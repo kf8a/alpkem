@@ -1,0 +1,24 @@
+<h1>Editing user</h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :login %><br />
+    <%= f.text_field :login %>
+  </p>
+  <p>
+    <%= f.label :open_id_identifier %><br />
+    <%= f.text_field :open_id_identifier %>
+  </p>
+  <p>
+    <%= f.label :persistence_token %><br />
+    <%= f.text_field :persistence_token %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

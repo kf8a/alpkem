@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  login: MyString
+  open_id_identifier: MyString
+  persistence_token: MyString
+
+two:
+  login: MyString
+  open_id_identifier: MyString
+  persistence_token: MyString

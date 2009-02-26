@@ -1,0 +1,18 @@
+<p>
+  <b>Login:</b>
+  <%=h @user.login %>
+</p>
+
+<p>
+  <b>Open id identifier:</b>
+  <%=h @user.open_id_identifier %>
+</p>
+
+<p>
+  <b>Persistence token:</b>
+  <%=h @user.persistence_token %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
