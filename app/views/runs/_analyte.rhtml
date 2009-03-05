@@ -9,9 +9,9 @@
 				<% if sample.approved? %>
 				<%= number %>
 				<% else %>
-				<%= link_to_remote  "#{number}" , showing_progress(:url => {:action => :delete, 
-					:controller => 'measurement', :id => measurement.id}),
-					{:class => "deleted_#{measurement.deleted?}"}%>
+				<%= link_to_remote  "#{number}" , :url => {:id => measurement.id, :controller => 'measurements', :action => 'destroy'}, :method => 'delete', :loading  => update_page{|p| p[:spinner].show },
+				:complete => update_page{|p| p[:spinner].hide }, 
+					:html => {:class => "deleted_#{measurement.deleted?}"}%>
 				<% end %>
 			</td>
 		</tr>

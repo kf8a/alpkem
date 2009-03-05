@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  def delete
+  def destroy
     m = Measurement.find(params[:id])
     m.toggle!(:deleted)
     sample = m.sample

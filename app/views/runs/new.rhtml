@@ -17,7 +17,7 @@
 	<label for="run_file">File</label>
 	<%= file_field :data, 'file' %>
 </p>
-	<%= submit_tag "Upload" %>
+	<%= submit_tag "Upload", :disable_with => "Uploading&hellip;"  %>
 
 <% end %>
 

@@ -9,7 +9,7 @@ class CreateSampleTypes < ActiveRecord::Migration
     SampleType.create({:name => 'Lysimeter', 
         :regular_expression => '\\t(.{1,2})-(.)([A-C|a-c])( rerun)*\\t\\s+-*\\d+\\.\\d+\\s+(-*\\d\\.\\d+)\\t.*\\t *-*\\d+\\.\\d+\\s+(-*\\d+\\.\\d+)\t'})
     SampleType.create({:name => 'Soil Sample',
-        :regular_expression => '\\t\\d{2}:\\d{2}\\t\\d{3}\\t(\\w{1,2})-(\\d)-(\\d)[abc], (\\d+)\\t.+\\t *([-| ]\\d+\\.\\d+)\\t.+\\t *([-| ]\\d+\\.\\d+)'})
+        :regular_expression => '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'})
   end
 
   def self.down
