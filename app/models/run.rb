@@ -3,6 +3,9 @@ class Run < ActiveRecord::Base
     belongs_to :sample_type
 
     validates_presence_of :sample_type
+    
+    SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 
     def measurements_by_analyte(analyte)
       raise ArgumentError unless analyte.class == Analyte
@@ -58,7 +61,7 @@ class Run < ActiveRecord::Base
         if sample_type_id == 1
           no3.amount = $6
         else
-          no3.amount = $4
+          no3.amount = $5
         end
         no3.save
         sample.measurements << no3
@@ -70,7 +73,7 @@ class Run < ActiveRecord::Base
         if sample_type_id == 1
           nh4.amount = $5
         else
-          nh4.amount = $3
+          nh4.amount = $4
         end
         nh4.save
 

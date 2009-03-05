@@ -60,7 +60,7 @@ class RunTest < Test::Unit::TestCase
   end
   
   def test_file_load_with_negatives
-    r = Run.count
+    old_runs = Run.count
      file_name = File.dirname(__FILE__) + '/../data/20040511.TXT'
      File.open(file_name,'r') do |f|
        s = StringIO.new(f.read)
@@ -73,11 +73,15 @@ class RunTest < Test::Unit::TestCase
        assert_equal 330, r.measurements.size
      end
 
-     assert_equal r+1, Run.count
+     assert_equal old_runs+1, Run.count
   end
   
   def test_file_load_with_reruns
-    r = Run.count
+    old_runs = Run.count
+    plot = Plot.find_by_treatment_and_replicate('T1','R1')
+    sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
+    
+    old_measurements =  sample.measurements.count
      file_name = File.dirname(__FILE__) + '/../data/20041102.TXT'
      File.open(file_name,'r') do |f|
        s = StringIO.new(f.read)
@@ -90,9 +94,10 @@ class RunTest < Test::Unit::TestCase
        assert_equal 342, r.measurements.size
      end
 
-     assert_equal r+1, Run.count  
+     assert_equal old_runs + 1, Run.count  
      plot = Plot.find_by_treatment_and_replicate('T1','R1')
      sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
-     assert_equal 8, sample.measurements.count
+   
+     assert_equal old_measurements + 8, sample.measurements.count
   end
 end
