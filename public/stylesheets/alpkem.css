@@ -1,0 +1,32 @@
+td {
+	align:right;
+}
+
+.even {
+	background-color: #f7ffe9;
+}
+.cv_high_true {
+	background-color: red;
+}
+
+a:visited {
+	color: blue;
+}
+
+a.deleted_true:hover {
+	text-decoration: underline;
+}
+
+.deleted_true  {
+	text-decoration: line-through;
+}
+
+#spinner {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+}
+
+ul {
+	list-style-type: none;
+}
