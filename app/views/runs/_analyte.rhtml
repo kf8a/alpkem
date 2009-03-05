@@ -1,0 +1,28 @@
+<% cv = sample.cv(analyte) %>
+<td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
+	<table>
+	<% sample.measurements_by_analyte(analyte).each do |measurement| %>
+	<% number = number_with_precision(measurement.amount,4) %>
+		<tr>
+			<td/>
+			<td>
+				<% if sample.approved? %>
+				<%= number %>
+				<% else %>
+				<%= link_to_remote  "#{number}" , showing_progress(:url => {:action => :delete, 
+					:controller => 'measurement', :id => measurement.id}),
+					{:class => "deleted_#{measurement.deleted?}"}%>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+		<tr>
+			<td>Mean:</td>	
+			<td><%= number_with_precision(sample.average(analyte),4) %></td>
+		</tr>
+		<tr>
+			<td>CV:</td>
+			<td><%= number_with_precision(cv,4) %></td>
+		</tr>
+  </table>
+</td>

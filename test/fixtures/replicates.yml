@@ -1,0 +1,45 @@
+--- 
+replicates_002: 
+  name: R2
+  id: "2"
+  study_id: "1"
+replicates_003: 
+  name: R3
+  id: "3"
+  study_id: "1"
+replicates_004: 
+  name: R4
+  id: "4"
+  study_id: "1"
+replicates_005: 
+  name: R5
+  id: "5"
+  study_id: "1"
+replicates_006: 
+  name: R6
+  id: "6"
+  study_id: "1"
+replicates_007: 
+  name: R1
+  id: "7"
+  study_id: "2"
+replicates_008: 
+  name: R2
+  id: "8"
+  study_id: "2"
+replicates_010: 
+  name: R4
+  id: "10"
+  study_id: "2"
+replicates_009: 
+  name: R3
+  id: "9"
+  study_id: "2"
+replicates_011: 
+  name: R5
+  id: "11"
+  study_id: "2"
+replicates_001: 
+  name: R1
+  id: "1"
+  study_id: "1"

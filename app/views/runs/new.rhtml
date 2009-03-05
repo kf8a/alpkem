@@ -1,0 +1,23 @@
+<h1>New Run</h1>
+
+<% form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
+<p>
+	<label for="run_sample_date">Sample Date</label>
+	<%= f.date_select :sample_date %>
+</p>
+<p>
+	<label  for='run_run_date'>Run Date</label>
+	<%= f.date_select :run_date %>
+</p>
+<p>
+	<label for='run_sample_type_id'>Sample Type</label>
+	<%= f.select :sample_type_id, SampleType.find(:all).map{|x| [x.name, x.id]} %>
+</p>
+<p>
+	<label for="run_file">File</label>
+	<%= file_field :data, 'file' %>
+</p>
+	<%= submit_tag "Upload" %>
+
+<% end %>
+

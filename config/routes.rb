@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :measurements
+
+  map.resources :samples
+
   map.resources :runs
 
   map.resources :users

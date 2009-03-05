@@ -1,0 +1,9 @@
+--- 
+analytes_001: 
+  name: NO3
+  unit: ppm
+  id: "1"
+analytes_002: 
+  name: NH4
+  unit: ppm
+  id: "2"

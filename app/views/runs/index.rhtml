@@ -1,0 +1,13 @@
+<h1>Runs</h1>
+<ul>
+	<% @runs.each do |run| %>
+		<li>
+		<%= run.id %>
+		<%= run.run_date %> <%= run.sample_type.name %> <%= run.samples.size %> samples
+		<%= link_to "qc", edit_run_path(run) %>
+		<%= link_to 'delete', run_path(run), :confirm => 'Are you sure?', :method => :delete %>
+		</li>
+	<% end %>
+</ul>
+<%= link_to "new", new_run_path %>
+

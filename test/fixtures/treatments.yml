@@ -1,0 +1,89 @@
+--- 
+treatments_017: 
+  name: G5
+  id: "17"
+  study_id: "2"
+treatments_006: 
+  name: T6
+  id: "6"
+  study_id: "1"
+treatments_018: 
+  name: G6
+  id: "18"
+  study_id: "2"
+treatments_007: 
+  name: T7
+  id: "7"
+  study_id: "1"
+treatments_019: 
+  name: G7
+  id: "19"
+  study_id: "2"
+treatments_008: 
+  name: T8
+  id: "8"
+  study_id: "1"
+treatments_020: 
+  name: G8
+  id: "20"
+  study_id: "2"
+treatments_009: 
+  name: TDF
+  id: "9"
+  study_id: "1"
+treatments_021: 
+  name: G9
+  id: "21"
+  study_id: "2"
+treatments_010: 
+  name: TSF
+  id: "10"
+  study_id: "1"
+treatments_022: 
+  name: G10
+  id: "22"
+  study_id: "2"
+treatments_011: 
+  name: TCF
+  id: "11"
+  study_id: "1"
+treatments_012: 
+  name: T21
+  id: "12"
+  study_id: "1"
+treatments_001: 
+  name: T1
+  id: "1"
+  study_id: "1"
+treatments_013: 
+  name: G1
+  id: "13"
+  study_id: "2"
+treatments_002: 
+  name: T2
+  id: "2"
+  study_id: "1"
+treatments_014: 
+  name: G2
+  id: "14"
+  study_id: "2"
+treatments_003: 
+  name: T3
+  id: "3"
+  study_id: "1"
+treatments_015: 
+  name: G3
+  id: "15"
+  study_id: "2"
+treatments_004: 
+  name: T4
+  id: "4"
+  study_id: "1"
+treatments_016: 
+  name: G4
+  id: "16"
+  study_id: "2"
+treatments_005: 
+  name: T5
+  id: "5"
+  study_id: "1"
