@@ -1,6 +1,8 @@
 require 'fastercsv'
 
 class SamplesController < ApplicationController
+  
+  before_filter :require_user
   # GET /samples
   # GET /samples.xml
   def index

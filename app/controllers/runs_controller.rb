@@ -1,4 +1,7 @@
 class RunsController < ApplicationController
+  
+  before_filter :require_user
+  
   # GET /runs
   # GET /runs.xml
   def index

@@ -1,4 +1,6 @@
 class MeasurementsController < ApplicationController
+  before_filter :require_user
+  
   def destroy
     m = Measurement.find(params[:id])
     m.toggle!(:deleted)
