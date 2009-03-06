@@ -2,7 +2,7 @@
 <td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
 	<table>
 	<% sample.measurements_by_analyte(analyte).each do |measurement| %>
-	<% number = number_with_precision(measurement.amount,4) %>
+	<% number = number_with_precision(measurement.amount,:precision => 4) %>
 		<tr>
 			<td/>
 			<td>

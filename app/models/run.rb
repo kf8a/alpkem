@@ -34,12 +34,21 @@ class Run < ActiveRecord::Base
 
         plot =  nil
         s_date = nil
-        if sample_type_id == 1
+        if sample_type_id == 1  # Lysimeter
           plot = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
           s_date = $4
-        else  
+        elsif sample_type_id == 2  # LTER Soil sample
           plot = Plot.find_by_name("T#{$1}R#{$2}")
           s_date = sample_date
+        elsif sample_type_id == 3
+          plot = Plot.find_by_name("G#{$1}R#{$2}")
+          s_date = sample_date
+        elsif sample_type_id == 4 # GLBRC Deep
+          raise "not implemented"
+        elsif sample_type_id == 5 # GLBRC Resin Strips
+          raise "not implemented"
+        else
+          raise "not implemented"
         end       
         # find sample
         sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
@@ -60,8 +69,10 @@ class Run < ActiveRecord::Base
         no3.analyte = analyte_no3
         if sample_type_id == 1
           no3.amount = $6
-        else
+        elsif sample_type_id == 2 || sample_type_id == 3
           no3.amount = $5
+        else
+          raise "not implemented"
         end
         no3.save
         sample.measurements << no3
@@ -72,8 +83,10 @@ class Run < ActiveRecord::Base
 
         if sample_type_id == 1
           nh4.amount = $5
-        else
+        elsif sample_type_id == 2 || sample_type_id == 3
           nh4.amount = $4
+        else
+          raise "not implemented"
         end
         nh4.save
 
