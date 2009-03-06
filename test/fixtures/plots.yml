@@ -1,111 +1,27 @@
 --- 
-plots_118: 
-  name: G10R1
-  id: "118"
+plots_282: 
+  name: G6R2S225
+  id: "282"
   study_id: "2"
-  treatment_id: "22"
-  replicate_id: "7"
-plots_061: 
-  name: TCFR1
-  id: "61"
-  study_id: "1"
-  treatment_id: "11"
-  replicate_id: "1"
-plots_032: 
-  name: T6R2
-  id: "32"
-  study_id: "1"
-  treatment_id: "6"
-  replicate_id: "2"
-plots_004: 
-  name: T1R4
-  id: "4"
-  study_id: "1"
-  treatment_id: "1"
-  replicate_id: "4"
-plots_119: 
-  name: G10R2
-  id: "119"
-  study_id: "2"
-  treatment_id: "22"
+  treatment_id: "18"
   replicate_id: "8"
-plots_062: 
-  name: TCFR2
-  id: "62"
-  study_id: "1"
-  treatment_id: "11"
-  replicate_id: "2"
-plots_033: 
-  name: T6R3
-  id: "33"
-  study_id: "1"
-  treatment_id: "6"
-  replicate_id: "3"
-plots_005: 
-  name: T1R5
-  id: "5"
-  study_id: "1"
-  treatment_id: "1"
-  replicate_id: "5"
-plots_090: 
-  name: G4R3
-  id: "90"
-  study_id: "2"
-  treatment_id: "16"
-  replicate_id: "9"
-plots_034: 
-  name: T6R4
-  id: "34"
-  study_id: "1"
-  treatment_id: "6"
-  replicate_id: "4"
-plots_006: 
-  name: T1R6
-  id: "6"
-  study_id: "1"
-  treatment_id: "1"
-  replicate_id: "6"
-plots_091: 
-  name: G4R4
-  id: "91"
-  study_id: "2"
-  treatment_id: "16"
-  replicate_id: "10"
-plots_063: 
-  name: TCFR3
-  id: "63"
-  study_id: "1"
-  treatment_id: "11"
-  replicate_id: "3"
-plots_035: 
-  name: T6R5
-  id: "35"
-  study_id: "1"
-  treatment_id: "6"
-  replicate_id: "5"
-plots_007: 
-  name: T2R1
-  id: "7"
-  study_id: "1"
-  treatment_id: "2"
-  replicate_id: "1"
 plots_092: 
   name: G4R5
   id: "92"
   study_id: "2"
   treatment_id: "16"
   replicate_id: "11"
-plots_036: 
-  name: T6R6
-  id: "36"
+plots_234: 
+  name: G4R4S225
+  id: "234"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "10"
+plots_044: 
+  name: T8R2
+  id: "44"
   study_id: "1"
-  treatment_id: "6"
-  replicate_id: "6"
-plots_008: 
-  name: T2R2
-  id: "8"
-  study_id: "1"
-  treatment_id: "2"
+  treatment_id: "8"
   replicate_id: "2"
 plots_093: 
   name: G5R1
@@ -113,23 +29,1067 @@ plots_093:
   study_id: "2"
   treatment_id: "17"
   replicate_id: "7"
-plots_064: 
-  name: TCFR4
-  id: "64"
+plots_235: 
+  name: G4R4S310
+  id: "235"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "10"
+plots_045: 
+  name: T8R3
+  id: "45"
   study_id: "1"
-  treatment_id: "11"
+  treatment_id: "8"
+  replicate_id: "3"
+plots_283: 
+  name: G6R2S310
+  id: "283"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "8"
+plots_094: 
+  name: G5R2
+  id: "94"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "8"
+plots_236: 
+  name: G4R4S325
+  id: "236"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "10"
+plots_046: 
+  name: T8R4
+  id: "46"
+  study_id: "1"
+  treatment_id: "8"
   replicate_id: "4"
-plots_120: 
-  name: G10R3
-  id: "120"
+plots_284: 
+  name: G6R2S325
+  id: "284"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "8"
+plots_095: 
+  name: G5R3
+  id: "95"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "9"
+plots_237: 
+  name: G4R5S110
+  id: "237"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "11"
+plots_047: 
+  name: T8R5
+  id: "47"
+  study_id: "1"
+  treatment_id: "8"
+  replicate_id: "5"
+plots_285: 
+  name: G6R3S110
+  id: "285"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_238: 
+  name: G4R5S125
+  id: "238"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "11"
+plots_048: 
+  name: T8R6
+  id: "48"
+  study_id: "1"
+  treatment_id: "8"
+  replicate_id: "6"
+plots_286: 
+  name: G6R3S125
+  id: "286"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_096: 
+  name: G5R4
+  id: "96"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_239: 
+  name: G4R5S210
+  id: "239"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "11"
+plots_049: 
+  name: TDFR1
+  id: "49"
+  study_id: "1"
+  treatment_id: "9"
+  replicate_id: "1"
+plots_287: 
+  name: G6R3S210
+  id: "287"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_097: 
+  name: G5R5
+  id: "97"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_100: 
+  name: G6R3
+  id: "100"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_288: 
+  name: G6R3S225
+  id: "288"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_098: 
+  name: G6R1
+  id: "98"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_101: 
+  name: G6R4
+  id: "101"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_289: 
+  name: G6R3S310
+  id: "289"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_099: 
+  name: G6R2
+  id: "99"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "8"
+plots_150: 
+  name: G1R5S225
+  id: "150"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_102: 
+  name: G6R5
+  id: "102"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_340: 
+  name: G8R2S125
+  id: "340"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_103: 
+  name: G7R1
+  id: "103"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_341: 
+  name: G8R2S210
+  id: "341"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_151: 
+  name: G1R5S310
+  id: "151"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_104: 
+  name: G7R2
+  id: "104"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_390: 
+  name: G9R5S225
+  id: "390"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_342: 
+  name: G8R2S225
+  id: "342"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_152: 
+  name: G1R5S325
+  id: "152"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_105: 
+  name: G7R3
+  id: "105"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "9"
+plots_391: 
+  name: G9R5S310
+  id: "391"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_343: 
+  name: G8R2S310
+  id: "343"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_153: 
+  name: G2R1S110
+  id: "153"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_106: 
+  name: G7R4
+  id: "106"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_392: 
+  name: G9R5S325
+  id: "392"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_344: 
+  name: G8R2S325
+  id: "344"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_154: 
+  name: G2R1S125
+  id: "154"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_107: 
+  name: G7R5
+  id: "107"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_345: 
+  name: G8R3S110
+  id: "345"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_155: 
+  name: G2R1S210
+  id: "155"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_108: 
+  name: G8R1
+  id: "108"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_393: 
+  name: G10R1S110
+  id: "393"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_346: 
+  name: G8R3S125
+  id: "346"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_156: 
+  name: G2R1S225
+  id: "156"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_109: 
+  name: G8R2
+  id: "109"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_394: 
+  name: G10R1S125
+  id: "394"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_347: 
+  name: G8R3S210
+  id: "347"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_157: 
+  name: G2R1S310
+  id: "157"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_395: 
+  name: G10R1S210
+  id: "395"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_348: 
+  name: G8R3S225
+  id: "348"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_158: 
+  name: G2R1S325
+  id: "158"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_396: 
+  name: G10R1S225
+  id: "396"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_349: 
+  name: G8R3S310
+  id: "349"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_159: 
+  name: G2R2S110
+  id: "159"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_397: 
+  name: G10R1S310
+  id: "397"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_020: 
+  name: T4R2
+  id: "20"
+  study_id: "1"
+  treatment_id: "4"
+  replicate_id: "2"
+plots_398: 
+  name: G10R1S325
+  id: "398"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_400: 
+  name: G10R2S125
+  id: "400"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_210: 
+  name: G3R5S225
+  id: "210"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "11"
+plots_401: 
+  name: G10R2S210
+  id: "401"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_211: 
+  name: G3R5S310
+  id: "211"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "11"
+plots_021: 
+  name: T4R3
+  id: "21"
+  study_id: "1"
+  treatment_id: "4"
+  replicate_id: "3"
+plots_399: 
+  name: G10R2S110
+  id: "399"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_260: 
+  name: G5R3S325
+  id: "260"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "9"
+plots_070: 
+  name: T21R4
+  id: "70"
+  study_id: "1"
+  treatment_id: "12"
+  replicate_id: "4"
+plots_402: 
+  name: G10R2S225
+  id: "402"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_212: 
+  name: G3R5S325
+  id: "212"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "11"
+plots_022: 
+  name: T4R4
+  id: "22"
+  study_id: "1"
+  treatment_id: "4"
+  replicate_id: "4"
+plots_403: 
+  name: G10R2S310
+  id: "403"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_071: 
+  name: T21R5
+  id: "71"
+  study_id: "1"
+  treatment_id: "12"
+  replicate_id: "5"
+plots_213: 
+  name: G4R1S110
+  id: "213"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_023: 
+  name: T4R5
+  id: "23"
+  study_id: "1"
+  treatment_id: "4"
+  replicate_id: "5"
+plots_404: 
+  name: G10R2S325
+  id: "404"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_261: 
+  name: G5R4S110
+  id: "261"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_072: 
+  name: T21R6
+  id: "72"
+  study_id: "1"
+  treatment_id: "12"
+  replicate_id: "6"
+plots_214: 
+  name: G4R1S125
+  id: "214"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_024: 
+  name: T4R6
+  id: "24"
+  study_id: "1"
+  treatment_id: "4"
+  replicate_id: "6"
+plots_405: 
+  name: G10R3S110
+  id: "405"
   study_id: "2"
   treatment_id: "22"
   replicate_id: "9"
-plots_037: 
-  name: T7R1
-  id: "37"
+plots_262: 
+  name: G5R4S125
+  id: "262"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_073: 
+  name: G1R1
+  id: "73"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "7"
+plots_215: 
+  name: G4R1S210
+  id: "215"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_025: 
+  name: T5R1
+  id: "25"
   study_id: "1"
-  treatment_id: "7"
+  treatment_id: "5"
+  replicate_id: "1"
+plots_406: 
+  name: G10R3S125
+  id: "406"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "9"
+plots_263: 
+  name: G5R4S210
+  id: "263"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_216: 
+  name: G4R1S225
+  id: "216"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_026: 
+  name: T5R2
+  id: "26"
+  study_id: "1"
+  treatment_id: "5"
+  replicate_id: "2"
+plots_407: 
+  name: G10R3S210
+  id: "407"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "9"
+plots_264: 
+  name: G5R4S225
+  id: "264"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_074: 
+  name: G1R2
+  id: "74"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_217: 
+  name: G4R1S310
+  id: "217"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_027: 
+  name: T5R3
+  id: "27"
+  study_id: "1"
+  treatment_id: "5"
+  replicate_id: "3"
+plots_408: 
+  name: G10R3S225
+  id: "408"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "9"
+plots_265: 
+  name: G5R4S310
+  id: "265"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_075: 
+  name: G1R3
+  id: "75"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_218: 
+  name: G4R1S325
+  id: "218"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_028: 
+  name: T5R4
+  id: "28"
+  study_id: "1"
+  treatment_id: "5"
+  replicate_id: "4"
+plots_409: 
+  name: G10R3S310
+  id: "409"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "9"
+plots_266: 
+  name: G5R4S325
+  id: "266"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "10"
+plots_076: 
+  name: G1R4
+  id: "76"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_219: 
+  name: G4R2S110
+  id: "219"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_029: 
+  name: T5R5
+  id: "29"
+  study_id: "1"
+  treatment_id: "5"
+  replicate_id: "5"
+plots_267: 
+  name: G5R5S110
+  id: "267"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_077: 
+  name: G1R5
+  id: "77"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_268: 
+  name: G5R5S125
+  id: "268"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_078: 
+  name: G2R1
+  id: "78"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "7"
+plots_269: 
+  name: G5R5S210
+  id: "269"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_079: 
+  name: G2R2
+  id: "79"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_320: 
+  name: G7R3S325
+  id: "320"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "9"
+plots_130: 
+  name: G1R2S125
+  id: "130"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_321: 
+  name: G7R4S110
+  id: "321"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_131: 
+  name: G1R2S210
+  id: "131"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_370: 
+  name: G9R2S125
+  id: "370"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_180: 
+  name: G2R5S225
+  id: "180"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_322: 
+  name: G7R4S125
+  id: "322"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_132: 
+  name: G1R2S225
+  id: "132"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_181: 
+  name: G2R5S310
+  id: "181"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_323: 
+  name: G7R4S210
+  id: "323"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_133: 
+  name: G1R2S310
+  id: "133"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_371: 
+  name: G9R2S210
+  id: "371"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_182: 
+  name: G2R5S325
+  id: "182"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_324: 
+  name: G7R4S225
+  id: "324"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_134: 
+  name: G1R2S325
+  id: "134"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_372: 
+  name: G9R2S225
+  id: "372"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_183: 
+  name: G3R1S110
+  id: "183"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_325: 
+  name: G7R4S310
+  id: "325"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_135: 
+  name: G1R3S110
+  id: "135"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_373: 
+  name: G9R2S310
+  id: "373"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_326: 
+  name: G7R4S325
+  id: "326"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "10"
+plots_136: 
+  name: G1R3S125
+  id: "136"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_374: 
+  name: G9R2S325
+  id: "374"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_184: 
+  name: G3R1S125
+  id: "184"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_327: 
+  name: G7R5S110
+  id: "327"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_137: 
+  name: G1R3S210
+  id: "137"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_375: 
+  name: G9R3S110
+  id: "375"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_185: 
+  name: G3R1S210
+  id: "185"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_328: 
+  name: G7R5S125
+  id: "328"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_138: 
+  name: G1R3S225
+  id: "138"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_376: 
+  name: G9R3S125
+  id: "376"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_186: 
+  name: G3R1S225
+  id: "186"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_329: 
+  name: G7R5S210
+  id: "329"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_139: 
+  name: G1R3S310
+  id: "139"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_377: 
+  name: G9R3S210
+  id: "377"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_187: 
+  name: G3R1S310
+  id: "187"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_378: 
+  name: G9R3S225
+  id: "378"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_188: 
+  name: G3R1S325
+  id: "188"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_001: 
+  name: T1R1
+  id: "1"
+  study_id: "1"
+  treatment_id: "1"
+  replicate_id: "1"
+plots_379: 
+  name: G9R3S310
+  id: "379"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_189: 
+  name: G3R2S110
+  id: "189"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_002: 
+  name: T1R2
+  id: "2"
+  study_id: "1"
+  treatment_id: "1"
+  replicate_id: "2"
+plots_050: 
+  name: TDFR2
+  id: "50"
+  study_id: "1"
+  treatment_id: "9"
+  replicate_id: "2"
+plots_003: 
+  name: T1R3
+  id: "3"
+  study_id: "1"
+  treatment_id: "1"
+  replicate_id: "3"
+plots_240: 
+  name: G4R5S225
+  id: "240"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "11"
+plots_051: 
+  name: TDFR3
+  id: "51"
+  study_id: "1"
+  treatment_id: "9"
+  replicate_id: "3"
+plots_004: 
+  name: T1R4
+  id: "4"
+  study_id: "1"
+  treatment_id: "1"
+  replicate_id: "4"
+plots_241: 
+  name: G4R5S310
+  id: "241"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "11"
+plots_005: 
+  name: T1R5
+  id: "5"
+  study_id: "1"
+  treatment_id: "1"
+  replicate_id: "5"
+plots_290: 
+  name: G6R3S325
+  id: "290"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "9"
+plots_242: 
+  name: G4R5S325
+  id: "242"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "11"
+plots_052: 
+  name: TDFR4
+  id: "52"
+  study_id: "1"
+  treatment_id: "9"
+  replicate_id: "4"
+plots_006: 
+  name: T1R6
+  id: "6"
+  study_id: "1"
+  treatment_id: "1"
+  replicate_id: "6"
+plots_291: 
+  name: G6R4S110
+  id: "291"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_243: 
+  name: G5R1S110
+  id: "243"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "7"
+plots_053: 
+  name: TDFR5
+  id: "53"
+  study_id: "1"
+  treatment_id: "9"
+  replicate_id: "5"
+plots_007: 
+  name: T2R1
+  id: "7"
+  study_id: "1"
+  treatment_id: "2"
+  replicate_id: "1"
+plots_292: 
+  name: G6R4S125
+  id: "292"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_244: 
+  name: G5R1S125
+  id: "244"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "7"
+plots_054: 
+  name: TDFR6
+  id: "54"
+  study_id: "1"
+  treatment_id: "9"
+  replicate_id: "6"
+plots_008: 
+  name: T2R2
+  id: "8"
+  study_id: "1"
+  treatment_id: "2"
+  replicate_id: "2"
+plots_293: 
+  name: G6R4S210
+  id: "293"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_245: 
+  name: G5R1S210
+  id: "245"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "7"
+plots_055: 
+  name: TSFR1
+  id: "55"
+  study_id: "1"
+  treatment_id: "10"
   replicate_id: "1"
 plots_009: 
   name: T2R3
@@ -137,33 +1097,1053 @@ plots_009:
   study_id: "1"
   treatment_id: "2"
   replicate_id: "3"
-plots_094: 
-  name: G5R2
-  id: "94"
+plots_246: 
+  name: G5R1S225
+  id: "246"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "7"
+plots_056: 
+  name: TSFR2
+  id: "56"
+  study_id: "1"
+  treatment_id: "10"
+  replicate_id: "2"
+plots_294: 
+  name: G6R4S225
+  id: "294"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_247: 
+  name: G5R1S310
+  id: "247"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "7"
+plots_057: 
+  name: TSFR3
+  id: "57"
+  study_id: "1"
+  treatment_id: "10"
+  replicate_id: "3"
+plots_295: 
+  name: G6R4S310
+  id: "295"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_248: 
+  name: G5R1S325
+  id: "248"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "7"
+plots_058: 
+  name: TSFR4
+  id: "58"
+  study_id: "1"
+  treatment_id: "10"
+  replicate_id: "4"
+plots_296: 
+  name: G6R4S325
+  id: "296"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "10"
+plots_249: 
+  name: G5R2S110
+  id: "249"
   study_id: "2"
   treatment_id: "17"
   replicate_id: "8"
-plots_065: 
-  name: TCFR5
-  id: "65"
+plots_059: 
+  name: TSFR5
+  id: "59"
   study_id: "1"
-  treatment_id: "11"
+  treatment_id: "10"
   replicate_id: "5"
-plots_121: 
-  name: G10R4
-  id: "121"
+plots_297: 
+  name: G6R5S110
+  id: "297"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_300: 
+  name: G6R5S225
+  id: "300"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_110: 
+  name: G8R3
+  id: "110"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_298: 
+  name: G6R5S125
+  id: "298"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_301: 
+  name: G6R5S310
+  id: "301"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_111: 
+  name: G8R4
+  id: "111"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_299: 
+  name: G6R5S210
+  id: "299"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_302: 
+  name: G6R5S325
+  id: "302"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "11"
+plots_112: 
+  name: G8R5
+  id: "112"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_160: 
+  name: G2R2S125
+  id: "160"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_303: 
+  name: G7R1S110
+  id: "303"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_113: 
+  name: G9R1
+  id: "113"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_350: 
+  name: G8R3S325
+  id: "350"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "9"
+plots_161: 
+  name: G2R2S210
+  id: "161"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_304: 
+  name: G7R1S125
+  id: "304"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_114: 
+  name: G9R2
+  id: "114"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_351: 
+  name: G8R4S110
+  id: "351"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_305: 
+  name: G7R1S210
+  id: "305"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_115: 
+  name: G9R3
+  id: "115"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_352: 
+  name: G8R4S125
+  id: "352"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_162: 
+  name: G2R2S225
+  id: "162"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_306: 
+  name: G7R1S225
+  id: "306"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_116: 
+  name: G9R4
+  id: "116"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_353: 
+  name: G8R4S210
+  id: "353"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_163: 
+  name: G2R2S310
+  id: "163"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_307: 
+  name: G7R1S310
+  id: "307"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_117: 
+  name: G9R5
+  id: "117"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_354: 
+  name: G8R4S225
+  id: "354"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_164: 
+  name: G2R2S325
+  id: "164"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "8"
+plots_308: 
+  name: G7R1S325
+  id: "308"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "7"
+plots_118: 
+  name: G10R1
+  id: "118"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "7"
+plots_355: 
+  name: G8R4S310
+  id: "355"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_165: 
+  name: G2R3S110
+  id: "165"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_309: 
+  name: G7R2S110
+  id: "309"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_119: 
+  name: G10R2
+  id: "119"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "8"
+plots_356: 
+  name: G8R4S325
+  id: "356"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "10"
+plots_166: 
+  name: G2R3S125
+  id: "166"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_357: 
+  name: G8R5S110
+  id: "357"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_167: 
+  name: G2R3S210
+  id: "167"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_358: 
+  name: G8R5S125
+  id: "358"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_168: 
+  name: G2R3S225
+  id: "168"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_359: 
+  name: G8R5S210
+  id: "359"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_169: 
+  name: G2R3S310
+  id: "169"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_410: 
+  name: G10R3S325
+  id: "410"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "9"
+plots_220: 
+  name: G4R2S125
+  id: "220"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_030: 
+  name: T5R6
+  id: "30"
+  study_id: "1"
+  treatment_id: "5"
+  replicate_id: "6"
+plots_411: 
+  name: G10R4S110
+  id: "411"
   study_id: "2"
   treatment_id: "22"
   replicate_id: "10"
+plots_221: 
+  name: G4R2S210
+  id: "221"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_031: 
+  name: T6R1
+  id: "31"
+  study_id: "1"
+  treatment_id: "6"
+  replicate_id: "1"
+plots_412: 
+  name: G10R4S125
+  id: "412"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "10"
+plots_222: 
+  name: G4R2S225
+  id: "222"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_032: 
+  name: T6R2
+  id: "32"
+  study_id: "1"
+  treatment_id: "6"
+  replicate_id: "2"
+plots_270: 
+  name: G5R5S225
+  id: "270"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_080: 
+  name: G2R3
+  id: "80"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_413: 
+  name: G10R4S210
+  id: "413"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "10"
+plots_223: 
+  name: G4R2S310
+  id: "223"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_033: 
+  name: T6R3
+  id: "33"
+  study_id: "1"
+  treatment_id: "6"
+  replicate_id: "3"
+plots_271: 
+  name: G5R5S310
+  id: "271"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_081: 
+  name: G2R4
+  id: "81"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_414: 
+  name: G10R4S225
+  id: "414"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "10"
+plots_224: 
+  name: G4R2S325
+  id: "224"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_034: 
+  name: T6R4
+  id: "34"
+  study_id: "1"
+  treatment_id: "6"
+  replicate_id: "4"
+plots_082: 
+  name: G2R5
+  id: "82"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_415: 
+  name: G10R4S310
+  id: "415"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "10"
+plots_225: 
+  name: G4R3S110
+  id: "225"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "9"
+plots_035: 
+  name: T6R5
+  id: "35"
+  study_id: "1"
+  treatment_id: "6"
+  replicate_id: "5"
+plots_272: 
+  name: G5R5S325
+  id: "272"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "11"
+plots_083: 
+  name: G3R1
+  id: "83"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "7"
+plots_416: 
+  name: G10R4S325
+  id: "416"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "10"
+plots_226: 
+  name: G4R3S125
+  id: "226"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "9"
+plots_036: 
+  name: T6R6
+  id: "36"
+  study_id: "1"
+  treatment_id: "6"
+  replicate_id: "6"
+plots_273: 
+  name: G6R1S110
+  id: "273"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_084: 
+  name: G3R2
+  id: "84"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_417: 
+  name: G10R5S110
+  id: "417"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_227: 
+  name: G4R3S210
+  id: "227"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "9"
+plots_037: 
+  name: T7R1
+  id: "37"
+  study_id: "1"
+  treatment_id: "7"
+  replicate_id: "1"
+plots_274: 
+  name: G6R1S125
+  id: "274"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_418: 
+  name: G10R5S125
+  id: "418"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_228: 
+  name: G4R3S225
+  id: "228"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "9"
 plots_038: 
   name: T7R2
   id: "38"
   study_id: "1"
   treatment_id: "7"
   replicate_id: "2"
-plots_095: 
-  name: G5R3
-  id: "95"
+plots_275: 
+  name: G6R1S210
+  id: "275"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_085: 
+  name: G3R3
+  id: "85"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_419: 
+  name: G10R5S210
+  id: "419"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_229: 
+  name: G4R3S310
+  id: "229"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "9"
+plots_039: 
+  name: T7R3
+  id: "39"
+  study_id: "1"
+  treatment_id: "7"
+  replicate_id: "3"
+plots_276: 
+  name: G6R1S225
+  id: "276"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_086: 
+  name: G3R4
+  id: "86"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_277: 
+  name: G6R1S310
+  id: "277"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_087: 
+  name: G3R5
+  id: "87"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "11"
+plots_278: 
+  name: G6R1S325
+  id: "278"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "7"
+plots_088: 
+  name: G4R1
+  id: "88"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "7"
+plots_279: 
+  name: G6R2S110
+  id: "279"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "8"
+plots_089: 
+  name: G4R2
+  id: "89"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "8"
+plots_330: 
+  name: G7R5S225
+  id: "330"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_140: 
+  name: G1R3S325
+  id: "140"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "9"
+plots_331: 
+  name: G7R5S310
+  id: "331"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_141: 
+  name: G1R4S110
+  id: "141"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_332: 
+  name: G7R5S325
+  id: "332"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "11"
+plots_142: 
+  name: G1R4S125
+  id: "142"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_380: 
+  name: G9R3S325
+  id: "380"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "9"
+plots_190: 
+  name: G3R2S125
+  id: "190"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_333: 
+  name: G8R1S110
+  id: "333"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_143: 
+  name: G1R4S210
+  id: "143"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_381: 
+  name: G9R4S110
+  id: "381"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_191: 
+  name: G3R2S210
+  id: "191"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_334: 
+  name: G8R1S125
+  id: "334"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_144: 
+  name: G1R4S225
+  id: "144"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_192: 
+  name: G3R2S225
+  id: "192"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_335: 
+  name: G8R1S210
+  id: "335"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_145: 
+  name: G1R4S310
+  id: "145"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_382: 
+  name: G9R4S125
+  id: "382"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_193: 
+  name: G3R2S310
+  id: "193"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_336: 
+  name: G8R1S225
+  id: "336"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_146: 
+  name: G1R4S325
+  id: "146"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "10"
+plots_383: 
+  name: G9R4S210
+  id: "383"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_194: 
+  name: G3R2S325
+  id: "194"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "8"
+plots_337: 
+  name: G8R1S310
+  id: "337"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_147: 
+  name: G1R5S110
+  id: "147"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_384: 
+  name: G9R4S225
+  id: "384"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_338: 
+  name: G8R1S325
+  id: "338"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "7"
+plots_148: 
+  name: G1R5S125
+  id: "148"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_385: 
+  name: G9R4S310
+  id: "385"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_195: 
+  name: G3R3S110
+  id: "195"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_339: 
+  name: G8R2S110
+  id: "339"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "8"
+plots_149: 
+  name: G1R5S210
+  id: "149"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "11"
+plots_386: 
+  name: G9R4S325
+  id: "386"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "10"
+plots_196: 
+  name: G3R3S125
+  id: "196"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_387: 
+  name: G9R5S110
+  id: "387"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_197: 
+  name: G3R3S210
+  id: "197"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_200: 
+  name: G3R3S325
+  id: "200"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_010: 
+  name: T2R4
+  id: "10"
+  study_id: "1"
+  treatment_id: "2"
+  replicate_id: "4"
+plots_388: 
+  name: G9R5S125
+  id: "388"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_198: 
+  name: G3R3S225
+  id: "198"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_201: 
+  name: G3R4S110
+  id: "201"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_011: 
+  name: T2R5
+  id: "11"
+  study_id: "1"
+  treatment_id: "2"
+  replicate_id: "5"
+plots_389: 
+  name: G9R5S210
+  id: "389"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "11"
+plots_199: 
+  name: G3R3S310
+  id: "199"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "9"
+plots_060: 
+  name: TSFR6
+  id: "60"
+  study_id: "1"
+  treatment_id: "10"
+  replicate_id: "6"
+plots_202: 
+  name: G3R4S125
+  id: "202"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_012: 
+  name: T2R6
+  id: "12"
+  study_id: "1"
+  treatment_id: "2"
+  replicate_id: "6"
+plots_250: 
+  name: G5R2S125
+  id: "250"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "8"
+plots_061: 
+  name: TCFR1
+  id: "61"
+  study_id: "1"
+  treatment_id: "11"
+  replicate_id: "1"
+plots_203: 
+  name: G3R4S210
+  id: "203"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_013: 
+  name: T3R1
+  id: "13"
+  study_id: "1"
+  treatment_id: "3"
+  replicate_id: "1"
+plots_251: 
+  name: G5R2S210
+  id: "251"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "8"
+plots_062: 
+  name: TCFR2
+  id: "62"
+  study_id: "1"
+  treatment_id: "11"
+  replicate_id: "2"
+plots_204: 
+  name: G3R4S225
+  id: "204"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_014: 
+  name: T3R2
+  id: "14"
+  study_id: "1"
+  treatment_id: "3"
+  replicate_id: "2"
+plots_252: 
+  name: G5R2S225
+  id: "252"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "8"
+plots_205: 
+  name: G3R4S310
+  id: "205"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_015: 
+  name: T3R3
+  id: "15"
+  study_id: "1"
+  treatment_id: "3"
+  replicate_id: "3"
+plots_253: 
+  name: G5R2S310
+  id: "253"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "8"
+plots_063: 
+  name: TCFR3
+  id: "63"
+  study_id: "1"
+  treatment_id: "11"
+  replicate_id: "3"
+plots_206: 
+  name: G3R4S325
+  id: "206"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "10"
+plots_016: 
+  name: T3R4
+  id: "16"
+  study_id: "1"
+  treatment_id: "3"
+  replicate_id: "4"
+plots_254: 
+  name: G5R2S325
+  id: "254"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "8"
+plots_064: 
+  name: TCFR4
+  id: "64"
+  study_id: "1"
+  treatment_id: "11"
+  replicate_id: "4"
+plots_207: 
+  name: G3R5S110
+  id: "207"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "11"
+plots_017: 
+  name: T3R5
+  id: "17"
+  study_id: "1"
+  treatment_id: "3"
+  replicate_id: "5"
+plots_255: 
+  name: G5R3S110
+  id: "255"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "9"
+plots_065: 
+  name: TCFR5
+  id: "65"
+  study_id: "1"
+  treatment_id: "11"
+  replicate_id: "5"
+plots_208: 
+  name: G3R5S125
+  id: "208"
+  study_id: "2"
+  treatment_id: "15"
+  replicate_id: "11"
+plots_018: 
+  name: T3R6
+  id: "18"
+  study_id: "1"
+  treatment_id: "3"
+  replicate_id: "6"
+plots_256: 
+  name: G5R3S125
+  id: "256"
   study_id: "2"
   treatment_id: "17"
   replicate_id: "9"
@@ -173,561 +2153,381 @@ plots_066:
   study_id: "1"
   treatment_id: "11"
   replicate_id: "6"
-plots_122: 
-  name: G10R5
-  id: "122"
+plots_209: 
+  name: G3R5S210
+  id: "209"
   study_id: "2"
-  treatment_id: "22"
+  treatment_id: "15"
   replicate_id: "11"
-plots_039: 
-  name: T7R3
-  id: "39"
-  study_id: "1"
-  treatment_id: "7"
-  replicate_id: "3"
-plots_067: 
-  name: T21R1
-  id: "67"
-  study_id: "1"
-  treatment_id: "12"
-  replicate_id: "1"
-plots_096: 
-  name: G5R4
-  id: "96"
-  study_id: "2"
-  treatment_id: "17"
-  replicate_id: "10"
-plots_068: 
-  name: T21R2
-  id: "68"
-  study_id: "1"
-  treatment_id: "12"
-  replicate_id: "2"
-plots_097: 
-  name: G5R5
-  id: "97"
-  study_id: "2"
-  treatment_id: "17"
-  replicate_id: "11"
-plots_010: 
-  name: T2R4
-  id: "10"
-  study_id: "1"
-  treatment_id: "2"
-  replicate_id: "4"
-plots_069: 
-  name: T21R3
-  id: "69"
-  study_id: "1"
-  treatment_id: "12"
-  replicate_id: "3"
-plots_040: 
-  name: T7R4
-  id: "40"
-  study_id: "1"
-  treatment_id: "7"
-  replicate_id: "4"
-plots_098: 
-  name: G6R1
-  id: "98"
-  study_id: "2"
-  treatment_id: "18"
-  replicate_id: "7"
-plots_011: 
-  name: T2R5
-  id: "11"
-  study_id: "1"
-  treatment_id: "2"
-  replicate_id: "5"
-plots_099: 
-  name: G6R2
-  id: "99"
-  study_id: "2"
-  treatment_id: "18"
-  replicate_id: "8"
-plots_012: 
-  name: T2R6
-  id: "12"
-  study_id: "1"
-  treatment_id: "2"
-  replicate_id: "6"
-plots_041: 
-  name: T7R5
-  id: "41"
-  study_id: "1"
-  treatment_id: "7"
-  replicate_id: "5"
-plots_013: 
-  name: T3R1
-  id: "13"
-  study_id: "1"
-  treatment_id: "3"
-  replicate_id: "1"
-plots_070: 
-  name: T21R4
-  id: "70"
-  study_id: "1"
-  treatment_id: "12"
-  replicate_id: "4"
-plots_042: 
-  name: T7R6
-  id: "42"
-  study_id: "1"
-  treatment_id: "7"
-  replicate_id: "6"
-plots_014: 
-  name: T3R2
-  id: "14"
-  study_id: "1"
-  treatment_id: "3"
-  replicate_id: "2"
-plots_071: 
-  name: T21R5
-  id: "71"
-  study_id: "1"
-  treatment_id: "12"
-  replicate_id: "5"
-plots_015: 
-  name: T3R3
-  id: "15"
-  study_id: "1"
-  treatment_id: "3"
-  replicate_id: "3"
-plots_072: 
-  name: T21R6
-  id: "72"
-  study_id: "1"
-  treatment_id: "12"
-  replicate_id: "6"
-plots_043: 
-  name: T8R1
-  id: "43"
-  study_id: "1"
-  treatment_id: "8"
-  replicate_id: "1"
-plots_016: 
-  name: T3R4
-  id: "16"
-  study_id: "1"
-  treatment_id: "3"
-  replicate_id: "4"
-plots_073: 
-  name: G1R1
-  id: "73"
-  study_id: "2"
-  treatment_id: "13"
-  replicate_id: "7"
-plots_044: 
-  name: T8R2
-  id: "44"
-  study_id: "1"
-  treatment_id: "8"
-  replicate_id: "2"
-plots_017: 
-  name: T3R5
-  id: "17"
-  study_id: "1"
-  treatment_id: "3"
-  replicate_id: "5"
-plots_045: 
-  name: T8R3
-  id: "45"
-  study_id: "1"
-  treatment_id: "8"
-  replicate_id: "3"
-plots_100: 
-  name: G6R3
-  id: "100"
-  study_id: "2"
-  treatment_id: "18"
-  replicate_id: "9"
-plots_018: 
-  name: T3R6
-  id: "18"
-  study_id: "1"
-  treatment_id: "3"
-  replicate_id: "6"
-plots_074: 
-  name: G1R2
-  id: "74"
-  study_id: "2"
-  treatment_id: "13"
-  replicate_id: "8"
-plots_046: 
-  name: T8R4
-  id: "46"
-  study_id: "1"
-  treatment_id: "8"
-  replicate_id: "4"
-plots_101: 
-  name: G6R4
-  id: "101"
-  study_id: "2"
-  treatment_id: "18"
-  replicate_id: "10"
 plots_019: 
   name: T4R1
   id: "19"
   study_id: "1"
   treatment_id: "4"
   replicate_id: "1"
-plots_075: 
-  name: G1R3
-  id: "75"
+plots_257: 
+  name: G5R3S210
+  id: "257"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "9"
+plots_067: 
+  name: T21R1
+  id: "67"
+  study_id: "1"
+  treatment_id: "12"
+  replicate_id: "1"
+plots_258: 
+  name: G5R3S225
+  id: "258"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "9"
+plots_068: 
+  name: T21R2
+  id: "68"
+  study_id: "1"
+  treatment_id: "12"
+  replicate_id: "2"
+plots_259: 
+  name: G5R3S310
+  id: "259"
+  study_id: "2"
+  treatment_id: "17"
+  replicate_id: "9"
+plots_069: 
+  name: T21R3
+  id: "69"
+  study_id: "1"
+  treatment_id: "12"
+  replicate_id: "3"
+plots_310: 
+  name: G7R2S125
+  id: "310"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_120: 
+  name: G10R3
+  id: "120"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "9"
+plots_311: 
+  name: G7R2S210
+  id: "311"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_121: 
+  name: G10R4
+  id: "121"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "10"
+plots_170: 
+  name: G2R3S325
+  id: "170"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "9"
+plots_312: 
+  name: G7R2S225
+  id: "312"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_122: 
+  name: G10R5
+  id: "122"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_360: 
+  name: G8R5S225
+  id: "360"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_171: 
+  name: G2R4S110
+  id: "171"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_313: 
+  name: G7R2S310
+  id: "313"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_123: 
+  name: G1R1S110
+  id: "123"
   study_id: "2"
   treatment_id: "13"
+  replicate_id: "7"
+plots_361: 
+  name: G8R5S310
+  id: "361"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_172: 
+  name: G2R4S125
+  id: "172"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_314: 
+  name: G7R2S325
+  id: "314"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "8"
+plots_124: 
+  name: G1R1S125
+  id: "124"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "7"
+plots_362: 
+  name: G8R5S325
+  id: "362"
+  study_id: "2"
+  treatment_id: "20"
+  replicate_id: "11"
+plots_315: 
+  name: G7R3S110
+  id: "315"
+  study_id: "2"
+  treatment_id: "19"
   replicate_id: "9"
-plots_047: 
-  name: T8R5
-  id: "47"
+plots_125: 
+  name: G1R1S210
+  id: "125"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "7"
+plots_363: 
+  name: G9R1S110
+  id: "363"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_173: 
+  name: G2R4S210
+  id: "173"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_316: 
+  name: G7R3S125
+  id: "316"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "9"
+plots_126: 
+  name: G1R1S225
+  id: "126"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "7"
+plots_364: 
+  name: G9R1S125
+  id: "364"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_174: 
+  name: G2R4S225
+  id: "174"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_317: 
+  name: G7R3S210
+  id: "317"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "9"
+plots_127: 
+  name: G1R1S310
+  id: "127"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "7"
+plots_365: 
+  name: G9R1S210
+  id: "365"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_175: 
+  name: G2R4S310
+  id: "175"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_318: 
+  name: G7R3S225
+  id: "318"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "9"
+plots_128: 
+  name: G1R1S325
+  id: "128"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "7"
+plots_366: 
+  name: G9R1S225
+  id: "366"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_176: 
+  name: G2R4S325
+  id: "176"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "10"
+plots_319: 
+  name: G7R3S310
+  id: "319"
+  study_id: "2"
+  treatment_id: "19"
+  replicate_id: "9"
+plots_129: 
+  name: G1R2S110
+  id: "129"
+  study_id: "2"
+  treatment_id: "13"
+  replicate_id: "8"
+plots_367: 
+  name: G9R1S310
+  id: "367"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_177: 
+  name: G2R5S110
+  id: "177"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_368: 
+  name: G9R1S325
+  id: "368"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "7"
+plots_178: 
+  name: G2R5S125
+  id: "178"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_369: 
+  name: G9R2S110
+  id: "369"
+  study_id: "2"
+  treatment_id: "21"
+  replicate_id: "8"
+plots_179: 
+  name: G2R5S210
+  id: "179"
+  study_id: "2"
+  treatment_id: "14"
+  replicate_id: "11"
+plots_040: 
+  name: T7R4
+  id: "40"
   study_id: "1"
-  treatment_id: "8"
+  treatment_id: "7"
+  replicate_id: "4"
+plots_420: 
+  name: G10R5S225
+  id: "420"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_230: 
+  name: G4R3S325
+  id: "230"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "9"
+plots_421: 
+  name: G10R5S310
+  id: "421"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_231: 
+  name: G4R4S110
+  id: "231"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "10"
+plots_041: 
+  name: T7R5
+  id: "41"
+  study_id: "1"
+  treatment_id: "7"
   replicate_id: "5"
-plots_102: 
-  name: G6R5
-  id: "102"
+plots_422: 
+  name: G10R5S325
+  id: "422"
+  study_id: "2"
+  treatment_id: "22"
+  replicate_id: "11"
+plots_280: 
+  name: G6R2S125
+  id: "280"
   study_id: "2"
   treatment_id: "18"
-  replicate_id: "11"
-plots_076: 
-  name: G1R4
-  id: "76"
+  replicate_id: "8"
+plots_090: 
+  name: G4R3
+  id: "90"
   study_id: "2"
-  treatment_id: "13"
+  treatment_id: "16"
+  replicate_id: "9"
+plots_232: 
+  name: G4R4S125
+  id: "232"
+  study_id: "2"
+  treatment_id: "16"
   replicate_id: "10"
-plots_048: 
-  name: T8R6
-  id: "48"
+plots_042: 
+  name: T7R6
+  id: "42"
+  study_id: "1"
+  treatment_id: "7"
+  replicate_id: "6"
+plots_281: 
+  name: G6R2S210
+  id: "281"
+  study_id: "2"
+  treatment_id: "18"
+  replicate_id: "8"
+plots_091: 
+  name: G4R4
+  id: "91"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "10"
+plots_233: 
+  name: G4R4S210
+  id: "233"
+  study_id: "2"
+  treatment_id: "16"
+  replicate_id: "10"
+plots_043: 
+  name: T8R1
+  id: "43"
   study_id: "1"
   treatment_id: "8"
-  replicate_id: "6"
-plots_103: 
-  name: G7R1
-  id: "103"
-  study_id: "2"
-  treatment_id: "19"
-  replicate_id: "7"
-plots_077: 
-  name: G1R5
-  id: "77"
-  study_id: "2"
-  treatment_id: "13"
-  replicate_id: "11"
-plots_049: 
-  name: TDFR1
-  id: "49"
-  study_id: "1"
-  treatment_id: "9"
   replicate_id: "1"
-plots_104: 
-  name: G7R2
-  id: "104"
-  study_id: "2"
-  treatment_id: "19"
-  replicate_id: "8"
-plots_078: 
-  name: G2R1
-  id: "78"
-  study_id: "2"
-  treatment_id: "14"
-  replicate_id: "7"
-plots_105: 
-  name: G7R3
-  id: "105"
-  study_id: "2"
-  treatment_id: "19"
-  replicate_id: "9"
-plots_020: 
-  name: T4R2
-  id: "20"
-  study_id: "1"
-  treatment_id: "4"
-  replicate_id: "2"
-plots_079: 
-  name: G2R2
-  id: "79"
-  study_id: "2"
-  treatment_id: "14"
-  replicate_id: "8"
-plots_106: 
-  name: G7R4
-  id: "106"
-  study_id: "2"
-  treatment_id: "19"
-  replicate_id: "10"
-plots_021: 
-  name: T4R3
-  id: "21"
-  study_id: "1"
-  treatment_id: "4"
-  replicate_id: "3"
-plots_107: 
-  name: G7R5
-  id: "107"
-  study_id: "2"
-  treatment_id: "19"
-  replicate_id: "11"
-plots_050: 
-  name: TDFR2
-  id: "50"
-  study_id: "1"
-  treatment_id: "9"
-  replicate_id: "2"
-plots_108: 
-  name: G8R1
-  id: "108"
-  study_id: "2"
-  treatment_id: "20"
-  replicate_id: "7"
-plots_051: 
-  name: TDFR3
-  id: "51"
-  study_id: "1"
-  treatment_id: "9"
-  replicate_id: "3"
-plots_022: 
-  name: T4R4
-  id: "22"
-  study_id: "1"
-  treatment_id: "4"
-  replicate_id: "4"
-plots_080: 
-  name: G2R3
-  id: "80"
-  study_id: "2"
-  treatment_id: "14"
-  replicate_id: "9"
-plots_109: 
-  name: G8R2
-  id: "109"
-  study_id: "2"
-  treatment_id: "20"
-  replicate_id: "8"
-plots_023: 
-  name: T4R5
-  id: "23"
-  study_id: "1"
-  treatment_id: "4"
-  replicate_id: "5"
-plots_081: 
-  name: G2R4
-  id: "81"
-  study_id: "2"
-  treatment_id: "14"
-  replicate_id: "10"
-plots_052: 
-  name: TDFR4
-  id: "52"
-  study_id: "1"
-  treatment_id: "9"
-  replicate_id: "4"
-plots_024: 
-  name: T4R6
-  id: "24"
-  study_id: "1"
-  treatment_id: "4"
-  replicate_id: "6"
-plots_082: 
-  name: G2R5
-  id: "82"
-  study_id: "2"
-  treatment_id: "14"
-  replicate_id: "11"
-plots_053: 
-  name: TDFR5
-  id: "53"
-  study_id: "1"
-  treatment_id: "9"
-  replicate_id: "5"
-plots_025: 
-  name: T5R1
-  id: "25"
-  study_id: "1"
-  treatment_id: "5"
-  replicate_id: "1"
-plots_083: 
-  name: G3R1
-  id: "83"
-  study_id: "2"
-  treatment_id: "15"
-  replicate_id: "7"
-plots_054: 
-  name: TDFR6
-  id: "54"
-  study_id: "1"
-  treatment_id: "9"
-  replicate_id: "6"
-plots_026: 
-  name: T5R2
-  id: "26"
-  study_id: "1"
-  treatment_id: "5"
-  replicate_id: "2"
-plots_084: 
-  name: G3R2
-  id: "84"
-  study_id: "2"
-  treatment_id: "15"
-  replicate_id: "8"
-plots_055: 
-  name: TSFR1
-  id: "55"
-  study_id: "1"
-  treatment_id: "10"
-  replicate_id: "1"
-plots_110: 
-  name: G8R3
-  id: "110"
-  study_id: "2"
-  treatment_id: "20"
-  replicate_id: "9"
-plots_027: 
-  name: T5R3
-  id: "27"
-  study_id: "1"
-  treatment_id: "5"
-  replicate_id: "3"
-plots_056: 
-  name: TSFR2
-  id: "56"
-  study_id: "1"
-  treatment_id: "10"
-  replicate_id: "2"
-plots_111: 
-  name: G8R4
-  id: "111"
-  study_id: "2"
-  treatment_id: "20"
-  replicate_id: "10"
-plots_028: 
-  name: T5R4
-  id: "28"
-  study_id: "1"
-  treatment_id: "5"
-  replicate_id: "4"
-plots_057: 
-  name: TSFR3
-  id: "57"
-  study_id: "1"
-  treatment_id: "10"
-  replicate_id: "3"
-plots_112: 
-  name: G8R5
-  id: "112"
-  study_id: "2"
-  treatment_id: "20"
-  replicate_id: "11"
-plots_029: 
-  name: T5R5
-  id: "29"
-  study_id: "1"
-  treatment_id: "5"
-  replicate_id: "5"
-plots_085: 
-  name: G3R3
-  id: "85"
-  study_id: "2"
-  treatment_id: "15"
-  replicate_id: "9"
-plots_058: 
-  name: TSFR4
-  id: "58"
-  study_id: "1"
-  treatment_id: "10"
-  replicate_id: "4"
-plots_113: 
-  name: G9R1
-  id: "113"
-  study_id: "2"
-  treatment_id: "21"
-  replicate_id: "7"
-plots_086: 
-  name: G3R4
-  id: "86"
-  study_id: "2"
-  treatment_id: "15"
-  replicate_id: "10"
-plots_059: 
-  name: TSFR5
-  id: "59"
-  study_id: "1"
-  treatment_id: "10"
-  replicate_id: "5"
-plots_114: 
-  name: G9R2
-  id: "114"
-  study_id: "2"
-  treatment_id: "21"
-  replicate_id: "8"
-plots_087: 
-  name: G3R5
-  id: "87"
-  study_id: "2"
-  treatment_id: "15"
-  replicate_id: "11"
-plots_115: 
-  name: G9R3
-  id: "115"
-  study_id: "2"
-  treatment_id: "21"
-  replicate_id: "9"
-plots_088: 
-  name: G4R1
-  id: "88"
-  study_id: "2"
-  treatment_id: "16"
-  replicate_id: "7"
-plots_001: 
-  name: T1R1
-  id: "1"
-  study_id: "1"
-  treatment_id: "1"
-  replicate_id: "1"
-plots_116: 
-  name: G9R4
-  id: "116"
-  study_id: "2"
-  treatment_id: "21"
-  replicate_id: "10"
-plots_030: 
-  name: T5R6
-  id: "30"
-  study_id: "1"
-  treatment_id: "5"
-  replicate_id: "6"
-plots_089: 
-  name: G4R2
-  id: "89"
-  study_id: "2"
-  treatment_id: "16"
-  replicate_id: "8"
-plots_002: 
-  name: T1R2
-  id: "2"
-  study_id: "1"
-  treatment_id: "1"
-  replicate_id: "2"
-plots_117: 
-  name: G9R5
-  id: "117"
-  study_id: "2"
-  treatment_id: "21"
-  replicate_id: "11"
-plots_060: 
-  name: TSFR6
-  id: "60"
-  study_id: "1"
-  treatment_id: "10"
-  replicate_id: "6"
-plots_031: 
-  name: T6R1
-  id: "31"
-  study_id: "1"
-  treatment_id: "6"
-  replicate_id: "1"
-plots_003: 
-  name: T1R3
-  id: "3"
-  study_id: "1"
-  treatment_id: "1"
-  replicate_id: "3"

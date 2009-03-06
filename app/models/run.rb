@@ -22,11 +22,10 @@ class Run < ActiveRecord::Base
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
       data = file_data.read 
-      sample_type = SampleType.find(sample_type_id)
+      sample_type = SampleType.find(sample_type_id) 
       re = Regexp.new(sample_type.regular_expression)
       data.each do | line |
         next unless line =~ re
-        
         # find plot
   #      plot = Plot.find_by_treatment_and_replicate('T'+$1, 'R'+$2)
 
@@ -34,22 +33,25 @@ class Run < ActiveRecord::Base
 
         plot =  nil
         s_date = nil
-        if sample_type_id == 1  # Lysimeter
+        case sample_type_id
+        when 1: #lysimeter
           plot = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
           s_date = $4
-        elsif sample_type_id == 2  # LTER Soil sample
+        when 2: # LTER Soil sample
           plot = Plot.find_by_name("T#{$1}R#{$2}")
           s_date = sample_date
-        elsif sample_type_id == 3
+        when 3:
           plot = Plot.find_by_name("G#{$1}R#{$2}")
           s_date = sample_date
-        elsif sample_type_id == 4 # GLBRC Deep
-          raise "not implemented"
-        elsif sample_type_id == 5 # GLBRC Resin Strips
+        when 4: # GLBRC Deep
+          plot = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
+          s_date = sample_date
+        when 5: # GLBRC Resin Strips
           raise "not implemented"
         else
           raise "not implemented"
         end       
+
         # find sample
         sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
 
@@ -67,7 +69,7 @@ class Run < ActiveRecord::Base
         no3 = Measurement.new
 
         no3.analyte = analyte_no3
-        if sample_type_id == 1
+        if sample_type_id == 1 || sample_type_id == 4
           no3.amount = $6
         elsif sample_type_id == 2 || sample_type_id == 3
           no3.amount = $5
@@ -81,7 +83,7 @@ class Run < ActiveRecord::Base
         nh4 = Measurement.new
         nh4.analyte = analyte_nh4
 
-        if sample_type_id == 1
+        if sample_type_id == 1 || sample_type_id == 4
           nh4.amount = $5
         elsif sample_type_id == 2 || sample_type_id == 3
           nh4.amount = $4

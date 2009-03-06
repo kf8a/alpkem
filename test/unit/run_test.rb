@@ -100,4 +100,19 @@ class RunTest < Test::Unit::TestCase
    
      assert_equal old_measurements + 8, sample.measurements.count
   end
+  
+  def test_glbrc_file_load
+    old_runs = Run.count
+    file_name = File.dirname(__FILE__) + '/../data/1106R4R5.TXT'
+    File.open(file_name,'r') do |f|
+      s = StringIO.new(f.read)
+      r = Run.new
+      r.sample_date = Date.today.to_s
+      r.sample_type = SampleType.find(4)
+      r.load(s,4)
+      assert r.save
+      assert r.samples.size > 1
+    end
+    assert_equal old_runs + 1, Run.count
+  end
 end

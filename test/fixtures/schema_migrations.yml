@@ -9,6 +9,8 @@ schema_migrations_012:
   version: "20090226192417"
 schema_migrations_001: 
   version: "20090226150345"
+schema_migrations_013: 
+  version: "20090306180139"
 schema_migrations_002: 
   version: "20090226171038"
 schema_migrations_003: 
