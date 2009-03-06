@@ -10,9 +10,6 @@
 [submodule "vendor/plugins/factory_girl"]
 	path = vendor/plugins/factory_girl
 	url = git://github.com/thoughtbot/factory_girl.git
-[submodule "vendor/plugins/quietbacktrace"]
-	path = vendor/plugins/quietbacktrace
-	url = git://github.com/thoughtbot/quietbacktrace.git
 [submodule "vendor/plugins/rr"]
 	path = vendor/plugins/rr
 	url = git://github.com/btakita/rr.git
