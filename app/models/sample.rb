@@ -3,7 +3,7 @@ require 'statistics'
 class Sample < ActiveRecord::Base
   belongs_to :plot
   belongs_to :sample_type
-  has_many :measurements
+  has_many :measurements, :order => 'id'
   
   def measurements_by_analyte_name(analyte_name)
     analyte = Analyte.find_by_name(:first, analyte_name)

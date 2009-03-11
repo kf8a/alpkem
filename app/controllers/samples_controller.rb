@@ -2,7 +2,7 @@ require 'fastercsv'
 
 class SamplesController < ApplicationController
   
-  before_filter :require_user
+  before_filter :require_user unless ::RAILS_ENV == 'development'
   # GET /samples
   # GET /samples.xml
   def index
