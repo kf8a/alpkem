@@ -1,10 +1,10 @@
 <tr class="<%= cycle("even", "odd") -%>">
 	<td><%= sample.plot.name %></td>
 	<td><%= sample.sample_date %></td>
+	<%= render :partial => 'analyte', 
+		:locals => {:sample => sample, :analyte => nh4} %>
 		<%= render :partial => 'analyte', 
 			:locals => {:sample => sample, :analyte => no3} %>
-		<%= render :partial => 'analyte', 
-			:locals => {:sample => sample, :analyte => nh4} %>
 		<tr>
 			<td>approved:</td>
 			<% @sample = sample %>
