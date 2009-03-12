@@ -40,14 +40,15 @@ class Run < ActiveRecord::Base
         when 2: # LTER Soil sample
           plot = Plot.find_by_name("T#{$1}R#{$2}")
           s_date = sample_date
-        when 3:
+        when 3: # GLBRC Soil
           plot = Plot.find_by_name("G#{$1}R#{$2}")
           s_date = sample_date
         when 4: # GLBRC Deep
           plot = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
           s_date = sample_date
         when 5: # GLBRC Resin Strips
-          raise "not implemented"
+          plot = Plot.find_by_name("G#{$1}R#{$2}")
+          s_date = sample_date
         else
           raise "not implemented"
         end       
@@ -71,7 +72,7 @@ class Run < ActiveRecord::Base
         no3.analyte = analyte_no3
         if sample_type_id == 1 || sample_type_id == 4
           no3.amount = $6
-        elsif sample_type_id == 2 || sample_type_id == 3
+        elsif sample_type_id == 2 || sample_type_id == 3 || sample_type_id == 5
           no3.amount = $5
         else
           raise "not implemented"
@@ -85,7 +86,7 @@ class Run < ActiveRecord::Base
 
         if sample_type_id == 1 || sample_type_id == 4
           nh4.amount = $5
-        elsif sample_type_id == 2 || sample_type_id == 3
+        elsif sample_type_id == 2 || sample_type_id == 3 || sample_type_id == 5
           nh4.amount = $4
         else
           raise "not implemented"
