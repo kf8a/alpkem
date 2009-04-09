@@ -3,7 +3,8 @@ require 'statistics'
 class Sample < ActiveRecord::Base
   belongs_to :plot
   belongs_to :sample_type
-  has_many :measurements, :order => 'run_id, id'
+  has_many :measurements, :class_name => 'Measurement', 
+    :finder_sql  => 'select measurements.*, runs.run_date from measurements, runs where sample_id = #{id} and measurements.run_id = runs.id order by runs.run_date, measurements.id'
   
   def measurements_by_analyte_name(analyte_name)
     analyte = Analyte.find_by_name(:first, analyte_name)
