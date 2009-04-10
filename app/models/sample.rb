@@ -3,8 +3,10 @@ require 'statistics'
 class Sample < ActiveRecord::Base
   belongs_to :plot
   belongs_to :sample_type
-  has_many :measurements, :class_name => 'Measurement', 
-    :finder_sql  => 'select measurements.*, runs.run_date from measurements, runs where sample_id = #{id} and measurements.run_id = runs.id order by runs.run_date, measurements.id'
+
+  has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
+  
+  has_many :runs, :through => :measurements, :order => 'run_date'
   
   def measurements_by_analyte_name(analyte_name)
     analyte = Analyte.find_by_name(:first, analyte_name)
@@ -12,7 +14,7 @@ class Sample < ActiveRecord::Base
   end
   
   def measurements_by_analyte(analyte)
-    raise ArgumentError unless analyte.class == Analyte
+    raise ArgumentError unless analyte.class == Analyte   
     measurements.find(:all, :conditions => [%q{analyte_id = ?}, analyte.id])
   end
   
