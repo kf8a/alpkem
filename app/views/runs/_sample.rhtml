@@ -1,13 +1,7 @@
-<tr class="<%= cycle("even", "odd") -%>" id="sample_<%= sample.id%>">
-	<td><%= sample.plot.name %></td>
-	<td><%= sample.sample_date %></td>
-	<%= render :partial => 'analyte', 
-		:locals => {:sample => sample, :analyte => nh4} %>
-		<%= render :partial => 'analyte', 
-			:locals => {:sample => sample, :analyte => no3} %>
-		</tr>
-		<tr>
+<%= render :partial => 'sample_data', :locals => {:sample => sample, :no3 => @no3, :nh4 => @nh4}%>
+<tr>
 			<td>approved:</td>
 			<% @sample = sample %>
 			<td><%= check_box 'sample', 'approved', { :onclick=>remote_function(:url => {:action => 'approve', :id => sample})}%></td>
-		</tr>
+</tr>
+

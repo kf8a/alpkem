@@ -38,7 +38,7 @@ class RunsController < ApplicationController
   # GET /runs/1/edit
   def edit
     @run = Run.find(params[:id])
-    @samples = @run.samples 
+    @samples = @run.samples    
     @nh4 = Analyte.find_by_name('NH4')
     @no3 = Analyte.find_by_name('NO3')
   end
@@ -94,6 +94,23 @@ class RunsController < ApplicationController
     sample = Sample.find(params[:id])
     sample.toggle(:approved)
     sample.save
-    render :nothing => true
+    
+    dom_id = "sample_#{sample.id}"
+    nh4 = Analyte.find_by_name('NH4')
+    no3 = Analyte.find_by_name('NO3')
+    
+    
+    respond_to do |format|
+      format.js do 
+        render :update do |page|
+          page.replace dom_id,
+          :partial => 'runs/sample_data', 
+          :locals => {:sample => sample, :no3 => no3, :nh4 => nh4}
+          page.visual_effect :highlight,  dom_id, :duration => 1
+        end
+      end
+      format.html { render :nothing => true }
+      format.xml { head :ok }
+    end
   end
 end
