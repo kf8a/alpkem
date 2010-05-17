@@ -7,12 +7,13 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
- config.gem 'ruby-openid', :lib => 'openid'
- config.gem 'RedCloth'
- config.gem 'authlogic',    :source => 'http://gems.github.com'   #, :version => '1.4.3'
- config.gem "authlogic-oid", :lib => "authlogic_openid", :source => 'http://gems.github.com'  
- config.gem 'mislav-will_paginate',  :lib => 'will_paginate', 
-     :source => 'http://gems.github.com'  
+  config.gem 'ruby-openid', :lib => 'openid'
+
+  config.gem 'authlogic' 
+  config.gem "authlogic-oid", :lib => "authlogic_openid", :source => 'http://gems.github.com'  
+# config.gem 'mislav-will_paginate',  :lib => 'will_paginate', 
+#     :source => 'http://gems.github.com'  
+  config.gem 'RedCloth'
  
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

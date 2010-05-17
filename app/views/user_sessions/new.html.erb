@@ -1,7 +1,7 @@
 <h1>Login</h1>
 
-<% form_for @user_session, :url => user_session_path do |f| %>
-  <%= debug f.error_messages%>
+<% form_for @user_session do |f| %>
+  <%= f.error_messages%>
   <p>
     <%= f.label :openid_identifier %><br />
     <%= f.text_field :openid_identifier %>

@@ -2,12 +2,12 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
+ # helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
-
+  before_filter :require_user, :except => [:index, :show]
   helper_method :current_user_session, :current_user
 
   private
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_session_url
+      redirect_to new_user_sessions_url
       return false
     end
   end

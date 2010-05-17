@@ -9,6 +9,7 @@ class UserSessionsController < ApplicationController
 
   def create
     @user_session = UserSession.new(params[:user_session])
+    logger.info @user_session
     @user_session.save do |result |
       if result
         flash[:notice] = "Login successful!"
@@ -22,7 +23,7 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
-    redirect_back_or_default new_user_session_url
+    redirect_back_or_default new_user_sessions_url
   end
 
 end
