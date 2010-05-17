@@ -34,20 +34,23 @@ class Run < ActiveRecord::Base
         plot =  nil
         s_date = nil
         case sample_type_id
-        when 1: #lysimeter
+        when 1 #lysimeter
           plot = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
           s_date = $4
-        when 2: # LTER Soil sample
+        when 2 # LTER Soil sample
           plot = Plot.find_by_name("T#{$1}R#{$2}")
           s_date = sample_date
-        when 3: # GLBRC Soil
+        when 3 # GLBRC Soil
           plot = Plot.find_by_name("G#{$1}R#{$2}")
           s_date = sample_date
-        when 4: # GLBRC Deep
+        when 4 # GLBRC Deep
           plot = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
           s_date = sample_date
-        when 5: # GLBRC Resin Strips
+        when 5 # GLBRC Resin Strips
           plot = Plot.find_by_name("G#{$1}R#{$2}")
+          s_date = sample_date
+        when 6 
+          plot = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
           s_date = sample_date
         else
           raise "not implemented"

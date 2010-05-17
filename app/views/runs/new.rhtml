@@ -6,6 +6,10 @@
 	<%= f.date_select :sample_date %>
 </p>
 <p>
+	<label for='run_sample_start_date'>Start Date (for incubations)</label>
+	<%= f.date_select :start_date %>
+</p>
+<p>
 	<label  for='run_run_date'>Run Date</label>
 	<%= f.date_select :run_date %>
 </p>
@@ -13,6 +17,7 @@
 	<label for='run_sample_type_id'>Sample Type</label>
 	<%= f.select :sample_type_id, SampleType.find(:all).map{|x| [x.name, x.id]} %>
 </p>
+
 <p>
 	<label for="run_file">File</label>
 	<%= file_field :data, 'file' %>
