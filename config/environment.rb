@@ -11,8 +11,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'authlogic' 
   config.gem "authlogic-oid", :lib => "authlogic_openid", :source => 'http://gems.github.com'  
-# config.gem 'mislav-will_paginate',  :lib => 'will_paginate', 
-#     :source => 'http://gems.github.com'  
+ config.gem 'mislav-will_paginate',  :lib => 'will_paginate', 
+     :source => 'http://gems.github.com'  
   config.gem 'RedCloth'
  
   # Only load the plugins named here, in the order given (default is alphabetical).
