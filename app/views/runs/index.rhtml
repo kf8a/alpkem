@@ -1,7 +1,7 @@
 <h1>Runs</h1>
 <ul>
 	<% @runs.each do |run| %>
-		<li>
+		<li class="updated_<%=run.updated? %>">
 		<%= run.id %>
 		<%= run.run_date %> <%= run.sample_type.name %> <%= run.samples.size %> samples
 		<%= link_to "qc", edit_run_path(run) %>

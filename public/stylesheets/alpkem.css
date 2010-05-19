@@ -30,3 +30,7 @@ a.deleted_true:hover {
 ul {
 	list-style-type: none;
 }
+
+.updated_true {
+	color: silver;
+}

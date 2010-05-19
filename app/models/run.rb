@@ -15,6 +15,10 @@ class Run < ActiveRecord::Base
     def samples
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
     end
+    
+    def updated?
+      samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
+    end
 
 
     def load(file_data, sample_type_id=2)
