@@ -1,6 +1,6 @@
 class RunsController < ApplicationController
   
-  before_filter :require_user # unless ::RAILS_ENV == 'development'
+  before_filter :require_user unless ::RAILS_ENV == 'development'
   
   # GET /runs
   # GET /runs.xml
