@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_filter :require_user unless ::RAILS_ENV == 'development'
+  before_filter :require_user if ::RAILS_ENV == 'production'
   
   def destroy
     m = Measurement.find(params[:id])
