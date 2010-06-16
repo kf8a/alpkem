@@ -36,7 +36,7 @@ class RunTest < Test::Unit::TestCase
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     assert_not_nil sample
-    assert_valid sample
+    assert_valid(sample)
     no3 = Analyte.find_by_name('NO3')
     nh4 = Analyte.find_by_name('NH4')
     assert_equal 0.053056531, sample.measurements_by_analyte(no3)[0].amount
