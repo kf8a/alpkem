@@ -3,6 +3,7 @@ class MeasurementsController < ApplicationController
   
   def destroy
     m = Measurement.find(params[:id])
+    p 'in'
     m.toggle!(:deleted)
     sample = m.sample
     dom_id = "sample_#{sample.id}_#{m.analyte.id}"
