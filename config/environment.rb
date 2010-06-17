@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
  config.gem 'mislav-will_paginate',  :lib => 'will_paginate', 
      :source => 'http://gems.github.com'  
   config.gem 'RedCloth'
+  #config.gem 'fastercsv' if RUBY_VERSION < '1.9'
  
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

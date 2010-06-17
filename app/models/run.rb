@@ -21,11 +21,11 @@ class Run < ActiveRecord::Base
     end
 
 
-    def load(file_data, sample_type_id=2)
-      return if file_data.size == 0
+    def load(data, sample_type_id=2)
+      return if data.size == 0
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
-      data = file_data.read 
+
       sample_type = SampleType.find(sample_type_id) 
       re = Regexp.new(sample_type.regular_expression)
       data.each do | line |

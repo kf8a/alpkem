@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class RunsControllerTest < ActionController::TestCase
+  
+  def setup
+    4.times {Factory.create :run}
+    @run = Factory.create :run
+  end
+    
   test "should get index" do
     get :index
     assert_response :success
@@ -13,33 +19,35 @@ class RunsControllerTest < ActionController::TestCase
   end
 
   test "should create run" do
-    assert_difference('Run.count') do
-      post :create, :run => { }
-    end
-
-    assert_redirected_to run_path(assigns(:run))
+    old_count = Run.count
+    post :create, :run => {:sample_date => Date.today, :sample_type_id => 1}
+    
+    assert old_count + 1, Run.count
+    assert assigns(:run)
+    assert_redirected_to run_path(:run)
   end
 
   test "should show run" do
-    get :show, :id => runs(:one).id
+    get :show, :id => @run.id
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => runs(:one).id
+    get :edit, :id => @run.id
     assert_response :success
   end
 
   test "should update run" do
-    put :update, :id => runs(:one).id, :run => { }
-    assert_redirected_to run_path(assigns(:run))
+    put :update, :id => @run.id
+    assert assigns(@run)
+    assert_redirected_to run_path(@run)
   end
 
   test "should destroy run" do
-    assert_difference('Run.count', -1) do
-      delete :destroy, :id => runs(:one).id
-    end
-
+    old_count = Run.count
+    delete :destroy, :id => @run.id
+    
+    assert old_count -1, Run.count
     assert_redirected_to runs_path
   end
 end

@@ -35,4 +35,27 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+    
+  Factory.define :run do  |r|
+    r.run_date          Date.today
+    r.sample_date       Date.today
+    r.sample_type_id    1
+  end
+  
+  Factory.define :user do |u|
+  end
+  
+  Factory.define :sample do |s|
+    s.sample_type_id  1
+    s.plot_id         1
+    s.sample_date     Date.today
+  end
+  
+  Factory.define :measurement do |m|
+    m.run_id          1
+    m.sample          Factory.create :sample       
+    m.analyte_id      1
+    m.amount          0.5
+  end
+  
 end

@@ -1,8 +1,9 @@
 class MeasurementsController < ApplicationController
-  before_filter :require_user unless ::RAILS_ENV == 'development'
+  before_filter :require_user if ::RAILS_ENV == 'production'
   
   def destroy
     m = Measurement.find(params[:id])
+    p 'in'
     m.toggle!(:deleted)
     sample = m.sample
     dom_id = "sample_#{sample.id}_#{m.analyte.id}"

@@ -4,11 +4,16 @@ require 'date'
 
 class RunTest < Test::Unit::TestCase
 
+  def teardown
+    Run.all.each {|r| r.destroy}
+  end
+  
   def test_presence_of_sample_type
     r = Run.new
     assert !r.save
     r.sample_type = SampleType.find(:first)
     assert r.save
+    r.destroy
   end
   
   def test_with_date
@@ -16,10 +21,11 @@ class RunTest < Test::Unit::TestCase
     r.sample_date = Date.today.to_s
     r.sample_type = SampleType.find_by_id(1)
     assert r.save
+    r.destroy
   end
 
   def test_file_load
-    assert_equal 0, Run.count
+    initial_run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/test.TXT'
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
@@ -31,7 +37,7 @@ class RunTest < Test::Unit::TestCase
       assert r.samples.size > 1
     end
 
-    assert_equal 1, Run.count
+    assert_equal initial_run_count + 1, Run.count
     
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
