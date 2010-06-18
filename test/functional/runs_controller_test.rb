@@ -20,11 +20,12 @@ class RunsControllerTest < ActionController::TestCase
 
   test "should create run" do
     old_count = Run.count
-    post :create, :run => {:sample_date => Date.today, :sample_type_id => 1}
-    
+    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
+    post :create, :run => {:sample_date => Date.today, :sample_type_id => 1}, :data => {:file => file_name}
+
     assert old_count + 1, Run.count
     assert assigns(:run)
-    assert_redirected_to run_path(:run)
+    assert_redirected_to run_path(assigns(:run))
   end
 
   test "should show run" do
