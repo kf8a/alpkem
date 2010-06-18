@@ -39,6 +39,7 @@ class RunsControllerTest < ActionController::TestCase
   end
 
   test "should update run" do
+    #Right now this test just tests whether the update action works at all, not whether it actually updates anything.
     put :update, :id => @run.id
     assert assigns(:run)
     assert_redirected_to run_path(@run)
