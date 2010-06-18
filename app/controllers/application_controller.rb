@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
-  before_filter :require_user, :except => [:index, :show]
+  before_filter :require_user, :except => [:index, :show] if ::RAILS_ENV == 'production'
   helper_method :current_user_session, :current_user
 
   private

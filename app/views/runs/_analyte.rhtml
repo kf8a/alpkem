@@ -18,7 +18,7 @@
 		<% end %>
 		<tr>
 			<td>Mean:</td>	
-			<td><%= number_with_precision(sample.average(analyte),4) %></td>
+			<td><%= number_with_precision(sample.average(analyte), :precision => 4) %></td>
 		</tr>
 		<tr>
 			<td>CV:</td>
