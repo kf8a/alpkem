@@ -40,7 +40,7 @@ class RunsControllerTest < ActionController::TestCase
 
   test "should update run" do
     put :update, :id => @run.id
-    assert assigns(@run)
+    assert assigns(:run)
     assert_redirected_to run_path(@run)
   end
 
