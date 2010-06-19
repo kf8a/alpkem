@@ -14,3 +14,11 @@ Feature: Manage runs
     Given I am on the new run page
     When I press "Upload"
     Then I should see "Run was not uploaded"
+    
+  Scenario: Upload actual data
+    Given I am on the new run page
+    When I select "Soil Sample" from "Sample Type"
+      And I attach the test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+
