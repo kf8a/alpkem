@@ -20,8 +20,9 @@ class RunsControllerTest < ActionController::TestCase
 
   test "should create run" do
     old_count = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
-    post :create, :run => {:sample_date => Date.today, :sample_type_id => 1}, :data => {:file => file_name}
+    file_name = '/../data/test.TXT'
+    
+    post :create, :run => {:sample_date => Date.today, :sample_type_id => 1}, :data => {:file => fixture_file_upload(file_name)}
 
     assert old_count + 1, Run.count
     assert assigns(:run)
