@@ -47,10 +47,11 @@ class RunsController < ApplicationController
   # POST /runs.xml
   def create
     @run = Run.new(params[:run])
-
+    file = params[:data][:file]
+    file_contents = StringIO.new(file.read)
     respond_to do |format|
       if @run.save
-        @run.load(params[:data][:file],@run.sample_type_id)
+        @run.load(file_contents, @run.sample_type_id)
         flash[:notice] = 'Run was successfully uploaded.'
         format.html { redirect_to(@run) }
         format.xml  { render :xml => @run, :status => :created, :location => @run }
