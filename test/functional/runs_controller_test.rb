@@ -22,11 +22,30 @@ class RunsControllerTest < ActionController::TestCase
     old_count = Run.count
     file_name = '/../data/test.TXT'
     
-    post :create, :run => {:sample_date => Date.today, :sample_type_id => 2}, :data => {:file => fixture_file_upload(file_name)}
+    post :create, :run => {:sample_date => Date.today, :sample_type_id => 2},
+                  :data => {:file => fixture_file_upload(file_name)}
 
     assert old_count + 1, Run.count
+    
+    plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
+    sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
+    assert_not_nil sample
+    assert sample.valid?
+    no3 = Analyte.find_by_name('NO3')
+    nh4 = Analyte.find_by_name('NH4')
+    assert_equal 0.053056531, sample.measurements_by_analyte(no3)[0].amount
+    assert_equal 0.295276523, sample.measurements_by_analyte(nh4)[0].amount
+    
     assert assigns(:run)
     assert_redirected_to run_path(assigns(:run))
+  end
+  
+  test "should not create run with invalid sample type" do
+    assert_no_difference 'Run.count' do
+      file_name = '/../data/test.TXT'
+      post :create, :run => {:sample_date => Date.today, :sample_type_id => 1},
+                    :data => {:file => fixture_file_upload(file_name)}
+    end
   end
 
   test "should show run" do
@@ -40,6 +59,7 @@ class RunsControllerTest < ActionController::TestCase
   end
 
   test "should update run" do
+    #Right now this test just tests whether the update action works at all, not whether it actually updates anything.
     put :update, :id => @run.id
     assert assigns(:run)
     assert_redirected_to run_path(@run)
