@@ -52,4 +52,8 @@ class RunsControllerTest < ActionController::TestCase
     assert old_count -1, Run.count
     assert_redirected_to runs_path
   end
+  
+  context 'creating runs' do
+    should 'throw an itelligent error message when uploading a file with the wrong sample_type'
+  end
 end
