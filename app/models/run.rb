@@ -59,7 +59,10 @@ class Run < ActiveRecord::Base
         else
           raise "not implemented"
         end       
-
+        
+        #TODO better reporting if we can't parse
+        raise 'not parsable' unless plot
+        
         # find sample
         sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
 
