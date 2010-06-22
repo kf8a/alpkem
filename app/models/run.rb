@@ -1,6 +1,5 @@
 class Run < ActiveRecord::Base
     has_many :measurements, :dependent => :destroy
-#    belongs_to :sample_type
 
     validates_presence_of :sample_type_id
 
@@ -43,22 +42,15 @@ class Run < ActiveRecord::Base
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
 
-#      sample_type = SampleType.find(sample_type_id) 
-#      re = Regexp.new(sample_type.regular_expression)
       if sample_type_id == 1
-        sample_type_name = "Lysimeter"
         re = Regexp.new(LYSIMETER)
       elsif sample_type_id == 2
-        sample_type = "Soil Sample"
         re = Regexp.new(SOIL_SAMPLE)
       elsif sample_type_id == 3
-        sample_type_name = "GLBRC Soil Sample"
         re = Regexp.new(GLBRC_SOIL_SAMPLE)
       elsif sample_type_id == 4
-        sample_type_name = "GLBRC Deep Core"
         re = Regexp.new(GLBRC_DEEP_CORE)
       else
-        sample_type_name = "Unnamed Sample Type"
         re = Regexp.new("")
       end
       data.each do | line |
