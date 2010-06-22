@@ -28,6 +28,8 @@ class RunsController < ApplicationController
   # GET /runs/new.xml
   def new
     @run = Run.new
+
+    #TODO: Sample_type_options has to be manually edited each time a new type is added. It could be refactored to eliminate this problem.
     @sample_type_options = [[@run.sample_type_name(1), "1"],[@run.sample_type_name(2), "2"],[@run.sample_type_name(3), "3"],[@run.sample_type_name(4), "4"]]
 
     respond_to do |format|
