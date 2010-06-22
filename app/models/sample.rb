@@ -2,7 +2,6 @@ require 'statistics'
 
 class Sample < ActiveRecord::Base
   belongs_to :plot
-#  belongs_to :sample_type
 
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
   
