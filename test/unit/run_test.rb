@@ -8,10 +8,10 @@ class RunTest < Test::Unit::TestCase
     Run.all.each {|r| r.destroy}
   end
   
-  def test_presence_of_sample_type
+  def test_requires_sample_type
     r = Run.new
     assert !r.save
-    r.sample_type = SampleType.find(:first)
+    r.sample_type_id = 1
     assert r.save
     r.destroy
   end
@@ -19,7 +19,7 @@ class RunTest < Test::Unit::TestCase
   def test_with_date
     r = Run.new
     r.sample_date = Date.today.to_s
-    r.sample_type = SampleType.find_by_id(1)
+    r.sample_type_id = 1
     assert r.save
     r.destroy
   end
@@ -31,7 +31,7 @@ class RunTest < Test::Unit::TestCase
       s = StringIO.new(f.read)
       r = Run.new
       r.sample_date = Date.today.to_s
-      r.sample_type = SampleType.find(2)
+      r.sample_type_id = 2
       r.load(s)
       assert r.save
       assert r.samples.size > 1
@@ -72,7 +72,7 @@ class RunTest < Test::Unit::TestCase
        s = StringIO.new(f.read)
        r = Run.new
        r.sample_date = Date.today.to_s
-       r.sample_type = SampleType.find(2)
+       r.sample_type_id = 2
        r.load(s)
        assert r.save
        assert r.samples.size > 1
@@ -93,7 +93,7 @@ class RunTest < Test::Unit::TestCase
        s = StringIO.new(f.read)
        r = Run.new
        r.sample_date = Date.today.to_s
-       r.sample_type = SampleType.find(2)
+       r.sample_type_id = 2
        r.load(s)
        assert r.save
        assert r.samples.size > 1
@@ -114,7 +114,7 @@ class RunTest < Test::Unit::TestCase
       s = StringIO.new(f.read)
       r = Run.new
       r.sample_date = Date.today.to_s
-      r.sample_type = SampleType.find(4)
+      r.sample_type_id = 4
       r.load(s,4)
       assert r.save
       assert r.samples.size > 1

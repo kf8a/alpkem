@@ -1,10 +1,10 @@
 class Run < ActiveRecord::Base
     has_many :measurements, :dependent => :destroy
-    belongs_to :sample_type
+#    belongs_to :sample_type
 
-    validates_presence_of :sample_type
+    validates_presence_of :sample_type_id
 
-    #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter
+    #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter a, b, c, A, B or C, then optionally "rerun", then
     SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     GLBRC_SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
@@ -19,6 +19,20 @@ class Run < ActiveRecord::Base
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
     end
     
+    def sample_type_name
+      if sample_type_id == 1
+        return "Lysimeter"
+      elsif sample_type_id == 2
+        return "Soil Sample"
+      elsif sample_type_id == 3
+        return "GLBRC Soil Sample"
+      elsif sample_type_id == 4
+        return "GLBRC Deep Core"
+      else
+        return "Unknown Sample Type"
+      end
+    end
+    
     def updated?
       samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
     end
@@ -29,17 +43,22 @@ class Run < ActiveRecord::Base
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
 
-      sample_type = SampleType.find(sample_type_id) 
+#      sample_type = SampleType.find(sample_type_id) 
 #      re = Regexp.new(sample_type.regular_expression)
       if sample_type_id == 1
+        sample_type_name = "Lysimeter"
         re = Regexp.new(LYSIMETER)
       elsif sample_type_id == 2
+        sample_type = "Soil Sample"
         re = Regexp.new(SOIL_SAMPLE)
       elsif sample_type_id == 3
+        sample_type_name = "GLBRC Soil Sample"
         re = Regexp.new(GLBRC_SOIL_SAMPLE)
       elsif sample_type_id == 4
+        sample_type_name = "GLBRC Deep Core"
         re = Regexp.new(GLBRC_DEEP_CORE)
       else
+        sample_type_name = "Unnamed Sample Type"
         re = Regexp.new("")
       end
       data.each do | line |
@@ -86,7 +105,7 @@ class Run < ActiveRecord::Base
           sample.sample_date = s_date
 
           sample.plot = plot
-          sample.sample_type = sample_type
+          sample.sample_type_id = sample_type_id
           sample.save
         end
 
