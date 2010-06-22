@@ -3,9 +3,12 @@ class Run < ActiveRecord::Base
     belongs_to :sample_type
 
     validates_presence_of :sample_type
-        
+
+    #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter
     SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    GLBRC_SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    GLBRC_DEEP_CORE = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 
     def measurements_by_analyte(analyte)
       raise ArgumentError unless analyte.class == Analyte
@@ -27,7 +30,18 @@ class Run < ActiveRecord::Base
       analyte_nh4 = Analyte.find_by_name('NH4')
 
       sample_type = SampleType.find(sample_type_id) 
-      re = Regexp.new(sample_type.regular_expression)
+#      re = Regexp.new(sample_type.regular_expression)
+      if sample_type_id == 1
+        re = Regexp.new(LYSIMETER)
+      elsif sample_type_id == 2
+        re = Regexp.new(SOIL_SAMPLE)
+      elsif sample_type_id == 3
+        re = Regexp.new(GLBRC_SOIL_SAMPLE)
+      elsif sample_type_id == 4
+        re = Regexp.new(GLBRC_DEEP_CORE)
+      else
+        re = Regexp.new("")
+      end
       data.each do | line |
         next unless line =~ re
         # find plot
