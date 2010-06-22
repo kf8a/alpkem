@@ -2,10 +2,11 @@ class Run < ActiveRecord::Base
     has_many :measurements, :dependent => :destroy
 
     validates_presence_of :sample_type_id
+    #validates_size_of     :data,  :minimum => 1
 
+    LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter a, b, c, A, B or C, then optionally "rerun", then
     SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-    LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     GLBRC_SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     GLBRC_DEEP_CORE = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 
@@ -86,7 +87,8 @@ class Run < ActiveRecord::Base
         end       
         
         #TODO better reporting if we can't parse
-        raise 'not parsable' unless plot
+        next unless plot
+        #raise 'not parsable' unless plot
         
         # find sample
         sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)

@@ -15,6 +15,19 @@ class RunTest < Test::Unit::TestCase
     assert r.save
     r.destroy
   end
+
+  def test_requires_nonempty_data
+    r = Run.new
+    assert !r.save
+    file_name = File.dirname(__FILE__) + '/../data/blank.txt'
+    File.open(file_name, 'r') do |f|
+      s = StringIO.new(f.read)
+      r.sample_date = Date.today.to_s
+      r.sample_type_id = 2
+      r.load(s)
+    end
+    assert !r.save
+  end
   
   def test_with_date
     r = Run.new
