@@ -15,7 +15,7 @@
 </p>
 <p>
 	<label for='run_sample_type_id'>Sample Type</label>
-	<%= f.select :sample_type_id, SampleType.find(:all).map{|x| [x.name, x.id]} %>
+	<%= f.select :sample_type_id, options_for_select(@sample_type_options) %>
 </p>
 
 <p>

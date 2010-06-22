@@ -18,14 +18,14 @@ class Run < ActiveRecord::Base
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
     end
     
-    def sample_type_name
-      if sample_type_id == 1
+    def sample_type_name(id=sample_type_id)
+      if id == 1
         return "Lysimeter"
-      elsif sample_type_id == 2
+      elsif id == 2
         return "Soil Sample"
-      elsif sample_type_id == 3
+      elsif id == 3
         return "GLBRC Soil Sample"
-      elsif sample_type_id == 4
+      elsif id == 4
         return "GLBRC Deep Core"
       else
         return "Unknown Sample Type"
