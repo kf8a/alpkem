@@ -4,6 +4,18 @@ require 'date'
 
 class RunTest < Test::Unit::TestCase
 
+  def setup
+    saveable_run = Run.new
+    saveable_run.sample_type_id = 2
+    saveable_run.sample_date = Date.today.to_s
+    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
+    File.open(file_name,'r') do |f|
+      s = StringIO.new(f.read)
+      saveable_run.load(s)
+    end
+
+  end
+
   def teardown
     Run.all.each {|r| r.destroy}
   end
