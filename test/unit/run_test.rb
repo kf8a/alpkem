@@ -57,7 +57,7 @@ class RunTest < Test::Unit::TestCase
 
   def test_file_load
     initial_run_count = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new

@@ -41,7 +41,7 @@ class RunsControllerTest < ActionController::TestCase
 
   test "should create run" do
     old_count = Run.count
-    file_name = '/../data/test.TXT'
+    file_name = '/../data/LTER_soil_test.TXT'
     
     post :create, :run => {:sample_date => Date.today, :sample_type_id => 2},
                   :data => {:file => fixture_file_upload(file_name)}
@@ -61,6 +61,14 @@ class RunsControllerTest < ActionController::TestCase
     assert_redirected_to run_path(assigns(:run))
   end
   
+  test "should not create run with invalid sample type" do
+    assert_no_difference 'Run.count' do
+      file_name = '/../data/LTER_soil_test.TXT'
+      post :create, :run => {:sample_date => Date.today, :sample_type_id => 1},
+                    :data => {:file => fixture_file_upload(file_name)}
+    end
+  end
+
   test "should show run" do
     get :show, :id => @run.id
     assert_response :success
