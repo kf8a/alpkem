@@ -9,7 +9,7 @@ class RunTest < Test::Unit::TestCase
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
-    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
     File.open(file_name, 'r') do |f|
       @good_data = StringIO.new(f.read)
     end
@@ -98,7 +98,7 @@ class RunTest < Test::Unit::TestCase
   
   def test_file_load_with_negatives
     old_runs = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/20040511.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new
@@ -119,7 +119,7 @@ class RunTest < Test::Unit::TestCase
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     
     old_measurements =  sample.measurements.count
-     file_name = File.dirname(__FILE__) + '/../data/20041102.TXT'
+     file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
      File.open(file_name,'r') do |f|
        s = StringIO.new(f.read)
        r = Run.new
@@ -140,7 +140,7 @@ class RunTest < Test::Unit::TestCase
   
   def test_glbrc_file_load
     old_runs = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/1106R4R5.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/GLBRC_deep_core_1106R4R5.TXT'
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new
