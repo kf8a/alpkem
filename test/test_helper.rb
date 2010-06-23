@@ -38,13 +38,14 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
     
-  Factory.define :run do  |r|
-    r.run_date          Date.today
-    r.sample_date       Date.today
-    r.sample_type_id    1
-  end
+  
   
   Factory.define :user do |u|
+  end
+
+  Factory.define :analyte do |a|
+    a.name  "NO3"
+    a.unit  "ppm"
   end
   
   Factory.define :sample do |s|
@@ -56,8 +57,14 @@ class ActiveSupport::TestCase
   Factory.define :measurement do |m|
     m.run_id          1
     m.sample          Factory.create :sample       
-    m.analyte_id      1
+    m.analyte         Factory.create :analyte
     m.amount          0.5
   end
-  
+
+  Factory.define :run do  |r|
+    r.run_date          Date.today
+    r.sample_date       Date.today
+    r.sample_type_id    1
+    r.association   :measurements, :factory => :measurement
+  end
 end

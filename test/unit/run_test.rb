@@ -5,48 +5,54 @@ require 'date'
 class RunTest < Test::Unit::TestCase
 
   def setup
-    saveable_run = Run.new
-    saveable_run.sample_type_id = 2
-    saveable_run.sample_date = Date.today.to_s
+    @attr = {
+      :sample_type_id => 2,
+      :sample_date    => Date.today.to_s
+    }
     file_name = File.dirname(__FILE__) + '/../data/test.TXT'
-    File.open(file_name,'r') do |f|
-      s = StringIO.new(f.read)
-      saveable_run.load(s)
+    File.open(file_name, 'r') do |f|
+      @good_data = StringIO.new(f.read)
     end
-
   end
 
   def teardown
     Run.all.each {|r| r.destroy}
   end
-  
-  def test_requires_sample_type
-    r = Run.new
-    assert !r.save
-    r.sample_type_id = 1
+
+  def test_saves_with_good_data
+    r = Run.new(@attr)
+    r.load(@good_data)
     assert r.save
-    r.destroy
+  end
+
+  def test_requires_sample_type
+    r = Run.new(@attr.merge(:sample_type_id => nil))
+    assert !r.load(@good_data)
+    assert !r.save
+    r.sample_type_id = 2
+    assert r.load(@good_data)
+    assert r.save
+  end
+
+  def test_requires_loaded_data
+    r = Run.new(@attr)
+    assert !r.save, "It should not save without data loaded."
   end
 
   def test_requires_nonempty_data
-    r = Run.new
-    assert !r.save
+    r = Run.new(@attr)
     file_name = File.dirname(__FILE__) + '/../data/blank.txt'
     File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.sample_date = Date.today.to_s
-      r.sample_type_id = 2
-      r.load(s)
+      empty_data = StringIO.new(f.read)
+      r.load(empty_data)
     end
     assert !r.save
   end
   
-  def test_with_date
-    r = Run.new
-    r.sample_date = Date.today.to_s
-    r.sample_type_id = 1
-    assert r.save
-    r.destroy
+  def test_requires_date
+    r = Run.new(@attr.merge(:sample_date => nil))
+    r.load(@good_data)
+    assert !r.save
   end
 
   def test_file_load
@@ -92,17 +98,17 @@ class RunTest < Test::Unit::TestCase
   
   def test_file_load_with_negatives
     old_runs = Run.count
-     file_name = File.dirname(__FILE__) + '/../data/20040511.TXT'
-     File.open(file_name,'r') do |f|
-       s = StringIO.new(f.read)
-       r = Run.new
-       r.sample_date = Date.today.to_s
-       r.sample_type_id = 2
-       r.load(s)
-       assert r.save
-       assert r.samples.size > 1
-       assert_equal 330, r.measurements.size
-     end
+    file_name = File.dirname(__FILE__) + '/../data/20040511.TXT'
+    File.open(file_name,'r') do |f|
+      s = StringIO.new(f.read)
+      r = Run.new
+      r.sample_date = Date.today.to_s
+      r.sample_type_id = 2
+      r.load(s)
+      assert r.save
+      assert r.samples.size > 1
+      assert_equal 330, r.measurements.size
+    end
 
      assert_equal old_runs+1, Run.count
   end
@@ -140,7 +146,7 @@ class RunTest < Test::Unit::TestCase
       r = Run.new
       r.sample_date = Date.today.to_s
       r.sample_type_id = 4
-      r.load(s,4)
+      r.load(s)
       assert r.save
       assert r.samples.size > 1
     end

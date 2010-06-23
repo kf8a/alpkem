@@ -51,8 +51,8 @@ class RunsController < ApplicationController
     file = params[:data][:file]
     file_contents = StringIO.new(file.read)
     respond_to do |format|
-      if @run.save
-        @run.load(file_contents, @run.sample_type_id)
+      if @run.load(file_contents)
+        @run.save
         flash[:notice] = 'Run was successfully uploaded.'
         format.html { redirect_to(@run) }
         format.xml  { render :xml => @run, :status => :created, :location => @run }

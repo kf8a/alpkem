@@ -3,8 +3,21 @@ require 'test_helper'
 class RunsControllerTest < ActionController::TestCase
   
   def setup
-    4.times {Factory.create :run}
-    @run = Factory.create :run
+    #TODO make these factories work with the models as they are now
+#    4.times {Factory.create :run}
+#    @run = Factory.create :run
+
+    @attr = {
+      :sample_type_id => 2,
+      :sample_date    => Date.today.to_s
+    }
+    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
+    File.open(file_name, 'r') do |f|
+      @good_data = StringIO.new(f.read)
+    end
+    @run = Run.new(@attr)
+    @run.load(@good_data)
+    @run.save
   end
     
   test "should get index" do
