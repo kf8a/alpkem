@@ -54,6 +54,13 @@ class RunsController < ApplicationController
   def create
     @run = Run.new(params[:run])
     file = params[:data][:file]
+    if file.class == String
+      flash[:notice] = 'No file was selected to upload.'
+      respond_to do |format|
+        format.html { redirect_to :action => "new" } and return
+        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity } and return
+      end
+    end
     file_contents = StringIO.new(file.read)
     @run.load(file_contents)
     respond_to do |format|
