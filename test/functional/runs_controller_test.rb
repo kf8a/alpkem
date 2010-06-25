@@ -11,7 +11,7 @@ class RunsControllerTest < ActionController::TestCase
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
-    file_name = File.dirname(__FILE__) + '/../data/test.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
     File.open(file_name, 'r') do |f|
       @good_data = StringIO.new(f.read)
     end
@@ -29,14 +29,6 @@ class RunsControllerTest < ActionController::TestCase
   test "should get new" do
     get :new
     assert_response :success
-  end
-
-  test "should not create run with invalid sample type" do
-    assert_no_difference 'Run.count' do
-      file_name = '/../data/test.TXT'
-      post :create, :run => {:sample_date => Date.today, :sample_type_id => 1},
-                    :data => {:file => fixture_file_upload(file_name)}
-    end
   end
 
   test "should create run" do

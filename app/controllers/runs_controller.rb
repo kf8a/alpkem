@@ -30,7 +30,10 @@ class RunsController < ApplicationController
     @run = Run.new
 
     #TODO: Sample_type_options has to be manually edited each time a new type is added. It could be refactored to eliminate this problem.
-    @sample_type_options = [[@run.sample_type_name(1), "1"],[@run.sample_type_name(2), "2"],[@run.sample_type_name(3), "3"],[@run.sample_type_name(4), "4"]]
+    @sample_type_options = [[sample_type_name(1), "1"],
+                            [sample_type_name(2), "2"],
+                            [sample_type_name(3), "3"],
+                            [sample_type_name(4), "4"]]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,14 +55,15 @@ class RunsController < ApplicationController
     @run = Run.new(params[:run])
     file = params[:data][:file]
     file_contents = StringIO.new(file.read)
+    @run.load(file_contents)
     respond_to do |format|
-      if @run.load(file_contents)
-        @run.save
+      if @run.save
         flash[:notice] = 'Run was successfully uploaded.'
         format.html { redirect_to(@run) }
         format.xml  { render :xml => @run, :status => :created, :location => @run }
       else
-        format.html { render :action => "new" }
+        flash[:notice] = 'Run was not uploaded.'
+        format.html { redirect_to :action => "new" } #TODO This is not ideal, since it does not tell you why it failed and all buttons are set to defaults.
         format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
       end
     end
@@ -115,6 +119,21 @@ class RunsController < ApplicationController
       end
       format.html { render :nothing => true }
       format.xml { head :ok }
+    end
+  end
+  
+  #TODO This exact same method is found in run.rb. Obviously should be refactored.
+  def sample_type_name(id)
+    if id == 1
+      return "Lysimeter"
+    elsif id == 2
+      return "Soil Sample"
+    elsif id == 3
+      return "GLBRC Soil Sample"
+    elsif id == 4
+      return "GLBRC Deep Core"
+    else
+      return "Unknown Sample Type"
     end
   end
 end
