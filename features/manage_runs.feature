@@ -1,4 +1,3 @@
-@no-txn
 Feature: Manage runs
   In order to upload data
   A user
@@ -13,19 +12,30 @@ Feature: Manage runs
       And I attach the test file
       And I press "Upload"
     Then I should see "Run was not uploaded."
+      And I should see "File not parsable."
     
   Scenario: Upload nothing
     Given I am on the new run page
     When I press "Upload"
     Then I should see "No file was selected to upload."
     
-  Scenario: Upload actual data THIS DOES NOT WORK
+  Scenario: Upload actual data
     Given I am on the new run page
     When I select "June 25, 2010" as the "Sample Date" date
       And I select "June 25, 2010" as the "Start Date" date
       And I select "June 25, 2010" as the "Run Date" date
       And I select "Soil Sample" from "Sample Type"
       And I attach the test file
-      And I upload the run
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+
+Scenario: Upload GLBRC Deep Core data
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "GLBRC Deep Core" from "Sample Type"
+      And I attach the GLBRC Deep Core test file
+      And I press "Upload"
     Then I should see "Run was successfully uploaded."
 
