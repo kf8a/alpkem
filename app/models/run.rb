@@ -2,7 +2,7 @@ class Run < ActiveRecord::Base
     has_many :measurements, :dependent => :destroy
 
     validates_presence_of :sample_type_id
-    validates_presence_of :measurements
+    validates_presence_of :measurements, :message => "No measurements are associated with this run."
     
     LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
     #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter a, b, c, A, B or C, then optionally "rerun", then
@@ -38,11 +38,20 @@ class Run < ActiveRecord::Base
     end
 
     #TODO In refactoring, we might want to place this in a controller rather than a model.
-    #You should only be able to perform load if your run has sample_type_id. Thus, the second part of this function is unnecessary.
     def load(data)
-      return false if data.size == 0
-      return false unless sample_type_id
-      return false unless sample_date
+      @load_errors = ""
+      if data.size == 0
+        @load_errors = "Data file is empty."
+        return false
+      end
+      unless sample_type_id
+        @load_errors = "No Sample Type selected."
+        return false
+      end
+      unless sample_date
+        @load_errors = "No Sample Date selected."
+        return false
+      end
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
 
@@ -90,7 +99,10 @@ class Run < ActiveRecord::Base
         end       
         
         #TODO better reporting if we can't parse
-        next unless plot
+        unless plot
+          @load_errors = "File not parsable."
+          next
+        end
         #raise 'not parsable' unless plot
         
         # find sample
@@ -137,5 +149,9 @@ class Run < ActiveRecord::Base
         self.measurements << nh4
       end
 
+    end
+
+    def display_load_errors()
+      return @load_errors
     end
 end

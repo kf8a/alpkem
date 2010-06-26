@@ -54,14 +54,12 @@ class RunsController < ApplicationController
     file = params[:data][:file]
     if file.class == String
       flash[:file_error] = 'No file was selected to upload.'
-      respond_to do |format|
-        format.html { render :action => "new" } and return
-        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity } and return
-      end
+      render :action => "new" and return
     end
     file_contents = StringIO.new(file.read)
     unless @run.load(file_contents)
       flash[:notice] = 'Load failed.'
+      flash[:file_error] = @run.display_load_errors
       redirect_to :action => "new" and return
     end
     respond_to do |format|
@@ -71,6 +69,7 @@ class RunsController < ApplicationController
         format.xml  { render :xml => @run, :status => :created, :location => @run }
       else
         flash[:notice] = 'Run was not uploaded.'
+        flash[:file_error] = @run.display_load_errors
         format.html { render :action => "new" }
         format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
       end
