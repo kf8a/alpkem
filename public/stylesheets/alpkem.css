@@ -34,3 +34,6 @@ ul {
 .updated_true {
 	color: silver;
 }
+.run_errors {
+  color: red;
+}
