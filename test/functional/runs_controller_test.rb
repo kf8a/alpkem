@@ -39,6 +39,19 @@ class RunsControllerTest < ActionController::TestCase
     end
   end
 
+  test "should not create run with no file" do
+    assert_no_difference 'Run.count' do
+      post :create, :run => @attr, :data => nil
+    end
+  end
+
+  test "should not create run with blank file" do
+    assert_no_difference 'Run.count' do
+      file_name = '/../data/blank.txt'
+      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+    end
+  end
+
   test "should create run" do
     old_count = Run.count
     file_name = '/../data/LTER_soil_test.TXT'

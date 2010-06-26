@@ -1,6 +1,10 @@
 <h1>New Run</h1>
 
 <% form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
+<% @sample_type_options = [[@run.sample_type_name(1), "1"],
+                            [@run.sample_type_name(2), "2"],
+                            [@run.sample_type_name(3), "3"],
+                            [@run.sample_type_name(4), "4"]] %>
 <%= f.error_messages %>
 <p>
 	<label for="run_sample_date">Sample Date</label>
