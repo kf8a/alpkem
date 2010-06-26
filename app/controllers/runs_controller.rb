@@ -62,14 +62,18 @@ class RunsController < ApplicationController
       end
     end
     file_contents = StringIO.new(file.read)
-    @run.load(file_contents)
+    unless @run.load(file_contents)
+      flash[:notice] = 'Load failed.'
+      redirect_to :action => "new" and return
+    end
     respond_to do |format|
       if @run.save
         flash[:notice] = 'Run was successfully uploaded.'
         format.html { redirect_to(@run) }
         format.xml  { render :xml => @run, :status => :created, :location => @run }
       else
-        flash[:notice] = 'Run was not uploaded.'
+        help_me = ""
+        flash[:notice] = 'Run was not uploaded.' + help_me
         format.html { redirect_to :action => "new" } #TODO This is not ideal, since it does not tell you why it failed and all buttons are set to defaults.
         format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
       end
@@ -88,7 +92,7 @@ class RunsController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @run.errors, :status  => :unprocessable_entity }
       end
     end
   end
