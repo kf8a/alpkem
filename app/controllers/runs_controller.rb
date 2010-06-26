@@ -48,12 +48,12 @@ class RunsController < ApplicationController
   def create
     @run = Run.new(params[:run])
     if params[:data].blank?
-      flash[:notice] = 'No file was selected to upload.'
+      flash[:file_error] = 'No file was selected to upload.'
       render :action => "new" and return
     end
     file = params[:data][:file]
     if file.class == String
-      flash[:notice] = 'No file was selected to upload.'
+      flash[:file_error] = 'No file was selected to upload.'
       respond_to do |format|
         format.html { render :action => "new" } and return
         format.xml  { render :xml => @run.errors, :status => :unprocessable_entity } and return
