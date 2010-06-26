@@ -5,7 +5,10 @@
 # files.
 
 ENV["RAILS_ENV"] ||= "cucumber"
+
 require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
+
+require File.expand_path(File.dirname(__FILE__) + '/../../test/test_helper')
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/world'
@@ -19,6 +22,7 @@ Webrat.configure do |config|
   config.mode = :rails
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser
 end
+
 
 
 # If you set this to false, any error raised from within your app will bubble 
