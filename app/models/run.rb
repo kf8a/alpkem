@@ -40,9 +40,9 @@ class Run < ActiveRecord::Base
     #TODO In refactoring, we might want to place this in a controller rather than a model.
     #You should only be able to perform load if your run has sample_type_id. Thus, the second part of this function is unnecessary.
     def load(data)
-      return if data.size == 0
-      return unless sample_type_id
-      return unless sample_date
+      return false if data.size == 0
+      return false unless sample_type_id
+      return false unless sample_date
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
 
