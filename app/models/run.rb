@@ -28,6 +28,8 @@ class Run < ActiveRecord::Base
         return "GLBRC Soil Sample"
       elsif id == 4
         return "GLBRC Deep Core"
+      elsif id == 5
+        return "GLBRC Resin Strips"
       else
         return "Unknown Sample Type"
       end
