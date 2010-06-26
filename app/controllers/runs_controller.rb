@@ -29,12 +29,6 @@ class RunsController < ApplicationController
   def new
     @run = Run.new
 
-    #TODO: Sample_type_options has to be manually edited each time a new type is added. It could be refactored to eliminate this problem.
-    @sample_type_options = [[sample_type_name(1), "1"],
-                            [sample_type_name(2), "2"],
-                            [sample_type_name(3), "3"],
-                            [sample_type_name(4), "4"]]
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @run }
@@ -53,11 +47,15 @@ class RunsController < ApplicationController
   # POST /runs.xml
   def create
     @run = Run.new(params[:run])
+    if params[:data].blank?
+      flash[:notice] = 'No file was selected to upload.'
+      render :action => "new" and return
+    end
     file = params[:data][:file]
     if file.class == String
       flash[:notice] = 'No file was selected to upload.'
       respond_to do |format|
-        format.html { redirect_to :action => "new" } and return
+        format.html { render :action => "new" } and return
         format.xml  { render :xml => @run.errors, :status => :unprocessable_entity } and return
       end
     end
@@ -72,9 +70,8 @@ class RunsController < ApplicationController
         format.html { redirect_to(@run) }
         format.xml  { render :xml => @run, :status => :created, :location => @run }
       else
-        help_me = ""
-        flash[:notice] = 'Run was not uploaded.' + help_me
-        format.html { redirect_to :action => "new" } #TODO This is not ideal, since it does not tell you why it failed and all buttons are set to defaults.
+        flash[:notice] = 'Run was not uploaded.'
+        format.html { render :action => "new" }
         format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
       end
     end
@@ -132,19 +129,5 @@ class RunsController < ApplicationController
       format.xml { head :ok }
     end
   end
-  
-  #TODO This exact same method is found in run.rb. Obviously should be refactored.
-  def sample_type_name(id)
-    if id == 1
-      return "Lysimeter"
-    elsif id == 2
-      return "Soil Sample"
-    elsif id == 3
-      return "GLBRC Soil Sample"
-    elsif id == 4
-      return "GLBRC Deep Core"
-    else
-      return "Unknown Sample Type"
-    end
-  end
+
 end
