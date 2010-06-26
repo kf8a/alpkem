@@ -1,11 +1,14 @@
 <h1>New Run</h1>
 
 <% form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
-<% @sample_type_options = [[@run.sample_type_name(1), "1"],
-                            [@run.sample_type_name(2), "2"],
-                            [@run.sample_type_name(3), "3"],
-                            [@run.sample_type_name(4), "4"]] %>
-<%= f.error_messages %>
+<% sample_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] %>
+<% @sample_type_options = [] %>
+<% sample_numbers.each do |number|
+    unless @run.sample_type_name(number) == "Unknown Sample Type"
+      @sample_type_options += [[@run.sample_type_name(number), "#{number}"]]
+    end
+end %>
+
 <p>
 	<label for="run_sample_date">Sample Date</label>
 	<%= f.date_select :sample_date %>
