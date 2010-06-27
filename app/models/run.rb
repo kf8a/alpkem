@@ -13,6 +13,10 @@ class Run < ActiveRecord::Base
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
     end
 
+    def updated?
+      samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
+    end
+
     #Things that need to be changed when adding new file type begins here
     
     LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
@@ -49,12 +53,8 @@ class Run < ActiveRecord::Base
       else
         return Regexp.new("")
       end
-    end    
-    def updated?
-      samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
     end
-
-    #TODO In refactoring, we might want to place this in a controller rather than a model.
+    
     def load(data)
       @load_errors = ""
       if data.size == 0
@@ -73,17 +73,6 @@ class Run < ActiveRecord::Base
       analyte_nh4 = Analyte.find_by_name('NH4')
 
       re = get_regex_by_sample_type_id
-#      if sample_type_id == 1
-#        re = Regexp.new(LYSIMETER)
-#      elsif sample_type_id == 2
-#        re = Regexp.new(SOIL_SAMPLE)
-#      elsif sample_type_id == 3
-#        re = Regexp.new(GLBRC_SOIL_SAMPLE)
-#      elsif sample_type_id == 4
-#        re = Regexp.new(GLBRC_DEEP_CORE)
-#      else
-#        re = Regexp.new("")
-#      end
       data.each do | line |
         next unless line =~ re
         # find plot
@@ -115,13 +104,14 @@ class Run < ActiveRecord::Base
         else
           raise "not implemented"
         end       
+
+    #Things that need to be changed when adding new file type ends here
         
         #TODO better reporting if we can't parse
         unless plot
           @load_errors = "File not parsable."
           next
         end
-        #raise 'not parsable' unless plot
         
         # find sample
         sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
