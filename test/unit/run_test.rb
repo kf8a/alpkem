@@ -2,7 +2,8 @@ require 'test_helper'
 
 require 'date'
 
-class RunTest < Test::Unit::TestCase
+#class RunTest < Test::Unit::TestCase
+class RunTest < ActiveSupport::TestCase
 
   def setup
     @attr = {
@@ -29,9 +30,6 @@ class RunTest < Test::Unit::TestCase
     r = Run.new(@attr.merge(:sample_type_id => nil))
     assert !r.load(@good_data)
     assert !r.save
-    r.sample_type_id = 2
-    assert r.load(@good_data)
-    assert r.save
   end
 
   def test_requires_loaded_data
@@ -56,19 +54,14 @@ class RunTest < Test::Unit::TestCase
   end
 
   def test_file_load
-    initial_run_count = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
-    File.open(file_name,'r') do |f|
-      s = StringIO.new(f.read)
-      r = Run.new
-      r.sample_date = Date.today.to_s
-      r.sample_type_id = 2
-      r.load(s)
+#    initial_run_count = Run.count
+    assert_difference 'Run.count' do
+      r = Run.new(@attr)
+      r.load(@good_data)
       assert r.save
       assert r.samples.size > 1
     end
-
-    assert_equal initial_run_count + 1, Run.count
+#    assert_equal initial_run_count + 1, Run.count
     
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
@@ -101,9 +94,9 @@ class RunTest < Test::Unit::TestCase
     file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new
-      r.sample_date = Date.today.to_s
-      r.sample_type_id = 2
+      r = Run.new(@attr)
+#      r.sample_date = Date.today.to_s
+#      r.sample_type_id = 2
       r.load(s)
       assert r.save
       assert r.samples.size > 1
