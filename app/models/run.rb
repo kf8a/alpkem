@@ -3,12 +3,6 @@ class Run < ActiveRecord::Base
 
     validates_presence_of :sample_type_id
     validates_presence_of :measurements, :message => "No measurements are associated with this run."
-    
-    LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-    #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter a, b, c, A, B or C, then optionally "rerun", then
-    SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-    GLBRC_SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-    GLBRC_DEEP_CORE = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 
     def measurements_by_analyte(analyte)
       raise ArgumentError unless analyte.class == Analyte
@@ -18,7 +12,15 @@ class Run < ActiveRecord::Base
     def samples
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
     end
+
+    #Things that need to be changed when adding new file type begins here
     
+    LYSIMETER = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    #SOIL_SAMPLE = Tab, then exactly 3 digits, then Tab, then optional:(1 or 2 word characters), then dash, then one optional digit, then a single letter a, b, c, A, B or C, then optionally "rerun", then
+    SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    GLBRC_SOIL_SAMPLE = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    GLBRC_DEEP_CORE = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+
     def sample_type_name(id=sample_type_id)
       if id == 1
         return "Lysimeter"
@@ -35,6 +37,19 @@ class Run < ActiveRecord::Base
       end
     end
     
+    def get_regex_by_sample_type_id(id=sample_type_id)
+      if id == 1
+        return Regexp.new(LYSIMETER)
+      elsif id == 2
+        return Regexp.new(SOIL_SAMPLE)
+      elsif id == 3
+        return Regexp.new(GLBRC_SOIL_SAMPLE)
+      elsif id == 4
+        return Regexp.new(GLBRC_DEEP_CORE)
+      else
+        return Regexp.new("")
+      end
+    end    
     def updated?
       samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
     end
@@ -57,17 +72,18 @@ class Run < ActiveRecord::Base
       analyte_no3 = Analyte.find_by_name('NO3')
       analyte_nh4 = Analyte.find_by_name('NH4')
 
-      if sample_type_id == 1
-        re = Regexp.new(LYSIMETER)
-      elsif sample_type_id == 2
-        re = Regexp.new(SOIL_SAMPLE)
-      elsif sample_type_id == 3
-        re = Regexp.new(GLBRC_SOIL_SAMPLE)
-      elsif sample_type_id == 4
-        re = Regexp.new(GLBRC_DEEP_CORE)
-      else
-        re = Regexp.new("")
-      end
+      re = get_regex_by_sample_type_id
+#      if sample_type_id == 1
+#        re = Regexp.new(LYSIMETER)
+#      elsif sample_type_id == 2
+#        re = Regexp.new(SOIL_SAMPLE)
+#      elsif sample_type_id == 3
+#        re = Regexp.new(GLBRC_SOIL_SAMPLE)
+#      elsif sample_type_id == 4
+#        re = Regexp.new(GLBRC_DEEP_CORE)
+#      else
+#        re = Regexp.new("")
+#      end
       data.each do | line |
         next unless line =~ re
         # find plot
