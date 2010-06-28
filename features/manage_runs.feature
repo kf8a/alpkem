@@ -38,6 +38,13 @@ Feature: Manage runs
       And I attach the Soil Sample test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
+      And I should see "Number of Samples: 55"
+      
+    When I follow "back"
+    Then I should see "2010-06-25 Soil Sample 55 samples qc delete"
+    
+    When I follow "qc"
+    Then I should see "T7R1 2010-06-25 0.2953 0.2947 0.3034"
 
   Scenario: Upload GLBRC Deep Core data
     Given I am on the new run page
@@ -58,4 +65,11 @@ Feature: Manage runs
       And I attach the GLBRC Resin Strips test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
+      And I should see "Number of Samples: 38"
+    
+    When I follow "back"
+      And I follow "qc"
+    Then I should see "G2R1 2010-06-28 0.0360 0.0300 0.0200"
+    
+    
 
