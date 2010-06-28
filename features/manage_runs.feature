@@ -69,7 +69,7 @@ Feature: Manage runs
     
     When I follow "back"
       And I follow "qc"
-    Then I should see "G2R1 2010-06-28 0.0360 0.0300 0.0200"
+    Then I should see "G2R1 2010-06-25 0.0360 0.0300 0.0200"
     
     
 
