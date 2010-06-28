@@ -144,4 +144,17 @@ class RunTest < ActiveSupport::TestCase
     end
     assert_equal old_runs + 1, Run.count
   end
+  
+  def test_glbrc_resin_strips_file_load
+    assert_difference 'Run.count' do
+      file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
+      File.open(file_name, 'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr.merge(:sample_type_id => 5))
+        r.load(s)
+        assert r.save
+        assert r.samples.size > 1
+      end
+    end
+  end
 end
