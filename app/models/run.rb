@@ -118,7 +118,11 @@ class Run < ActiveRecord::Base
         s_date      = sample_date
       else
         raise "not implemented"
-      end       
+      end
+      
+      next if no3_amount.blank?
+      next if no4_amount.blank?
+        
 
   #Things that need to be changed when adding new file type ends here
       
