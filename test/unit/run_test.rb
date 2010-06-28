@@ -2,7 +2,6 @@ require 'test_helper'
 
 require 'date'
 
-#class RunTest < Test::Unit::TestCase
 class RunTest < ActiveSupport::TestCase
 
   def setup
