@@ -23,14 +23,14 @@ class Run < ActiveRecord::Base
 
   #Things that need to be changed when adding new file type begins here
   
-  LYSIMETER =           '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  SOIL_SAMPLE =         '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  GLBRC_SOIL_SAMPLE =   '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  GLBRC_DEEP_CORE =     '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  GLBRC_RESIN_STRIPS =  '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  SOIL_SAMPLE         = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  GLBRC_SOIL_SAMPLE   = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  GLBRC_RESIN_STRIPS  = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
 
   def sample_type_name(id=sample_type_id)
-    if id == 1
+    if    id == 1
       return "Lysimeter"
     elsif id == 2
       return "Soil Sample"
@@ -46,7 +46,7 @@ class Run < ActiveRecord::Base
   end
   
   def get_regex_by_sample_type_id(id=sample_type_id)
-    if id == 1
+    if    id == 1
       return Regexp.new(LYSIMETER)
     elsif id == 2
       return Regexp.new(SOIL_SAMPLE)
@@ -87,27 +87,35 @@ class Run < ActiveRecord::Base
 
       # HACK Warning samples for soil N also should have a sample data.
 
-      plot =  nil
-      s_date = nil
       case sample_type_id
       when 1 #lysimeter
-        plot = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
-        s_date = $4
+        plot        = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
+        s_date      = $4
+        nh4_amount  = $5
+        no3_amount  = $6
       when 2 # LTER Soil sample
-        plot = Plot.find_by_name("T#{$1}R#{$2}")
-        s_date = sample_date
+        plot        = Plot.find_by_name("T#{$1}R#{$2}")
+        s_date      = sample_date
+        nh4_amount  = $4
+        no3_amount  = $5
       when 3 # GLBRC Soil
-        plot = Plot.find_by_name("G#{$1}R#{$2}")
-        s_date = sample_date
+        plot        = Plot.find_by_name("G#{$1}R#{$2}")
+        s_date      = sample_date
+        nh4_amount  = $4
+        no3_amount  = $5
       when 4 # GLBRC Deep
-        plot = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
-        s_date = sample_date
+        plot        = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
+        s_date      = sample_date
+        nh4_amount  = $5
+        no3_amount  = $6
       when 5 # GLBRC Resin Strips
-        plot = Plot.find_by_name("G#{$1}R#{$2}")
-        s_date = sample_date
+        plot        = Plot.find_by_name("G#{$1}R#{$2}")
+        s_date      = sample_date
+        nh4_amount  = $4
+        no3_amount  = $5
       when 6 
-        plot = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
-        s_date = sample_date
+        plot        = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
+        s_date      = sample_date
       else
         raise "not implemented"
       end       
@@ -124,44 +132,29 @@ class Run < ActiveRecord::Base
       sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
 
       if sample.nil? then
-        sample = Sample.new
-
-        sample.sample_date = s_date
-
-        sample.plot = plot
+        sample                = Sample.new
+        sample.sample_date    = s_date
+        sample.plot           = plot
         sample.sample_type_id = sample_type_id
         sample.save
       end
 
       # create a new measurement
-      no3 = Measurement.new
-
+      no3         = Measurement.new
       no3.analyte = analyte_no3
-      if sample_type_id == 1 || sample_type_id == 4
-        no3.amount = $6
-      elsif sample_type_id == 2 || sample_type_id == 3 || sample_type_id == 5
-        no3.amount = $5
-      else
-        raise "not implemented"
-      end
+      no3.amount  = no3_amount
       no3.save
+
       sample.measurements << no3
-      self.measurements << no3
+      self.measurements   << no3
 
-      nh4 = Measurement.new
+      nh4         = Measurement.new
       nh4.analyte = analyte_nh4
-
-      if sample_type_id == 1 || sample_type_id == 4
-        nh4.amount = $5
-      elsif sample_type_id == 2 || sample_type_id == 3 || sample_type_id == 5
-        nh4.amount = $4
-      else
-        raise "not implemented"
-      end
+      nh4.amount  = nh4_amount
       nh4.save
 
       sample.measurements << nh4
-      self.measurements << nh4
+      self.measurements   << nh4
     end
   end
 end
