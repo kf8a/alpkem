@@ -13,11 +13,7 @@ class SamplesController < ApplicationController
         no3 = Analyte.find_by_name('NO3')
         nh4 = Analyte.find_by_name('NH4')
         
-        if @samples.blank?
-#          csv_string = CSV.generate do |csv|
-#            csv << ['No_valid_samples', 'really']
-#          end
-        else
+        unless @samples.blank?
           csv_string = CSV.generate do |csv|
             csv << ['sample_id','sample_date','treatment','replicate','no3_ppm','nh4_ppm']
             @samples.each do |s|

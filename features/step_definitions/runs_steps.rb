@@ -12,3 +12,7 @@ When /^I attach the GLBRC Resin Strips test file$/ do
   path_to_test_file = File.join(Rails.root, "test", "data", "new_format_soil_samples_090415.TXT")
   attach_file("data_file", path_to_test_file, "text")
 end
+
+Then /^I should see the following data:$/ do |expected_data_table|
+  expected_data_table.diff!(tableish('table tr', 'td,th'))
+end
