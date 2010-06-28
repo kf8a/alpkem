@@ -9,7 +9,7 @@ Feature: Manage runs
       And I select "May 3, 2010" as the "Start Date" date
       And I select "May 2, 2010" as the "Run Date" date
       And I select "Lysimeter" from "Sample Type"
-      And I attach the test file
+      And I attach the Soil Sample test file
       And I press "Upload"
     Then I should see "Run was not uploaded."
       And I should see "File not parsable."
@@ -39,13 +39,23 @@ Feature: Manage runs
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
 
-Scenario: Upload GLBRC Deep Core data
+  Scenario: Upload GLBRC Deep Core data
     Given I am on the new run page
     When I select "June 25, 2010" as the "Sample Date" date
       And I select "June 25, 2010" as the "Start Date" date
       And I select "June 25, 2010" as the "Run Date" date
       And I select "GLBRC Deep Core" from "Sample Type"
       And I attach the GLBRC Deep Core test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+
+  Scenario: Upload GLBRC Resin Strips data
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "GLBRC Resin Strips" from "Sample Type"
+      And I attach the GLBRC Resin Strips test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
 
