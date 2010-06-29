@@ -15,39 +15,38 @@ set :branch, "master"
 set :deploy_via, :copy
 set :git_enable_submodules,1
 
-set :mongrel_conf, '/etc/mongrel_cluster/alpkem.yml'
-
 role :app, 'sebewa.kbs.msu.edu'
 role :web, 'sebewa.kbs.msu.edu'
 role :db,  'sebewa.kbs.msu.edu', :primary => true
 
+
 namespace :deploy do
-  namespace :mongrel do
-    [ :stop, :start, :restart ].each do |t|
-      desc "#{t.to_s.capitalize} the mongrel appserver"
+  namespace :thin do
+    [:stop, :start, :restart].each do |t|
+      desc "#{t.to_s.capitalize} the thin appserver"
       task t, :roles => :app do
-        #invoke_command checks the use_sudo variable to determine how to run the mongrel_rails command
-        invoke_command "mongrel_rails cluster::#{t.to_s} -C #{mongrel_conf}" #, :via => run_method
+        invoke_command "thin -C /etc/thin/alpkem.yml #{t.to_s}"
       end
     end
   end
 
-  desc "Custom restart task for mongrel cluster"
+  desc "Custom restart task for thin cluster"
   task :restart, :roles => :app, :except => { :no_release => true } do
-    deploy.mongrel.restart
+    deploy.thin.restart
   end
 
-  desc "Custom start task for mongrel cluster"
+  desc "Custom start task for thin cluster"
   task :start, :roles => :app do
-    deploy.mongrel.start
+    deploy.thin.start
   end
 
-  desc "Custom stop task for mongrel cluster"
+  desc "Custom stop task for thin cluster"
   task :stop, :roles => :app do
-    deploy.mongrel.stop
+    deploy.thin.stop
   end
   
-  after "deploy:update_code", :link_production_db
+ # after :deploy, :link_paperclip_storage, 
+  after :deploy, :link_production_db
 end
 
 # database.yml task
