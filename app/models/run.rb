@@ -21,7 +21,7 @@ class Run < ActiveRecord::Base
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
   end
 
-  #Things that need to be changed when adding new file type begins here
+#--Things that need to be changed when adding new file type begins here--
   
   LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   SOIL_SAMPLE         = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
@@ -83,10 +83,9 @@ class Run < ActiveRecord::Base
     data.each do | line |
       next unless line =~ re
       # find plot
-#      plot = Plot.find_by_treatment_and_replicate('T'+$1, 'R'+$2)
+      # plot = Plot.find_by_treatment_and_replicate('T'+$1, 'R'+$2)
 
       # HACK Warning samples for soil N also should have a sample data.
-
       case sample_type_id
       when 1 #lysimeter
         plot        = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
@@ -121,10 +120,9 @@ class Run < ActiveRecord::Base
       end
       
       next if no3_amount.blank?
-      next if no4_amount.blank?
-        
+      next if nh4_amount.blank?
 
-  #Things that need to be changed when adding new file type ends here
+#--Things that need to be changed when adding new file type ends here--
       
       #TODO better reporting if we can't parse
       unless plot
