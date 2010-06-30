@@ -1,8 +1,17 @@
 require 'test_helper'
 
 class CnRunsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+
+  def setup
+    get :new
   end
+  
+  test "should get new" do
+    assert_response :success
+  end
+  
+  test "should create initial cn_run object" do
+    assert_not_nil assigns(:cn_run)
+  end
+  
 end
