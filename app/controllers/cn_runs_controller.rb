@@ -1,0 +1,2 @@
+class CnRunsController < ApplicationController
+end

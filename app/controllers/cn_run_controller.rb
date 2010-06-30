@@ -1,2 +1,0 @@
-class CnRunController < ApplicationController
-end
