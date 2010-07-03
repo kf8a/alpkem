@@ -7,3 +7,11 @@ analytes_002:
   name: NH4
   unit: ppm
   id: "2"
+analytes_003:
+  name: Percent N
+  unit: percent
+  id: "3"
+analytes_004:
+  name: Percent C
+  unit: percent
+  id: "4"

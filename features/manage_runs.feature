@@ -68,8 +68,23 @@ Feature: Manage runs
       And I should see "Number of Samples: 38"
     
     When I follow "back"
-      And I follow "qc"
-    Then I should see "G2R1 2010-06-25 0.0360 0.0300 0.0200"
-    
-    
+    Then I should be on the runs page.
 
+    When I follow "qc"
+    Then I should see "G2R1 2010-06-25 0.0360 0.0300 0.0200"
+  
+  Scenario: Upload CN data
+    Given I am on the new run page
+    When I attach the CN test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+    
+    When I follow "back"
+    Then I should be on the cn_runs page.
+    
+    When I follow "qc"
+    Then I should see "09/17/2001"
+      And I should see "0109CFR1S1C1SURA"
+      And I should see "13.65"
+      And I should see "0.1183"
+      And I should see "1.6748"

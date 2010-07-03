@@ -28,6 +28,7 @@ class Run < ActiveRecord::Base
   GLBRC_SOIL_SAMPLE   = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_RESIN_STRIPS  = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.*)","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
 
   def sample_type_name(id=sample_type_id)
     if    id == 1
@@ -40,6 +41,8 @@ class Run < ActiveRecord::Base
       return "GLBRC Deep Core"
     elsif id == 5
       return "GLBRC Resin Strips"
+    elsif id == 6
+      return "CN Soil Sample"
     else
       return "Unknown Sample Type"
     end
@@ -56,6 +59,8 @@ class Run < ActiveRecord::Base
       return Regexp.new(GLBRC_DEEP_CORE)
     elsif id == 5
       return Regexp.new(GLBRC_RESIN_STRIPS)
+    elsif id == 6
+      return Regexp.new(CN_SAMPLE)
     else
       return Regexp.new("")
     end
@@ -76,8 +81,10 @@ class Run < ActiveRecord::Base
       return false
     end
     
-    analyte_no3 = Analyte.find_by_name('NO3')
-    analyte_nh4 = Analyte.find_by_name('NH4')
+    analyte_no3       = Analyte.find_by_name('NO3')
+    analyte_nh4       = Analyte.find_by_name('NH4')
+    analyte_percent_n = Analyte.find_by_name('Percent N')
+    analyte_percent_c = Analyte.find_by_name('Percent C')
     re = get_regex_by_sample_type_id
     
     data.each do | line |
@@ -92,71 +99,125 @@ class Run < ActiveRecord::Base
         s_date      = $4
         nh4_amount  = $5
         no3_amount  = $6
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
       when 2 # LTER Soil sample
         plot        = Plot.find_by_name("T#{$1}R#{$2}")
         s_date      = sample_date
         nh4_amount  = $4
         no3_amount  = $5
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
       when 3 # GLBRC Soil
         plot        = Plot.find_by_name("G#{$1}R#{$2}")
         s_date      = sample_date
         nh4_amount  = $4
         no3_amount  = $5
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
       when 4 # GLBRC Deep
         plot        = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
         s_date      = sample_date
         nh4_amount  = $5
         no3_amount  = $6
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
       when 5 # GLBRC Resin Strips
         plot        = Plot.find_by_name("G#{$1}R#{$2}")
         s_date      = sample_date
         nh4_amount  = $4
         no3_amount  = $5
-      when 6 
-        plot        = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
-        s_date      = sample_date
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
+      when 6
+        if $2.blank?
+          s_date = sample_date
+        else s_date = $2
+        end
+        plot        = $3
+        cn_type     = $5
+        weight      = $6
+        percent_n   = $8
+        percent_c   = $9
+        process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c)
       else
         raise "not implemented"
       end
-      
-      next if no3_amount.blank?
-      next if nh4_amount.blank?
+    end
+  end
 
 #--Things that need to be changed when adding new file type ends here--
-      
-      #TODO better reporting if we can't parse
-      unless plot
-        @load_errors = "File not parsable."
-        next
-      end
-      
-      # find sample
-      sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
 
-      if sample.nil? then
-        sample                = Sample.new
-        sample.sample_date    = s_date
-        sample.plot           = plot
-        sample.sample_type_id = sample_type_id
-        sample.save
-      end
+  def process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c)
+    return if percent_n.blank?
+    return if percent_c.blank?
 
-      # create a new measurement
-      no3         = Measurement.new
-      no3.analyte = analyte_no3
-      no3.amount  = no3_amount
-      no3.save
-
-      sample.measurements << no3
-      self.measurements   << no3
-
-      nh4         = Measurement.new
-      nh4.analyte = analyte_nh4
-      nh4.amount  = nh4_amount
-      nh4.save
-
-      sample.measurements << nh4
-      self.measurements   << nh4
+    #TODO better reporting if we can't parse
+    unless plot
+      @load_errors = "File not parsable."
+      return
     end
+    
+    #since all CNs have the same type, and no plot id, the "sample" category is useless for them.
+    # find sample
+    sample = Cn_sample.find_by_plot_and_date
+
+    if sample.nil? then
+      sample                = Cn_sample.new
+      sample.sample_date    = s_date
+      sample.cn_plot        = plot
+      sample.save
+    end
+
+    # create a new measurement
+    nitrogen         = Measurement.new
+    nitrogen.analyte = analyte_no3
+    no3.amount  = no3_amount
+    no3.save
+
+    sample.measurements << no3
+    self.measurements   << no3
+
+    nh4         = Measurement.new
+    nh4.analyte = analyte_nh4
+    nh4.amount  = nh4_amount
+    nh4.save
+
+    sample.measurements << nh4
+    self.measurements   << nh4
+  end
+  
+  def process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
+    return if no3_amount.blank?
+    return if nh4_amount.blank?
+      
+    #TODO better reporting if we can't parse
+    unless plot
+      @load_errors = "File not parsable."
+      return
+    end
+    
+    # find sample
+    sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
+
+    if sample.nil? then
+      sample                = Sample.new
+      sample.sample_date    = s_date
+      sample.plot           = plot
+      sample.sample_type_id = sample_type_id
+      sample.save
+    end
+
+    # create a new measurement
+    no3         = Measurement.new
+    no3.analyte = analyte_no3
+    no3.amount  = no3_amount
+    no3.save
+
+    sample.measurements << no3
+    self.measurements   << no3
+
+    nh4         = Measurement.new
+    nh4.analyte = analyte_nh4
+    nh4.amount  = nh4_amount
+    nh4.save
+
+    sample.measurements << nh4
+    self.measurements   << nh4
   end
 end
