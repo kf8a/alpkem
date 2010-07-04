@@ -1,9 +1,15 @@
 class Run < ActiveRecord::Base
   has_many :measurements, :dependent => :destroy
+  has_many :cn_measurements, :dependent => :destroy
 
   validates_presence_of :sample_type_id
-  validates_presence_of :measurements, :message => "No measurements are associated with this run."
+  validates_presence_of :measurements, :message => "No measurements are associated with this run.", :unless => :cn_measurements_exist
 
+  def cn_measurements_exist
+    return false if cn_measurements.blank?
+    return true
+  end
+  
   def display_load_errors()
     return @load_errors
   end
@@ -17,6 +23,10 @@ class Run < ActiveRecord::Base
     Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
   end
 
+  def cn_samples
+    CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
+  end
+  
   def updated?
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
   end
@@ -134,7 +144,7 @@ class Run < ActiveRecord::Base
         weight      = $6
         percent_n   = $8
         percent_c   = $9
-        process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c)
+        process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c)
       else
         raise "not implemented"
       end
@@ -143,7 +153,7 @@ class Run < ActiveRecord::Base
 
 #--Things that need to be changed when adding new file type ends here--
 
-  def process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c)
+  def process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c)
     return if percent_n.blank?
     return if percent_c.blank?
 
@@ -153,33 +163,34 @@ class Run < ActiveRecord::Base
       return
     end
     
-    #since all CNs have the same type, and no plot id, the "sample" category is useless for them.
     # find sample
-    sample = Cn_sample.find_by_plot_and_date
+    sample = CnSample.find_by_cn_plot_and_sample_date(plot, s_date)
 
     if sample.nil? then
-      sample                = Cn_sample.new
+      sample                = CnSample.new
       sample.sample_date    = s_date
       sample.cn_plot        = plot
       sample.save
     end
 
     # create a new measurement
-    nitrogen         = Measurement.new
-    nitrogen.analyte = analyte_no3
-    no3.amount  = no3_amount
-    no3.save
+    nitrogen         = CnMeasurement.new
+    nitrogen.analyte = analyte_percent_n
+    nitrogen.amount  = percent_n
 
-    sample.measurements << no3
-    self.measurements   << no3
+    sample.cn_measurements << nitrogen
+    self.cn_measurements   << nitrogen
 
-    nh4         = Measurement.new
-    nh4.analyte = analyte_nh4
-    nh4.amount  = nh4_amount
-    nh4.save
+    nitrogen.save
 
-    sample.measurements << nh4
-    self.measurements   << nh4
+    carbon         = CnMeasurement.new
+    carbon.analyte = analyte_percent_c
+    carbon.amount  = percent_c
+
+    sample.cn_measurements << carbon
+    self.cn_measurements   << carbon
+    
+    carbon.save
   end
   
   def process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)

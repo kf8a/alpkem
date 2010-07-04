@@ -75,7 +75,11 @@ Feature: Manage runs
   
   Scenario: Upload CN data
     Given I am on the new run page
-    When I attach the CN test file
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "CN Soil Sample" from "Sample Type"
+      And I attach the CN test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
     
