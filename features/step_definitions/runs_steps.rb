@@ -16,3 +16,8 @@ end
 Then /^I should see the following data:$/ do |expected_data_table|
   expected_data_table.diff!(tableish('table tr', 'td,th'))
 end
+
+When /^I attach the CN test file$/ do
+  path_to_test_file = File.join(Rails.root, "test", "data", "DC01CFR1.csv")
+  attach_file("data_file", path_to_test_file, "text")
+end
