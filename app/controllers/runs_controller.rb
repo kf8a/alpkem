@@ -12,11 +12,23 @@ class RunsController < ApplicationController
       format.xml  { render :xml => @runs }
     end
   end
+  
+  # GET /runs/cn
+  # GET /runs/cn.xml
+  def cn
+    @runs = Run.find(:all, :order => 'sample_date')
+    
+    respond_to do |format|
+      format.html # cn.html.erb
+      format.xml  { render :xml => @runs }
+    end
+  end
 
   # GET /runs/1
   # GET /runs/1.xml
   def show
     @run = Run.find(params[:id])
+    @is_cn_run = @run.cn_measurements_exist
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,10 +49,15 @@ class RunsController < ApplicationController
 
   # GET /runs/1/edit
   def edit
-    @run = Run.find(params[:id])
-    @samples = @run.samples    
-    @nh4 = Analyte.find_by_name('NH4')
-    @no3 = Analyte.find_by_name('NO3')
+    @run        = Run.find(params[:id])
+    if @run.cn_measurements_exist
+      @samples = @run.cn_samples
+    else @samples = @run.samples
+    end
+    @nh4        = Analyte.find_by_name('NH4')
+    @no3        = Analyte.find_by_name('NO3')
+    @percent_n  = Analyte.find_by_name('Percent N')
+    @percent_c  = Analyte.find_by_name('Percent C')
   end
 
   # POST /runs

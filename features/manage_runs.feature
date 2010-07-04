@@ -84,11 +84,10 @@ Feature: Manage runs
     Then I should see "Run was successfully uploaded."
     
     When I follow "back"
-    Then I should be on the cn_runs page.
+    Then I should be on the cn runs page.
     
     When I follow "qc"
-    Then I should see "09/17/2001"
-      And I should see "0109CFR1S1C1SURA"
-      And I should see "13.65"
+    Then I should see "2001-09-17"
+      And I should see "CFR1S1C1SURA"
       And I should see "0.1183"
       And I should see "1.6748"
