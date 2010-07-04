@@ -88,6 +88,6 @@ Feature: Manage runs
     
     When I follow "qc"
     Then I should see "2001-09-17"
-      And I should see "CFR1S1C1SURA"
+      And I should see "CFR1S1C1SUR"
       And I should see "0.1183"
       And I should see "1.6748"
