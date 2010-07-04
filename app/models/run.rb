@@ -135,16 +135,13 @@ class Run < ActiveRecord::Base
         no3_amount  = $5
         process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4)
       when 6
-        if $2.blank?
-          s_date = sample_date
-        else s_date = $2
-        end
-        plot        = $3
+        s_date      = $2
+        cn_plot     = $3
         cn_type     = $5
         weight      = $6
         percent_n   = $8
         percent_c   = $9
-        process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c)
+        process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c)
       else
         raise "not implemented"
       end
@@ -153,23 +150,27 @@ class Run < ActiveRecord::Base
 
 #--Things that need to be changed when adding new file type ends here--
 
-  def process_cn_sample(s_date, plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c)
+  def process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c)
     return if percent_n.blank?
     return if percent_c.blank?
 
     #TODO better reporting if we can't parse
-    unless plot
-      @load_errors = "File not parsable."
+    unless cn_plot
+      @load_errors = "No plot could be found."
       return
     end
     
+    unless s_date.nil?
+      s_date = s_date.to_date
+    end
+    
     # find sample
-    sample = CnSample.find_by_cn_plot_and_sample_date(plot, s_date)
+    sample = CnSample.find_by_cn_plot_and_sample_date(cn_plot, s_date)
 
     if sample.nil? then
       sample                = CnSample.new
       sample.sample_date    = s_date
-      sample.cn_plot        = plot
+      sample.cn_plot        = cn_plot
       sample.save
     end
 
@@ -199,7 +200,7 @@ class Run < ActiveRecord::Base
       
     #TODO better reporting if we can't parse
     unless plot
-      @load_errors = "File not parsable."
+      @load_errors = "No plot could be found or plot is not in db."
       return
     end
     
