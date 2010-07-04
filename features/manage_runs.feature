@@ -68,8 +68,26 @@ Feature: Manage runs
       And I should see "Number of Samples: 38"
     
     When I follow "back"
-      And I follow "qc"
-    Then I should see "G2R1 2010-06-25 0.0360 0.0300 0.0200"
-    
-    
+    Then I should be on the runs page.
 
+    When I follow "qc"
+    Then I should see "G2R1 2010-06-25 0.0360 0.0300 0.0200"
+  
+  Scenario: Upload CN data
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "CN Soil Sample" from "Sample Type"
+      And I attach the CN test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+    
+    When I follow "back"
+    Then I should be on the cn runs page.
+    
+    When I follow "qc"
+    Then I should see "2001-09-17"
+      And I should see "CFR1S1C1SURA"
+      And I should see "0.1183"
+      And I should see "1.6748"

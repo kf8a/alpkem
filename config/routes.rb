@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :samples
 
+  map.resources :runs, :collection => { :cn => :get }
   map.resources :runs
 
   map.resources :users
