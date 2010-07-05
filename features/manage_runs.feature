@@ -12,7 +12,7 @@ Feature: Manage runs
       And I attach the Soil Sample test file
       And I press "Upload"
     Then I should see "Run was not uploaded."
-      And I should see "File not parsable."
+      And I should see "No plot could be found or plot is not in db."
     
   Scenario: Upload nothing
     Given I am on the new run page
@@ -87,7 +87,5 @@ Feature: Manage runs
     Then I should be on the cn runs page.
     
     When I follow "qc"
-    Then I should see "2001-09-17"
-      And I should see "CFR1S1C1SUR"
-      And I should see "0.1183"
+    Then I should see "CFR1S1C1SUR 2001-09-17 0.1183 0.1314"
       And I should see "1.6748"

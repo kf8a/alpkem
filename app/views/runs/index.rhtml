@@ -1,6 +1,7 @@
 <h1>Runs</h1>
 <ul>
 	<% @runs.each do |run| %>
+	  <% next if run.cn_measurements_exist -%>
 		<li class="updated_<%=run.updated? %>">
 		<%= run.id %>
 		<%= run.run_date %> <%= run.sample_type_name %> <%= run.samples.size %> samples
