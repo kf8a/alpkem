@@ -3,6 +3,7 @@ coverage/*
 log/*.log
 db/*.db
 db/*.sqlite3
+db/test.sqlite3-journal
 db/schema.rb
 tmp/**/*
 doc/api
