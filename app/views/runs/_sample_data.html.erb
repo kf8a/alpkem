@@ -14,4 +14,12 @@
     <%= render :partial => 'analyte', 
       :locals => {:sample => sample, :analyte => no3} %>
   <% end -%>
+  <% @sample = sample -%>
+  <% if sample.approved -%>
+    <td class="approved">Sample is approved!<br />
+  <% else -%>
+    <td class="notapproved">Sample is not approved.<br />
+  <% end -%>
+  <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
+  </td>
 </tr>
