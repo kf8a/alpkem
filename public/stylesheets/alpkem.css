@@ -6,6 +6,26 @@ td {
 	background-color: #f7ffe9;
 }
 
+.even td {
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
+}
+
+.even td td {
+  border-style: none;
+}
+
+.odd td {
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+}
+
+.odd td td {
+  border-style: none;
+}
+
 .approved {
   background-color: chartreuse;
 }
