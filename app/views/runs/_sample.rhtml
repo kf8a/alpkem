@@ -1,6 +1,3 @@
 <%= render :partial => 'sample_data', :locals => {:sample => sample, :no3 => @no3, :nh4 => @nh4, :percent_n => @percent_n, :percent_c => @percent_c}%>
 
-<tr>
-  <% @sample = sample %>
-  <td><%= label_tag "sample_#{sample.id}_approved", 'approved:' %><%= check_box "sample_#{sample.id}", 'approved', { :onclick=>remote_function(:url => {:action => 'approve', :id => sample, :sample_class => sample.class})}%></td>
-</tr>
+<tr><td>---</td></tr>

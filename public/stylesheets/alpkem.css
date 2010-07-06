@@ -5,6 +5,15 @@ td {
 .even {
 	background-color: #f7ffe9;
 }
+
+.approved {
+  background-color: chartreuse;
+}
+
+.notapproved {
+  background-color: yellow;
+}
+
 .cv_high_true {
 	background-color: red;
 }
