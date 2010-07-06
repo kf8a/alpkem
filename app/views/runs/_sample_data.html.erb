@@ -1,17 +1,17 @@
 <tr class="<%= cycle("even", "odd") -%>" id="sample_<%=sample.id%>">
-  <% if @run.cn_measurements_exist -%>
+  <% if sample.class == CnSample -%>
     <td><%= sample.cn_plot %></td>
-  	<td><%= sample.sample_date %></td>
-	  <%= render :partial => 'analyte', 
-		  :locals => {:sample => sample, :analyte => percent_n} %>
-	  <%= render :partial => 'analyte', 
-		  :locals => {:sample => sample, :analyte => percent_c} %>  	
+    <td><%= sample.sample_date %></td>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => percent_n} %>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => percent_c} %>  	
   <% else -%>
-  	<td><%= sample.plot.name %></td>
-	  <td><%= sample.sample_date %></td>
-	  <%= render :partial => 'analyte', 
-		  :locals => {:sample => sample, :analyte => nh4} %>
-	  <%= render :partial => 'analyte', 
-		  :locals => {:sample => sample, :analyte => no3} %>
+    <td><%= sample.plot.name %></td>
+    <td><%= sample.sample_date %></td>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => nh4} %>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => no3} %>
   <% end -%>
 </tr>
