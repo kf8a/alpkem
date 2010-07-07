@@ -25,6 +25,12 @@ class RunsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:runs)
   end
+  
+  test "should get cn" do
+    get :cn
+    assert_response :success
+    assert_not_nil assigns(:runs)
+  end
 
   test "should get new" do
     get :new
@@ -79,6 +85,24 @@ class RunsControllerTest < ActionController::TestCase
     get :show, :id => @run.id
     assert_response :success
   end
+  
+  test "should show cn run" do
+    @cn_attr = {
+      :sample_type_id => 6,
+      :sample_date    => Date.today.to_s
+    }
+    file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
+    File.open(file_name, 'r') do |f|
+      @cn_data = StringIO.new(f.read)
+    end
+    @cn_run = Run.new(@cn_attr)
+    @cn_run.load(@cn_data)
+    @cn_run.save
+    get :show, :id => @cn_run.id
+    assert_response :success
+    assert assigns(:run)
+    assert assigns(:is_cn_run)
+  end
 
   test "should get edit" do
     get :edit, :id => @run.id
@@ -100,7 +124,4 @@ class RunsControllerTest < ActionController::TestCase
     assert_redirected_to runs_path
   end
   
-  context 'creating runs' do
-    should 'throw an itelligent error message when uploading a file with the wrong sample_type'
-  end
 end

@@ -1,14 +1,14 @@
-<h1>Runs</h1>
+<h1>CN Runs</h1>
 <ul>
 	<% @runs.each do |run| %>
-	  <% next if run.cn_measurements_exist -%>
+	  <% next unless run.cn_measurements_exist -%>
 		<li class="updated_<%=run.updated? %>">
 		<%= run.id %>
-		<%= run.run_date %> <%= run.sample_type_name %> <%= run.samples.size %> samples
+		<%= run.run_date %> <%= run.sample_type_name %> <%= run.cn_samples.size %> samples
 		<%= link_to "qc", edit_run_path(run) %>
 		<%= link_to 'delete', run_path(run), :confirm => 'Are you sure?', :method => :delete %>
 		</li>
 	<% end %>
 </ul>
 <%= link_to "new", new_run_path %>
-<%= link_to "CN runs", cn_runs_path %>
+<%= link_to "Other runs", runs_path %>

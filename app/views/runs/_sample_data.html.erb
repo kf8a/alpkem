@@ -1,8 +1,25 @@
 <tr class="<%= cycle("even", "odd") -%>" id="sample_<%=sample.id%>">
-	<td><%= sample.plot.name %></td>
-	<td><%= sample.sample_date %></td>
-	<%= render :partial => 'analyte', 
-		:locals => {:sample => sample, :analyte => nh4} %>
-		<%= render :partial => 'analyte', 
-			:locals => {:sample => sample, :analyte => no3} %>
+  <% if sample.class == CnSample -%>
+    <td><%= sample.cn_plot %></td>
+    <td><%= sample.sample_date %></td>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => percent_n} %>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => percent_c} %>  	
+  <% else -%>
+    <td><%= sample.plot.name %></td>
+    <td><%= sample.sample_date %></td>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => nh4} %>
+    <%= render :partial => 'analyte', 
+      :locals => {:sample => sample, :analyte => no3} %>
+  <% end -%>
+  <% @sample = sample -%>
+  <% if sample.approved -%>
+    <td class="approved">Sample is approved!<br />
+  <% else -%>
+    <td class="notapproved">Sample is not approved.<br />
+  <% end -%>
+  <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
+  </td>
 </tr>

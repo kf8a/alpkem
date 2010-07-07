@@ -12,11 +12,23 @@ class RunsController < ApplicationController
       format.xml  { render :xml => @runs }
     end
   end
+  
+  # GET /runs/cn
+  # GET /runs/cn.xml
+  def cn
+    @runs = Run.find(:all, :order => 'sample_date')
+    
+    respond_to do |format|
+      format.html # cn.html.erb
+      format.xml  { render :xml => @runs }
+    end
+  end
 
   # GET /runs/1
   # GET /runs/1.xml
   def show
     @run = Run.find(params[:id])
+    @is_cn_run = @run.cn_measurements_exist
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,10 +49,15 @@ class RunsController < ApplicationController
 
   # GET /runs/1/edit
   def edit
-    @run = Run.find(params[:id])
-    @samples = @run.samples    
-    @nh4 = Analyte.find_by_name('NH4')
-    @no3 = Analyte.find_by_name('NO3')
+    @run        = Run.find(params[:id])
+    if @run.cn_measurements_exist
+      @samples = @run.cn_samples
+    else @samples = @run.samples
+    end
+    @nh4        = Analyte.find_by_name('NH4')
+    @no3        = Analyte.find_by_name('NO3')
+    @percent_n  = Analyte.find_by_name('Percent N')
+    @percent_c  = Analyte.find_by_name('Percent C')
   end
 
   # POST /runs
@@ -106,13 +123,20 @@ class RunsController < ApplicationController
   end
   
   def approve
-    sample = Sample.find(params[:id])
+    sample_class = params[:sample_class]
+    if sample_class == "CnSample"
+      sample = CnSample.find(params[:id])
+    else
+      sample = Sample.find(params[:id])
+    end
     sample.toggle(:approved)
     sample.save
     
     dom_id = "sample_#{sample.id}"
     nh4 = Analyte.find_by_name('NH4')
     no3 = Analyte.find_by_name('NO3')
+    percent_n  = Analyte.find_by_name('Percent N')
+    percent_c  = Analyte.find_by_name('Percent C')
     
     
     respond_to do |format|
@@ -120,7 +144,7 @@ class RunsController < ApplicationController
         render :update do |page|
           page.replace dom_id,
           :partial => 'runs/sample_data', 
-          :locals => {:sample => sample, :no3 => no3, :nh4 => nh4}
+          :locals => {:sample => sample, :no3 => no3, :nh4 => nh4, :percent_n => percent_n, :percent_c => percent_c} #{:sample => sample, :no3 => no3, :nh4 => nh4}
           page.visual_effect :highlight,  dom_id, :duration => 1
         end
       end

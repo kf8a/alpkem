@@ -6,7 +6,7 @@ class Sample < ActiveRecord::Base
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
   
   has_many :runs, :through => :measurements, :order => 'run_date'
-  
+
   def measurements_by_analyte_name(analyte_name)
     analyte = Analyte.find_by_name(:first, analyte_name)
     measurements_by_analyte(analyte)
