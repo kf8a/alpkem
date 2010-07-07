@@ -173,7 +173,7 @@ class Run < ActiveRecord::Base
     end
     
     unless s_date.nil?
-      s_date = s_date.to_date
+      s_date = Date.strptime(s_date, "%m/%d/%Y")
     end
     
     # find sample
