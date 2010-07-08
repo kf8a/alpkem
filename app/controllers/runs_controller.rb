@@ -50,10 +50,7 @@ class RunsController < ApplicationController
   # GET /runs/1/edit
   def edit
     @run        = Run.find(params[:id])
-    if @run.cn_measurements_exist
-      @samples = @run.cn_samples
-    else @samples = @run.samples
-    end
+    @samples    = @run.samples
     @nh4        = Analyte.find_by_name('NH4')
     @no3        = Analyte.find_by_name('NO3')
     @percent_n  = Analyte.find_by_name('Percent N')

@@ -166,7 +166,7 @@ class RunTest < ActiveSupport::TestCase
         r = Run.new(@attr.merge(:sample_type_id => 6))
         r.load(s)
         assert r.save
-        assert r.cn_samples.size > 1
+        assert r.samples.size > 1
       end
     end
   end

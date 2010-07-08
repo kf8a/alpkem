@@ -20,12 +20,16 @@ class Run < ActiveRecord::Base
   end
 
   def samples
-    Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
+    if cn_measurements_exist
+      CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
+    else
+      Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
+    end
   end
 
-  def cn_samples
-    CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
-  end
+#  def cn_samples
+#    CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
+#  end
   
   def updated?
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)

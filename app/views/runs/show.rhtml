@@ -8,9 +8,7 @@
 	Sample Type: <%= @run.sample_type_name %>
 </p>
 <p>
-  <% if @is_cn_run %> Number of Samples: <%= @run.cn_samples.size %>
-  <% else %> Number of Samples: <%= @run.samples.size %>
-  <% end %>
+  Number of Samples: <%= @run.samples.size %>
 </p>
 <% if @is_cn_run %><%= link_to 'back', cn_runs_path %>
 <% else %><%= link_to 'back', runs_path %>
