@@ -10,6 +10,4 @@
 <p>
   Number of Samples: <%= @run.samples.size %>
 </p>
-<% if @is_cn_run %><%= link_to 'back', cn_runs_path %>
-<% else %><%= link_to 'back', runs_path %>
-<% end %>
+<%= link_to 'back', @back %>

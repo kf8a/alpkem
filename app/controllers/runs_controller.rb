@@ -5,7 +5,7 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.xml
   def index
-    @runs = Run.find(:all, :order => 'sample_date')
+    @runs = runs
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +16,7 @@ class RunsController < ApplicationController
   # GET /runs/cn
   # GET /runs/cn.xml
   def cn
-    @runs = Run.find(:all, :order => 'sample_date')
+    @runs = cn_runs    
     
     respond_to do |format|
       format.html # cn.html.erb
@@ -28,8 +28,10 @@ class RunsController < ApplicationController
   # GET /runs/1.xml
   def show
     @run = Run.find(params[:id])
-    @is_cn_run = @run.cn_measurements_exist
-
+    if @run.cn_measurements_exist
+          @back = cn_runs_path
+    else  @back = runs_path
+    end        
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @run }

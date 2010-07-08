@@ -101,7 +101,6 @@ class RunsControllerTest < ActionController::TestCase
     get :show, :id => @cn_run.id
     assert_response :success
     assert assigns(:run)
-    assert assigns(:is_cn_run)
   end
 
   test "should get edit" do

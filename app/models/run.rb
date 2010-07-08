@@ -26,11 +26,7 @@ class Run < ActiveRecord::Base
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
     end
   end
-
-#  def cn_samples
-#    CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
-#  end
-  
+    
   def updated?
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
   end
@@ -177,7 +173,7 @@ class Run < ActiveRecord::Base
     end
     
     unless s_date.nil?
-      s_date = s_date.to_date
+      s_date = Date.strptime(s_date, "%m/%d/%Y")
     end
     
     # find sample
