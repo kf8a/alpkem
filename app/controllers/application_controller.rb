@@ -48,4 +48,24 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
+  def runs
+    all_runs = Run.find(:all, :order => 'sample_date')
+    runs_index = []
+    all_runs.each do |run|
+      next if run.cn_measurements_exist
+      runs_index << run
+    end
+    return runs_index
+  end
+
+  def cn_runs
+    all_runs = Run.find(:all, :order => 'sample_date')
+    runs_index = []
+    all_runs.each do |run|
+      next unless run.cn_measurements_exist
+      runs_index << run
+    end
+    return runs_index
+  end
+
 end

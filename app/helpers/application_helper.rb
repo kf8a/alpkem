@@ -4,5 +4,4 @@ module ApplicationHelper
     opts.merge :loading  => update_page{|p| p[:spinner].show },
                :complete => update_page{|p| p[:spinner].hide }
   end
-  
 end
