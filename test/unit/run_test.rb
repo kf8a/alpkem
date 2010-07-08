@@ -20,23 +20,24 @@ class RunTest < ActiveSupport::TestCase
   end
 
   def test_saves_with_good_data
-    r = Run.new(@attr)
-    r.load(@good_data)
-    assert r.save
+    assert_difference "Run.count" do
+      r = Run.new(@attr)
+      r.load(@good_data)
+      assert r.save
+    end
   end
 
-  def test_requires_sample_type
+  def test_load_requires_sample_type
     r = Run.new(@attr.merge(:sample_type_id => nil))
     assert !r.load(@good_data)
-    assert !r.save
   end
 
-  def test_requires_loaded_data
+  def test_save_requires_loaded_data
     r = Run.new(@attr)
     assert !r.save, "It should not save without data loaded."
   end
 
-  def test_requires_nonempty_data
+  def test_save_requires_nonempty_data
     r = Run.new(@attr)
     file_name = File.dirname(__FILE__) + '/../data/blank.txt'
     File.open(file_name, 'r') do |f|
@@ -46,22 +47,18 @@ class RunTest < ActiveSupport::TestCase
     assert !r.save
   end
   
-  def test_requires_date
+  def test_save_requires_date
     r = Run.new(@attr.merge(:sample_date => nil))
     r.load(@good_data)
     assert !r.save
   end
 
-  def test_file_load
-#    initial_run_count = Run.count
-    assert_difference 'Run.count' do
-      r = Run.new(@attr)
-      r.load(@good_data)
-      assert r.save
-      assert r.samples.size > 1
-    end
-#    assert_equal initial_run_count + 1, Run.count
-    
+  def test_file_load_data
+    r = Run.new(@attr)
+    r.load(@good_data)
+    r.save
+
+    assert r.samples.size > 1    
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     assert_not_nil sample
@@ -89,60 +86,49 @@ class RunTest < ActiveSupport::TestCase
   end
   
   def test_file_load_with_negatives
-    old_runs = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
-    File.open(file_name,'r') do |f|
-      s = StringIO.new(f.read)
-      r = Run.new(@attr)
-#      r.sample_date = Date.today.to_s
-#      r.sample_type_id = 2
-      r.load(s)
-      assert r.save
-      assert r.samples.size > 1
-      assert_equal 330, r.measurements.size
+    assert_difference "Run.count" do
+      file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
+      File.open(file_name,'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr)
+        r.load(s)
+        assert r.save
+        assert r.samples.size > 1
+        assert_equal 330, r.measurements.size
+      end
     end
-
-     assert_equal old_runs+1, Run.count
   end
   
   def test_file_load_with_reruns
-    old_runs = Run.count
-    plot = Plot.find_by_treatment_and_replicate('T1','R1')
-    sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
-    
-    old_measurements =  sample.measurements.count
-     file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
-     File.open(file_name,'r') do |f|
-       s = StringIO.new(f.read)
-       r = Run.new
-       r.sample_date = Date.today.to_s
-       r.sample_type_id = 2
-       r.load(s)
-       assert r.save
-       assert r.samples.size > 1
-       assert_equal 342, r.measurements.size
-     end
-
-     assert_equal old_runs + 1, Run.count  
-     plot = Plot.find_by_treatment_and_replicate('T1','R1')
-     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
-   
-     assert_equal old_measurements + 8, sample.measurements.count
+    assert_difference "Run.count" do
+      plot = Plot.find_by_treatment_and_replicate('T1','R1')
+      sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
+      
+      assert_difference "sample.measurements.count", 8 do
+        file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
+        File.open(file_name,'r') do |f|
+          s = StringIO.new(f.read)
+          r = Run.new(@attr)
+          r.load(s)
+          assert r.save
+          assert r.samples.size > 1
+          assert_equal 342, r.measurements.size
+        end
+      end
+    end
   end
   
   def test_glbrc_file_load
-    old_runs = Run.count
-    file_name = File.dirname(__FILE__) + '/../data/GLBRC_deep_core_1106R4R5.TXT'
-    File.open(file_name,'r') do |f|
-      s = StringIO.new(f.read)
-      r = Run.new
-      r.sample_date = Date.today.to_s
-      r.sample_type_id = 4
-      r.load(s)
-      assert r.save
-      assert r.samples.size > 1
+    assert_difference "Run.count" do
+      file_name = File.dirname(__FILE__) + '/../data/GLBRC_deep_core_1106R4R5.TXT'
+      File.open(file_name,'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr.merge(:sample_type_id => 4))
+        r.load(s)
+        assert r.save
+        assert r.samples.size > 1
+      end
     end
-    assert_equal old_runs + 1, Run.count
   end
   
   def test_glbrc_resin_strips_file_load
