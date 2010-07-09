@@ -18,6 +18,19 @@ class RunsControllerTest < ActionController::TestCase
     @run = Run.new(@attr)
     @run.load(@good_data)
     @run.save
+    
+    @cn_attr = {
+      :sample_type_id => 6,
+      :sample_date    => Date.today.to_s
+    }
+    file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
+    File.open(file_name, 'r') do |f|
+      @cn_data = StringIO.new(f.read)
+    end
+    @cn_run = Run.new(@cn_attr)
+    @cn_run.load(@cn_data)
+    @cn_run.save
+
   end
     
   test "should get index" do
@@ -84,17 +97,6 @@ class RunsControllerTest < ActionController::TestCase
   end
   
   test "should show cn run" do
-    @cn_attr = {
-      :sample_type_id => 6,
-      :sample_date    => Date.today.to_s
-    }
-    file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
-    File.open(file_name, 'r') do |f|
-      @cn_data = StringIO.new(f.read)
-    end
-    @cn_run = Run.new(@cn_attr)
-    @cn_run.load(@cn_data)
-    @cn_run.save
     get :show, :id => @cn_run.id
     assert_response :success
     assert assigns(:run)
@@ -119,4 +121,23 @@ class RunsControllerTest < ActionController::TestCase
     assert_redirected_to runs_path
   end
   
+  test "should approve and disapprove sample" do
+    sample = Sample.find(:first)
+    xhr :get, :approve, :id => sample, :sample_class => "Sample"
+    assert assigns(:sample).approved
+    sample = assigns(:sample)
+    assert sample.approved
+    xhr :get, :approve, :id => sample, :sample_class => "Sample"
+    assert ! assigns(:sample).approved
+  end
+  
+  test "should approve and disapprove cn sample" do
+    sample = CnSample.find(:first)
+    xhr :get, :approve, :id => sample, :sample_class => "CnSample"
+    assert assigns(:sample).approved
+    sample = assigns(:sample)
+    assert sample.approved
+    xhr :get, :approve, :id => sample, :sample_class => "CnSample"
+    assert ! assigns(:sample).approved
+  end
 end

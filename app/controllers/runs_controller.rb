@@ -124,14 +124,14 @@ class RunsController < ApplicationController
   def approve
     sample_class = params[:sample_class]
     if sample_class == "CnSample"
-      sample = CnSample.find(params[:id])
+      @sample = CnSample.find(params[:id])
     else
-      sample = Sample.find(params[:id])
+      @sample = Sample.find(params[:id])
     end
-    sample.toggle(:approved)
-    sample.save
+    @sample.toggle(:approved)
+    @sample.save
     
-    dom_id = "sample_#{sample.id}"
+    dom_id = "sample_#{@sample.id}"
     nh4 = Analyte.find_by_name('NH4')
     no3 = Analyte.find_by_name('NO3')
     percent_n  = Analyte.find_by_name('Percent N')
@@ -143,7 +143,7 @@ class RunsController < ApplicationController
         render :update do |page|
           page.replace dom_id,
           :partial => 'runs/sample_data', 
-          :locals => {:sample => sample, :no3 => no3, :nh4 => nh4, :percent_n => percent_n, :percent_c => percent_c} #{:sample => sample, :no3 => no3, :nh4 => nh4}
+          :locals => {:sample => @sample, :no3 => no3, :nh4 => nh4, :percent_n => percent_n, :percent_c => percent_c}
           page.visual_effect :highlight,  dom_id, :duration => 1
         end
       end

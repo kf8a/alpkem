@@ -9,7 +9,7 @@
 				<% if sample.approved? %>
 				<%= number %>
 				<% else %>
-				<%= link_to_remote  "#{number}" , :url => {:id => measurement.id, :controller => 'measurements', :action => 'destroy'}, :method => 'delete', :loading  => update_page{|p| p[:spinner].show },
+				<%= link_to_remote  "#{number}" , :url => {:id => measurement.id, :controller => 'measurements', :action => 'destroy', :sample_class => sample.class}, :method => 'delete', :loading  => update_page{|p| p[:spinner].show },
 				:complete => update_page{|p| p[:spinner].hide }, 
 					:html => {:class => "deleted_#{measurement.deleted?}"}%>
 				<% end %>
