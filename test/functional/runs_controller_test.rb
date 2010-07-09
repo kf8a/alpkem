@@ -59,14 +59,11 @@ class RunsControllerTest < ActionController::TestCase
   end
 
   test "should create run" do
-    old_count = Run.count
-    file_name = '/../data/LTER_soil_test.TXT'
-    
-    post :create, :run => {:sample_date => Date.today, :sample_type_id => 2},
-                  :data => {:file => fixture_file_upload(file_name)}
+    assert_difference "Run.count" do
+      file_name = '/../data/LTER_soil_test.TXT'
+      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+    end
 
-    assert old_count + 1, Run.count
-    
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     assert_not_nil sample
@@ -116,10 +113,9 @@ class RunsControllerTest < ActionController::TestCase
   end
 
   test "should destroy run" do
-    old_count = Run.count
-    delete :destroy, :id => @run.id
-    
-    assert old_count -1, Run.count
+    assert_difference "Run.count", -1 do
+      delete :destroy, :id => @run.id
+    end
     assert_redirected_to runs_path
   end
   
