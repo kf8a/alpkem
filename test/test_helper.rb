@@ -54,9 +54,21 @@ class ActiveSupport::TestCase
     s.sample_date     Date.today
   end
   
+  Factory.define :cn_sample do |s|
+    s.cn_plot         "Testplot"
+    s.sample_date     Date.today
+  end  
+  
   Factory.define :measurement do |m|
     m.run_id          1
     m.sample          Factory.create :sample       
+    m.analyte         Factory.create :analyte
+    m.amount          0.5
+  end
+
+  Factory.define :cn_measurement do |m|
+    m.run_id          2
+    m.cn_sample       Factory.create :cn_sample       
     m.analyte         Factory.create :analyte
     m.amount          0.5
   end
