@@ -18,7 +18,25 @@ class Run < ActiveRecord::Base
     raise ArgumentError unless analyte.class == Analyte
     measurements.find(:all, :conditions => [%q{analyte_id = ?}, analyte.id])
   end
-
+  
+  def analytes
+    if cn_measurements_exist
+      list_of_analytes = []
+      analyte_percent_n = Analyte.find_by_name('Percent N')
+      analyte_percent_c = Analyte.find_by_name('Percent C')
+      list_of_analytes << analyte_percent_n
+      list_of_analytes << analyte_percent_c
+      return list_of_analytes
+    else
+      list_of_analytes = []
+      analyte_no3       = Analyte.find_by_name('NO3')
+      analyte_nh4       = Analyte.find_by_name('NH4')
+      list_of_analytes << analyte_no3
+      list_of_analytes << analyte_nh4
+      return list_of_analytes
+    end
+  end
+  
   def samples
     if cn_measurements_exist
       CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])

@@ -44,7 +44,15 @@ Feature: Manage runs
     Then I should see "2010-06-25 Soil Sample 55 samples qc delete"
     
     When I follow "qc"
-    Then I should see "T7R1 2010-06-25 0.2953 0.2947 0.3034"
+    Then I should see "T7R1"
+      And I should see "2010-06-25"
+      And I should see "0.0531 0.0571 0.0610"
+      And I should see "Mean: 0.0571"
+      And I should see "CV: 5.6953"
+      And I should see "0.2953 0.2947 0.3034"
+      And I should see "Mean: 0.2978"
+      And I should see "CV: 1.3414"
+      And I should see "Sample is not approved."
 
   Scenario: Upload GLBRC Deep Core data
     Given I am on the new run page
@@ -71,7 +79,8 @@ Feature: Manage runs
     Then I should be on the runs page.
 
     When I follow "qc"
-    Then I should see "G2R1 2010-06-25 0.0360 0.0300 0.0200"
+    Then I should see "G2R1 2010-06-25"
+      And I should see "0.0360 0.0300 0.0200"
   
   Scenario: Upload CN data
     Given I am on the new run page

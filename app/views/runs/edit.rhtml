@@ -15,17 +15,12 @@
 		<tr>
 			<th>Plot</th>
 			<th>Date</th>
-			<% if @run.cn_measurements_exist -%>
-			  <th rowspan='2'>Percent N</th>
-			  <th rowspan='2'>Percent C</th>
-			<% else -%>
-			  <th rowspan='2'>NH4</th>
-			  <th rowspan='2'>NO3</th>
-			<% end -%>
+      <% @analytes.each do |analyte| %>
+        <th rowspan='2'><%= analyte.name %></th>
+      <% end %>
 		</tr>
 	</thead>
 	<tbody>
-		<%= render :partial => 'sample', :collection => @samples,
-		 	:locals => {:no3 => @no3, :nh4 => @nh4, :percent_n => @percent_n, :percent_c => @percent_c}%>
+		<%= render :partial => 'sample', :collection => @samples %>
 	</tbody>
 </table>

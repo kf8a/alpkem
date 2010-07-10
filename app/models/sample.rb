@@ -6,6 +6,19 @@ class Sample < ActiveRecord::Base
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
   
   has_many :runs, :through => :measurements, :order => 'run_date'
+  
+  def plot_name
+    return plot.name
+  end
+  
+  def analytes
+    list_of_analytes = []
+    analyte_no3       = Analyte.find_by_name('NO3')
+    analyte_nh4       = Analyte.find_by_name('NH4')
+    list_of_analytes << analyte_no3
+    list_of_analytes << analyte_nh4
+    return list_of_analytes
+  end
 
   def measurements_by_analyte_name(analyte_name)
     analyte = Analyte.find_by_name(:first, analyte_name)
