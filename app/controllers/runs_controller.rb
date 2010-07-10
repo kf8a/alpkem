@@ -53,10 +53,7 @@ class RunsController < ApplicationController
   def edit
     @run        = Run.find(params[:id])
     @samples    = @run.samples
-    @nh4        = Analyte.find_by_name('NH4')
-    @no3        = Analyte.find_by_name('NO3')
-    @percent_n  = Analyte.find_by_name('Percent N')
-    @percent_c  = Analyte.find_by_name('Percent C')
+    @analytes   = @run.analytes
   end
 
   # POST /runs
@@ -131,19 +128,15 @@ class RunsController < ApplicationController
     @sample.toggle(:approved)
     @sample.save
     
-    dom_id = "sample_#{@sample.id}"
-    nh4 = Analyte.find_by_name('NH4')
-    no3 = Analyte.find_by_name('NO3')
-    percent_n  = Analyte.find_by_name('Percent N')
-    percent_c  = Analyte.find_by_name('Percent C')
-    
+    dom_id      = "sample_#{@sample.id}"
+    @analytes   = @sample.analytes
     
     respond_to do |format|
       format.js do 
         render :update do |page|
           page.replace dom_id,
-          :partial => 'runs/sample_data', 
-          :locals => {:sample => @sample, :no3 => no3, :nh4 => nh4, :percent_n => percent_n, :percent_c => percent_c}
+          :partial => 'runs/sample', 
+          :locals => {:sample => @sample}
           page.visual_effect :highlight,  dom_id, :duration => 1
         end
       end
