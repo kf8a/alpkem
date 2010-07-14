@@ -22,6 +22,11 @@ When /^I attach the CN test file$/ do
   attach_file("data_file", path_to_test_file, "text")
 end
 
+When /^I attach another CN test file$/ do
+  path_to_test_file = File.join(Rails.root, "test", "data", "soilCN_file2.csv")
+  attach_file("data_file", path_to_test_file, "text")
+end
+
 Then /^I should see the following data:$/ do |expected_data_table|
   expected_data_table.diff!(tableish('table tr', 'td,th'))
 end

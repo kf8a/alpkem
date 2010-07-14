@@ -63,7 +63,7 @@ Feature: Manage runs
       And I attach the GLBRC Deep Core test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
-
+  
   Scenario: Upload GLBRC Resin Strips data
     Given I am on the new run page
     When I select "June 25, 2010" as the "Sample Date" date
@@ -98,3 +98,13 @@ Feature: Manage runs
     When I follow "qc"
     Then I should see "CFR1S1C1SUR 2001-09-17 0.1183 0.1314"
       And I should see "1.6748"
+
+  Scenario: Upload another CN data file
+  Given I am on the new run page
+  When I select "June 25, 2010" as the "Sample Date" date
+    And I select "June 25, 2010" as the "Start Date" date
+    And I select "June 25, 2010" as the "Run Date" date
+    And I select "CN Soil Sample" from "Sample Type"
+    And I attach another CN test file
+    And I press "Upload"
+  Then I should see "Run was successfully uploaded."
