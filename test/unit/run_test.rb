@@ -156,4 +156,17 @@ class RunTest < ActiveSupport::TestCase
       end
     end
   end
+  
+  def test_cn_deep_core_file_load
+    assert_difference 'Run.count' do
+      file_name = File.dirname(__FILE__) + '/../data/GLBRC_CN_deepcore.csv'
+      File.open(file_name, 'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr.merge(:sample_type_id => 7))
+        r.load(s)
+        assert r.save
+        assert r.samples.size > 1
+      end
+    end
+  end
 end

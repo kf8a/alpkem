@@ -100,11 +100,11 @@ Feature: Manage runs
       And I should see "1.6748"
 
   Scenario: Upload GLBRC deepcore CN data file
-  Given I am on the new run page
-  When I select "June 25, 2010" as the "Sample Date" date
-    And I select "June 25, 2010" as the "Start Date" date
-    And I select "June 25, 2010" as the "Run Date" date
-    And I select "CN Soil Sample" from "Sample Type"
-    And I attach GLBRC deepcore CN test file
-    And I press "Upload"
-  Then I should see "Run was successfully uploaded."
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "CN Deep Core" from "Sample Type"
+      And I attach GLBRC deepcore CN test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."

@@ -50,13 +50,14 @@ class Run < ActiveRecord::Base
   end
 
 #--Things that need to be changed when adding new file type begins here--
-  
+
   LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   SOIL_SAMPLE         = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_SOIL_SAMPLE   = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_RESIN_STRIPS  = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
+  CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
 
   def sample_type_name(id=sample_type_id)
     if    id == 1
@@ -71,6 +72,8 @@ class Run < ActiveRecord::Base
       return "GLBRC Resin Strips"
     elsif id == 6
       return "CN Soil Sample"
+    elsif id == 7
+      return "CN Deep Core"
     else
       return "Unknown Sample Type"
     end
@@ -89,6 +92,8 @@ class Run < ActiveRecord::Base
       return Regexp.new(GLBRC_RESIN_STRIPS)
     elsif id == 6
       return Regexp.new(CN_SAMPLE)
+    elsif id == 7
+      return Regexp.new(CN_DEEP_CORE)
     else
       return Regexp.new("")
     end
@@ -172,6 +177,14 @@ class Run < ActiveRecord::Base
         percent_n   = $8
         percent_c   = $9
         process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
+      when 7
+        s_date      = sample_date
+        cn_plot     = $1
+        weight      = $2
+        cn_type     = $3
+        percent_n   = $4
+        percent_c   = $5
+        process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
       else
         raise "not implemented"
       end
@@ -190,7 +203,7 @@ class Run < ActiveRecord::Base
       return
     end
     
-    unless s_date.nil?
+    unless s_date.nil? or s_date.class == Date
       s_date = Date.strptime(s_date, "%m/%d/%Y")
     end
     
