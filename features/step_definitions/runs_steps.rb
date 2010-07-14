@@ -22,8 +22,8 @@ When /^I attach the CN test file$/ do
   attach_file("data_file", path_to_test_file, "text")
 end
 
-When /^I attach another CN test file$/ do
-  path_to_test_file = File.join(Rails.root, "test", "data", "soilCN_file2.csv")
+When /^I attach GLBRC deepcore CN test file$/ do
+  path_to_test_file = File.join(Rails.root, "test", "data", "GLBRC_CN_deepcore.csv")
   attach_file("data_file", path_to_test_file, "text")
 end
 
