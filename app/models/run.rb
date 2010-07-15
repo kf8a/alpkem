@@ -67,7 +67,7 @@ class Run < ActiveRecord::Base
     elsif id == 3
       return "GLBRC Soil Sample"
     elsif id == 4
-      return "GLBRC Deep Core"
+      return "GLBRC Deep Core Nitrogen"
     elsif id == 5
       return "GLBRC Resin Strips"
     elsif id == 6
