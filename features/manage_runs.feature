@@ -59,7 +59,7 @@ Feature: Manage runs
     When I select "June 25, 2010" as the "Sample Date" date
       And I select "June 25, 2010" as the "Start Date" date
       And I select "June 25, 2010" as the "Run Date" date
-      And I select "GLBRC Deep Core" from "Sample Type"
+      And I select "GLBRC Deep Core Nitrogen" from "Sample Type"
       And I attach the GLBRC Deep Core test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."

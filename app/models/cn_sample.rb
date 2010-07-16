@@ -11,8 +11,8 @@ class CnSample < ActiveRecord::Base
   
   def analytes
     list_of_analytes = []
-    analyte_percent_n = Analyte.find_by_name('Percent N')
-    analyte_percent_c = Analyte.find_by_name('Percent C')
+    analyte_percent_n = Analyte.find_by_name('N')
+    analyte_percent_c = Analyte.find_by_name('C')
     list_of_analytes << analyte_percent_n
     list_of_analytes << analyte_percent_c
     return list_of_analytes

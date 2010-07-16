@@ -8,10 +8,10 @@ analytes_002:
   unit: ppm
   id: "2"
 analytes_003:
-  name: Percent N
+  name: N
   unit: percent
   id: "3"
 analytes_004:
-  name: Percent C
+  name: C
   unit: percent
   id: "4"

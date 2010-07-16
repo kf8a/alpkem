@@ -22,8 +22,8 @@ class Run < ActiveRecord::Base
   def analytes
     if cn_measurements_exist
       list_of_analytes = []
-      analyte_percent_n = Analyte.find_by_name('Percent N')
-      analyte_percent_c = Analyte.find_by_name('Percent C')
+      analyte_percent_n = Analyte.find_by_name('N')
+      analyte_percent_c = Analyte.find_by_name('C')
       list_of_analytes << analyte_percent_n
       list_of_analytes << analyte_percent_c
       return list_of_analytes
@@ -116,8 +116,8 @@ class Run < ActiveRecord::Base
     
     analyte_no3       = Analyte.find_by_name('NO3')
     analyte_nh4       = Analyte.find_by_name('NH4')
-    analyte_percent_n = Analyte.find_by_name('Percent N')
-    analyte_percent_c = Analyte.find_by_name('Percent C')
+    analyte_percent_n = Analyte.find_by_name('N')
+    analyte_percent_c = Analyte.find_by_name('C')
     re = get_regex_by_sample_type_id
     plot = nil
     sample = nil
@@ -177,7 +177,7 @@ class Run < ActiveRecord::Base
         percent_n   = $8
         percent_c   = $9
         process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
-      when 7
+      when 7  #CN GLBRC Deepcore
         s_date      = sample_date
         cn_plot     = $1
         weight      = $2
@@ -233,20 +233,23 @@ class Run < ActiveRecord::Base
     nitrogen         = CnMeasurement.new
     nitrogen.analyte = analyte_percent_n
     nitrogen.amount  = percent_n
-
+    nitrogen.save
+    
     sample.cn_measurements << nitrogen
+    
     self.cn_measurements   << nitrogen
 
-    nitrogen.save
-
+    
     carbon         = CnMeasurement.new
     carbon.analyte = analyte_percent_c
     carbon.amount  = percent_c
+    carbon.save    
 
+    logger.info carbon.to_json
+    logger.info nitrogen.to_json
     sample.cn_measurements << carbon
     self.cn_measurements   << carbon
-    
-    carbon.save
+        
   end
   
   def process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
