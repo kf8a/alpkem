@@ -82,6 +82,25 @@ Feature: Manage runs
     Then I should see "G2R1 2010-06-25"
       And I should see "0.0360 0.0300 0.0200"
   
+  Scenario: Upload GLBRC New Format Soil data
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "GLBRC Soil Sample (New)" from "Sample Type"
+      And I attach the new GLBRC Soil test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+      And I should see "Number of Samples: 50"
+
+    When I follow "back"
+    Then I should be on the runs page.
+
+    When I follow "qc"
+    Then I should see "G8R2 2010-06-25"
+      And I should see "0.1800 0.1740 0.1860"
+  
+  
   Scenario: Upload CN data
     Given I am on the new run page
     When I select "June 25, 2010" as the "Sample Date" date

@@ -77,8 +77,6 @@ class RunsController < ApplicationController
       redirect_to :action => "new" and return
     end
     
-    logger.info "runs #{@run.valid?}"
-    logger.info "errors #{ @run.errors.full_messages}"
     respond_to do |format|
       if @run.save
         flash[:notice] = 'Run was successfully uploaded.'

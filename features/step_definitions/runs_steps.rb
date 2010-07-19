@@ -27,6 +27,12 @@ When /^I attach GLBRC deepcore CN test file$/ do
   attach_file("data_file", path_to_test_file, "text")
 end
 
+When /^I attach the new GLBRC Soil test file$/ do
+  path_to_test_file = File.join(Rails.root, "test", "data", "glbrc_soil_sample_new_format.txt")
+  attach_file("data_file", path_to_test_file, "text")
+end
+
+
 Then /^I should see the following data:$/ do |expected_data_table|
   expected_data_table.diff!(tableish('table tr', 'td,th'))
 end

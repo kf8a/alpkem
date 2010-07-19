@@ -58,6 +58,7 @@ class Run < ActiveRecord::Base
   GLBRC_RESIN_STRIPS  = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
+  GLBRC_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
 
   def sample_type_name(id=sample_type_id)
     if    id == 1
@@ -74,6 +75,8 @@ class Run < ActiveRecord::Base
       return "CN Soil Sample"
     elsif id == 7
       return "CN Deep Core"
+    elsif id == 8
+      return "GLBRC Soil Sample (New)"
     else
       return "Unknown Sample Type"
     end
@@ -94,6 +97,8 @@ class Run < ActiveRecord::Base
       return Regexp.new(CN_SAMPLE)
     elsif id == 7
       return Regexp.new(CN_DEEP_CORE)
+    elsif id == 8
+      return Regexp.new(GLBRC_SOIL_SAMPLE_NEW)
     else
       return Regexp.new("")
     end
@@ -185,6 +190,14 @@ class Run < ActiveRecord::Base
         percent_n   = $4
         percent_c   = $5
         process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
+      when 8 # GLBRC Soil new
+        if plot.nil? or plot.name != "G#{$1}R#{$2}"
+          plot        = Plot.find_by_name("G#{$1}R#{$2}")
+        end
+        s_date      = sample_date
+        nh4_amount  = $4
+        no3_amount  = $5
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)        
       else
         raise "not implemented"
       end
@@ -245,8 +258,6 @@ class Run < ActiveRecord::Base
     carbon.amount  = percent_c
     carbon.save    
 
-    logger.info carbon.to_json
-    logger.info nitrogen.to_json
     sample.cn_measurements << carbon
     self.cn_measurements   << carbon
         
