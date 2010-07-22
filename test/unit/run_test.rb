@@ -4,15 +4,22 @@ require 'date'
 
 class RunTest < ActiveSupport::TestCase
 
+  def good_data
+    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
+    File.open(file_name, 'r') do |f|
+      return StringIO.new(f.read)
+    end
+  end
+  
   def setup
     @attr = {
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
-    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
-    File.open(file_name, 'r') do |f|
-      @good_data = StringIO.new(f.read)
-    end
+#    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
+#    File.open(file_name, 'r') do |f|
+#      @good_data = StringIO.new(f.read)
+#    end
   end
 
   def teardown
@@ -22,14 +29,14 @@ class RunTest < ActiveSupport::TestCase
   def test_saves_with_good_data
     assert_difference "Run.count" do
       r = Run.new(@attr)
-      r.load(@good_data)
+      r.load(good_data)
       assert r.save
     end
   end
 
   def test_load_requires_sample_type
     r = Run.new(@attr.merge(:sample_type_id => nil))
-    assert !r.load(@good_data)
+    assert !r.load(good_data)
   end
 
   def test_save_requires_loaded_data
@@ -49,13 +56,13 @@ class RunTest < ActiveSupport::TestCase
   
   def test_save_requires_date
     r = Run.new(@attr.merge(:sample_date => nil))
-    r.load(@good_data)
+    r.load(good_data)
     assert !r.save
   end
 
   def test_file_load_data
     r = Run.new(@attr)
-    r.load(@good_data)
+    r.load(good_data)
     r.save
 
     assert r.samples.size > 1    
