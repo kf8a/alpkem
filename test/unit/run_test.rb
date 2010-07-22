@@ -1,7 +1,5 @@
 require 'test_helper'
 
-require 'date'
-
 class RunTest < ActiveSupport::TestCase
 
   def good_data
