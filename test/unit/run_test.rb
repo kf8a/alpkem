@@ -16,10 +16,6 @@ class RunTest < ActiveSupport::TestCase
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
-#    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
-#    File.open(file_name, 'r') do |f|
-#      @good_data = StringIO.new(f.read)
-#    end
   end
 
   def teardown
