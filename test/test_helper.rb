@@ -60,9 +60,11 @@ class ActiveSupport::TestCase
   end  
   
   Factory.define :measurement do |m|
-    m.run_id          1
-    m.sample          Factory.create :sample       
-    m.analyte         Factory.create :analyte
+#    m.association     :run
+#    m.sample          Factory.create :sample       
+    m.association     :sample
+#    m.analyte         Factory.create :analyte
+    m.association     :analyte
     m.amount          0.5
   end
 
@@ -77,6 +79,7 @@ class ActiveSupport::TestCase
     r.run_date          Date.today
     r.sample_date       Date.today
     r.sample_type_id    1
-    r.association   :measurements, :factory => :measurement
+    r.after_build {|run| Factory.create(:measurement, :run_id => run.object_id)}
+#    r.association       :measurements, :factory => :measurement
   end
 end

@@ -87,9 +87,8 @@ class RunTest < ActiveSupport::TestCase
     measurements = run.measurements_by_analyte(nh4)
     assert_not_nil measurements.index {|m| m.amount == 0.209936038}
     
-    assert_equal "T6", run.samples[run.samples.size-1].plot.treatment.name
+    assert_not_nil run.samples.index {|s| s.plot.treatment.name == "T6"}
     
-    assert_equal 6, run.samples[0].measurements.size # only the current runs measurements are returned.
     assert_equal 330, run.measurements.size
   end
   
@@ -109,19 +108,14 @@ class RunTest < ActiveSupport::TestCase
   
   def test_file_load_with_reruns
     assert_difference "Run.count" do
-      plot = Plot.find_by_treatment_and_replicate('T1','R1')
-      sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
-      
-      assert_difference "sample.measurements.count", 8 do
-        file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
-        File.open(file_name,'r') do |f|
-          s = StringIO.new(f.read)
-          r = Run.new(@attr)
-          r.load(s)
-          assert r.save
-          assert r.samples.size > 1
-          assert_equal 342, r.measurements.size
-        end
+      file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
+      File.open(file_name,'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr)
+        r.load(s)
+        assert r.save
+        assert r.samples.size > 1
+        assert_equal 342, r.measurements.size
       end
     end
   end
