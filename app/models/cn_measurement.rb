@@ -9,5 +9,9 @@ class CnMeasurement < ActiveRecord::Base
   def CnMeasurement.find_all_good_measurements()
     CnMeasurement.find(:all, :conditions => ['deleted = false'])
   end
-
+  
+  def sample
+    return cn_sample
+  end
+  
 end

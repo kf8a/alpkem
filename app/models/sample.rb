@@ -11,6 +11,20 @@ class Sample < ActiveRecord::Base
     return plot.name
   end
   
+  def previous_measurements
+    approved_samples = Sample.find_approved
+    relevant_measurements = []
+    approved_samples.each do |a|
+      next unless a.plot == plot
+      next unless a.sample_date
+      a.measurements.each do |m|
+        next if m.deleted?
+        relevant_measurements << m
+      end
+    end
+    return relevant_measurements
+  end
+  
   def analytes
     list_of_analytes = []
     analyte_no3       = Analyte.find_by_name('NO3')
