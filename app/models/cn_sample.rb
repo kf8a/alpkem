@@ -17,6 +17,20 @@ class CnSample < ActiveRecord::Base
     list_of_analytes << analyte_percent_c
     return list_of_analytes
   end
+
+  def previous_measurements
+    approved_samples = CnSample.find_approved
+    relevant_measurements = []
+    approved_samples.each do |a|
+      next unless a.cn_plot == cn_plot
+      next unless a.sample_date
+      a.cn_measurements.each do |m|
+        next if m.deleted?
+        relevant_measurements << m
+      end
+    end
+    return relevant_measurements
+  end
   
   def measurements_by_analyte_name(analyte_name)
     analyte = Analyte.find_by_name(:first, analyte_name)

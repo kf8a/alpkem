@@ -9,4 +9,52 @@
   <% end -%>
   <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
   </td>
+  <td>
+    <% previous_years = "" %>
+    <% analyte1_years = [] %>
+    <% analyte2_years = [] %>
+    <% earliest_year = Date.today.year - 1 %>
+    <% previous_amounts = "" %>
+    <% analyte1_amounts = [] %>
+    <% analyte2_amounts = [] %>
+    <% lowest_amount = 0 %>
+    <% highest_amount = 0 %>
+    <% analyte1 = @analytes[0] %>
+    <% analyte2 = @analytes[1] %>
+    <% chart_marker_sizes = "" %>
+    <% sample.previous_measurements.each do |m|
+        earliest_year     = [earliest_year, m.sample.sample_date.year].min
+        highest_amount    = [highest_amount, m.amount].max
+        lowest_amount     = [lowest_amount, m.amount].min
+        analyte1_amounts  << m.amount.to_s + "," if m.analyte == analyte1
+        analyte1_years    << m.sample.sample_date.year.to_s + "," if m.analyte == analyte1
+        analyte2_amounts  << m.amount.to_s + "," if m.analyte == analyte2
+        analyte2_years    << m.sample.sample_date.year.to_s + "," if m.analyte == analyte2
+       end %>
+    <% analyte1_amounts.size.times do |a|
+        previous_amounts += analyte1_amounts[a] + analyte2_amounts[a]
+        previous_years   += analyte1_years[a] + analyte2_years[a]
+        chart_marker_sizes += "1,1,"
+      end %>
+    <% year_step = [((Date.today.year - earliest_year)/4).to_int, 1].max %>
+    <% previous_years.slice!(-1) if previous_years.end_with?(",") %>
+    <% previous_amounts.slice!(-1) if previous_amounts.end_with?(",") %>
+    <% chart_marker_sizes.slice!(-1) if chart_marker_sizes.end_with?(",") %>
+    <% chart_step         = (highest_amount - lowest_amount)/5 %>
+    <% chart_type         = "s" %>
+    <% chart_width        = "250" %>
+    <% chart_height       = "200" %>
+    <% chart_legend       = analyte1.name.delete(" ") + "|" + analyte2.name.delete(" ") %>
+    <% chart_x_values     = previous_years %>
+    <% chart_y_values     = previous_amounts %>
+    <% chart_visible_axes = "x,y" %>
+    <% chart_x_axis_range = earliest_year.to_s + "," + Date.today.year.to_s + "," + year_step.to_s %>
+    <% chart_y_axis_range = lowest_amount.to_s + "," + highest_amount.to_s + "," + chart_step.to_s %>
+    <% chart_data_range   = earliest_year.to_s + "," + Date.today.year.to_s + "," + lowest_amount.to_s + "," + highest_amount.to_s %>
+    <% chart_title        = "Approved+measurements" %>
+    <% chart_colors       = "FF0000|0000FF" %>
+    
+    <% google_chart_url = "http://chart.apis.google.com/chart?cht=" + chart_type + "&chd=t:" + chart_x_values + "|" + chart_y_values + "|" + chart_marker_sizes + "&chs=" + chart_width + "x" + chart_height + "&chdl=" + chart_legend + "&chxt=" + chart_visible_axes + "&chxr=0," + chart_x_axis_range + "|1," + chart_y_axis_range + "&chds=" + chart_data_range + "&chtt=" + chart_title + "&chco=" + chart_colors %>
+    <img src=<%= google_chart_url %>>
+  </td>
 </tr>

@@ -16,6 +16,7 @@ class Sample < ActiveRecord::Base
     relevant_measurements = []
     approved_samples.each do |a|
       next unless a.plot == plot
+      next unless a.sample_date
       a.measurements.each do |m|
         next if m.deleted?
         relevant_measurements << m
