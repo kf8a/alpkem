@@ -27,7 +27,7 @@ module RunsHelper
       previous_dates   += analyte1_dates[a] + analyte2_dates[a]
       chart_marker_sizes += "1,1,"
     end
-    date_step = [((Date.today.jd - earliest_date.jd)/4), 1].max
+    date_step = [((Date.today.year - earliest_date.year)/4), 1].max
     previous_dates.slice!(-1) if previous_dates.end_with?(",")
     previous_amounts.slice!(-1) if previous_amounts.end_with?(",")
     chart_marker_sizes.slice!(-1) if chart_marker_sizes.end_with?(",")
@@ -39,7 +39,7 @@ module RunsHelper
     chart_x_values     = previous_dates
     chart_y_values     = previous_amounts
     chart_visible_axes = "x,y"
-    chart_x_axis_range = earliest_date.jd.to_s + "," + Date.today.jd.to_s + "," + date_step.to_s
+    chart_x_axis_range = earliest_date.year.to_s + "," + Date.today.year.to_s + "," + date_step.to_s
     chart_y_axis_range = lowest_amount.to_s + "," + highest_amount.to_s + "," + chart_step.to_s
     chart_data_range   = earliest_date.jd.to_s + "," + Date.today.jd.to_s + "," + lowest_amount.to_s + "," + highest_amount.to_s
     chart_title        = "Approved+measurements"
