@@ -97,6 +97,11 @@ class RunsControllerTest < ActionController::TestCase
     get :edit, :id => @run.id
     assert_response :success
   end
+  
+  test "should get graphs from googlecharts when editing" do
+    get :edit, :id => @run.id
+    assert_select "img", {:minimum => 20} #Don't make this too precise
+  end
 
   test "should update run" do
     #Right now this test just tests whether the update action works at all, not whether it actually updates anything.
