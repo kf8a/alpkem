@@ -59,7 +59,8 @@ class Run < ActiveRecord::Base
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
   GLBRC_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
-
+  LTER_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  
   def sample_type_name(id=sample_type_id)
     if    id == 1
       return "Lysimeter"
@@ -86,7 +87,7 @@ class Run < ActiveRecord::Base
     if    id == 1
       return Regexp.new(LYSIMETER)
     elsif id == 2
-      return Regexp.new(SOIL_SAMPLE)
+      return Regexp.new(LTER_SOIL_SAMPLE_NEW)
     elsif id == 3
       return Regexp.new(GLBRC_SOIL_SAMPLE)
     elsif id == 4
