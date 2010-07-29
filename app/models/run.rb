@@ -87,7 +87,7 @@ class Run < ActiveRecord::Base
     if    id == 1
       return Regexp.new(LYSIMETER)
     elsif id == 2
-      return Regexp.new(LTER_SOIL_SAMPLE_NEW)
+      return Regexp.new(SOIL_SAMPLE)
     elsif id == 3
       return Regexp.new(GLBRC_SOIL_SAMPLE)
     elsif id == 4
