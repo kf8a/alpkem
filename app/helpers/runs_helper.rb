@@ -22,7 +22,7 @@ module RunsHelper
       analyte2_amounts  << m.amount.to_s + "," if m.analyte == analyte2
       analyte2_dates    << m.sample.sample_date.jd.to_s + "," if m.analyte == analyte2
     end
-    analyte1_amounts.size.times do |a|
+    [analyte1_amounts.size, analyte2_amounts.size].min.times do |a|
       previous_amounts += analyte1_amounts[a] + analyte2_amounts[a]
       previous_dates   += analyte1_dates[a] + analyte2_dates[a]
       chart_marker_sizes += "1,1,"
