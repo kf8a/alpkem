@@ -22,10 +22,31 @@ module RunsHelper
       analyte2_amounts  << m.amount.to_s + "," if m.analyte == analyte2
       analyte2_dates    << m.sample.sample_date.jd.to_s + "," if m.analyte == analyte2
     end
-    [analyte1_amounts.size, analyte2_amounts.size].min.times do |a|
-      previous_amounts += analyte1_amounts[a] + analyte2_amounts[a]
-      previous_dates   += analyte1_dates[a] + analyte2_dates[a]
-      chart_marker_sizes += "1,1,"
+    [analyte1_amounts.size, analyte2_amounts.size].max.times do |a|
+      if analyte1_amounts[a]
+        analyte1_amount = analyte1_amounts[a]
+        analyte1_date = analyte1_dates[a]
+        analyte1_size = "1,"
+      else
+        #fake data, but put in at 0 size
+        analyte1_amount = "1000,"
+        analyte1_date = "4,"
+        analyte1_size = "0,"
+      end
+      
+      if analyte2_amounts[a]
+        analyte2_amount = analyte2_amounts[a]
+        analyte2_date = analyte2_dates[a]
+        analyte2_size = "1,"
+      else
+        analyte2_amount = "1000,"
+        analyte2_date = "4,"
+        analyte2_size = "0,"
+      end
+      
+      previous_amounts += analyte1_amount + analyte2_amount
+      previous_dates   += analyte1_date + analyte2_date
+      chart_marker_sizes += analyte1_size + analyte2_size
     end
     date_step = [((Date.today.year - earliest_date.year)/4), 1].max
     previous_dates.slice!(-1) if previous_dates.end_with?(",")
