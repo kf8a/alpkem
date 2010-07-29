@@ -38,4 +38,26 @@ class RunsHelperTest < ActionView::TestCase
 
     assert_equal proper_chart_url, google_chart_url_maker(@measurements, @analytes)
   end
+  
+  test "should not crash if there is no analyte2 amounts" do
+    analyte1 = Factory.create(:analyte, :name => "C6H12O6", :unit => "sweetness")
+    analyte2 = Factory.create(:analyte, :name => "NaCl", :unit => "saltiness")
+    
+    measurement1_date = Date.today
+    measurement1_amount = 0.0235
+    @measurement1 = Factory.create(:measurement, :amount => measurement1_amount, :analyte => analyte1, :sample => Factory.create(:sample, :sample_date => measurement1_date))
+    
+    measurement2_date = Date.today.last_year
+    measurement2_amount = 0.001
+    @measurement2 = Factory.create(:measurement, :amount => measurement2_amount, :analyte => analyte1, :sample => Factory.create(:sample, :sample_date => measurement2_date))
+    
+    measurement3_date = Date.yesterday
+    measurement3_amount = -0.089
+    @measurement3 = Factory.create(:measurement, :amount => measurement3_amount, :analyte => analyte1, :sample => Factory.create(:sample, :sample_date => measurement3_date))
+    
+    @measurements = [@measurement1, @measurement2, @measurement3]
+    @analytes = [analyte1, analyte2]
+
+    assert google_chart_url_maker(@measurements, @analytes)
+  end
 end
