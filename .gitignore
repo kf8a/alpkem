@@ -11,3 +11,4 @@ doc/app
 config/database.yml
 coverage/*
 nbproject/*
+rcov/*
