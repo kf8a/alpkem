@@ -62,46 +62,30 @@ class Run < ActiveRecord::Base
   LTER_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   
   def sample_type_name(id=sample_type_id)
-    if    id == 1
-      return "Lysimeter"
-    elsif id == 2
-      return "Soil Sample"
-    elsif id == 3
-      return "GLBRC Soil Sample"
-    elsif id == 4
-      return "GLBRC Deep Core Nitrogen"
-    elsif id == 5
-      return "GLBRC Resin Strips"
-    elsif id == 6
-      return "CN Soil Sample"
-    elsif id == 7
-      return "CN Deep Core"
-    elsif id == 8
-      return "GLBRC Soil Sample (New)"
-    else
-      return "Unknown Sample Type"
+    case id
+    when 1; "Lysimeter"
+    when 2; "Soil Sample"
+    when 3; "GLBRC Soil Sample"
+    when 4; "GLBRC Deep Core Nitrogen"
+    when 5; "GLBRC Resin Strips"
+    when 6; "CN Soil Sample"
+    when 7; "CN Deep Core"
+    when 8; "GLBRC Soil Sample (New)"
+    else    "Unknown Sample Type"
     end
   end
   
   def get_regex_by_sample_type_id(id=sample_type_id)
-    if    id == 1
-      return Regexp.new(LYSIMETER)
-    elsif id == 2
-      return Regexp.new(SOIL_SAMPLE)
-    elsif id == 3
-      return Regexp.new(GLBRC_SOIL_SAMPLE)
-    elsif id == 4
-      return Regexp.new(GLBRC_DEEP_CORE)
-    elsif id == 5
-      return Regexp.new(GLBRC_RESIN_STRIPS)
-    elsif id == 6
-      return Regexp.new(CN_SAMPLE)
-    elsif id == 7
-      return Regexp.new(CN_DEEP_CORE)
-    elsif id == 8
-      return Regexp.new(GLBRC_SOIL_SAMPLE_NEW)
-    else
-      return Regexp.new("")
+    case id
+    when 1; Regexp.new(LYSIMETER)
+    when 2; Regexp.new(LTER_SOIL_SAMPLE_NEW)
+    when 3; Regexp.new(GLBRC_SOIL_SAMPLE)
+    when 4; Regexp.new(GLBRC_DEEP_CORE)
+    when 5; Regexp.new(GLBRC_RESIN_STRIPS)
+    when 6; Regexp.new(CN_SAMPLE)
+    when 7; Regexp.new(CN_DEEP_CORE)
+    when 8; Regexp.new(GLBRC_SOIL_SAMPLE_NEW)
+    else    Regexp.new("")
     end
   end
   
