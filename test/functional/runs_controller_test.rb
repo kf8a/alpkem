@@ -11,6 +11,7 @@ class RunsControllerTest < ActionController::TestCase
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
+<<<<<<< HEAD
     file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
     File.open(file_name, 'r') do |f|
       @good_data = StringIO.new(f.read)
@@ -31,94 +32,146 @@ class RunsControllerTest < ActionController::TestCase
     @cn_run.load(@cn_data)
     @cn_run.save
 
+=======
+>>>>>>> Speeds up runs_controller test by localizing creation of a run
   end
     
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:runs)
-  end
-  
-  test "should get cn" do
-    get :cn
-    assert_response :success
-    assert_not_nil assigns(:runs)
-  end
-
   test "should get new" do
     get :new
     assert_response :success
   end
 
-  test "should not create run with invalid sample type" do
-    assert_no_difference 'Run.count' do
+  context "POST :create with invalid sample type" do
+    setup do
       file_name = '/../data/LTER_soil_test.TXT'
-      post :create, :run => {:sample_date => Date.today, :sample_type_id => 1},
-                    :data => {:file => fixture_file_upload(file_name)}
+      post :create, :run => {:sample_date => Date.today, 
+                              :sample_type_id => 1},
+                    :data => {:file => fixture_file_upload(file_name)}    
     end
+    
+    should_render_template :new
+  end
+  
+  context "POST :create with no file" do
+    setup do
+      post :create, :run => @attr, :data => nil      
+    end
+    
+    should_render_template :new
   end
 
-  test "should not create run with no file" do
-    assert_no_difference 'Run.count' do
-      post :create, :run => @attr, :data => nil
-    end
-  end
-
-  test "should not create run with blank file" do
-    assert_no_difference 'Run.count' do
+  context "POST :create with blank file" do
+    setup do
       file_name = '/../data/blank.txt'
       post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
     end
+    
+    should_redirect_to("new run page") {new_run_path}
   end
 
   test "should create run" do
-    assert_difference "Run.count" do
-      file_name = '/../data/new_format_soil_samples_090415.TXT'
-      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
-    end
+    file_name = '/../data/ew_format_soil_samples_090415.TXT'
+    post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
 
     assert assigns(:run)
     assert_redirected_to run_path(assigns(:run))
   end
   
-
-  test "should show run" do
-    get :show, :id => @run.id
-    assert_response :success
-  end
-  
-  test "should show cn run" do
-    get :show, :id => @cn_run.id
-    assert_response :success
-    assert assigns(:run)
-  end
-
-  test "should get edit" do
-    get :edit, :id => @run.id
-    assert_response :success
-  end
-  
-  test "should get graphs from googlecharts when editing" do
-    get :edit, :id => @run.id
-    assert_select "img", {:minimum => 20} #Don't make this too precise
-  end
-
-  test "should update run" do
-    #Right now this test just tests whether the update action works at all, not whether it actually updates anything.
-    put :update, :id => @run.id
-    assert assigns(:run)
-    assert_redirected_to run_path(@run)
-  end
-
-  test "should destroy run" do
-    assert_difference "Run.count", -1 do
-      delete :destroy, :id => @run.id
+  context "A cn_run" do
+    setup do
+      @cn_attr = {
+        :sample_type_id => 6,
+        :sample_date    => Date.today.to_s
+      }
+      file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
+      File.open(file_name, 'r') do |f|
+        @cn_data = StringIO.new(f.read)
+      end
+      @cn_run = Run.new(@cn_attr)
+      @cn_run.load(@cn_data)
+      @cn_run.save    
     end
-    assert_redirected_to runs_path
+
+    context "GET :cn" do
+      setup do
+        get :cn
+      end
+
+      should_respond_with :success
+      should_assign_to :runs
+    end
+
+    context "GET :show the cn run" do
+      setup do
+        get :show, :id => @cn_run.id
+      end
+      
+      should_respond_with :success
+      should_assign_to :run
+    end
   end
   
+  context "a non-CN run" do
+    setup do
+      file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
+      File.open(file_name, 'r') do |f|
+        @good_data = StringIO.new(f.read)
+      end
+      @run = Run.new(@attr)
+      @run.load(@good_data)
+      @run.save    
+    end
+    
+    context "GET :index" do
+      setup do
+        get :index
+      end
+      
+      should_respond_with :success
+      should_assign_to :runs
+    end
+  
+    context "GET :show the run" do
+      setup do
+        get :show, :id => @run.id
+      end
+      
+      should_respond_with :success
+    end
+    
+    context "GET :edit the run" do
+      setup do
+        get :edit, :id => @run.id
+      end
+      
+      should_respond_with :success
+      should "get graphs from googlecharts" do
+        assert_select "img", {:minimum => 20} #Don't make this too precise
+      end
+    end
+    
+    context "PUT :update the run" do
+      setup do
+        put :update, :id => @run.id
+      end
+      
+      should_assign_to :run
+      should_redirect_to("the run's page") {run_path(@run)}
+    end
+    
+    context "DELETE :destroy the run" do
+      setup do
+        delete :destroy, :id => @run.id
+      end
+      
+      should_destroy :run
+      should_redirect_to("the runs index page") {runs_path}
+    end
+  end
+
   test "should approve and disapprove sample" do
-    sample = Sample.find(:first)
+#    sample = Sample.find(:first)
+    sample = Factory.create(:sample)
     xhr :get, :approve, :id => sample, :sample_class => "Sample"
     assert assigns(:sample).approved
     sample = assigns(:sample)
@@ -128,7 +181,8 @@ class RunsControllerTest < ActionController::TestCase
   end
   
   test "should approve and disapprove cn sample" do
-    sample = CnSample.find(:first)
+#    sample = CnSample.find(:first)
+    sample = Factory.create(:cn_sample)
     xhr :get, :approve, :id => sample, :sample_class => "CnSample"
     assert assigns(:sample).approved
     sample = assigns(:sample)
