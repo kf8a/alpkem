@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class RunsControllerTest < ActionController::TestCase
   
@@ -11,7 +11,7 @@ class RunsControllerTest < ActionController::TestCase
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
-    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
     File.open(file_name, 'r') do |f|
       @good_data = StringIO.new(f.read)
     end
@@ -73,7 +73,7 @@ class RunsControllerTest < ActionController::TestCase
 
   test "should create run" do
     assert_difference "Run.count" do
-      file_name = '/../data/LTER_soil_test.TXT'
+      file_name = '/../data/new_format_soil_samples_090415.TXT'
       post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
     end
 

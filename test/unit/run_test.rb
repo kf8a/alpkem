@@ -3,7 +3,7 @@ require 'test_helper'
 class RunTest < ActiveSupport::TestCase
 
   def good_data
-    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
+    file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
     File.open(file_name, 'r') do |f|
       return StringIO.new(f.read)
     end
@@ -54,6 +54,9 @@ class RunTest < ActiveSupport::TestCase
     assert !r.save
   end
 
+  # these next 2 test fail because I am now using the new format for sample type 2 rather than the old format and
+  # i have a new data file so the anumbers are not the same
+  
   def test_file_load_data
     r = Run.new(@attr)
     r.load(good_data)
