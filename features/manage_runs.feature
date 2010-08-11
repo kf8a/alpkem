@@ -46,12 +46,12 @@ Feature: Manage runs
     When I follow "qc"
     Then I should see "T7R1"
       And I should see "2010-06-25"
-      And I should see "0.0531 0.0571 0.0610"
-      And I should see "Mean: 0.0571"
-      And I should see "CV: 5.6953"
-      And I should see "0.2953 0.2947 0.3034"
-      And I should see "Mean: 0.2978"
-      And I should see "CV: 1.3414"
+      And I should see "0.0030 0.0120 0.0280"
+      And I should see "Mean: 0.0143"
+      And I should see "CV: 72.1305"
+      And I should see "0.2520 0.3390 0.3460"
+      And I should see "Mean: 0.3123"
+      And I should see "CV: 13.6898"
       And I should see "Sample is not approved."
 
   Scenario: Upload GLBRC Deep Core data
