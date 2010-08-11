@@ -19,7 +19,7 @@ class RunsHelperTest < ActionView::TestCase
                                     :sample => Factory.create(:sample, 
                                     :sample_date => @measurement1_date))
     
-    @measurement2_date    = Date.today.last_year
+    @measurement2_date    = Date.today.prev_year
     @measurement2_amount  = 0.001
     @measurement2         = Factory.create(:measurement, 
                                     :amount => @measurement2_amount, 
@@ -35,7 +35,7 @@ class RunsHelperTest < ActionView::TestCase
                                     :sample => Factory.create(:sample, 
                                     :sample_date => @measurement3_date))
     
-    @measurement4_date    = Date.today.last_month
+    @measurement4_date    = Date.today.prev_month
     @measurement4_amount  = -0.875
     @measurement4         = Factory.create(:measurement, 
                                     :amount => @measurement4_amount, 
