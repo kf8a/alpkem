@@ -65,8 +65,10 @@ module RunsHelper
     chart_data_range   = earliest_date.jd.to_s + "," + Date.today.jd.to_s + "," + lowest_amount.to_s + "," + highest_amount.to_s
     chart_title        = "Approved+measurements"
     chart_colors       = "FF0000|0000FF"
+    chart_numeric_y_range= highest_amount - lowest_amount
+    point_size         = chart_numeric_y_range < 1 ? 4 : ((chart_height.to_i)/(chart_numeric_y_range) * 40)
     
-    google_chart_url = "http://chart.apis.google.com/chart?cht=" + chart_type + "&chd=t:" + chart_x_values + "|" + chart_y_values + "|" + chart_marker_sizes + "&chs=" + chart_width + "x" + chart_height + "&chdl=" + chart_legend + "&chxt=" + chart_visible_axes + "&chxr=0," + chart_x_axis_range + "|1," + chart_y_axis_range + "&chds=" + chart_data_range + "&chtt=" + chart_title + "&chco=" + chart_colors
+    google_chart_url = "http://chart.apis.google.com/chart?cht=" + chart_type + "&chd=t:" + chart_x_values + "|" + chart_y_values + "|" + chart_marker_sizes + "&chs=" + chart_width + "x" + chart_height + "&chdl=" + chart_legend + "&chxt=" + chart_visible_axes + "&chxr=0," + chart_x_axis_range + "|1," + chart_y_axis_range + "&chds=" + chart_data_range + "&chtt=" + chart_title + "&chco=" + chart_colors + "&chm=o,FF0000,#{point_size}|o,0000FF,#{point_size}"
     return google_chart_url
   end
 end
