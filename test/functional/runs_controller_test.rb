@@ -20,13 +20,13 @@ class RunsControllerTest < ActionController::TestCase
 
   context "POST :create with invalid sample type" do
     setup do
-      file_name = '/../data/LTER_soil_test.TXT'
+      file_name = '/../data/new_format_soil_samples_090415.TXT'
       post :create, :run => {:sample_date => Date.today, 
                               :sample_type_id => 1},
                     :data => {:file => fixture_file_upload(file_name)}    
     end
     
-    should_render_template :new
+    should render_template :new
   end
   
   context "POST :create with no file" do
@@ -34,7 +34,7 @@ class RunsControllerTest < ActionController::TestCase
       post :create, :run => @attr, :data => nil      
     end
     
-    should_render_template :new
+    should render_template :new
   end
 
   context "POST :create with blank file" do
@@ -43,11 +43,11 @@ class RunsControllerTest < ActionController::TestCase
       post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
     end
     
-    should_redirect_to("new run page") {new_run_path}
+    should redirect_to("new run page") {new_run_path}
   end
 
   test "should create run" do
-    file_name = '/../data/LTER_soil_test.TXT'
+    file_name = '/../data/new_format_soil_samples_090415.TXT'
     post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
 
     assert assigns(:run)
@@ -74,8 +74,8 @@ class RunsControllerTest < ActionController::TestCase
         get :cn
       end
 
-      should_respond_with :success
-      should_assign_to :runs
+      should respond_with :success
+      should assign_to :runs
     end
 
     context "GET :show the cn run" do
@@ -83,14 +83,14 @@ class RunsControllerTest < ActionController::TestCase
         get :show, :id => @cn_run.id
       end
       
-      should_respond_with :success
-      should_assign_to :run
+      should respond_with :success
+      should assign_to :run
     end
   end
   
   context "a non-CN run" do
     setup do
-      file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
+      file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
       File.open(file_name, 'r') do |f|
         @good_data = StringIO.new(f.read)
       end
@@ -104,8 +104,8 @@ class RunsControllerTest < ActionController::TestCase
         get :index
       end
       
-      should_respond_with :success
-      should_assign_to :runs
+      should respond_with :success
+      should assign_to :runs
     end
   
     context "GET :show the run" do
@@ -113,7 +113,7 @@ class RunsControllerTest < ActionController::TestCase
         get :show, :id => @run.id
       end
       
-      should_respond_with :success
+      should respond_with :success
     end
     
     context "GET :edit the run" do
@@ -121,7 +121,7 @@ class RunsControllerTest < ActionController::TestCase
         get :edit, :id => @run.id
       end
       
-      should_respond_with :success
+      should respond_with :success
       should "get graphs from googlecharts" do
         assert_select "img", {:minimum => 20} #Don't make this too precise
       end
@@ -132,8 +132,8 @@ class RunsControllerTest < ActionController::TestCase
         put :update, :id => @run.id
       end
       
-      should_assign_to :run
-      should_redirect_to("the run's page") {run_path(@run)}
+      should assign_to :run
+      should redirect_to("the run's page") {run_path(@run)}
     end
     
     context "DELETE :destroy the run" do
@@ -142,7 +142,7 @@ class RunsControllerTest < ActionController::TestCase
       end
       
       should_destroy :run
-      should_redirect_to("the runs index page") {runs_path}
+      should redirect_to("the runs index page") {runs_path}
     end
   end
 

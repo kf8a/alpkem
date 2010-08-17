@@ -4,7 +4,7 @@ module RunsHelper
     previous_dates = ""
     analyte1_dates = []
     analyte2_dates = []
-    earliest_date = Date.today.last_year
+    earliest_date = Date.today.prev_year
     previous_amounts = ""
     analyte1_amounts = []
     analyte2_amounts = []

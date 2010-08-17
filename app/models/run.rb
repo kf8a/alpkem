@@ -22,8 +22,8 @@ class Run < ActiveRecord::Base
   def analytes
     if cn_measurements_exist
       list_of_analytes = []
-      analyte_percent_n = Analyte.find_by_name('Percent N')
-      analyte_percent_c = Analyte.find_by_name('Percent C')
+      analyte_percent_n = Analyte.find_by_name('N')
+      analyte_percent_c = Analyte.find_by_name('C')
       list_of_analytes << analyte_percent_n
       list_of_analytes << analyte_percent_c
       return list_of_analytes
@@ -58,44 +58,34 @@ class Run < ActiveRecord::Base
   GLBRC_RESIN_STRIPS  = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
-
+  GLBRC_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  LTER_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  
   def sample_type_name(id=sample_type_id)
-    if    id == 1
-      return "Lysimeter"
-    elsif id == 2
-      return "Soil Sample"
-    elsif id == 3
-      return "GLBRC Soil Sample"
-    elsif id == 4
-      return "GLBRC Deep Core"
-    elsif id == 5
-      return "GLBRC Resin Strips"
-    elsif id == 6
-      return "CN Soil Sample"
-    elsif id == 7
-      return "CN Deep Core"
-    else
-      return "Unknown Sample Type"
+    case id
+    when 1; "Lysimeter"
+    when 2; "Soil Sample"
+    when 3; "GLBRC Soil Sample"
+    when 4; "GLBRC Deep Core Nitrogen"
+    when 5; "GLBRC Resin Strips"
+    when 6; "CN Soil Sample"
+    when 7; "CN Deep Core"
+    when 8; "GLBRC Soil Sample (New)"
+    else    "Unknown Sample Type"
     end
   end
   
   def get_regex_by_sample_type_id(id=sample_type_id)
-    if    id == 1
-      return Regexp.new(LYSIMETER)
-    elsif id == 2
-      return Regexp.new(SOIL_SAMPLE)
-    elsif id == 3
-      return Regexp.new(GLBRC_SOIL_SAMPLE)
-    elsif id == 4
-      return Regexp.new(GLBRC_DEEP_CORE)
-    elsif id == 5
-      return Regexp.new(GLBRC_RESIN_STRIPS)
-    elsif id == 6
-      return Regexp.new(CN_SAMPLE)
-    elsif id == 7
-      return Regexp.new(CN_DEEP_CORE)
-    else
-      return Regexp.new("")
+    case id
+    when 1; Regexp.new(LYSIMETER)
+    when 2; Regexp.new(LTER_SOIL_SAMPLE_NEW)
+    when 3; Regexp.new(GLBRC_SOIL_SAMPLE)
+    when 4; Regexp.new(GLBRC_DEEP_CORE)
+    when 5; Regexp.new(GLBRC_RESIN_STRIPS)
+    when 6; Regexp.new(CN_SAMPLE)
+    when 7; Regexp.new(CN_DEEP_CORE)
+    when 8; Regexp.new(GLBRC_SOIL_SAMPLE_NEW)
+    else    Regexp.new("")
     end
   end
   
@@ -116,8 +106,8 @@ class Run < ActiveRecord::Base
     
     analyte_no3       = Analyte.find_by_name('NO3')
     analyte_nh4       = Analyte.find_by_name('NH4')
-    analyte_percent_n = Analyte.find_by_name('Percent N')
-    analyte_percent_c = Analyte.find_by_name('Percent C')
+    analyte_percent_n = Analyte.find_by_name('N')
+    analyte_percent_c = Analyte.find_by_name('C')
     re = get_regex_by_sample_type_id
     plot = nil
     sample = nil
@@ -177,7 +167,7 @@ class Run < ActiveRecord::Base
         percent_n   = $8
         percent_c   = $9
         process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
-      when 7
+      when 7  #CN GLBRC Deepcore
         s_date      = sample_date
         cn_plot     = $1
         weight      = $2
@@ -185,6 +175,14 @@ class Run < ActiveRecord::Base
         percent_n   = $4
         percent_c   = $5
         process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
+      when 8 # GLBRC Soil new
+        if plot.nil? or plot.name != "G#{$1}R#{$2}"
+          plot        = Plot.find_by_name("G#{$1}R#{$2}")
+        end
+        s_date      = sample_date
+        nh4_amount  = $4
+        no3_amount  = $5
+        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)        
       else
         raise "not implemented"
       end
@@ -233,20 +231,21 @@ class Run < ActiveRecord::Base
     nitrogen         = CnMeasurement.new
     nitrogen.analyte = analyte_percent_n
     nitrogen.amount  = percent_n
-
+    nitrogen.save
+    
     sample.cn_measurements << nitrogen
+    
     self.cn_measurements   << nitrogen
 
-    nitrogen.save
-
+    
     carbon         = CnMeasurement.new
     carbon.analyte = analyte_percent_c
     carbon.amount  = percent_c
+    carbon.save    
 
     sample.cn_measurements << carbon
     self.cn_measurements   << carbon
-    
-    carbon.save
+        
   end
   
   def process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)

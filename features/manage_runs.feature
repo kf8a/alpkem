@@ -46,12 +46,12 @@ Feature: Manage runs
     When I follow "qc"
     Then I should see "T7R1"
       And I should see "2010-06-25"
-      And I should see "0.0531 0.0571 0.0610"
-      And I should see "Mean: 0.0571"
-      And I should see "CV: 5.6953"
-      And I should see "0.2953 0.2947 0.3034"
-      And I should see "Mean: 0.2978"
-      And I should see "CV: 1.3414"
+      And I should see "0.0030 0.0120 0.0280"
+      And I should see "Mean: 0.0143"
+      And I should see "CV: 72.1305"
+      And I should see "0.2520 0.3390 0.3460"
+      And I should see "Mean: 0.3123"
+      And I should see "CV: 13.6898"
       And I should see "Sample is not approved."
 
   Scenario: Upload GLBRC Deep Core data
@@ -59,7 +59,7 @@ Feature: Manage runs
     When I select "June 25, 2010" as the "Sample Date" date
       And I select "June 25, 2010" as the "Start Date" date
       And I select "June 25, 2010" as the "Run Date" date
-      And I select "GLBRC Deep Core" from "Sample Type"
+      And I select "GLBRC Deep Core Nitrogen" from "Sample Type"
       And I attach the GLBRC Deep Core test file
       And I press "Upload"
     Then I should see "Run was successfully uploaded."
@@ -81,6 +81,25 @@ Feature: Manage runs
     When I follow "qc"
     Then I should see "G2R1 2010-06-25"
       And I should see "0.0360 0.0300 0.0200"
+  
+  Scenario: Upload GLBRC New Format Soil data
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "GLBRC Soil Sample (New)" from "Sample Type"
+      And I attach the new GLBRC Soil test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
+      And I should see "Number of Samples: 50"
+
+    When I follow "back"
+    Then I should be on the runs page.
+
+    When I follow "qc"
+    Then I should see "G8R2 2010-06-25"
+      And I should see "0.1800 0.1740 0.1860"
+  
   
   Scenario: Upload CN data
     Given I am on the new run page

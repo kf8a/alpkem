@@ -65,6 +65,7 @@ class RunsController < ApplicationController
       render :action => "new" and return
     end
     file = params[:data][:file]
+
     if file.class == String
       flash[:file_error] = 'No file was selected to upload.'
       render :action => "new" and return
@@ -75,6 +76,7 @@ class RunsController < ApplicationController
       flash[:file_error] = @run.display_load_errors
       redirect_to :action => "new" and return
     end
+    
     respond_to do |format|
       if @run.save
         flash[:notice] = 'Run was successfully uploaded.'
