@@ -26,7 +26,7 @@ class RunsControllerTest < ActionController::TestCase
                     :data => {:file => fixture_file_upload(file_name)}    
     end
     
-    should render_template :new
+    should redirect_to("the new run page") {new_run_path}
   end
   
   context "POST :create with no file" do

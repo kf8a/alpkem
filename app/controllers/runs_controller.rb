@@ -77,6 +77,15 @@ class RunsController < ApplicationController
       redirect_to :action => "new" and return
     end
     
+    if @run.measurements.blank?
+      if @run.cn_measurements.blank?
+        flash[:notice] = 'Load failed.'
+        flash[:file_error] = "No data was able to be loaded from this file."
+        redirect_to :action => "new" and return
+        return false
+      end
+    end
+    
     respond_to do |format|
       if @run.save
         flash[:notice] = 'Run was successfully uploaded.'

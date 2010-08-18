@@ -11,13 +11,24 @@ Feature: Manage runs
       And I select "Lysimeter" from "Sample Type"
       And I attach the Soil Sample test file
       And I press "Upload"
-    Then I should see "Run was not uploaded."
-      And I should see "No plot could be found or plot is not in db."
+    Then I should see "Load failed."
+      And I should see "No data was able to be loaded from this file."
     
   Scenario: Upload nothing
     Given I am on the new run page
     When I press "Upload"
     Then I should see "No file was selected to upload."
+    
+  Scenario: Upload a blank file
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "Lysimeter" from "Sample Type"
+      And I attach the blank test file
+      And I press "Upload"
+    Then I should see "Load failed."
+      And I should see "Data file is empty."
 
   Scenario: Upload Lysimeter data
     Given I am on the new run page

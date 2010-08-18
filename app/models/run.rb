@@ -187,6 +187,7 @@ class Run < ActiveRecord::Base
         raise "not implemented"
       end
     end
+    
   end
 
 #--Things that need to be changed when adding new file type ends here--
@@ -196,10 +197,7 @@ class Run < ActiveRecord::Base
     return if percent_c.blank?
 
     #TODO better reporting if we can't parse
-    unless cn_plot
-      @load_errors = "No plot could be found."
-      return
-    end
+    return unless cn_plot
     
     unless s_date.nil? or s_date.class == Date
       s_date = Date.strptime(s_date, "%m/%d/%Y")
@@ -253,10 +251,7 @@ class Run < ActiveRecord::Base
     return if nh4_amount.blank?
       
     #TODO better reporting if we can't parse
-    unless plot
-      @load_errors = "No plot could be found or plot is not in db."
-      return
-    end
+    return unless plot
     
     # find sample
     if sample
