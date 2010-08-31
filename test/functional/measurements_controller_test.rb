@@ -34,8 +34,8 @@ class MeasurementsControllerTest < ActionController::TestCase
   end
   
   test "should destroy and undestroy measurement" do
-#    @run = Factory.create :run
-#    assert @run.valid?
+    @run = Factory.create :run
+    assert @run.valid?
     @measurement = Factory.create :measurement
     assert @measurement.valid?
     @measurement = Measurement.find(:first)

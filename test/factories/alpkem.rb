@@ -37,6 +37,5 @@ Factory.define :run do  |r|
   r.run_date          Date.today
   r.sample_date       Date.today
   r.sample_type_id    1
-  r.after_build {|run| Factory.create(:measurement, :run_id => run.object_id)}
-#    r.association       :measurements, :factory => :measurement
+  r.measurements      [Factory.create(:measurement, :run_id => r.object_id)]
 end

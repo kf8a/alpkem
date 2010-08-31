@@ -29,7 +29,7 @@ class RunsController < ApplicationController
   def show
     @run = Run.find(params[:id])
     if @run.cn_measurements_exist
-          @back = cn_runs_path
+      @back = cn_runs_path
     else  @back = runs_path
     end        
     respond_to do |format|
@@ -74,16 +74,13 @@ class RunsController < ApplicationController
     unless @run.load(file_contents)
       flash[:notice] = 'Load failed.'
       flash[:file_error] = @run.display_load_errors
-      redirect_to :action => "new" and return
+      redirect_to :action => "new" and return false
     end
     
-    if @run.measurements.blank?
-      if @run.cn_measurements.blank?
-        flash[:notice] = 'Load failed.'
-        flash[:file_error] = "No data was able to be loaded from this file."
-        redirect_to :action => "new" and return
-        return false
-      end
+    if @run.measurements.blank? and @run.cn_measurements.blank?
+      flash[:notice] = 'Load failed.'
+      flash[:file_error] = "No data was able to be loaded from this file."
+      redirect_to :action => "new" and return false
     end
     
     respond_to do |format|
