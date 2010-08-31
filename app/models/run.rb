@@ -6,12 +6,11 @@ class Run < ActiveRecord::Base
   validates_presence_of :measurements, :message => "No measurements are associated with this run.", :unless => :cn_measurements_exist
 
   def cn_measurements_exist
-    return false if cn_measurements.blank?
-    return true
+    !cn_measurements.blank?
   end
   
   def display_load_errors()
-    return @load_errors
+    @load_errors
   end
   
   def measurements_by_analyte(analyte)
@@ -84,105 +83,97 @@ class Run < ActiveRecord::Base
   
   def load(data)
     @load_errors = ""
-    if data.size == 0
-      @load_errors = "Data file is empty."
-      return false
-    end
-    unless sample_type_id
-      @load_errors = "No Sample Type selected."
-      return false
-    end
-    unless sample_date
-      @load_errors = "No Sample Date selected."
-      return false
-    end
     
-    analyte_no3       = Analyte.find_by_name('NO3')
-    analyte_nh4       = Analyte.find_by_name('NH4')
-    analyte_percent_n = Analyte.find_by_name('N')
-    analyte_percent_c = Analyte.find_by_name('C')
-    re = get_regex_by_sample_type_id
-    plot = nil
-    sample = nil
+    @load_errors = "Data file is empty."      if data.size == 0 
+    @load_errors = "No Sample Type selected." unless sample_type_id
+    @load_errors = "No Sample Date selected." unless sample_date
     
-    data.each do | line |
-      next unless line =~ re
+    if @load_errors.blank?
+      re = get_regex_by_sample_type_id
+      plot = nil
+      @sample = nil
+    
+      data.each do | line |
+        next unless line =~ re
 
-      # HACK Warning samples for soil N also should have a sample data.
-      case sample_type_id
-      when 1 #lysimeter
-        if plot.nil? or plot.name != "T#{$1}R#{2}F#{$3}"
-          plot      = Plot.find_by_name("T#{$1}R#{$2}F#{$3}")
+        # HACK Warning samples for soil N also should have a sample data.
+        case sample_type_id
+        when 1 #lysimeter
+          plot_to_find = "T#{$1}R#{2}F#{$3}"
+          s_date      = $4
+          nh4_amount  = $5
+          no3_amount  = $6
+          plot = find_plot(plot, plot_to_find)
+          process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
+        when 2 # LTER Soil sample
+          plot_to_find = "T#{$1}R#{$2}"
+          s_date      = sample_date
+          nh4_amount  = $4
+          no3_amount  = $5
+          plot = find_plot(plot, plot_to_find)
+          process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
+        when 3 # GLBRC Soil
+          plot_to_find = "G#{$1}R#{$2}"
+          s_date      = sample_date
+          nh4_amount  = $4
+          no3_amount  = $5
+          plot = find_plot(plot, plot_to_find)
+          process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
+        when 4 # GLBRC Deep
+          plot_to_find = "G#{$1}R#{$2}S#{$3}#{$4}"
+          s_date      = sample_date
+          nh4_amount  = $5
+          no3_amount  = $6
+          plot = find_plot(plot, plot_to_find)
+          process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
+        when 5 # GLBRC Resin Strips
+          plot_to_find = "G#{$1}R#{$2}"
+          s_date      = sample_date
+          nh4_amount  = $4
+          no3_amount  = $5
+          plot = find_plot(plot, plot_to_find)
+          process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
+        when 6
+          s_date      = $2
+          cn_plot     = $3
+          cn_type     = $5
+          weight      = $6
+          percent_n   = $8
+          percent_c   = $9
+          process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c)
+        when 7  #CN GLBRC Deepcore
+          s_date      = sample_date
+          cn_plot     = $1
+          weight      = $2
+          cn_type     = $3
+          percent_n   = $4
+          percent_c   = $5
+          process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c)
+        when 8 # GLBRC Soil new
+          plot_to_find = "G#{$1}R#{$2}"
+          s_date      = sample_date
+          nh4_amount  = $4
+          no3_amount  = $5
+          plot = find_plot(plot, plot_to_find)
+          process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
+        else
+          raise "not implemented"
         end
-        s_date      = $4
-        nh4_amount  = $5
-        no3_amount  = $6
-        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
-      when 2 # LTER Soil sample
-        if plot.nil? or plot.name != "T#{$1}R#{$2}"
-          plot      = Plot.find_by_name("T#{$1}R#{$2}")
-        end
-        s_date      = sample_date
-        nh4_amount  = $4
-        no3_amount  = $5
-        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
-      when 3 # GLBRC Soil
-        if plot.nil? or plot.name != "G#{$1}R#{$2}"
-          plot        = Plot.find_by_name("G#{$1}R#{$2}")
-        end
-        s_date      = sample_date
-        nh4_amount  = $4
-        no3_amount  = $5
-        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
-      when 4 # GLBRC Deep
-        if plot.nil? or plot.name != "G#{$1}R#{$2}S#{$3}#{$4}"
-          plot        = Plot.find_by_name("G#{$1}R#{$2}S#{$3}#{$4}")
-        end
-        s_date      = sample_date
-        nh4_amount  = $5
-        no3_amount  = $6
-        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
-      when 5 # GLBRC Resin Strips
-        if plot.nil? or plot.name != "G#{$1}R#{$2}"
-          plot        = Plot.find_by_name("G#{$1}R#{$2}")
-        end
-        s_date      = sample_date
-        nh4_amount  = $4
-        no3_amount  = $5
-        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
-      when 6
-        s_date      = $2
-        cn_plot     = $3
-        cn_type     = $5
-        weight      = $6
-        percent_n   = $8
-        percent_c   = $9
-        process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
-      when 7  #CN GLBRC Deepcore
-        s_date      = sample_date
-        cn_plot     = $1
-        weight      = $2
-        cn_type     = $3
-        percent_n   = $4
-        percent_c   = $5
-        process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
-      when 8 # GLBRC Soil new
-        if plot.nil? or plot.name != "G#{$1}R#{$2}"
-          plot        = Plot.find_by_name("G#{$1}R#{$2}")
-        end
-        s_date      = sample_date
-        nh4_amount  = $4
-        no3_amount  = $5
-        process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)        
-      else
-        raise "not implemented"
       end
     end
   end
-
+  
 #--Things that need to be changed when adding new file type ends here--
 
-  def process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c, analyte_percent_n, analyte_percent_c, sample)
+  def find_plot(plot, plot_to_find)
+    if plot.try(:name) == plot_to_find
+      plot
+    else
+      Plot.find_by_name(plot_to_find)
+    end
+  end
+
+  def process_cn_sample(s_date, cn_plot, cn_type, weight, percent_n, percent_c)
     return if percent_n.blank? or percent_c.blank? or cn_plot.blank?
     
     unless s_date.nil? or s_date.class == Date
@@ -190,68 +181,71 @@ class Run < ActiveRecord::Base
     end
     
     # find sample unless already found
-    unless sample.try(:cn_plot) == cn_plot and sample.try(:sample_date) == s_date
-      sample = CnSample.find_by_cn_plot_and_sample_date(cn_plot, s_date)
+    unless @sample.try(:cn_plot) == cn_plot and @sample.try(:sample_date) == s_date
+      @sample = CnSample.find_by_cn_plot_and_sample_date(cn_plot, s_date)
     end
 
-    if sample.nil? then
-      sample                = CnSample.new
-      sample.sample_date    = s_date
-      sample.cn_plot        = cn_plot
-      sample.save
+    if @sample.nil? then
+      @sample                = CnSample.new
+      @sample.sample_date    = s_date
+      @sample.cn_plot        = cn_plot
+      @sample.save
     end
 
     # create a new measurement
-    nitrogen         = CnMeasurement.new
-    nitrogen.analyte = analyte_percent_n
-    nitrogen.amount  = percent_n
+    @analyte_percent_n = (@analyte_percent_n or Analyte.find_by_name('N'))
+    nitrogen          = CnMeasurement.new
+    nitrogen.analyte  = @analyte_percent_n
+    nitrogen.amount   = percent_n
     nitrogen.save
     
-    sample.cn_measurements << nitrogen
+    @sample.cn_measurements << nitrogen
     self.cn_measurements   << nitrogen
 
-    
-    carbon         = CnMeasurement.new
-    carbon.analyte = analyte_percent_c
-    carbon.amount  = percent_c
+    @analyte_percent_c = (@analyte_percent_c or Analyte.find_by_name('C'))    
+    carbon            = CnMeasurement.new
+    carbon.analyte    = @analyte_percent_c
+    carbon.amount     = percent_c
     carbon.save    
 
-    sample.cn_measurements << carbon
+    @sample.cn_measurements << carbon
     self.cn_measurements   << carbon
-        
   end
   
-  def process_nhno_sample(plot, s_date, nh4_amount, no3_amount, analyte_no3, analyte_nh4, sample)
+  def process_nhno_sample(plot, s_date, nh4_amount, no3_amount)
     return if no3_amount.blank? or nh4_amount.blank? or plot.blank?
     
     # find sample unless already found
-    unless sample.try(:plot) == plot and sample.try(:sample_date) == s_date
-      sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
+    unless @sample.try(:plot) == plot and @sample.try(:sample_date) == s_date
+      @sample = Sample.find_by_plot_id_and_sample_date(plot.id, s_date)
     end
 
-    if sample.nil? then
-      sample                = Sample.new
-      sample.sample_date    = s_date
-      sample.plot           = plot
-      sample.sample_type_id = sample_type_id
-      sample.save
+    if @sample.nil? then
+      @sample                = Sample.new
+      @sample.sample_date    = s_date
+      @sample.plot           = plot
+      @sample.sample_type_id = sample_type_id
+      @sample.save
     end
+
 
     # create a new measurement
+    @analyte_no3 = (@analyte_no3 or Analyte.find_by_name('NO3'))
     no3         = Measurement.new
-    no3.analyte = analyte_no3
+    no3.analyte = @analyte_no3
     no3.amount  = no3_amount
     no3.save
 
-    sample.measurements << no3
+    @sample.measurements << no3
     self.measurements   << no3
 
+    @analyte_nh4 = (@analyte_nh4 or Analyte.find_by_name('NH4'))
     nh4         = Measurement.new
-    nh4.analyte = analyte_nh4
+    nh4.analyte = @analyte_nh4
     nh4.amount  = nh4_amount
     nh4.save
 
-    sample.measurements << nh4
+    @sample.measurements << nh4
     self.measurements   << nh4
   end
 end
