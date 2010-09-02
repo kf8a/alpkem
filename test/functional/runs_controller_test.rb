@@ -3,14 +3,28 @@ require File.dirname(__FILE__) + '/../test_helper'
 class RunsControllerTest < ActionController::TestCase
   
   def setup
-    #TODO make these factories work with the models as they are now
-#    4.times {Factory.create :run}
-#    @run = Factory.create :run
+    4.times {Factory.create :run}
+    @run = Factory.create :run
+    @cnrun = Factory.create :cn_run
 
     @attr = {
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
+  end
+  
+  def teardown
+    Analyte.all.each {|a| a.destroy}
+    CnMeasurement.all.each {|c| c.destroy}
+    CnSample.all.each {|c| c.destroy}    
+    Measurement.all.each {|m| m.destroy}
+    Plot.all.each {|p| p.destroy}
+    Replicate.all.each {|r| r.destroy}
+    Run.all.each {|r| r.destroy}
+    Sample.all.each {|s| s.destroy}
+    Study.all.each {|s| s.destroy}
+    Treatment.all.each {|t| t.destroy}
+    User.all.each {|u| u.destroy}
   end
     
   test "should get new" do
@@ -56,17 +70,7 @@ class RunsControllerTest < ActionController::TestCase
   
   context "A cn_run" do
     setup do
-      @cn_attr = {
-        :sample_type_id => 6,
-        :sample_date    => Date.today.to_s
-      }
-      file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
-      File.open(file_name, 'r') do |f|
-        @cn_data = StringIO.new(f.read)
-      end
-      @cn_run = Run.new(@cn_attr)
-      @cn_run.load(@cn_data)
-      @cn_run.save    
+      @cn_run = Factory.create(:cn_run)
     end
 
     context "GET :cn" do
@@ -90,13 +94,7 @@ class RunsControllerTest < ActionController::TestCase
   
   context "a non-CN run" do
     setup do
-      file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
-      File.open(file_name, 'r') do |f|
-        @good_data = StringIO.new(f.read)
-      end
-      @run = Run.new(@attr)
-      @run.load(@good_data)
-      @run.save    
+      @run = Factory.create(:run)
     end
     
     context "GET :index" do
@@ -122,9 +120,6 @@ class RunsControllerTest < ActionController::TestCase
       end
       
       should respond_with :success
-      should "get graphs from googlecharts" do
-        assert_select "img", {:minimum => 20} #Don't make this too precise
-      end
     end
     
     context "PUT :update the run" do
@@ -147,24 +142,22 @@ class RunsControllerTest < ActionController::TestCase
   end
 
   test "should approve and disapprove sample" do
-#    sample = Sample.find(:first)
     sample = Factory.create(:sample)
     xhr :get, :approve, :id => sample, :sample_class => "Sample"
-    assert assigns(:sample).approved
-    sample = assigns(:sample)
+    sample.reload
     assert sample.approved
     xhr :get, :approve, :id => sample, :sample_class => "Sample"
-    assert ! assigns(:sample).approved
+    sample.reload
+    assert ! sample.approved
   end
   
   test "should approve and disapprove cn sample" do
-#    sample = CnSample.find(:first)
     sample = Factory.create(:cn_sample)
     xhr :get, :approve, :id => sample, :sample_class => "CnSample"
-    assert assigns(:sample).approved
-    sample = assigns(:sample)
+    sample.reload
     assert sample.approved
     xhr :get, :approve, :id => sample, :sample_class => "CnSample"
-    assert ! assigns(:sample).approved
+    sample.reload
+    assert ! sample.approved
   end
 end

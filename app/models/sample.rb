@@ -8,7 +8,7 @@ class Sample < ActiveRecord::Base
   has_many :runs, :through => :measurements, :order => 'run_date'
   
   def plot_name
-    return plot.name
+    return plot.try(:name)
   end
   
   def previous_measurements

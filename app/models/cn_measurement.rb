@@ -5,6 +5,7 @@ class CnMeasurement < ActiveRecord::Base
   
   validates_presence_of :analyte
   validates_presence_of :cn_sample
+  validates_presence_of :amount
   
   def CnMeasurement.find_all_good_measurements()
     CnMeasurement.find(:all, :conditions => ['deleted = false'])
