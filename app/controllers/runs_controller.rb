@@ -60,7 +60,7 @@ class RunsController < ApplicationController
   # POST /runs.xml
   def create
     @run = Run.new(params[:run])
-    if params[:data].blank? or params[:data][:file].class == String
+    if params[:data].blank? || (params[:data][:file].class == String)
       flash[:file_error] = 'No file was selected to upload.'
       render :action => "new" and return
     end
@@ -73,7 +73,7 @@ class RunsController < ApplicationController
       redirect_to :action => "new" and return false
     end
     
-    if @run.measurements.blank? and @run.cn_measurements.blank?
+    if @run.measurements.blank? && @run.cn_measurements.blank?
       flash[:notice] = 'Load failed.'
       flash[:file_error] = "No data was able to be loaded from this file."
       redirect_to :action => "new" and return false

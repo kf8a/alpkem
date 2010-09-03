@@ -63,7 +63,7 @@ Feature: Manage runs
       And I should see "0.2520 0.3390 0.3460"
       And I should see "Mean: 0.3123"
       And I should see "CV: 13.6898"
-      And I should see "Sample is not approved."
+      And I should see "Sample is not approved"
 
   Scenario: Upload GLBRC Deep Core data
     Given I am on the new run page

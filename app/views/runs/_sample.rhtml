@@ -2,12 +2,9 @@
   <td><%= sample.plot_name %></td>
   <td><%= sample.sample_date %></td>
   <%= render :partial => 'analyte', :collection => @analytes, :locals => {:sample => sample}%>
-  <% if sample.approved -%>
-    <td class="approved">Sample is approved!<br />
-  <% else -%>
-    <td class="notapproved">Sample is not approved.<br />
-  <% end -%>
-  <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
+  <% notword = ("" if sample.approved) || "not" %>
+  <td class="<%= notword %>approved">Sample is <%= notword %> approved!<br />
+    <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
   </td>
   <td>
     <%= render :partial => 'googlechart', :locals => {:sample => sample} %>
