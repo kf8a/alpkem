@@ -60,40 +60,28 @@ class RunsHelperTest < ActionView::TestCase
                                     :sample_date => @measurement6_date))  
   end
   
-  test "makes the right google chart url" do
+  test "makes the right google chart script" do
     @measurements     = [@measurement1, @measurement2, @measurement3,
                          @measurement4, @measurement5, @measurement6]
                      
     @analytes         = [@analyte1, @analyte2]
 
-    proper_chart_url  = "http://chart.apis.google.com/chart?cht=s&chd=t:" +
-                        @measurement1_date.jd.to_s + "," +
-                        @measurement4_date.jd.to_s + "," + 
-                        @measurement2_date.jd.to_s + "," + 
-                        @measurement5_date.jd.to_s + "," + 
-                        @measurement3_date.jd.to_s + "," + 
-                        @measurement6_date.jd.to_s + "|" + 
-                        @measurement1_amount.to_s + "," + 
-                        @measurement4_amount.to_s + "," + 
-                        @measurement2_amount.to_s + "," + 
-                        @measurement5_amount.to_s + "," + 
-                        @measurement3_amount.to_s + "," + 
-                        @measurement6_amount.to_s + 
-                        "|1,1,1,1,1,1&chs=250x200&chdl=" + 
-                        @analyte1.name + "|" + @analyte2.name + 
-                        "&chxt=x,y&chxr=0," + 
-                        @measurement5_date.year.to_s + "," + 
-                        @measurement6_date.year.to_s + ",1|1," + 
-                        @measurement4_amount.to_s + "," + 
-                        @measurement6_amount.to_s + ",0.335&chds=" + 
-                        @measurement5_date.jd.to_s + "," + 
-                        @measurement6_date.jd.to_s + "," + 
-                        @measurement4_amount.to_s + "," + 
-                        @measurement6_amount.to_s + 
-                        "&chtt=Approved+measurements&chco=FF0000|0000FF"
+    proper_chart_script  =
+      "data.addColumn('date', 'Date');" +
+      "data.addColumn('number', '#{@analyte1.name}');" +
+      "data.addColumn('number', '#{@analyte2.name}');" +
+      "data.addRows([" +
+        "[new Date(#{@measurement1_date.year}, #{@measurement1_date.month}, #{@measurement1_date.day}), #{@measurement1_amount}, undefined]," +
+        "[new Date(#{@measurement2_date.year}, #{@measurement2_date.month}, #{@measurement2_date.day}), #{@measurement2_amount}, undefined]," +
+        "[new Date(#{@measurement3_date.year}, #{@measurement3_date.month}, #{@measurement3_date.day}), #{@measurement3_amount}, undefined]," +
+        "[new Date(#{@measurement4_date.year}, #{@measurement4_date.month}, #{@measurement4_date.day}), undefined, #{@measurement4_amount}]," +
+        "[new Date(#{@measurement5_date.year}, #{@measurement5_date.month}, #{@measurement5_date.day}), undefined, #{@measurement5_amount}]," +
+        "[new Date(#{@measurement6_date.year}, #{@measurement6_date.month}, #{@measurement6_date.day}), undefined, #{@measurement6_amount}]" +
+        "]);"
 
-    assert_equal proper_chart_url, 
-                  google_chart_url_maker(@measurements, @analytes)
+
+    assert_equal proper_chart_script,
+                  google_chart_script_helper(@measurements, @analytes)
   end
   
   test "should not crash if there is no analyte2 amounts" do
@@ -101,42 +89,28 @@ class RunsHelperTest < ActionView::TestCase
 
     @analytes = [@analyte1, @analyte2]
 
-    assert google_chart_url_maker(@measurements, @analytes)
+    assert google_chart_script_helper(@measurements, @analytes)
   end
-  
-  test "should make a google chart url with all the measurements even when they are unbalanced" do
-    
-    @measurements     = [@measurement1, @measurement2, 
+
+  test "should make a google chart script with all the measurements even when they are unbalanced" do
+
+    @measurements     = [@measurement1, @measurement2,
                          @measurement4, @measurement5, @measurement6]
 
     @analytes         = [@analyte1, @analyte2]
 
-    proper_chart_url  = "http://chart.apis.google.com/chart?cht=s&chd=t:" + 
-                        @measurement1_date.jd.to_s + "," + 
-                        @measurement4_date.jd.to_s + "," + 
-                        @measurement2_date.jd.to_s + "," + 
-                        @measurement5_date.jd.to_s + "," + 
-                        "4," + 
-                        @measurement6_date.jd.to_s + "|" + 
-                        @measurement1_amount.to_s + "," + 
-                        @measurement4_amount.to_s + "," + 
-                        @measurement2_amount.to_s + "," + 
-                        @measurement5_amount.to_s + "," + 
-                        "1000," + 
-                        @measurement6_amount.to_s + 
-                        "|1,1,1,1,0,1&chs=250x200&chdl=" + 
-                        @analyte1.name + "|" + @analyte2.name + 
-                        "&chxt=x,y&chxr=0," + 
-                        @measurement5_date.year.to_s + "," + 
-                        @measurement6_date.year.to_s + ",1|1," + 
-                        @measurement4_amount.to_s + "," + 
-                        @measurement6_amount.to_s + ",0.335&chds=" + 
-                        @measurement5_date.jd.to_s + "," + 
-                        @measurement6_date.jd.to_s + "," + 
-                        @measurement4_amount.to_s + "," + 
-                        @measurement6_amount.to_s + 
-                        "&chtt=Approved+measurements&chco=FF0000|0000FF"
+    proper_chart_script  =
+      "data.addColumn('date', 'Date');" +
+      "data.addColumn('number', '#{@analyte1.name}');" +
+      "data.addColumn('number', '#{@analyte2.name}');" +
+      "data.addRows([" +
+        "[new Date(#{@measurement1_date.year}, #{@measurement1_date.month}, #{@measurement1_date.day}), #{@measurement1_amount}, undefined]," +
+        "[new Date(#{@measurement2_date.year}, #{@measurement2_date.month}, #{@measurement2_date.day}), #{@measurement2_amount}, undefined]," +
+        "[new Date(#{@measurement4_date.year}, #{@measurement4_date.month}, #{@measurement4_date.day}), undefined, #{@measurement4_amount}]," +
+        "[new Date(#{@measurement5_date.year}, #{@measurement5_date.month}, #{@measurement5_date.day}), undefined, #{@measurement5_amount}]," +
+        "[new Date(#{@measurement6_date.year}, #{@measurement6_date.month}, #{@measurement6_date.day}), undefined, #{@measurement6_amount}]" +
+        "]);"
 
-    assert_equal proper_chart_url, google_chart_url_maker(@measurements, @analytes)
+    assert_equal proper_chart_script, google_chart_script_helper(@measurements, @analytes)
   end
 end

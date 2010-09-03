@@ -10,7 +10,6 @@
   <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
   </td>
   <td>
-    <!--<img src=<%= google_chart_url_maker(sample.previous_measurements,@analytes) %>>-->
     <%= render :partial => 'googlechart', :locals => {:sample => sample} %>
   </td>
 </tr>
