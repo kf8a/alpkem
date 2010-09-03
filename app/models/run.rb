@@ -43,17 +43,15 @@ class Run < ActiveRecord::Base
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
   end
 
-#--Things that need to be changed when adding new file type begins here--
+#--Things that need to be changed when adding a new file type begin here--
 
   LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  SOIL_SAMPLE         = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  GLBRC_SOIL_SAMPLE   = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  STANDARD_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  GLBRC_RESIN_STRIPS  = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
-  GLBRC_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
-  LTER_SOIL_SAMPLE_NEW = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+
   
   def sample_type_name(id=sample_type_id)
     case id
@@ -69,17 +67,29 @@ class Run < ActiveRecord::Base
     end
   end
   
-  def get_regex_by_sample_type_id(id=sample_type_id)
+  def get_regex_by_format_type(format_type)
+    case format_type
+    when "Lysimeter";   Regexp.new(LYSIMETER)
+    when "Standard";    Regexp.new(STANDARD_SAMPLE)
+    when "Old Soil";    Regexp.new(OLD_SOIL_SAMPLE)
+    when "GLBRC Deep";  Regexp.new(GLBRC_DEEP_CORE)
+    when "CN Sample";   Regexp.new(CN_SAMPLE)
+    when "CN Deep";     Regexp.new(CN_DEEP_CORE)
+    else                Regexp.new("")
+    end
+  end
+
+  def file_format_by_sample_type_id(id=sample_type_id)
     case id
-    when 1; Regexp.new(LYSIMETER)
-    when 2; Regexp.new(LTER_SOIL_SAMPLE_NEW)
-    when 3; Regexp.new(GLBRC_SOIL_SAMPLE)
-    when 4; Regexp.new(GLBRC_DEEP_CORE)
-    when 5; Regexp.new(GLBRC_RESIN_STRIPS)
-    when 6; Regexp.new(CN_SAMPLE)
-    when 7; Regexp.new(CN_DEEP_CORE)
-    when 8; Regexp.new(GLBRC_SOIL_SAMPLE_NEW)
-    else    Regexp.new("")
+    when 1; "Lysimeter"
+    when 2; "Standard"
+    when 3; "Old Soil"
+    when 4; "GLBRC Deep"
+    when 5; "Standard"
+    when 6; "CN Sample"
+    when 7; "CN Deep"
+    when 8; "Standard"
+    else    "Unknown format"
     end
   end
   
@@ -91,69 +101,49 @@ class Run < ActiveRecord::Base
     @load_errors = "No Sample Date selected." unless sample_date
     
     if @load_errors.blank?
-      re = get_regex_by_sample_type_id
+      format_type = file_format_by_sample_type_id(sample_type_id)
+      re = get_regex_by_format_type(format_type)
       @plot = nil
       @sample = nil
-    
+      s_date = sample_date
+
       data.each do | line |
         next unless line =~ re
 
-        # HACK Warning samples for soil N also should have a sample data.
-        case sample_type_id
-        when 1 #lysimeter
+        if (format_type == "Lysimeter") || (format_type == "GLBRC Deep")
+          nh4_amount = $5
+          no3_amount = $6
+        elsif (format_type == "Standard") || (format_type == "Old Soil")
+          nh4_amount = $4
+          no3_amount = $5
+        end
+
+        case format_type
+        when "Lysimeter"
           s_date      = $4
-          nh4_amount  = $5
-          no3_amount  = $6
           @plot = find_plot("T#{$1}R#{2}F#{$3}")
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
-        when 2 # LTER Soil sample
-          s_date      = sample_date
-          nh4_amount  = $4
-          no3_amount  = $5
-          @plot = find_plot("T#{$1}R#{$2}")
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
-        when 3 # GLBRC Soil
-          s_date      = sample_date
-          nh4_amount  = $4
-          no3_amount  = $5
-          @plot = find_plot("G#{$1}R#{$2}")
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
-        when 4 # GLBRC Deep
-          s_date      = sample_date
-          nh4_amount  = $5
-          no3_amount  = $6
+        when "Standard" || "Old Soil"
+          @plot = find_plot("T#{$1}R#{$2}") if sample_type_id == 2
+          @plot = find_plot("G#{$1}R#{$2}") unless sample_type_id == 2
+        when "GLBRC Deep"
           @plot = find_plot("G#{$1}R#{$2}S#{$3}#{$4}")
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
-        when 5 # GLBRC Resin Strips
-          s_date      = sample_date
-          nh4_amount  = $4
-          no3_amount  = $5
-          @plot = find_plot("G#{$1}R#{$2}")
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
-        when 6
+        when "CN Sample"
           s_date      = $2
           cn_plot     = $3
-          cn_type     = $5
-          weight      = $6
           percent_n   = $8
           percent_c   = $9
-          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
-        when 7  #CN GLBRC Deepcore
-          s_date      = sample_date
+        when "CN Deep"
           cn_plot     = $1
-          weight      = $2
-          cn_type     = $3
           percent_n   = $4
           percent_c   = $5
-          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
-        when 8 # GLBRC Soil new
-          s_date      = sample_date
-          nh4_amount  = $4
-          no3_amount  = $5
-          @plot = find_plot("G#{$1}R#{$2}")
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
         else
           raise "not implemented"
+        end
+
+        if nh4_amount || no3_amount
+          process_nhno_sample(s_date, nh4_amount, no3_amount)
+        elsif percent_n || percent_c
+          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
         end
       end
     end
