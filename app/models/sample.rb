@@ -10,7 +10,7 @@ class Sample < ActiveRecord::Base
   
   def plot_name
     #The test is only for some legacy dataset that have samples without plots
-    if plot.nil? ? '' : plot.name
+    plot.nil? ? '' : plot.name
   end
   
   def previous_measurements
