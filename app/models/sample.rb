@@ -9,7 +9,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :plot
   
   def plot_name
-    return plot.name
+    if plot.nil? ? '' : plot.name
   end
   
   def previous_measurements
