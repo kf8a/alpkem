@@ -105,22 +105,33 @@ class Run < ActiveRecord::Base
       re = get_regex_by_format_type(format_type)
       @plot = nil
       @sample = nil
-      s_date = sample_date
 
       data.each do | line |
         next unless line =~ re
 
-        if  (format_type == "Lysimeter") ||
-            (format_type == "GLBRC Deep") ||
-            (format_type == "Standard") ||
-            (format_type == "Old Soil") then
+        if format_type == "Lysimeter"
+          s_date = $4
+        elsif format_type ==  "CN Sample"
+          s_date = $2
+        else
+          s_date = sample_date
+        end
+
+        if ["Lysimeter","GLBRC Deep","Standard","Old Soil"].include?(format_type)
           nh4_amount = $5
           no3_amount = $6
         end
 
+        if format_type == "CN Sample"
+          percent_n   = $8
+          percent_c   = $9
+        elsif format_type == "CN Deep"
+          percent_n   = $4
+          percent_c   = $5
+        end
+
         case format_type
         when "Lysimeter"
-          s_date      = $4
           @plot = find_plot("T#{$1}R#{2}F#{$3}")
         when "Standard"
           plot_name = ("T#{$1}R#{$2}" if sample_type_id == 2) || "G#{$1}R#{$2}"
@@ -130,14 +141,9 @@ class Run < ActiveRecord::Base
         when "GLBRC Deep"
           @plot = find_plot("G#{$1}R#{$2}S#{$3}#{$4}")
         when "CN Sample"
-          s_date      = $2
           cn_plot     = $3
-          percent_n   = $8
-          percent_c   = $9
         when "CN Deep"
           cn_plot     = $1
-          percent_n   = $4
-          percent_c   = $5
         else
           raise "not implemented"
         end
