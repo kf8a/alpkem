@@ -4,8 +4,9 @@ class Sample < ActiveRecord::Base
   belongs_to :plot
 
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
-  
   has_many :runs, :through => :measurements, :order => 'run_date'
+  
+  validates_presence_of :plot
   
   def plot_name
     return plot.try(:name)

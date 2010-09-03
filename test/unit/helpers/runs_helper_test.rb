@@ -92,8 +92,7 @@ class RunsHelperTest < ActionView::TestCase
                         @measurement6_amount.to_s + 
                         "&chtt=Approved+measurements&chco=FF0000|0000FF"
 
-    assert_equal proper_chart_url, 
-                  google_chart_url_maker(@measurements, @analytes)
+    assert google_chart_url_maker(@measurements, @analytes) =~ Regexp.new(proper_chart_url)
   end
   
   test "should not crash if there is no analyte2 amounts" do
@@ -137,6 +136,6 @@ class RunsHelperTest < ActionView::TestCase
                         @measurement6_amount.to_s + 
                         "&chtt=Approved+measurements&chco=FF0000|0000FF"
 
-    assert_equal proper_chart_url, google_chart_url_maker(@measurements, @analytes)
+    assert google_chart_url_maker(@measurements, @analytes) =~ Regexp.new(proper_chart_url)
   end
 end
