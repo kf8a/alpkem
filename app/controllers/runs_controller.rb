@@ -60,16 +60,12 @@ class RunsController < ApplicationController
   # POST /runs.xml
   def create
     @run = Run.new(params[:run])
-    if params[:data].blank?
+    if params[:data].blank? or params[:data][:file].class == String
       flash[:file_error] = 'No file was selected to upload.'
       render :action => "new" and return
     end
-    file = params[:data][:file]
 
-    if file.class == String
-      flash[:file_error] = 'No file was selected to upload.'
-      render :action => "new" and return
-    end
+    file = params[:data][:file]
     file_contents = StringIO.new(file.read)
     unless @run.load(file_contents)
       flash[:notice] = 'Load failed.'
