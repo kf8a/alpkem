@@ -135,7 +135,7 @@ class Run < ActiveRecord::Base
           weight      = $6
           percent_n   = $8
           percent_c   = $9
-          process_cn_sample(s_date, cn_plot, cn_type, percent_n, percent_c)
+          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
         when 7  #CN GLBRC Deepcore
           s_date      = sample_date
           cn_plot     = $1
@@ -143,7 +143,7 @@ class Run < ActiveRecord::Base
           cn_type     = $3
           percent_n   = $4
           percent_c   = $5
-          process_cn_sample(s_date, cn_plot, cn_type, percent_n, percent_c)
+          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
         when 8 # GLBRC Soil new
           s_date      = sample_date
           nh4_amount  = $4
@@ -167,7 +167,7 @@ class Run < ActiveRecord::Base
     end
   end
 
-  def process_cn_sample(s_date, cn_plot, cn_type, percent_n, percent_c)
+  def process_cn_sample(s_date, cn_plot, percent_n, percent_c)
     return if percent_n.blank? or percent_c.blank? or cn_plot.blank?
     
     unless s_date.nil? or s_date.class == Date
