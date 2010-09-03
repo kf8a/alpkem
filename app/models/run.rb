@@ -3,13 +3,15 @@ class Run < ActiveRecord::Base
   has_many :cn_measurements, :dependent => :destroy
 
   validates_presence_of :sample_type_id
-  validates_presence_of :measurements, :message => "No measurements are associated with this run.", :unless => :cn_measurements_exist
+  validates_presence_of :measurements, 
+    :message => "No measurements are associated with this run.",
+    :unless => :cn_measurements_exist?
 
-  def cn_measurements_exist
+  def cn_measurements_exist?
     !cn_measurements.blank?
   end
   
-  def display_load_errors()
+  def display_load_errors
     @load_errors
   end
   
@@ -20,7 +22,7 @@ class Run < ActiveRecord::Base
   
   def analytes
     list_of_analytes = []
-    if cn_measurements_exist
+    if cn_measurements_exist?
       list_of_analytes << Analyte.find_by_name('N')
       list_of_analytes << Analyte.find_by_name('C')
     else
@@ -30,7 +32,7 @@ class Run < ActiveRecord::Base
   end
   
   def samples
-    if cn_measurements_exist
+    if cn_measurements_exist?
       CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
     else
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
@@ -135,7 +137,7 @@ class Run < ActiveRecord::Base
           weight      = $6
           percent_n   = $8
           percent_c   = $9
-          process_cn_sample(s_date, cn_plot, cn_type, percent_n, percent_c)
+          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
         when 7  #CN GLBRC Deepcore
           s_date      = sample_date
           cn_plot     = $1
@@ -143,7 +145,7 @@ class Run < ActiveRecord::Base
           cn_type     = $3
           percent_n   = $4
           percent_c   = $5
-          process_cn_sample(s_date, cn_plot, cn_type, percent_n, percent_c)
+          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
         when 8 # GLBRC Soil new
           s_date      = sample_date
           nh4_amount  = $4
@@ -167,7 +169,7 @@ class Run < ActiveRecord::Base
     end
   end
 
-  def process_cn_sample(s_date, cn_plot, cn_type, percent_n, percent_c)
+  def process_cn_sample(s_date, cn_plot, percent_n, percent_c)
     return if percent_n.blank? or percent_c.blank? or cn_plot.blank?
     
     unless s_date.nil? or s_date.class == Date

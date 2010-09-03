@@ -26,9 +26,10 @@ config.action_mailer.delivery_method = :test
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
 
-if RUBY_VERSION > "1.9"
-  config.gem 'simplecov'
-  config.gem 'simplecov-html'  
-end
 config.gem "shoulda", :lib => false
 config.gem "factory_girl" , :lib => false
+
+if RUBY_VERSION > "1.9"
+  config.gem 'simplecov'
+  config.gem 'simplecov-html'
+end

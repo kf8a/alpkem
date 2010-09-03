@@ -8,6 +8,7 @@ Factory.define :plot do |p|
 end
 
 Factory.define :sample do |s|
+  s.association   :plot
 end
 
 Factory.define :cn_sample do |s|
