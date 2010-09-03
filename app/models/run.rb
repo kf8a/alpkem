@@ -3,13 +3,13 @@ class Run < ActiveRecord::Base
   has_many :cn_measurements, :dependent => :destroy
 
   validates_presence_of :sample_type_id
-  validates_presence_of :measurements, :message => "No measurements are associated with this run.", :unless => :cn_measurements_exist
+  validates_presence_of :measurements, :message => "No measurements are associated with this run.", :unless => :cn_measurements_exist?
 
-  def cn_measurements_exist
+  def cn_measurements_exist?
     !cn_measurements.blank?
   end
   
-  def display_load_errors()
+  def display_load_errors
     @load_errors
   end
   
@@ -20,7 +20,7 @@ class Run < ActiveRecord::Base
   
   def analytes
     list_of_analytes = []
-    if cn_measurements_exist
+    if cn_measurements_exist?
       list_of_analytes << Analyte.find_by_name('N')
       list_of_analytes << Analyte.find_by_name('C')
     else
@@ -30,7 +30,7 @@ class Run < ActiveRecord::Base
   end
   
   def samples
-    if cn_measurements_exist
+    if cn_measurements_exist?
       CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
     else
       Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
