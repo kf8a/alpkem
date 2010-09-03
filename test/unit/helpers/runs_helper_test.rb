@@ -79,7 +79,6 @@ class RunsHelperTest < ActionView::TestCase
         "[new Date(#{@measurement6_date.year}, #{@measurement6_date.month}, #{@measurement6_date.day}), undefined, #{@measurement6_amount}]" +
         "]);"
 
-
     assert_equal proper_chart_script,
                   google_chart_script_helper(@measurements, @analytes)
   end
