@@ -46,8 +46,8 @@ class Run < ActiveRecord::Base
 #--Things that need to be changed when adding a new file type begin here--
 
   LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  STANDARD_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
-  OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  STANDARD_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
@@ -110,21 +110,23 @@ class Run < ActiveRecord::Base
       data.each do | line |
         next unless line =~ re
 
-        if (format_type == "Lysimeter") || (format_type == "GLBRC Deep")
+        if  (format_type == "Lysimeter") ||
+            (format_type == "GLBRC Deep") ||
+            (format_type == "Standard") ||
+            (format_type == "Old Soil") then
           nh4_amount = $5
           no3_amount = $6
-        elsif (format_type == "Standard") || (format_type == "Old Soil")
-          nh4_amount = $4
-          no3_amount = $5
         end
 
         case format_type
         when "Lysimeter"
           s_date      = $4
           @plot = find_plot("T#{$1}R#{2}F#{$3}")
-        when "Standard" || "Old Soil"
-          @plot = find_plot("T#{$1}R#{$2}") if sample_type_id == 2
-          @plot = find_plot("G#{$1}R#{$2}") unless sample_type_id == 2
+        when "Standard"
+          plot_name = ("T#{$1}R#{$2}" if sample_type_id == 2) || "G#{$1}R#{$2}"
+          @plot = find_plot(plot_name)
+        when "Old Soil"
+          @plot = find_plot("G#{$1}R#{$2}")
         when "GLBRC Deep"
           @plot = find_plot("G#{$1}R#{$2}S#{$3}#{$4}")
         when "CN Sample"
