@@ -194,7 +194,11 @@ class Run < ActiveRecord::Base
       @sample.save
     end
 
-    # create a new measurement
+    create_nitrogen_measurement(percent_n)
+    create_carbon_measurement(percent_c)
+  end
+  
+  def create_nitrogen_measurement(percent_n)
     @analyte_percent_n  = (@analyte_percent_n || Analyte.find_by_name('N'))
     nitrogen            = CnMeasurement.new
     nitrogen.analyte    = @analyte_percent_n
@@ -203,12 +207,14 @@ class Run < ActiveRecord::Base
     
     @sample.cn_measurements << nitrogen
     self.cn_measurements   << nitrogen
+  end
 
+  def create_carbon_measurement(percent_c)
     @analyte_percent_c = (@analyte_percent_c || Analyte.find_by_name('C'))
     carbon             = CnMeasurement.new
     carbon.analyte     = @analyte_percent_c
     carbon.amount      = percent_c
-    carbon.save    
+    carbon.save
 
     @sample.cn_measurements << carbon
     self.cn_measurements   << carbon
@@ -235,8 +241,11 @@ class Run < ActiveRecord::Base
       @sample.save
     end
 
+    create_no3_measurement(no3_amount)
+    create_nh4_measurement(nh4_amount)
+  end
 
-    # create a new measurement
+  def create_no3_measurement(no3_amount)
     @analyte_no3  = (@analyte_no3 || Analyte.find_by_name('NO3'))
     no3           = Measurement.new
     no3.analyte   = @analyte_no3
@@ -245,7 +254,9 @@ class Run < ActiveRecord::Base
 
     @sample.measurements << no3
     self.measurements   << no3
+  end
 
+  def create_nh4_measurement(nh4_amount)
     @analyte_nh4  = (@analyte_nh4 || Analyte.find_by_name('NH4'))
     nh4           = Measurement.new
     nh4.analyte   = @analyte_nh4
