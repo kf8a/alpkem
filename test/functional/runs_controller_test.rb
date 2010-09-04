@@ -48,7 +48,7 @@ class RunsControllerTest < ActionController::TestCase
       post :create, :run => @attr, :data => nil      
     end
     
-    should render_template :new
+    should redirect_to("the new run page") {new_run_path}
   end
 
   context "POST :create with blank file" do

@@ -60,35 +60,39 @@ class RunsController < ApplicationController
   # POST /runs.xml
   def create
     @run = Run.new(params[:run])
-    if params[:data].blank? || (params[:data][:file].class == String)
+
+    file = (!params[:data].blank? && params[:data][:file])
+    if file
+      file_contents = StringIO.new(file.read)
+      unless @run.load(file_contents)
+        flash[:notice] = 'Load failed.'
+        flash[:file_error] = @run.display_load_errors
+      end
+    else
       flash[:file_error] = 'No file was selected to upload.'
-      render :action => "new" and return
     end
 
-    file = params[:data][:file]
-    file_contents = StringIO.new(file.read)
-    unless @run.load(file_contents)
-      flash[:notice] = 'Load failed.'
-      flash[:file_error] = @run.display_load_errors
-      redirect_to :action => "new" and return false
-    end
-    
     if @run.measurements.blank? && @run.cn_measurements.blank?
       flash[:notice] = 'Load failed.'
       flash[:file_error] = "No data was able to be loaded from this file."
-      redirect_to :action => "new" and return false
     end
     
-    respond_to do |format|
-      if @run.save
-        flash[:notice] = 'Run was successfully uploaded.'
-        format.html { redirect_to(@run) }
-        format.xml  { render :xml => @run, :status => :created, :location => @run }
-      else
-        flash[:notice] = 'Run was not uploaded.'
-        flash[:file_error] = @run.display_load_errors
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
+    errors_exist = !flash[:file_error].blank?
+
+    if errors_exist
+      redirect_to :action => "new"
+    else
+      respond_to do |format|
+        if @run.save
+          flash[:notice] = 'Run was successfully uploaded.'
+          format.html { redirect_to(@run) }
+          format.xml  { render :xml => @run, :status => :created, :location => @run }
+        else
+          flash[:notice] = 'Run was not uploaded.'
+          flash[:file_error] = @run.display_load_errors
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

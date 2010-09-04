@@ -12,13 +12,11 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
+    @current_user_session ||= UserSession.find
   end
 
   def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.user
+    @current_user ||= current_user_session && current_user_session.user
   end
   
   def require_user
@@ -52,8 +50,7 @@ class ApplicationController < ActionController::Base
     all_runs = Run.find(:all, :order => 'sample_date')
     runs_index = []
     all_runs.each do |run|
-      next if run.cn_measurements_exist?
-      runs_index << run
+      runs_index << run unless run.cn_measurements_exist?
     end
     return runs_index
   end
@@ -62,8 +59,7 @@ class ApplicationController < ActionController::Base
     all_runs = Run.find(:all, :order => 'sample_date')
     runs_index = []
     all_runs.each do |run|
-      next unless run.cn_measurements_exist?
-      runs_index << run
+      runs_index << run if run.cn_measurements_exist?
     end
     return runs_index
   end
