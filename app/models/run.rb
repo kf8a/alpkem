@@ -134,8 +134,11 @@ class Run < ActiveRecord::Base
         when "Lysimeter"
           @plot = find_plot("T#{$1}R#{2}F#{$3}")
         when "Standard"
-          plot_name = ("T#{$1}R#{$2}" if sample_type_id == 2) || "G#{$1}R#{$2}"
-          @plot = find_plot(plot_name)
+          if sample_type_id == 2
+            @plot = find_plot("T#{$1}R#{$2}")
+          else
+            @plot = find_plot("G#{$1}R#{$2}")
+          end
         when "Old Soil"
           @plot = find_plot("G#{$1}R#{$2}")
         when "GLBRC Deep"
@@ -148,6 +151,8 @@ class Run < ActiveRecord::Base
           raise "not implemented"
         end
 
+#--Things that need to be changed when adding new file type ends here--
+
         if nh4_amount || no3_amount
           process_nhno_sample(s_date, nh4_amount, no3_amount)
         elsif percent_n || percent_c
@@ -157,8 +162,6 @@ class Run < ActiveRecord::Base
     end
   end
   
-#--Things that need to be changed when adding new file type ends here--
-
   def find_plot(plot_to_find)
     if @plot.try(:name) == plot_to_find
       @plot
@@ -167,18 +170,23 @@ class Run < ActiveRecord::Base
     end
   end
 
+  def find_cnsample(plot, date)
+    right_plot = @sample.try(:cn_plot) == plot
+    right_date = @sample.try(:sample_date) == date
+    unless right_plot && right_date
+      @sample = CnSample.find_by_cn_plot_and_sample_date(plot, date)
+    end
+  end
+
   def process_cn_sample(s_date, cn_plot, percent_n, percent_c)
-    return if percent_n.blank? or percent_c.blank? or cn_plot.blank?
+    return if percent_n.blank? || percent_c.blank? || cn_plot.blank?
     
-    unless s_date.nil? or s_date.class == Date
+    unless s_date.nil? || s_date.class == Date
       s_date = Date.strptime(s_date, "%m/%d/%Y")
     end
     
-    # find sample unless already found
-    unless @sample.try(:cn_plot) == cn_plot and @sample.try(:sample_date) == s_date
-      @sample = CnSample.find_by_cn_plot_and_sample_date(cn_plot, s_date)
-    end
-
+    find_cnsample(cn_plot, s_date)
+    
     if @sample.nil? then
       @sample                = CnSample.new
       @sample.sample_date    = s_date
@@ -187,7 +195,7 @@ class Run < ActiveRecord::Base
     end
 
     # create a new measurement
-    @analyte_percent_n  = (@analyte_percent_n or Analyte.find_by_name('N'))
+    @analyte_percent_n  = (@analyte_percent_n || Analyte.find_by_name('N'))
     nitrogen            = CnMeasurement.new
     nitrogen.analyte    = @analyte_percent_n
     nitrogen.amount     = percent_n
@@ -196,7 +204,7 @@ class Run < ActiveRecord::Base
     @sample.cn_measurements << nitrogen
     self.cn_measurements   << nitrogen
 
-    @analyte_percent_c = (@analyte_percent_c or Analyte.find_by_name('C'))    
+    @analyte_percent_c = (@analyte_percent_c || Analyte.find_by_name('C'))
     carbon             = CnMeasurement.new
     carbon.analyte     = @analyte_percent_c
     carbon.amount      = percent_c
@@ -205,14 +213,19 @@ class Run < ActiveRecord::Base
     @sample.cn_measurements << carbon
     self.cn_measurements   << carbon
   end
-  
-  def process_nhno_sample(s_date, nh4_amount, no3_amount)
-    return if no3_amount.blank? or nh4_amount.blank? or @plot.blank?
-    
-    # find sample unless already found
-    unless @sample.try(:plot) == @plot and @sample.try(:sample_date) == s_date
-      @sample = Sample.find_by_plot_id_and_sample_date(@plot.id, s_date)
+
+  def find_sample(plot, date)
+    right_plot = @sample.try(:plot) == plot
+    right_date = @sample.try(:sample_date) == date
+    unless right_plot && right_date
+      @sample = Sample.find_by_plot_id_and_sample_date(plot.id, date)
     end
+  end
+
+  def process_nhno_sample(s_date, nh4_amount, no3_amount)
+    return if no3_amount.blank? || nh4_amount.blank? || @plot.blank?
+    
+    find_sample(@plot, s_date)
 
     if @sample.nil? then
       @sample                = Sample.new
@@ -224,7 +237,7 @@ class Run < ActiveRecord::Base
 
 
     # create a new measurement
-    @analyte_no3  = (@analyte_no3 or Analyte.find_by_name('NO3'))
+    @analyte_no3  = (@analyte_no3 || Analyte.find_by_name('NO3'))
     no3           = Measurement.new
     no3.analyte   = @analyte_no3
     no3.amount    = no3_amount
@@ -233,7 +246,7 @@ class Run < ActiveRecord::Base
     @sample.measurements << no3
     self.measurements   << no3
 
-    @analyte_nh4  = (@analyte_nh4 or Analyte.find_by_name('NH4'))
+    @analyte_nh4  = (@analyte_nh4 || Analyte.find_by_name('NH4'))
     nh4           = Measurement.new
     nh4.analyte   = @analyte_nh4
     nh4.amount    = nh4_amount
