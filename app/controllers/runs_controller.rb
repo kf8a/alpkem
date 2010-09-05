@@ -62,9 +62,14 @@ class RunsController < ApplicationController
     @run = Run.new(params[:run])
 
     file = (!params[:data].blank? && params[:data][:file])
-    if file
+    if file && !file.class.eql?(String)
       file_contents = StringIO.new(file.read)
-      unless @run.load(file_contents)
+      if @run.load(file_contents)
+        if @run.measurements.blank? && @run.cn_measurements.blank?
+          flash[:notice] = 'Load failed.'
+          flash[:file_error] = "No data was able to be loaded from this file."
+        end
+      else
         flash[:notice] = 'Load failed.'
         flash[:file_error] = @run.display_load_errors
       end
@@ -72,13 +77,7 @@ class RunsController < ApplicationController
       flash[:file_error] = 'No file was selected to upload.'
     end
 
-    if @run.measurements.blank? && @run.cn_measurements.blank?
-      flash[:notice] = 'Load failed.'
-      flash[:file_error] = "No data was able to be loaded from this file."
-    end
-    
     errors_exist = !flash[:file_error].blank?
-
     if errors_exist
       redirect_to :action => "new"
     else
