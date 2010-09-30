@@ -1,9 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :measurements
 
-  map.resources :samples
-
+  map.resources :plots
+  
   map.resources :runs, :collection => { :cn => :get, :approve => :get }
+
+  map.resources :samples
 
   map.resources :users
 
