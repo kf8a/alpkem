@@ -14,6 +14,8 @@ Dir.glob(RAILS_ROOT + "/test/factories/*.rb").each do |factory|
   require factory 
 end
 
+#require "#{Rails.root}/db/seeds.rb"
+
 class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -47,5 +49,14 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  
+
+  setup :load_seeds
+
+  protected
+
+    def load_seeds
+      load "#{Rails.root}/db/seeds.rb"
+    end
+
+
 end
