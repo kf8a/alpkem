@@ -46,7 +46,7 @@ class Run < ActiveRecord::Base
 #--Things that need to be changed when adding a new file type begin here--
 
   LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  STANDARD_SAMPLE     = '\t\d{3}\tL?(\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
@@ -130,23 +130,56 @@ class Run < ActiveRecord::Base
           percent_c   = $5
         end
 
+        first = $1
+        second = $2
+        third = $3
+        fourth = $4
+
         case format_type
         when "Lysimeter"
-          @plot = find_plot("T#{$1}R#{2}F#{$3}")
+          plot_name = "T#{first}R#{second}F#{third}"
+          @plot = find_plot(plot_name)
+          unless first.blank? || second.blank? || third.blank?
+            raise "There is no plot named #{plot_name}" if @plot.blank?
+          end
         when "Standard"
           if sample_type_id == 2
-            @plot = find_plot("T#{$1}R#{$2}")
+            plot_name = "T#{first}R#{second}"
+            @plot = find_plot(plot_name)
+            unless first.blank? || second.blank?
+              raise "There is no plot named #{plot_name}" if @plot.blank?
+            end
+          elsif first.start_with?("L")
+            first.slice!("L")
+            plot_name = "L#{first.to_i}S#{second}"
+            @plot = find_plot(plot_name)
+            unless second.blank?
+              raise "There is no plot named #{plot_name}" if @plot.blank?
+            end
           else
-            @plot = find_plot("G#{$1.to_i}R#{$2}")
+            plot_name = "G#{first}R#{second}"
+            @plot = find_plot(plot_name)
+            unless first.blank? || second.blank?
+              raise "There is no plot named #{plot_name}" if @plot.blank?
+            end
           end
         when "Old Soil"
-          @plot = find_plot("G#{$1}R#{$2}")
+          
+          plot_name = "G#{first}R#{second}"
+          @plot = find_plot(plot_name)
+          unless first.blank? || second.blank?
+            raise "There is no plot named #{plot_name}" if @plot.blank?
+          end
         when "GLBRC Deep"
-          @plot = find_plot("G#{$1}R#{$2}S#{$3}#{$4}")
+          plot_name = "G#{first}R#{second}S#{third}#{fourth}"
+          @plot = find_plot(plot_name)
+          unless first.blank? || second.blank? || third.blank? || fourth.blank?
+            raise "There is no plot named #{plot_name}" if @plot.blank?
+          end
         when "CN Sample"
-          cn_plot     = $3
+          cn_plot     = third
         when "CN Deep"
-          cn_plot     = $1
+          cn_plot     = first
         else
           raise "not implemented"
         end
