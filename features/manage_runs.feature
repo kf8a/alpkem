@@ -110,7 +110,16 @@ Feature: Manage runs
     When I follow "qc"
     Then I should see "G8R2 2010-06-25"
       And I should see "0.1800 0.1740 0.1860"
-  
+
+  Scenario: Upload a file that is a new GLBRC Soil Sample but did not work
+    Given I am on the new run page
+    When I select "June 25, 2010" as the "Sample Date" date
+      And I select "June 25, 2010" as the "Start Date" date
+      And I select "June 25, 2010" as the "Run Date" date
+      And I select "GLBRC Soil Sample (New)" from "Sample Type"
+      And I attach the slightly different new GLBRC soil test file
+      And I press "Upload"
+    Then I should see "Run was successfully uploaded."
   
   Scenario: Upload CN data
     Given I am on the new run page
