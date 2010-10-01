@@ -28,8 +28,8 @@ class RunsController < ApplicationController
   # GET /runs/1.xml
   def show
     @run = Run.find(params[:id])
-    if @run.cn_measurements_exist
-          @back = cn_runs_path
+    if @run.cn_measurements_exist?
+      @back = cn_runs_path
     else  @back = runs_path
     end        
     respond_to do |format|
@@ -60,33 +60,40 @@ class RunsController < ApplicationController
   # POST /runs.xml
   def create
     @run = Run.new(params[:run])
-    if params[:data].blank?
-      flash[:file_error] = 'No file was selected to upload.'
-      render :action => "new" and return
-    end
-    file = params[:data][:file]
 
-    if file.class == String
-      flash[:file_error] = 'No file was selected to upload.'
-      render :action => "new" and return
-    end
-    file_contents = StringIO.new(file.read)
-    unless @run.load(file_contents)
-      flash[:notice] = 'Load failed.'
-      flash[:file_error] = @run.display_load_errors
-      redirect_to :action => "new" and return
-    end
-    
-    respond_to do |format|
-      if @run.save
-        flash[:notice] = 'Run was successfully uploaded.'
-        format.html { redirect_to(@run) }
-        format.xml  { render :xml => @run, :status => :created, :location => @run }
+    file = (!params[:data].blank? && params[:data][:file])
+    if file && !file.class.eql?(String)
+      file_contents = StringIO.new(file.read)
+      if @run.load(file_contents)
+        if @run.measurements.blank? && @run.cn_measurements.blank?
+          flash[:notice] = 'Load failed.'
+          flash[:file_error] = "No data was able to be loaded from this file."
+        end
       else
-        flash[:notice] = 'Run was not uploaded.'
+        flash[:notice] = 'Load failed.'
         flash[:file_error] = @run.display_load_errors
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
+      end
+    else
+      flash[:file_error] = 'No file was selected to upload.'
+    end
+
+    errors_exist = !flash[:file_error].blank?
+    if errors_exist
+      redirect_to :action => "new"
+    else
+      respond_to do |format|
+        if @run.save
+          flash[:notice] = 'Run was successfully uploaded.'
+          flash[:notice] += @run.plot_errors
+          format.html { redirect_to(@run) }
+          format.xml  { render :xml => @run, :status => :created, :location => @run }
+        else
+          flash[:notice] = 'Run was not uploaded.'
+          flash[:notice] += @run.plot_errors
+          flash[:file_error] = @run.display_load_errors
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end

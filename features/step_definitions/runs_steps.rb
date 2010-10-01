@@ -32,6 +32,16 @@ When /^I attach the new GLBRC Soil test file$/ do
   attach_file("data_file", path_to_test_file, "text")
 end
 
+When /^I attach the slightly different new GLBRC soil test file$/ do
+  path_to_test_file = File.join(Rails.root, "test", "data", "100419L.TXT")
+  attach_file("data_file", path_to_test_file, "text")
+end
+
+When /^I attach the blank test file$/ do
+  path_to_test_file = File.join(Rails.root, "test", "data", "blank.txt")
+  attach_file("data_file", path_to_test_file, "text")
+end
+
 
 Then /^I should see the following data:$/ do |expected_data_table|
   expected_data_table.diff!(tableish('table tr', 'td,th'))

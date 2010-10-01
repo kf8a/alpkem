@@ -1,60 +1,53 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class MeasurementsControllerTest < ActionController::TestCase
 
   def setup
-#    @attr = {
-#      :sample_type_id => 2,
-#      :sample_date    => Date.today.to_s
-#    }
-#    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_test.TXT'
-#    File.open(file_name, 'r') do |f|
-#      @good_data = StringIO.new(f.read)
-#    end
-#    @run = Run.new(@attr)
-#    @run.load(@good_data)
-#    @run.save
-    
-    @cn_attr = {
-      :sample_type_id => 6,
-      :sample_date    => Date.today.to_s
-    }
-    file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
-    File.open(file_name, 'r') do |f|
-      @cn_data = StringIO.new(f.read)
-    end
-    @cn_run = Run.new(@cn_attr)
-    @cn_run.load(@cn_data)
-    @cn_run.save
-
-#    @measurement = Factory.create :measurement
-#    @measurement.save
-#    @cnmeasurement = Factory.create :cn_measurement
-#    @cnmeasurement.save
+    Analyte.all.each {|a| a.destroy}
+    CnMeasurement.all.each {|c| c.destroy}
+    CnSample.all.each {|c| c.destroy}    
+    Measurement.all.each {|m| m.destroy}
+    Plot.all.each {|p| p.destroy}
+    Replicate.all.each {|r| r.destroy}
+    Run.all.each {|r| r.destroy}
+    Sample.all.each {|s| s.destroy}
+    Study.all.each {|s| s.destroy}
+    Treatment.all.each {|t| t.destroy}
+    User.all.each {|u| u.destroy}
+  end
+  
+  def teardown
+    Analyte.all.each {|a| a.destroy}
+    CnMeasurement.all.each {|c| c.destroy}
+    CnSample.all.each {|c| c.destroy}    
+    Measurement.all.each {|m| m.destroy}
+    Plot.all.each {|p| p.destroy}
+    Replicate.all.each {|r| r.destroy}
+    Run.all.each {|r| r.destroy}
+    Sample.all.each {|s| s.destroy}
+    Study.all.each {|s| s.destroy}
+    Treatment.all.each {|t| t.destroy}
+    User.all.each {|u| u.destroy}
   end
   
   test "should destroy and undestroy measurement" do
-#    @run = Factory.create :run
-#    assert @run.valid?
-    @measurement = Factory.create :measurement
-    assert @measurement.valid?
-    @measurement = Measurement.find(:first)
+    @measurement = Factory.create(:measurement)
     xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample"
-    assert assigns(:m).deleted
-    @measurement = assigns(:m)
+    @measurement.reload
     assert @measurement.deleted
     xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample"
-    assert ! assigns(:m).deleted
+    @measurement.reload
+    assert ! @measurement.deleted
   end
   
   test "should destroy and undestroy cn measurement" do
-    @cnmeasurement = CnMeasurement.find(:first)
+    @cnmeasurement  = Factory.create(:cn_measurement)
     xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample"
-    assert assigns(:m).deleted
-    @cnmeasurement = assigns(:m)
+    @cnmeasurement.reload
     assert @cnmeasurement.deleted
     xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample"
-    assert ! assigns(:m).deleted
+    @cnmeasurement.reload
+    assert ! @cnmeasurement.deleted
   end
 
 end

@@ -9,8 +9,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :plot
   
   def plot_name
-    #The test is only for some legacy dataset that have samples without plots
-    plot.nil? ? '' : plot.name
+    return plot.try(:name)
   end
   
   def previous_measurements

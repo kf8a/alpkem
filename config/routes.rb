@@ -1,10 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :measurements
 
-  map.resources :samples
+  map.resources :plots
+  
+  map.resources :runs, :collection => { :cn => :get, :approve => :get }
 
-  map.resources :runs, :collection => { :cn => :get }
-  map.resources :runs
+  map.resources :samples
 
   map.resources :users
 
@@ -14,13 +15,4 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "runs", :action => 'index'
   
   map.open_id_complete 'sessions', :controller => "sessions", :action => "create", :requirements => { :method => :get }
-  
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing the them or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
 end
