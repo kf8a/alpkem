@@ -1,1 +1,15 @@
 <h1>New Plots</h1>
+
+<% form_tag '/plots/create_plots' do %>
+  <%= label_tag 'study_name' %>
+  <%= text_field_tag 'study_name' %><br />
+  <%= label_tag 'prefix' %>
+  <%= text_field_tag 'prefix', :max_length => 2, :size => 4 %><br />
+  <%= label_tag 'number_of_treatments' %>
+  <%= text_field_tag 'number_of_treatments', :max_length => 2, :size => 4 %><br />
+  <%= label_tag 'replicate_prefix' %>
+  <%= text_field_tag 'replicate_prefix', :max_length => 2, :size => 4 %><br />
+  <%= label_tag 'number_of_replicates' %>
+  <%= text_field_tag 'number_of_replicates', :max_length => 2, :size => 4 %><br />
+  <%= submit_tag 'Submit' %>
+<% end %>
