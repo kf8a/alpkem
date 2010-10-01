@@ -14,6 +14,10 @@ class Run < ActiveRecord::Base
   def display_load_errors
     @load_errors
   end
+
+  def plot_errors
+    @plot_errors
+  end
   
   def measurements_by_analyte(analyte)
     raise ArgumentError unless analyte.class == Analyte
@@ -95,6 +99,7 @@ class Run < ActiveRecord::Base
   
   def load(data)
     @load_errors = ""
+    @plot_errors = ""
     
     @load_errors = "Data file is empty."      if data.size == 0 
     @load_errors = "No Sample Type selected." unless sample_type_id
@@ -140,27 +145,27 @@ class Run < ActiveRecord::Base
           plot_name = "T#{first}R#{second}F#{third}"
           @plot = find_plot(plot_name)
           unless first.blank? || second.blank? || third.blank?
-            raise "There is no plot named #{plot_name}" if @plot.blank?
+            @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
           end
         when "Standard"
           if sample_type_id == 2
             plot_name = "T#{first}R#{second}"
             @plot = find_plot(plot_name)
             unless first.blank? || second.blank?
-              raise "There is no plot named #{plot_name}" if @plot.blank?
+              @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
             end
           elsif first.start_with?("L")
             first.slice!("L")
             plot_name = "L#{first.to_i}S#{second}"
             @plot = find_plot(plot_name)
             unless second.blank?
-              raise "There is no plot named #{plot_name}" if @plot.blank?
+              @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
             end
           else
             plot_name = "G#{first}R#{second}"
             @plot = find_plot(plot_name)
             unless first.blank? || second.blank?
-              raise "There is no plot named #{plot_name}" if @plot.blank?
+              @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
             end
           end
         when "Old Soil"
@@ -168,13 +173,13 @@ class Run < ActiveRecord::Base
           plot_name = "G#{first}R#{second}"
           @plot = find_plot(plot_name)
           unless first.blank? || second.blank?
-            raise "There is no plot named #{plot_name}" if @plot.blank?
+            @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
           end
         when "GLBRC Deep"
           plot_name = "G#{first}R#{second}S#{third}#{fourth}"
           @plot = find_plot(plot_name)
           unless first.blank? || second.blank? || third.blank? || fourth.blank?
-            raise "There is no plot named #{plot_name}" if @plot.blank?
+            @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
           end
         when "CN Sample"
           cn_plot     = third

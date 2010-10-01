@@ -84,10 +84,12 @@ class RunsController < ApplicationController
       respond_to do |format|
         if @run.save
           flash[:notice] = 'Run was successfully uploaded.'
+          flash[:notice] += @run.plot_errors
           format.html { redirect_to(@run) }
           format.xml  { render :xml => @run, :status => :created, :location => @run }
         else
           flash[:notice] = 'Run was not uploaded.'
+          flash[:notice] += @run.plot_errors
           flash[:file_error] = @run.display_load_errors
           format.html { render :action => "new" }
           format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
