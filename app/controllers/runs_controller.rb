@@ -5,7 +5,7 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.xml
   def index
-    @runs = runs.order_by(:sample_date)
+    @runs = runs.find(:all, :order => 'sample_date desc')
 
     respond_to do |format|
       format.html # index.html.erb
