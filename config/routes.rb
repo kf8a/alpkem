@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :measurements
 
-  map.resources :plots, :collection => { :create_plots => :post }
+  map.resources :plots, :collection => { :create_plots => :post, :update_plots => :post }
   
   map.resources :runs, :collection => { :cn => :get, :approve => :get }
 

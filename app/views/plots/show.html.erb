@@ -1,0 +1,7 @@
+<h1>Plots for <%= @study.name %> </h1>
+
+<% @study.plots.each do |plot| %>
+  <%= plot.name %><br />
+<% end %>
+
+<%= link_to 'Edit', edit_plot_path(@study) %>

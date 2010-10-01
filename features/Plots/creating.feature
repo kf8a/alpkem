@@ -14,3 +14,15 @@ Feature: Creating plots
     Then I should see "Junipers"
       And I should see "J1S1"
       And I should see "J10S3"
+
+  Scenario: Add to the plot set with an old study
+    Given the Juniper study exists
+    When I go to the plots page
+      And I follow "Junipers"
+      And I follow "Edit"
+      And I fill in "How many total treatments should there be?" with "11"
+      And I fill in "How many total replicates should there be?" with "5"
+      And I press "Submit"
+    Then I should see "Junipers"
+      And I should see "J1S1"
+      And I should see "J11S5"
