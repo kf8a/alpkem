@@ -1,6 +1,13 @@
 <h1>Runs</h1>
-<ul>
+<table>
+  <tr>
+    <th>Run Date</th>
+    <th>Sample Date</th>
+    <th>Name</th>
+    <th>Size</th>
+  </tr>
+  
 <%= render :partial => 'run', :collection => @runs %>
-</ul>
+</table>
 <%= link_to "new", new_run_path %>
 <%= link_to "CN runs", cn_runs_path %>

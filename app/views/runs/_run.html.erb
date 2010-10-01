@@ -1,7 +1,10 @@
-<li class="updated_<%=run.updated? %>">
-<%= run.id %>
-<%= run.run_date %> <%= run.sample_type_name %> <%= run.samples.size %> samples
-<%= link_to "qc", edit_run_path(run) %>
-<%= link_to 'delete', run_path(run), :confirm => 'Are you sure?', :method => :delete %>
-</li>
+<tr class="updated_<%=run.updated? %>">
+<td><%= run.run_date %></td>
+<td><%= run.sample_date %></td>
+<td><%= run.sample_type_name %></td>
+<td><%= run.samples.size %> samples</td>
+<td><%= link_to "qc", edit_run_path(run) %></td>
+<td><%= link_to 'delete', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
+</tr>
+
 
