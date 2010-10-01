@@ -4,7 +4,7 @@
 <td><%= run.sample_type_name %></td>
 <td><%= run.samples.size %> samples</td>
 <td><%= link_to "qc", edit_run_path(run) %></td>
-<td><%= link_to 'delete', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
+<td><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
 </tr>
 
 

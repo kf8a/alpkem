@@ -154,9 +154,9 @@ class Run < ActiveRecord::Base
             unless first.blank? || second.blank?
               @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
             end
-          elsif first.start_with?("L")
-            first.slice!("L")
-            plot_name = "L#{first.to_i}S#{second}"
+          elsif first.start_with?("L0")
+            first.slice!("L0")
+            plot_name = "L0#{first.to_i}S#{second}"
             @plot = find_plot(plot_name)
             unless second.blank?
               @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
