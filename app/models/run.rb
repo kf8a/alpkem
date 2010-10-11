@@ -137,7 +137,7 @@ class Run < ActiveRecord::Base
           percent_n   = $4
           percent_c   = $5
         when 'Lysimeter'
-          nh4_amount = $6
+          nh4_amount  = $6
         end
 
         first = $1
