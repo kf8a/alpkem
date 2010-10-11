@@ -32,11 +32,17 @@ gem 'RedCloth'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem 'webrat'
+  gem 'webrat', '>=0.7.2.beta.2'
   gem "shoulda"
   gem "factory_girl"
-  gem "cucumber-rails"
+  gem 'capybara'
   gem "database_cleaner"
+  gem "cucumber-rails"
+  gem "cucumber"
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'launchy'
+
 
   if RUBY_VERSION > "1.9"
     gem 'simplecov'

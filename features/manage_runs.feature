@@ -11,6 +11,7 @@ Feature: Manage runs
       And I select "Lysimeter" from "Sample Type"
       And I attach the Soil Sample test file
       And I press "Upload"
+      And I follow the redirect
     Then I should see "Load failed."
       And I should see "No data was able to be loaded from this file."
     

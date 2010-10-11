@@ -4,11 +4,8 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-ENV["RAILS_ENV"] ||= "cucumber"
-
+ENV["RAILS_ENV"] ||= "test"
 require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
-
-require File.expand_path(File.dirname(__FILE__) + '/../../test/test_helper')
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/world'
@@ -19,11 +16,13 @@ require 'webrat'
 require 'webrat/core/matchers'
 
 Webrat.configure do |config|
-  config.mode = :rails
+  config.mode = :rack
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser
 end
 
-
+World(Rack::Test::Methods)
+World(Webrat::Methods)
+World(Webrat::Matchers)
 
 # If you set this to false, any error raised from within your app will bubble 
 # up to your step definition and out to cucumber unless you catch it somewhere
