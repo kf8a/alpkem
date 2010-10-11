@@ -13,8 +13,7 @@ Rails::Initializer.run do |config|
 
   config.gem 'authlogic' 
   config.gem "authlogic-oid", :lib => "authlogic_openid"
- config.gem 'mislav-will_paginate',  :lib => 'will_paginate', 
-     :source => 'http://gems.github.com'  
+  config.gem 'will_paginate',  :lib => 'will_paginate'
   config.gem 'RedCloth'
   #config.gem 'fastercsv' if RUBY_VERSION < '1.9'
  

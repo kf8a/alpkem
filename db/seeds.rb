@@ -1,7 +1,7 @@
 l_study = Study.find_or_create_by_name(:name => 'Lux Arbor', :prefix => 'M')
 
 1.upto(3) do |i|
-  Treatment.find_or_create_by_name(:name => "L#{i}", :study_id => l_study.id)
+  Treatment.find_or_create_by_name(:name => "L0#{i}", :study_id => l_study.id)
 end
 
 1.upto(10) do |i|
