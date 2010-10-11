@@ -117,7 +117,7 @@ class Run < ActiveRecord::Base
 
         if format_type == "Lysimeter"
            s_date = $5
-         if format_type ==  "CN Sample"
+        elsif format_type ==  "CN Sample"
           s_date = $2
         else
           s_date = sample_date
