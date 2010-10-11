@@ -137,7 +137,7 @@ class Run < ActiveRecord::Base
           percent_n   = $4
           percent_c   = $5
         when 'Lysimeter'
-          no4_amount = $5
+          no3_amount = $5
         end
 
         first = $1
@@ -272,7 +272,7 @@ class Run < ActiveRecord::Base
   end
 
   def process_nhno_sample(s_date, nh4_amount, no3_amount)
-    return if no3_amount.blank? || nh4_amount.blank? || @plot.blank?
+    return if @plot.blank?
     
     find_sample(@plot, s_date)
 
@@ -283,9 +283,11 @@ class Run < ActiveRecord::Base
       @sample.sample_type_id = sample_type_id
       @sample.save
     end
+    
+    logger.info @sample
 
-    create_no3_measurement(no3_amount)
-    create_nh4_measurement(nh4_amount)
+    create_no3_measurement(no3_amount) if no3_amount
+    create_nh4_measurement(nh4_amount) if nh4_amount
   end
 
   def create_no3_measurement(no3_amount)
