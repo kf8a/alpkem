@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
     all_runs.each do |run|
       runs_index << run unless run.cn_measurements_exist?
     end
-    return runs_index
+    runs_index
   end
 
   def cn_runs
@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
     all_runs.each do |run|
       runs_index << run if run.cn_measurements_exist?
     end
-    return runs_index
+    runs_index
   end
 
 end

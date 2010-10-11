@@ -1,4 +1,6 @@
 class UserSessionsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+  
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy
 
@@ -13,7 +15,7 @@ class UserSessionsController < ApplicationController
     @user_session.save do |result|
       if result
         flash[:notice] = "Login successful!"
-        redirect_back_or_default 'runs'
+        redirect_back_or_default '/runs'
       else
         render :action => :new
       end

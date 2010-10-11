@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :plots, :collection => { :create_plots => :post, :update_plots => :post }
   
-  map.resources :runs, :collection => { :cn => :get, :approve => :get }
+  map.resources :runs, :collection => { :cn => :get, :approve => :post }
 
   map.resources :samples
 
