@@ -1,28 +1,35 @@
 <% cv = sample.cv(analyte) %>
 <td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
-	<table>
-	<% sample.measurements_by_analyte(analyte).each do |measurement| %>
-	<% number = number_with_precision(measurement.amount,:precision => 4) %>
-		<tr>
-			<td/>
-			<td>
-				<% if sample.approved? %>
-				<%= number %>
-				<% else %>
-				<%= link_to_remote  "#{number}" , :url => {:id => measurement.id, :controller => 'measurements', :action => 'destroy', :sample_class => sample.class}, :method => 'delete', :loading  => update_page{|p| p[:spinner].show },
-				:complete => update_page{|p| p[:spinner].hide }, 
-					:html => {:class => "deleted_#{measurement.deleted?}"}%>
-				<% end %>
-			</td>
-		</tr>
-		<% end %>
-		<tr>
-			<td>Mean:</td>	
-			<td><%= number_with_precision(sample.average(analyte), :precision => 4) %></td>
-		</tr>
-		<tr>
-			<td>CV:</td>
-			<td><%= number_with_precision(cv, :precision=>4) %></td>
-		</tr>
+  <table>
+    <% sample.measurements_by_analyte(analyte).each do |measurement| %>
+      <% number = number_with_precision(measurement.amount,:precision => 4) %>
+      <tr>
+        <td>
+          <% if sample.approved? %>
+            <%= number %>
+          <% else %>
+            <%= link_to "#{number}",
+                :url => {
+                    :id => measurement.id,
+                    :controller => 'measurements',
+                    :action => 'destroy',
+                    :sample_class => sample.class},
+                :method => 'delete',
+                :loading => update_page{|p| p[:spinner].show },
+                :complete => update_page{|p| p[:spinner].hide },
+                :html => {:class => "deleted_#{measurement.deleted?}"},
+                :remote => true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>Mean:</td>
+      <td><%= number_with_precision(sample.average(analyte), :precision => 4) %></td>
+    </tr>
+    <tr>
+      <td>CV:</td>
+      <td><%= number_with_precision(cv, :precision=>4) %></td>
+    </tr>
   </table>
 </td>
