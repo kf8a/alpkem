@@ -115,9 +115,9 @@ class Run < ActiveRecord::Base
       data.each do | line |
         next unless line =~ re
 
-        if format_type == "Lysimeter"
-          s_date = $4
-        elsif format_type ==  "CN Sample"
+        # if format_type == "Lysimeter"
+        #    s_date = $4
+         if format_type ==  "CN Sample"
           s_date = $2
         else
           s_date = sample_date
