@@ -9,7 +9,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :plot
   
   def plot_name
-    self.plot.name
+    self.plot.try(:name)
   end
   
   def previous_measurements
