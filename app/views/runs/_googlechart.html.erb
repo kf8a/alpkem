@@ -4,12 +4,12 @@
   google.load('visualization', '1', {'packages':['annotatedtimeline']});
 
   // Set a callback to run when the Google Visualization API is loaded.
-  google.setOnLoadCallback(drawChart);
+  google.setOnLoadCallback(drawChart_<%=sample.id%>);
 
   // Callback that creates and populates a data table,
   // instantiates the pie chart, passes in the data and
   // draws it.
-  function drawChart() {
+  function drawChart_<%=sample.id%>() {
 
   // Create our data table.
   var data = new google.visualization.DataTable();
