@@ -209,7 +209,7 @@ class RunTest < ActiveSupport::TestCase
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 1))
         r.load(s)
-        #assert r.save
+        assert r.save
         assert r.samples.size > 1
       end
     end
