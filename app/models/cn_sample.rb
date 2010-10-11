@@ -1,12 +1,14 @@
 require 'statistics'
 
 class CnSample < ActiveRecord::Base
+
   has_many :cn_measurements, :include => :run, :order => 'runs.run_date, cn_measurements.id'
-  
   has_many :runs, :through => :cn_measurements, :order => 'run_date'
 
+  validates_presence_of :cn_plot
+
   def plot_name
-    return cn_plot
+    return self.cn_plot
   end
   
   def analytes
@@ -30,11 +32,6 @@ class CnSample < ActiveRecord::Base
       end
     end
     return relevant_measurements
-  end
-  
-  def measurements_by_analyte_name(analyte_name)
-    analyte = Analyte.find_by_name(:first, analyte_name)
-    measurements_by_analyte(analyte)
   end
   
   def measurements_by_analyte(analyte)

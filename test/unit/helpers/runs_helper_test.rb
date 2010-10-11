@@ -3,6 +3,7 @@ require 'test_helper'
 class RunsHelperTest < ActionView::TestCase
 
   def setup
+    @plot = Plot.first
     @analyte1 = Factory.create(:analyte, 
                                 :name => "C6H12O6", 
                                 :unit => "sweetness")
@@ -17,7 +18,8 @@ class RunsHelperTest < ActionView::TestCase
                                     :amount => @measurement1_amount, 
                                     :analyte => @analyte1, 
                                     :sample => Factory.create(:sample, 
-                                    :sample_date => @measurement1_date))
+                                    :sample_date => @measurement1_date,
+                                    :plot => @plot))
     
     @measurement2_date    = Date.today.prev_year
     @measurement2_amount  = 0.001
@@ -25,7 +27,8 @@ class RunsHelperTest < ActionView::TestCase
                                     :amount => @measurement2_amount, 
                                     :analyte => @analyte1, 
                                     :sample => Factory.create(:sample, 
-                                    :sample_date => @measurement2_date))
+                                    :sample_date => @measurement2_date,
+                                    :plot => @plot))
     
     @measurement3_date    = Date.yesterday
     @measurement3_amount  = -0.089
@@ -33,7 +36,8 @@ class RunsHelperTest < ActionView::TestCase
                                     :amount => @measurement3_amount, 
                                     :analyte => @analyte1, 
                                     :sample => Factory.create(:sample, 
-                                    :sample_date => @measurement3_date))
+                                    :sample_date => @measurement3_date,
+                                    :plot => @plot))
     
     @measurement4_date    = Date.today.prev_month
     @measurement4_amount  = -0.875
@@ -41,7 +45,8 @@ class RunsHelperTest < ActionView::TestCase
                                     :amount => @measurement4_amount, 
                                     :analyte => @analyte2, 
                                     :sample => Factory.create(:sample, 
-                                    :sample_date => @measurement4_date))
+                                    :sample_date => @measurement4_date,
+                                    :plot => @plot))
     
     @measurement5_date    = Date.today - 450
     @measurement5_amount  = 0.0
@@ -49,7 +54,8 @@ class RunsHelperTest < ActionView::TestCase
                                     :amount => @measurement5_amount, 
                                     :analyte => @analyte2, 
                                     :sample => Factory.create(:sample, 
-                                    :sample_date => @measurement5_date))
+                                    :sample_date => @measurement5_date,
+                                    :plot => @plot))
     
     @measurement6_date    = Date.today
     @measurement6_amount  = 0.8
@@ -57,7 +63,8 @@ class RunsHelperTest < ActionView::TestCase
                                     :amount => @measurement6_amount, 
                                     :analyte => @analyte2, 
                                     :sample => Factory.create(:sample, 
-                                    :sample_date => @measurement6_date))  
+                                    :sample_date => @measurement6_date,
+                                    :plot => @plot))
   end
   
   test "makes the right google chart script" do

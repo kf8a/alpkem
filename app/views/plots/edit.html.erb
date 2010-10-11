@@ -1,0 +1,17 @@
+<h1>Editing plots for <%= @study.name %> </h1>
+
+<% form_tag '/plots/update_plots' do %>
+  Current Treatments: <%= @study.treatments.size %><br />
+
+  <%= label_tag 'number_of_treatments', 'How many total treatments should there be?' %>
+  <%= text_field_tag 'number_of_treatments', @study.treatments.size, :max_length => 2, :size => 4 %><br />
+
+  Current Replicates: <%= @study.replicates.size %><br />
+
+  <%= label_tag 'number_of_replicates', 'How many total replicates should there be?' %>
+  <%= text_field_tag 'number_of_replicates', @study.replicates.size, :max_length => 2, :size => 4 %><br />
+
+  <%= hidden_field_tag 'id', @study.id %>
+  
+  <%= submit_tag 'Submit' %>
+<% end %>

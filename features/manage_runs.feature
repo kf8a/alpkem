@@ -52,7 +52,7 @@ Feature: Manage runs
       And I should see "Number of Samples: 55"
       
     When I follow "back"
-    Then I should see "2010-06-25 Soil Sample 55 samples qc delete"
+    Then I should see "2010-06-25 Soil Sample 55 samples qc destroy"
     
     When I follow "qc"
     Then I should see "T7R1"
