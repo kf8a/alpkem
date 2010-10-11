@@ -1,18 +1,23 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :measurements
+Alpkem::Application.routes.draw do
+  resources :measurements
 
-  map.resources :plots, :collection => { :create_plots => :post, :update_plots => :post }
-  
-  map.resources :runs, :collection => { :cn => :get, :approve => :post }
+  resources :plots do
+    collection do
+      post :create_plots
+      post :update_plots
+    end
+  end
 
-  map.resources :samples
+  resources :runs do
+    collection do
+      get :cn
+      post :approve
+    end
+  end
 
-  map.resources :users
-
-  map.resource :user_sessions
-  
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => "runs", :action => 'index'
-  
-  map.open_id_complete 'sessions', :controller => "sessions", :action => "create", :requirements => { :method => :get }
+  resources :samples
+  resources :users
+  resource :user_sessions
+  match '/' => 'runs#index'
+  match 'sessions' => 'sessions#create', :as => :open_id_complete, :constraints => { :method => get }
 end
