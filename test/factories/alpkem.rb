@@ -12,6 +12,7 @@ Factory.define :sample do |s|
 end
 
 Factory.define :cn_sample do |s|
+  s.cn_plot     "Plot"
 end  
 
 Factory.define :measurement do |m|
