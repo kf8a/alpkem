@@ -4,7 +4,7 @@
   <%= render :partial => 'analyte', :collection => @analytes, :locals => {:sample => sample}%>
   <% notword = ("" if sample.approved) || "not" %>
   <td class="<%= notword %>approved">Sample is <%= notword %> approved!<br />
-    <%= button_to_remote "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class} %>
+    <%= button_to "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class}, :remote => true %>
   </td>
   <td>
     <%= render :partial => 'googlechart', :locals => {:sample => sample} %>
