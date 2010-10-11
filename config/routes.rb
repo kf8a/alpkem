@@ -19,5 +19,5 @@ Alpkem::Application.routes.draw do
   resources :users
   resource :user_sessions
   match '/' => 'runs#index'
-  match 'sessions' => 'sessions#create', :as => :open_id_complete, :constraints => { :method => get }
+  #match 'sessions' => 'sessions#create', :as => :open_id_complete, :constraints => { :method => get }
 end
