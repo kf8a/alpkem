@@ -42,6 +42,8 @@ class RunsController < ApplicationController
   # GET /runs/new.xml
   def new
     @run = Run.new
+    @run.sample_date  = session[:sample_date]
+    @run.run_date     = session[:run_date]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,6 +63,9 @@ class RunsController < ApplicationController
   def create
     @run = Run.new(params[:run])
 
+    session[:sample_date] = @run.sample_date
+    session[:run_date] = @run.run_date
+    
     file = (!params[:data].blank? && params[:data][:file])
     if file && !file.class.eql?(String)
       file_contents = StringIO.new(file.read)

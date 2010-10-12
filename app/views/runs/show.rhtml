@@ -10,4 +10,4 @@
 <p>
   Number of Samples: <%= @run.samples.size %>
 </p>
-<%= link_to 'back', @back %>
+<%= link_to 'back', @back %> <%= link_to "qc", edit_run_path(@run) %> <%= link_to 'destroy', run_path(@run), :confirm => 'Are you sure?', :method => :delete %>

@@ -49,7 +49,8 @@ class Run < ActiveRecord::Base
 
 #--Things that need to be changed when adding a new file type begin here--
 
-  LYSIMETER           = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  LYSIMETER_OLD       = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  LYSIMETER           = '(\d{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\t\s+\d+\t\s+(\d+\.\d+)'
   STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
@@ -115,24 +116,28 @@ class Run < ActiveRecord::Base
         next unless line =~ re
 
         if format_type == "Lysimeter"
-          s_date = $4
+           s_date = $5
         elsif format_type ==  "CN Sample"
           s_date = $2
         else
           s_date = sample_date
         end
-
-        if ["Lysimeter","GLBRC Deep","Standard","Old Soil"].include?(format_type)
+        
+  
+        if ["GLBRC Deep","Standard","Old Soil"].include?(format_type)
           nh4_amount = $5
           no3_amount = $6
         end
 
-        if format_type == "CN Sample"
+        case format_type
+        when 'CN Sample'
           percent_n   = $8
           percent_c   = $9
-        elsif format_type == "CN Deep"
+        when 'CN Deep'
           percent_n   = $4
           percent_c   = $5
+        when 'Lysimeter'
+          nh4_amount  = $6
         end
 
         first = $1
@@ -267,7 +272,7 @@ class Run < ActiveRecord::Base
   end
 
   def process_nhno_sample(s_date, nh4_amount, no3_amount)
-    return if no3_amount.blank? || nh4_amount.blank? || @plot.blank?
+    return if @plot.blank?
     
     find_sample(@plot, s_date)
 
@@ -278,9 +283,11 @@ class Run < ActiveRecord::Base
       @sample.sample_type_id = sample_type_id
       @sample.save
     end
+    
+    logger.info @sample
 
-    create_no3_measurement(no3_amount)
-    create_nh4_measurement(nh4_amount)
+    create_no3_measurement(no3_amount) if no3_amount
+    create_nh4_measurement(nh4_amount) if nh4_amount
   end
 
   def create_no3_measurement(no3_amount)
