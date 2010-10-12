@@ -36,7 +36,7 @@ class CnSample < ActiveRecord::Base
   
   def measurements_by_analyte(analyte)
     raise ArgumentError unless analyte.class == Analyte   
-    cn_measurements.find(:all, :conditions => [%q{analyte_id = ?}, analyte.id])
+    cn_measurements.where(%q{analyte_id = ?}, analyte.id)
   end
   
   def average(analyte)
@@ -46,11 +46,11 @@ class CnSample < ActiveRecord::Base
   
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
-    m = cn_measurements.find(:all, :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
+    m = cn_measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id)
     Statistics.cv(m.map {|x| x.amount})
   end
 
   def CnSample.find_approved()
-    CnSample.find(:all, :conditions => [%q{approved = 't'}])
+    CnSample.where(%q{approved = 't'})
   end
 end

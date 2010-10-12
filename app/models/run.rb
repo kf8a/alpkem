@@ -37,9 +37,9 @@ class Run < ActiveRecord::Base
   
   def samples
     if cn_measurements_exist?
-      CnSample.find(:all, :conditions => ['id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id])
+      CnSample.where('id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id)
     else
-      Sample.find(:all, :conditions => ['id in (select sample_id from measurements where run_id = ?)', self.id])
+      Sample.where('id in (select sample_id from measurements where run_id = ?)', self.id)
     end
   end
     
