@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def runs
-    all_runs = Run.find(:all, :order => 'sample_date')
+    all_runs = Run.order('sample_date')
     runs_index = []
     all_runs.each do |run|
       runs_index << run unless run.cn_measurements_exist?
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cn_runs
-    all_runs = Run.find(:all, :order => 'sample_date')
+    all_runs = Run.order('sample_date')
     runs_index = []
     all_runs.each do |run|
       runs_index << run if run.cn_measurements_exist?
