@@ -7,18 +7,8 @@
     end
 end %>
 
-<% if @run.errors.any? %>
-  <div id="errorExplanation">
-    <h2><%= pluralize(@run.errors.count, "error") %> prohibited this run from being saved:</h2>
-    <ul>
-      <% @run.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
+  <%= render "shared/error_messages", :target => @run %>
   <p>
     <%= f.label :sample_date, "Sample Date" %>
     <%= f.date_select :sample_date %>
@@ -46,13 +36,3 @@ end %>
   </p>
   <%= submit_tag "Upload", :disable_with => "Uploading&hellip;"  %>
 <% end %>
-
-Current Info:
-
-Sample Date: <%= @run.sample_date %>
-Start Date: <%= @run.start_date %>
-Run Date: <%= @run.run_date %>
-Sample Type ID: <%= @run.sample_type_id %>
-Number of measurements: <%= @run.measurements.count + @run.cn_measurements.count %>
-
-
