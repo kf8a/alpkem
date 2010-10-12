@@ -10,7 +10,7 @@ require 'rails/test_help'
 require 'shoulda'
 require 'factory_girl'
 
-Dir.glob(RAILS_ROOT + "/test/factories/*.rb").each do |factory| 
+Dir.glob(Rails.root.to_s + "/test/factories/*.rb").each do |factory|
   require factory 
 end
 
