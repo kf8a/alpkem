@@ -1,6 +1,6 @@
 class RunsController < ApplicationController
   
-  before_filter :require_user if ::RAILS_ENV == 'production'
+  before_filter :require_user if ::Rails.env == 'production'
   
   # GET /runs
   # GET /runs.xml

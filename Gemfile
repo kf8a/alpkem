@@ -8,7 +8,7 @@ gem 'rails', '3.0.0'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem 'ruby-openid', :require => 'openid'
-gem 'authlogic'
+gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => 'rails3'
 gem 'authlogic-oid', :require => 'authlogic_openid'
 gem 'will_paginate', :require => 'will_paginate'
 gem 'RedCloth'

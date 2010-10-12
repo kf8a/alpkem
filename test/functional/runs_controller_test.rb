@@ -136,7 +136,9 @@ class RunsControllerTest < ActionController::TestCase
         delete :destroy, :id => @run.id
       end
       
-      should_destroy :run
+      should "destroy the run" do
+        assert_nil Run.find_by_id(@run.id)
+      end
       should redirect_to("the runs index page") {runs_path}
     end
   end
