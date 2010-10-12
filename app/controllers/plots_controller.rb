@@ -32,7 +32,7 @@ class PlotsController < ApplicationController
   end
 
   def show
-    @study = Study.find(params[:id])
+    @study = Study.find_by_id(params[:id])
   end
 
   def edit

@@ -4,9 +4,9 @@ class CnMeasurement < ActiveRecord::Base
   belongs_to :cn_sample
   belongs_to :run
   
-  validates_presence_of :amount
-  validates_presence_of :analyte
-  validates_presence_of :cn_sample
+  validates :amount,    :presence => true
+  validates :analyte,   :presence => true
+  validates :cn_sample, :presence => true
   
   def sample
     return cn_sample

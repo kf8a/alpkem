@@ -63,8 +63,8 @@ class RunsController < ApplicationController
   def create
     @run = Run.new(params[:run])
 
-    #session[:sample_date] = @run.sample_date
-    #session[:run_date] = @run.run_date
+    session[:sample_date] = @run.sample_date
+    session[:run_date] = @run.run_date
     
     file = (!params[:data].blank? && params[:data][:file])
     if file && !file.class.eql?(String)

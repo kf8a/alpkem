@@ -1,0 +1,1 @@
+require Rails.root.join('test', 'test_helper')

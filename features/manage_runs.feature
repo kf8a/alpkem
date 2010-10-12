@@ -130,7 +130,6 @@ Feature: Manage runs
       And I select "CN Soil Sample" from "Sample Type"
       And I attach the CN test file
       And I press "Upload"
-    Then show me the page
     Then I should see "Run was successfully uploaded."
     
     When I follow "back"
