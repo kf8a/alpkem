@@ -3,9 +3,9 @@ class Run < ActiveRecord::Base
   has_many :cn_measurements, :dependent => :destroy
 
   validates_presence_of :sample_type_id
-  validates_presence_of :measurements, 
-    :message => "No measurements are associated with this run.",
-    :unless => :cn_measurements_exist?
+  #validates_presence_of :measurements,
+  #  :message => "No measurements are associated with this run.",
+  #  :unless => :cn_measurements_exist?
 
   def cn_measurements_exist?
     !cn_measurements.blank?

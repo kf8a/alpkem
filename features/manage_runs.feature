@@ -5,9 +5,9 @@ Feature: Manage runs
   
   Scenario: Upload incorrect sample type
     Given I am on the new run page
-    When I select "May 4, 2010" as the "Sample Date" date
-      And I select "May 3, 2010" as the "Start Date" date
-      And I select "May 2, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "Lysimeter" from "Sample Type"
       And I attach the Soil Sample test file
       And I press "Upload"
@@ -22,9 +22,9 @@ Feature: Manage runs
     
   Scenario: Upload a blank file
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "Lysimeter" from "Sample Type"
       And I attach the blank test file
       And I press "Upload"
@@ -33,9 +33,9 @@ Feature: Manage runs
 
   Scenario: Upload Lysimeter data
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "Lysimeter" from "Sample Type"
       And I attach the Lysimeter test file
       And I press "Upload"
@@ -43,9 +43,9 @@ Feature: Manage runs
     
   Scenario: Upload Soil Sample data
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "Soil Sample" from "Sample Type"
       And I attach the Soil Sample test file
       And I press "Upload"
@@ -68,9 +68,9 @@ Feature: Manage runs
 
   Scenario: Upload GLBRC Deep Core data
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "GLBRC Deep Core Nitrogen" from "Sample Type"
       And I attach the GLBRC Deep Core test file
       And I press "Upload"
@@ -78,9 +78,9 @@ Feature: Manage runs
   
   Scenario: Upload GLBRC Resin Strips data
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "GLBRC Resin Strips" from "Sample Type"
       And I attach the GLBRC Resin Strips test file
       And I press "Upload"
@@ -96,9 +96,9 @@ Feature: Manage runs
   
   Scenario: Upload GLBRC New Format Soil data
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "GLBRC Soil Sample (New)" from "Sample Type"
       And I attach the new GLBRC Soil test file
       And I press "Upload"
@@ -114,9 +114,9 @@ Feature: Manage runs
 
   Scenario: Upload a file that is a new GLBRC Soil Sample but did not work
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "GLBRC Soil Sample (New)" from "Sample Type"
       And I attach the slightly different new GLBRC soil test file
       And I press "Upload"
@@ -124,12 +124,13 @@ Feature: Manage runs
   
   Scenario: Upload CN data
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "CN Soil Sample" from "Sample Type"
       And I attach the CN test file
       And I press "Upload"
+    Then show me the page
     Then I should see "Run was successfully uploaded."
     
     When I follow "back"
@@ -141,9 +142,9 @@ Feature: Manage runs
 
   Scenario: Upload GLBRC deepcore CN data file
     Given I am on the new run page
-    When I select "June 25, 2010" as the "Sample Date" date
-      And I select "June 25, 2010" as the "Start Date" date
-      And I select "June 25, 2010" as the "Run Date" date
+    When I select "June 25, 2010" as the "run_sample_date" date
+      And I select "June 25, 2010" as the "run_start_date" date
+      And I select "June 25, 2010" as the "run_run_date" date
       And I select "CN Deep Core" from "Sample Type"
       And I attach GLBRC deepcore CN test file
       And I press "Upload"

@@ -22,5 +22,8 @@ Alpkem::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # Disable request forgery protection in development environment
+  config.action_controller.allow_forgery_protection  = false
 end
 

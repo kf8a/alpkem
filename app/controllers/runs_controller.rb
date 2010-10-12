@@ -27,7 +27,7 @@ class RunsController < ApplicationController
   # GET /runs/1
   # GET /runs/1.xml
   def show
-    @run = Run.find(params[:id], :include => :measurements)
+    @run = Run.find(params[:id])#, :include => :measurements)
     if @run.cn_measurements_exist?
       @back = cn_runs_path
     else  @back = runs_path
@@ -63,8 +63,8 @@ class RunsController < ApplicationController
   def create
     @run = Run.new(params[:run])
 
-    session[:sample_date] = @run.sample_date
-    session[:run_date] = @run.run_date
+    #session[:sample_date] = @run.sample_date
+    #session[:run_date] = @run.run_date
     
     file = (!params[:data].blank? && params[:data][:file])
     if file && !file.class.eql?(String)
