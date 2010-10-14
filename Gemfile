@@ -12,6 +12,9 @@ gem 'will_paginate', :require => 'will_paginate'
 gem 'RedCloth'
 gem 'rack-openid'
 
+#Gets rid of annoying UTF-8 string error in rack
+gem "escape_utils"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
