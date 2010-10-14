@@ -10,6 +10,7 @@ gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => '
 gem 'authlogic-oid', :require => 'authlogic_openid'
 gem 'will_paginate', :require => 'will_paginate'
 gem 'RedCloth'
+gem 'rack-openid'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -30,14 +31,12 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem 'webrat', '>=0.7.2.beta.2'
   gem "shoulda"
   gem "factory_girl"
   gem 'capybara'
   gem "database_cleaner"
   gem "cucumber-rails"
   gem "cucumber"
-  gem 'rspec-rails'
   gem 'spork'
   gem 'launchy'
 
