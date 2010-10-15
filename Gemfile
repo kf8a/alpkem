@@ -15,6 +15,8 @@ gem 'rack-openid'
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
+gem "metric_fu"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
