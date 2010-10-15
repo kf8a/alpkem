@@ -27,3 +27,18 @@
     <%= render :partial => 'sample', :collection => @samples %>
   </tbody>
 </table>
+
+
+<script type="text/javascript">
+  // Load the Visualization API and the annotated timeline package.
+  google.load('visualization', '1', {'packages':['annotatedtimeline']});
+
+  // Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawCharts);
+
+  function drawCharts() {
+    <% @samples.each do |sample| %>
+      drawChart_<%= sample.id %>();
+    <% end %>
+  }
+</script>

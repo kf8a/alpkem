@@ -6,4 +6,7 @@
   <td class="<%= notword %>approved">Sample is <%= notword %> approved!<br />
     <%= button_to "Toggle approval", :url => {:action => 'approve', :id => sample, :sample_class => sample.class}, :remote => true %>
   </td>
+  <td>
+    <%= render :partial => 'googlechart', :locals => {:sample => sample} %>
+  </td>
 </tr>
