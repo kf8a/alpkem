@@ -71,7 +71,7 @@ class RunsController < ApplicationController
       file_contents = StringIO.new(file.read)
       if @run.load(file_contents)
         if @run.measurements.blank? && @run.cn_measurements.blank?
-          flash[:notice] = 'Load failed.'
+          flash[:notice] = 'Load failed.' + @run.plot_errors
           flash[:file_error] = "No data was able to be loaded from this file."
         end
       else
