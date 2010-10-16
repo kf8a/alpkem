@@ -1,6 +1,7 @@
 class RunsController < ApplicationController
   
   before_filter :require_user if ::Rails.env == 'production'
+  before_filter :get_run, :only => [:edit, :update, :destroy]
   
   # GET /runs
   # GET /runs.xml
@@ -53,7 +54,6 @@ class RunsController < ApplicationController
 
   # GET /runs/1/edit
   def edit
-    @run        = Run.find(params[:id])
     @samples    = @run.samples
     @analytes   = @run.analytes
   end
@@ -106,8 +106,6 @@ class RunsController < ApplicationController
   # PUT /runs/1
   # PUT /runs/1.xml
   def update
-    @run = Run.find(params[:id])
-
     respond_to do |format|
       if @run.update_attributes(params[:run])
         flash[:notice] = 'Run was successfully updated.'
@@ -123,7 +121,6 @@ class RunsController < ApplicationController
   # DELETE /runs/1
   # DELETE /runs/1.xml
   def destroy
-    @run = Run.find(params[:id])
     @run.destroy
 
     respond_to do |format|
@@ -157,6 +154,12 @@ class RunsController < ApplicationController
       format.html { render :nothing => true }
       format.xml { head :ok }
     end
+  end
+
+  private###############################
+
+  def get_run
+    @run = Run.find(params[:id])
   end
 
 end

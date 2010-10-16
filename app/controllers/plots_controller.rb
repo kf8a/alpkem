@@ -1,6 +1,8 @@
 #Allows the creation of plots, including replicates, treatments, and studies
 class PlotsController < ApplicationController
 
+  before_filter :get_study, :only => [:show, :edit]
+
   def index
     @studies = Study.all
   end
@@ -32,11 +34,9 @@ class PlotsController < ApplicationController
   end
 
   def show
-    @study = Study.find(params[:id])
   end
 
   def edit
-    @study = Study.find(params[:id])
   end
 
   def update_plots
@@ -60,5 +60,11 @@ class PlotsController < ApplicationController
       end
     end
     redirect_to :action => 'show', :id => study.id
+  end
+
+  private#################################
+
+  def get_study
+    @study = Study.find(params[:id])
   end
 end
