@@ -5,6 +5,24 @@ class Run < ActiveRecord::Base
   validates :sample_type_id, :presence => true
   validates :measurements, :presence => { :unless => :cn_measurements_exist? }
 
+  def self.runs
+    all_runs = Run.order('sample_date')
+    runs_index = []
+    all_runs.each do |run|
+      runs_index << run unless run.cn_measurements_exist?
+    end
+    runs_index
+  end
+
+  def self.cn_runs
+    all_runs = Run.order('sample_date')
+    runs_index = []
+    all_runs.each do |run|
+      runs_index << run if run.cn_measurements_exist?
+    end
+    runs_index
+  end
+
   def cn_measurements_exist?
     !cn_measurements.blank?
   end

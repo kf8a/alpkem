@@ -5,7 +5,7 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.xml
   def index
-    @runs = runs
+    @runs = Run.runs
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +16,7 @@ class RunsController < ApplicationController
   # GET /runs/cn
   # GET /runs/cn.xml
   def cn
-    @runs = cn_runs    
+    @runs = Run.cn_runs
     
     respond_to do |format|
       format.html # cn.html.erb
