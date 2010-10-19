@@ -2,6 +2,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def self.up
     drop_table :open_id_authentication_associations
     drop_table :open_id_authentication_nonces
+    drop_table :users
     create_table(:users) do |t|
       t.openid_authenticatable
       t.rememberable      
