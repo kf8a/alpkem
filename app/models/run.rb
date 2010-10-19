@@ -48,7 +48,7 @@ class Run < ActiveRecord::Base
 #--Things that need to be changed when adding a new file type begin here--
 
   LYSIMETER_OLD       = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  LYSIMETER           = '(\d{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\t\s+\d+\t\s+(\d+\.\d+)'
+  LYSIMETER           = '(\d{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\t\s+\d+\t\s+(\d+\.\d+)\t+\s+\d+\t\s+(\d+\.\d+)'
   STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
@@ -136,6 +136,7 @@ class Run < ActiveRecord::Base
           percent_c   = $5
         when 'Lysimeter'
           nh4_amount  = $6
+          no3_amount  = $7
         end
 
         first = $1

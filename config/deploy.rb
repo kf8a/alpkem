@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 set :application, "alpkem"
 set :repository,  "/Users/bohms/code/alpkem2"
 set :scm, :git
