@@ -1,11 +1,12 @@
 class RunsController < ApplicationController
   
   before_filter :require_user if ::Rails.env == 'production'
+  before_filter :get_run, :only => [:edit, :update, :destroy]
   
   # GET /runs
   # GET /runs.xml
   def index
-    @runs = runs
+    @runs = Run.runs
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +17,7 @@ class RunsController < ApplicationController
   # GET /runs/cn
   # GET /runs/cn.xml
   def cn
-    @runs = cn_runs    
+    @runs = Run.cn_runs
     
     respond_to do |format|
       format.html # cn.html.erb
@@ -27,7 +28,7 @@ class RunsController < ApplicationController
   # GET /runs/1
   # GET /runs/1.xml
   def show
-    @run = Run.find(params[:id], :include => :measurements)
+    @run = Run.includes(:measurements).find(params[:id])
     if @run.cn_measurements_exist?
       @back = cn_runs_path
     else  @back = runs_path
@@ -53,7 +54,6 @@ class RunsController < ApplicationController
 
   # GET /runs/1/edit
   def edit
-    @run        = Run.find(params[:id])
     @samples    = @run.samples
     @analytes   = @run.analytes
   end
@@ -71,7 +71,7 @@ class RunsController < ApplicationController
       file_contents = StringIO.new(file.read)
       if @run.load(file_contents)
         if @run.measurements.blank? && @run.cn_measurements.blank?
-          flash[:notice] = 'Load failed.'
+          flash[:notice] = 'Load failed.' + @run.plot_errors
           flash[:file_error] = "No data was able to be loaded from this file."
         end
       else
@@ -106,8 +106,6 @@ class RunsController < ApplicationController
   # PUT /runs/1
   # PUT /runs/1.xml
   def update
-    @run = Run.find(params[:id])
-
     respond_to do |format|
       if @run.update_attributes(params[:run])
         flash[:notice] = 'Run was successfully updated.'
@@ -123,7 +121,6 @@ class RunsController < ApplicationController
   # DELETE /runs/1
   # DELETE /runs/1.xml
   def destroy
-    @run = Run.find(params[:id])
     @run.destroy
 
     respond_to do |format|
@@ -157,6 +154,12 @@ class RunsController < ApplicationController
       format.html { render :nothing => true }
       format.xml { head :ok }
     end
+  end
+
+  private###############################
+
+  def get_run
+    @run = Run.find(params[:id])
   end
 
 end

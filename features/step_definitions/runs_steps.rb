@@ -1,5 +1,6 @@
 When /^I attach the Lysimeter test file$/ do
-  pending
+  path_to_test_file = Rails.root.join("test", "data", "Lysimeter_new_format.TXT")
+  attach_file("data_file", path_to_test_file)
 end
 
 When /^I attach the Soil Sample test file$/ do

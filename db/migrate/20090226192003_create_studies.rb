@@ -4,9 +4,6 @@ class CreateStudies < ActiveRecord::Migration
       t.string :name
       t.string :prefix
     end
-    Study.reset_column_information
-    Study.create({:name => 'Main Site', :prefix => 'T'})
-    Study.create({:name => 'glbrc', :prefix => 'G'})
   end
 
   def self.down
