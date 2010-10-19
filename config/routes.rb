@@ -1,4 +1,6 @@
 Alpkem::Application.routes.draw do
+  devise_for :users
+
   resources :measurements
 
   resources :plots do
@@ -16,8 +18,5 @@ Alpkem::Application.routes.draw do
   end
 
   resources :samples
-  resources :users
-  resource :user_sessions
-  match 'sessions' => 'sessions#create', :as => 'open_id_complete', :constraints => { :method => 'get' }
   root :to => 'runs#index'
 end
