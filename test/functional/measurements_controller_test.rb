@@ -14,6 +14,11 @@ class MeasurementsControllerTest < ActionController::TestCase
     Study.all.each {|s| s.destroy}
     Treatment.all.each {|t| t.destroy}
     User.all.each {|u| u.destroy}
+    
+    
+    @user = Factory.create :user
+    sign_in @user
+   
   end
   
   def teardown

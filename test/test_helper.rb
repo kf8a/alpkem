@@ -15,6 +15,7 @@ Dir.glob(Rails.root.to_s + "/test/factories/*.rb").each do |factory|
 end
 
 class ActiveSupport::TestCase
+  #include Devise::TestHelpers
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
@@ -30,4 +31,8 @@ class ActiveSupport::TestCase
   def load_seeds
     load "#{Rails.root}/db/seeds.rb"
   end
+end
+
+class ActionController::TestCase
+   include Devise::TestHelpers
 end

@@ -6,6 +6,9 @@ class RunsControllerTest < ActionController::TestCase
     4.times {Factory.create :run}
     @run = Factory.create :run
     @cnrun = Factory.create :cn_run
+    
+    @user = Factory.create :user
+    sign_in @user
 
     @attr = {
       :sample_type_id => 2,
@@ -32,116 +35,119 @@ class RunsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  context "POST :create with invalid sample type" do
-    setup do
+  context 'with a signed in user' do
+    
+    context "POST :create with invalid sample type" do
+      setup do
+        file_name = '/../data/new_format_soil_samples_090415.TXT'
+        post :create, :run => {:sample_date => Date.today, 
+          :sample_type_id => 1},
+          :data => {:file => fixture_file_upload(file_name)}    
+        end
+
+        should redirect_to("the new run page") {new_run_path}
+      end
+
+      context "POST :create with no file" do
+        setup do
+          post :create, :run => @attr, :data => nil      
+        end
+
+        should redirect_to("the new run page") {new_run_path}
+      end
+
+      context "POST :create with blank file" do
+        setup do
+          file_name = '/../data/blank.txt'
+          post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+        end
+
+        should redirect_to("new run page") {new_run_path}
+      end
+
+      context "A cn_run" do
+        setup do
+          @cn_run = Factory.create(:cn_run)
+        end
+
+        context "GET :cn" do
+          setup do
+            get :cn
+          end
+
+          should respond_with :success
+          should assign_to :runs
+        end
+
+        context "GET :show the cn run" do
+          setup do
+            get :show, :id => @cn_run.id
+          end
+
+          should respond_with :success
+          should assign_to :run
+        end
+      end
+
+      context "a non-CN run" do
+        setup do
+          @run = Factory.create(:run)
+        end
+
+        context "GET :index" do
+          setup do
+            get :index
+          end
+
+          should respond_with :success
+          should assign_to :runs
+        end
+
+        context "GET :show the run" do
+          setup do
+            get :show, :id => @run.id
+          end
+
+          should respond_with :success
+        end
+
+        context "GET :edit the run" do
+          setup do
+            get :edit, :id => @run.id
+          end
+
+          should respond_with :success
+        end
+
+        context "PUT :update the run" do
+          setup do
+            put :update, :id => @run.id
+          end
+
+          should assign_to :run
+          should redirect_to("the run's page") {run_path(@run)}
+        end
+
+        context "DELETE :destroy the run" do
+          setup do
+            delete :destroy, :id => @run.id
+          end
+
+          should "destroy the run" do
+            assert_nil Run.find_by_id(@run.id)
+          end
+          should redirect_to("the runs index page") {runs_path}
+        end
+      end
+    end
+
+    test "should create run" do
       file_name = '/../data/new_format_soil_samples_090415.TXT'
-      post :create, :run => {:sample_date => Date.today, 
-                              :sample_type_id => 1},
-                    :data => {:file => fixture_file_upload(file_name)}    
-    end
-    
-    should redirect_to("the new run page") {new_run_path}
-  end
-  
-  context "POST :create with no file" do
-    setup do
-      post :create, :run => @attr, :data => nil      
-    end
-    
-    should redirect_to("the new run page") {new_run_path}
-  end
-
-  context "POST :create with blank file" do
-    setup do
-      file_name = '/../data/blank.txt'
       post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
-    end
-    
-    should redirect_to("new run page") {new_run_path}
-  end
 
-  test "should create run" do
-    file_name = '/../data/new_format_soil_samples_090415.TXT'
-    post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
-
-    assert assigns(:run)
-    assert_redirected_to run_path(assigns(:run))
-  end
-  
-  context "A cn_run" do
-    setup do
-      @cn_run = Factory.create(:cn_run)
+      assert assigns(:run)
+      assert_redirected_to run_path(assigns(:run))
     end
-
-    context "GET :cn" do
-      setup do
-        get :cn
-      end
-
-      should respond_with :success
-      should assign_to :runs
-    end
-
-    context "GET :show the cn run" do
-      setup do
-        get :show, :id => @cn_run.id
-      end
-      
-      should respond_with :success
-      should assign_to :run
-    end
-  end
-  
-  context "a non-CN run" do
-    setup do
-      @run = Factory.create(:run)
-    end
-    
-    context "GET :index" do
-      setup do
-        get :index
-      end
-      
-      should respond_with :success
-      should assign_to :runs
-    end
-  
-    context "GET :show the run" do
-      setup do
-        get :show, :id => @run.id
-      end
-      
-      should respond_with :success
-    end
-    
-    context "GET :edit the run" do
-      setup do
-        get :edit, :id => @run.id
-      end
-      
-      should respond_with :success
-    end
-    
-    context "PUT :update the run" do
-      setup do
-        put :update, :id => @run.id
-      end
-      
-      should assign_to :run
-      should redirect_to("the run's page") {run_path(@run)}
-    end
-    
-    context "DELETE :destroy the run" do
-      setup do
-        delete :destroy, :id => @run.id
-      end
-      
-      should "destroy the run" do
-        assert_nil Run.find_by_id(@run.id)
-      end
-      should redirect_to("the runs index page") {runs_path}
-    end
-  end
 
   test "should approve and disapprove sample" do
     sample = Factory.create(:sample)
