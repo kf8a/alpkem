@@ -3,14 +3,16 @@ Feature: Manage user_sessions
   An unsigned-in but valid user
   wants to be signed in
   
-#  Scenario: Login registered user
-#    Given I am on the new user_sessions page
-#    When I fill in "user_session_openid_identifier" with "registered user"
-#      And I press "Login"
-#    Then I should see "Login succesful!"
-#    
+  Scenario: Login registered user
+    Given a user exists with an identity url of "http://alpkemtest.myopenid.com"
+     And I am on the new_user_session page
+    When I fill in "user_identity_url" with "http://alpkemtest.myopenid.com"
+      And I press "Sign in"
+      #And I fill in "password" with "alpkemtest" #Add this back in if necessary
+    Then I should see "Sign Out"
+    
 #  Scenario: Don't login unregistered user
 #    Given I am on the new user_sessions page
-#    When I fill in "user_session_openid_identifier" with "notauser@example.com"
-#      And I press "Login"
-#    Then I should see "not an OpenID identifier"
+#    When I fill in "user_identity_url" with "notauser@example.com"
+#      And I press "Sign in"
+#    Then I should see "This OpenID URL is not associated with any registered user"
