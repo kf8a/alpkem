@@ -2,7 +2,6 @@ class SamplesController < ApplicationController
   
   require 'csv' or require 'fastercsv'
 
-  before_filter :require_user if ::Rails.env == 'production'
   # GET /samples
   # GET /samples.xml
   def index

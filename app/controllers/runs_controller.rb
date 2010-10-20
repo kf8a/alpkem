@@ -1,6 +1,5 @@
 class RunsController < ApplicationController
   
-  before_filter :require_user if ::Rails.env == 'production'
   before_filter :get_run, :only => [:edit, :update, :destroy]
   
   # GET /runs

@@ -1,5 +1,4 @@
 class MeasurementsController < ApplicationController
-  before_filter :require_user if ::Rails.env == 'production'
   
   def destroy
     sample_class = params[:sample_class]
