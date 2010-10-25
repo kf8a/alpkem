@@ -7,6 +7,5 @@
     <%= button_to "Toggle approval", {:action => 'approve', :id => sample, :sample_class => sample.class}, {:remote => true} %>
   </td>
   <td>
-    <%= render :partial => 'googlechart', :locals => {:sample => sample, :analytes => @analytes} %>
   </td>
 </tr>
