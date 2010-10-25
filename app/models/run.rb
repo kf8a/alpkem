@@ -287,8 +287,11 @@ class Run < ActiveRecord::Base
     right_date = @sample.try(:sample_date) == date
     unless right_plot && right_date
       @sample = Sample.find_by_plot_id_and_sample_date(plot.id, date)
-      @sample.approved = false    #unapprove sample when adding data
-      @sample.save
+      if @sample
+        @sample.approved = false    #unapprove sample when adding data
+        @sample.save
+      end
+      @sample
     end
   end
 
