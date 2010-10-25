@@ -5,11 +5,9 @@ gem 'rails', '3.0.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-#gem 'rack-openid'
 gem 'devise'#, :git => 'git://github.com/plataformatec/devise.git', :branch => 'omniauth'
 #gem 'omniauth'
 gem 'devise_openid_authenticatable'
-#gem "oa-oauth", :require => "omniauth/oauth"
 
 gem 'will_paginate', :require => 'will_paginate'
 gem 'RedCloth'
