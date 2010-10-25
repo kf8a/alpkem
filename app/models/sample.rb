@@ -48,7 +48,7 @@ class Sample < ActiveRecord::Base
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
     m = measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id)
-    Statistics.variance(m.map {|x| x.amount})
+    Statistics.sigma(m.map {|x| x.amount})
   end
 
   def Sample.find_approved()
