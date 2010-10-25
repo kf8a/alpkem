@@ -6,6 +6,9 @@ class CnSample < ActiveRecord::Base
   has_many :runs, :through => :cn_measurements, :order => 'run_date'
 
   validates_presence_of :cn_plot
+  
+  scope :approved, where(%q{approved = 't'})
+  
 
   def plot_name
     return self.cn_plot
@@ -21,7 +24,7 @@ class CnSample < ActiveRecord::Base
   end
 
   def previous_measurements
-    approved_samples = CnSample.find_approved
+    approved_samples = CnSample.approved
     relevant_measurements = []
     approved_samples.each do |a|
       next unless a.cn_plot == cn_plot
@@ -50,7 +53,4 @@ class CnSample < ActiveRecord::Base
     Statistics.cv(m.map {|x| x.amount})
   end
 
-  def CnSample.find_approved()
-    CnSample.where(%q{approved = 't'})
-  end
 end
