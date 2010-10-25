@@ -6,7 +6,7 @@
       <tr>
         <td>
           <% if sample.approved? %>
-            <%= number %>
+            <span class="deleted_<%=measurement.deleted?%>"><%= number %></span>
           <% else %>
             <%= link_to "#{number}", 
                   measurement_path(measurement),
