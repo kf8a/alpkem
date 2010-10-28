@@ -2,6 +2,7 @@ require 'statistics'
 
 class Sample < ActiveRecord::Base
   belongs_to :plot
+  belongs_to :sample_type
 
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
   has_many :runs, :through => :measurements, :order => 'run_date'
@@ -31,10 +32,8 @@ class Sample < ActiveRecord::Base
   def analytes
     analyte_no3       = Analyte.find_by_name('NO3')
     analyte_nh4       = Analyte.find_by_name('NH4')
-    [].tap do |list_of_analytes|
-      list_of_analytes << analyte_no3
-      list_of_analytes << analyte_nh4
-    end
+
+    [analyte_no3, analyte_nh4]
   end
 
   #TODO This method is only used in tests now, so rewrite those tests and delete method.

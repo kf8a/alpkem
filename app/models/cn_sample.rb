@@ -9,18 +9,14 @@ class CnSample < ActiveRecord::Base
   
   scope :approved, where(%q{approved = 't'})
   
-
   def plot_name
     return self.cn_plot
   end
   
   def analytes
-    list_of_analytes = []
     analyte_percent_n = Analyte.find_by_name('N')
     analyte_percent_c = Analyte.find_by_name('C')
-    list_of_analytes << analyte_percent_n
-    list_of_analytes << analyte_percent_c
-    return list_of_analytes
+    [analyte_percent_n, analyte_percent_c]
   end
 
   def previous_measurements

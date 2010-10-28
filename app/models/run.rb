@@ -70,8 +70,10 @@ class Run < ActiveRecord::Base
   STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  GLBRC_DEEP_CORE_CN  = ',(\d+)([G|L|M]\d+[R|S]\d{2})0(\d{2})[ABC|abc],(\d+\.\d+),\d+,.+,(\d+\.\d+),(\d+\.\d+)'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[abc|ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
+#  CN_DEEP_CORE        = ',\d*,(\d+)(.+)[ABC],(\d+.\d+),\d+,.*,,(\d+.\d+),(\d+.\d+)'
 
   
   def sample_type_name(id=sample_type_id)
@@ -84,19 +86,21 @@ class Run < ActiveRecord::Base
     when 6; "CN Soil Sample"
     when 7; "CN Deep Core"
     when 8; "GLBRC Soil Sample (New)"
+    when 9; "GLBRC Deep Core CN"
     else    "Unknown Sample Type"
     end
   end
   
   def get_regex_by_format_type(format_type)
     case format_type
-    when "Lysimeter";   Regexp.new(LYSIMETER)
-    when "Standard";    Regexp.new(STANDARD_SAMPLE)
-    when "Old Soil";    Regexp.new(OLD_SOIL_SAMPLE)
-    when "GLBRC Deep";  Regexp.new(GLBRC_DEEP_CORE)
-    when "CN Sample";   Regexp.new(CN_SAMPLE)
-    when "CN Deep";     Regexp.new(CN_DEEP_CORE)
-    else                Regexp.new("")
+    when "Lysimeter";     Regexp.new(LYSIMETER)
+    when "Standard";      Regexp.new(STANDARD_SAMPLE)
+    when "Old Soil";      Regexp.new(OLD_SOIL_SAMPLE)
+    when "GLBRC Deep";    Regexp.new(GLBRC_DEEP_CORE)
+    when "CN Sample";     Regexp.new(CN_SAMPLE)
+    when "CN Deep";       Regexp.new(CN_DEEP_CORE)
+    when "CN GLBRC Deep"; Regexp.new(GLBRC_DEEP_CORE_CN)
+    else                  Regexp.new("")
     end
   end
 
@@ -110,6 +114,7 @@ class Run < ActiveRecord::Base
     when 6; "CN Sample"
     when 7; "CN Deep"
     when 8; "Standard"
+    when 9; "CN GLBRC Deep"
     else    "Unknown format"
     end
   end
@@ -140,7 +145,11 @@ class Run < ActiveRecord::Base
       @plot = nil
       @sample = nil
 
+#      parser = FileParser.create(sample_type_and_format)
+
       data.each do | line |
+      #   date,plot, sample = parser.parse(line)
+      # end
         next unless line =~ re
 
         if format_type == "Lysimeter"
@@ -219,6 +228,8 @@ class Run < ActiveRecord::Base
           cn_plot     = third
         when "CN Deep"
           cn_plot     = first
+        when "CN GLBRC Deep"
+          cn_plot     = first
         else
           raise "not implemented"
         end
@@ -270,32 +281,20 @@ class Run < ActiveRecord::Base
       @sample.save
     end
 
-    create_nitrogen_measurement(percent_n)
-    create_carbon_measurement(percent_c)
-  end
-  
-  def create_nitrogen_measurement(percent_n)
     @analyte_percent_n  = (@analyte_percent_n || Analyte.find_by_name('N'))
-    nitrogen            = CnMeasurement.new
-    nitrogen.analyte    = @analyte_percent_n
-    nitrogen.amount     = percent_n
-    nitrogen.save
-    
-    @sample.cn_measurements << nitrogen
-    self.cn_measurements   << nitrogen
-  end
-
-  def create_carbon_measurement(percent_c)
     @analyte_percent_c = (@analyte_percent_c || Analyte.find_by_name('C'))
-    carbon             = CnMeasurement.new
-    carbon.analyte     = @analyte_percent_c
-    carbon.amount      = percent_c
-    carbon.save
+    
+    create_cn_measurement(percent_n, @analyte_percent_n)
+    create_cn_measurement(percent_c, @analyte_percent_c)
 
-    @sample.cn_measurements << carbon
-    self.cn_measurements   << carbon
+   end
+  
+  def create_cn_measurement(amount, analyte)
+    measurement = CnMeasurement.new(:amount => amount, :analyte => analyte)
+    @sample.cn_measurements << measurement
+    self.cn_measurements    << measurement
   end
-
+ 
   def find_sample(plot, date)
     right_plot = @sample.try(:plot) == plot
     right_date = @sample.try(:sample_date) == date
@@ -322,31 +321,17 @@ class Run < ActiveRecord::Base
       @sample.save
     end
     
-    logger.info @sample
-
-    create_no3_measurement(no3_amount) if no3_amount
-    create_nh4_measurement(nh4_amount) if nh4_amount
-  end
-
-  def create_no3_measurement(no3_amount)
     @analyte_no3  = (@analyte_no3 || Analyte.find_by_name('NO3'))
-    no3           = Measurement.new
-    no3.analyte   = @analyte_no3
-    no3.amount    = no3_amount
-    no3.save
-
-    @sample.measurements << no3
-    self.measurements   << no3
-  end
-
-  def create_nh4_measurement(nh4_amount)
     @analyte_nh4  = (@analyte_nh4 || Analyte.find_by_name('NH4'))
-    nh4           = Measurement.new
-    nh4.analyte   = @analyte_nh4
-    nh4.amount    = nh4_amount
-    nh4.save
-
-    @sample.measurements << nh4
-    self.measurements   << nh4
+    
+    create_measurement(no3_amount, @analyte_no3) if no3_amount
+    create_measurement(nh4_amount, @analyte_nh4) if nh4_amount
   end
+  
+  def create_measurement(amount, analyte)
+    measurement = Measurement.new(:analyte => analyte, :amount => amount)
+    @sample.measurements << measurement
+    self.measurements    << measurement
+  end
+
 end
