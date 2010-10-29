@@ -66,11 +66,11 @@ class Run < ActiveRecord::Base
 #--Things that need to be changed when adding a new file type begin here--
 
   LYSIMETER_OLD       = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  LYSIMETER           = '(\d{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\t\s+\d+\t\s+(\d+\.\d+)\t+\s+\d+\t\s+(\d+\.\d+)'
+  LYSIMETER           = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\t\s+\d+\t\s+(-?\d+\.\d+)\t+\s+\d+\t\s+(-?\d+\.\d+)'
   STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  GLBRC_DEEP_CORE_CN  = ',(\d+)([G|L|M]\d+[R|S]\d{2})0(\d{2})[ABC|abc],(\d+\.\d+),\d+,.+,(\d+\.\d+),(\d+\.\d+)'
+  GLBRC_CN            = '(\d+),\d+,\d+([G|L|M]\d+[R|S]\d{2}0\d{2})[ABC|abc],(\d+\.\d+),\d+,.+,(\d+\.\d+),(\d+\.\d+)'
   CN_SAMPLE           = ',(\d*),(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?(\w*)"?,"(.*)",(\d*\.\d*),.*,"?(\w*)"?,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[abc|ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
 #  CN_DEEP_CORE        = ',\d*,(\d+)(.+)[ABC],(\d+.\d+),\d+,.*,,(\d+.\d+),(\d+.\d+)'
@@ -86,7 +86,7 @@ class Run < ActiveRecord::Base
     when 6; "CN Soil Sample"
     when 7; "CN Deep Core"
     when 8; "GLBRC Soil Sample (New)"
-    when 9; "GLBRC Deep Core CN"
+    when 9; "GLBRC CN"
     else    "Unknown Sample Type"
     end
   end
@@ -99,7 +99,7 @@ class Run < ActiveRecord::Base
     when "GLBRC Deep";    Regexp.new(GLBRC_DEEP_CORE)
     when "CN Sample";     Regexp.new(CN_SAMPLE)
     when "CN Deep";       Regexp.new(CN_DEEP_CORE)
-    when "CN GLBRC Deep"; Regexp.new(GLBRC_DEEP_CORE_CN)
+    when "CN GLBRC";      Regexp.new(GLBRC_CN)
     else                  Regexp.new("")
     end
   end
@@ -114,7 +114,7 @@ class Run < ActiveRecord::Base
     when 6; "CN Sample"
     when 7; "CN Deep"
     when 8; "Standard"
-    when 9; "CN GLBRC Deep"
+    when 9; "CN GLBRC"
     else    "Unknown format"
     end
   end
@@ -156,6 +156,8 @@ class Run < ActiveRecord::Base
            s_date = $5
         elsif format_type ==  "CN Sample"
           s_date = $2
+        elsif format_type == 'CN GLBRC'
+          s_date = Date.parse($1)
         else
           s_date = sample_date
         end
@@ -176,6 +178,9 @@ class Run < ActiveRecord::Base
         when 'Lysimeter'
           nh4_amount  = $6
           no3_amount  = $7
+        when 'CN GLBRC'
+          percent_n   = $4
+          percent_c   = $5
         end
 
         first = $1
@@ -228,8 +233,8 @@ class Run < ActiveRecord::Base
           cn_plot     = third
         when "CN Deep"
           cn_plot     = first
-        when "CN GLBRC Deep"
-          cn_plot     = first
+        when "CN GLBRC"
+          cn_plot     = second
         else
           raise "not implemented"
         end
@@ -281,16 +286,14 @@ class Run < ActiveRecord::Base
       @sample.save
     end
 
-    @analyte_percent_n  = (@analyte_percent_n || Analyte.find_by_name('N'))
-    @analyte_percent_c = (@analyte_percent_c || Analyte.find_by_name('C'))
-    
-    create_cn_measurement(percent_n, @analyte_percent_n)
-    create_cn_measurement(percent_c, @analyte_percent_c)
-
+    create_cn_measurement(percent_n, 'N')
+    create_cn_measurement(percent_c, 'C')
    end
   
-  def create_cn_measurement(amount, analyte)
-    measurement = CnMeasurement.new(:amount => amount, :analyte => analyte)
+  def create_cn_measurement(amount, analyte_name)
+    analyte     = Analyte.find_by_name(analyte_name)    
+    measurement = CnMeasurement.create(:amount => amount, :analyte => analyte)
+
     @sample.cn_measurements << measurement
     self.cn_measurements    << measurement
   end

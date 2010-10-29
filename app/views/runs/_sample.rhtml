@@ -4,6 +4,7 @@
   <%= render :partial => 'analyte', :collection => @analytes, :locals => {:sample => sample}%>
   <% notword = ("" if sample.approved) || "not" %>
   <td class="<%= notword %>approved">Sample is <%= notword %> approved!<br />
+
     <%= button_to "Toggle approval", {:action => 'approve', :id => sample.id, :sample_class => sample.class, :run_id => @run.id}, {:remote => true} %>
   </td>
   <td>

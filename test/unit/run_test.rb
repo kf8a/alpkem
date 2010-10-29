@@ -175,6 +175,19 @@ class RunTest < ActiveSupport::TestCase
       end
     end
   end
+  
+  def test_glbrc_cn_deep_core_new_format_file_load
+    assert_difference 'Run.count' do
+      file_name = File.dirname(__FILE__) + '/../data/GLBRC_cn.csv'
+      File.open(file_name, 'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr.merge(:sample_type_id => 9))
+        r.load(s)
+        assert r.save
+        assert r.samples.size > 1
+      end
+    end
+  end
 
   def test_new_glbrc_soil_sample_file_load
     assert_difference 'Run.count' do
