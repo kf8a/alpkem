@@ -239,6 +239,8 @@ class RunTest < ActiveSupport::TestCase
         assert r.save
         #TODO add CF and DF plots to the test database
         assert_equal 123, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
+        assert_equal 2, r.samples[0].measurements.size
+        assert_equal  0.055, r.samples[0].measurements[0]
       end
     end
   end
