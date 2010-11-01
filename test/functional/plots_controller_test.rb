@@ -48,12 +48,32 @@ class PlotsControllerTest < ActionController::TestCase
   end
 
   context "PUT :update_plots" do
-    setup do
-      @study = Factory.create(:study, :name => "teststudy")
-      put :update_plots, :id => @study.id
+    context "with a study with no current replicates" do
+      setup do
+        @study = Factory.create(:study, :name => "teststudy")
+        put :update_plots, :id => @study.id
+      end
+
+      should redirect_to("the study's show page") { plot_path(@study.id) }
+      should set_the_flash.to("There are no replicates to update.")
     end
 
-    should redirect_to("the plot's show page") { plot_path(@study.id) }
+    context "with a study with replicates already" do
+      setup do
+        @study = Factory.create(:study, :name => "teststudy")
+        @study.create_plots(2, 2, "te")
+        put :update_plots, :id => @study.id, :number_of_replicates => 3, :number_of_treatments => 3
+      end
+
+      should redirect_to("the study's show page") {plot_path(@study.id)}
+      should_not set_the_flash
+      should "create additional replicates, treatments, and plots as requested" do
+        @study.reload
+        assert @study.replicates.count == 3
+        assert @study.treatments.count == 3
+        assert @study.plots.count      == 9
+      end
+    end
   end
 
 end
