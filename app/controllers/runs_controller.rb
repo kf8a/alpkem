@@ -36,7 +36,7 @@ class RunsController < ApplicationController
 
   # GET /runs/1/edit
   def edit
-    @samples    = @run.samples
+    @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
     @measurements = @run.measurements + @run.cn_measurements
   end

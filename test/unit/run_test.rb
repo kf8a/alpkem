@@ -229,6 +229,21 @@ class RunTest < ActiveSupport::TestCase
     end
   end
   
+  def test_different_lysimeter_sample_file_load
+    assert_difference 'Run.count' do
+      file_name = File.dirname(__FILE__) + '/../data/090615QL.TXT'
+      File.open(file_name, 'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr.merge(:sample_type_id => 1))
+        r.load(s)
+        assert r.save
+        #TODO add CF and DF plots to the test database
+        assert_equal 123, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
+      end
+    end
+  end
+  
+  
   def test_lysimeter_single_sample_file_load
     assert_difference 'Run.count' do
       file_name = File.dirname(__FILE__) + '/../data/Lysimeter_single_format.TXT'
