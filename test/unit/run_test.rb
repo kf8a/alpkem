@@ -228,4 +228,17 @@ class RunTest < ActiveSupport::TestCase
       end
     end
   end
+  
+  def test_lysimeter_single_sample_file_load
+    assert_difference 'Run.count' do
+      file_name = File.dirname(__FILE__) + '/../data/Lysimeter_single_format.TXT'
+      File.open(file_name, 'r') do |f|
+         s = StringIO.new(f.read)
+         r = Run.new(@attr.merge(:sample_type_id => 10))
+         r.load(s)
+         assert r.save
+         assert_equal 114, r.samples.size 
+       end    
+    end
+  end
 end

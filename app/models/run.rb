@@ -67,6 +67,7 @@ class Run < ActiveRecord::Base
 
   LYSIMETER_OLD       = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   LYSIMETER           = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8}).+\d+\t\s+(-?\d+\.\d+)\t+\s+\d+\t\s+(-?\d+\.\d+)'
+  LYSIMETER_SINGLE    = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8}).+\d+\t\s+(-?\d+\.\d+)'
   STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+).+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
@@ -78,28 +79,32 @@ class Run < ActiveRecord::Base
   
   def sample_type_name(id=sample_type_id)
     case id
-    when 1; "Lysimeter"
-    when 2; "Soil Sample"
-    when 3; "GLBRC Soil Sample"
-    when 4; "GLBRC Deep Core Nitrogen"
-    when 5; "GLBRC Resin Strips"
-    when 6; "CN Soil Sample"
-    when 7; "CN Deep Core"
-    when 8; "GLBRC Soil Sample (New)"
-    when 9; "GLBRC CN"
+    when  1; "Lysimeter"
+    when  2; "Soil Sample"
+    when  3; "GLBRC Soil Sample"
+    when  4; "GLBRC Deep Core Nitrogen"
+    when  5; "GLBRC Resin Strips"
+    when  6; "CN Soil Sample"
+    when  7; "CN Deep Core"
+    when  8; "GLBRC Soil Sample (New)"
+    when  9; "GLBRC CN"
+    when 10; "Lysimeter NO3"
+    when 11; "Lysimeter NH4"
     else    "Unknown Sample Type"
     end
   end
   
   def get_regex_by_format_type(format_type)
     case format_type
-    when "Lysimeter";     Regexp.new(LYSIMETER)
-    when "Standard";      Regexp.new(STANDARD_SAMPLE)
-    when "Old Soil";      Regexp.new(OLD_SOIL_SAMPLE)
-    when "GLBRC Deep";    Regexp.new(GLBRC_DEEP_CORE)
-    when "CN Sample";     Regexp.new(CN_SAMPLE)
-    when "CN Deep";       Regexp.new(CN_DEEP_CORE)
+    when 'Lysimeter';     Regexp.new(LYSIMETER)
+    when 'Standard';      Regexp.new(STANDARD_SAMPLE)
+    when 'Old Soil';      Regexp.new(OLD_SOIL_SAMPLE)
+    when 'GLBRC Deep';    Regexp.new(GLBRC_DEEP_CORE)
+    when 'CN Sample';     Regexp.new(CN_SAMPLE)
+    when 'CN Deep';       Regexp.new(CN_DEEP_CORE)
     when "CN GLBRC";      Regexp.new(GLBRC_CN)
+    when 'Lysimeter NO3'; Regexp.new(LYSIMETER_SINGLE)
+    when 'Lysimeter NH4'; Regexp.new(LYSIMETER_SINGLE)
     else                  Regexp.new("")
     end
   end
@@ -115,6 +120,8 @@ class Run < ActiveRecord::Base
     when 7; "CN Deep"
     when 8; "Standard"
     when 9; "CN GLBRC"
+    when 10; 'Lysimeter NO3'
+    when 11; 'Lysimeter NH4'
     else    "Unknown format"
     end
   end
@@ -150,12 +157,9 @@ class Run < ActiveRecord::Base
       data.each do | line |
       #   date,plot, sample = parser.parse(line)
       # end
-        unless line =~ re
-          p line
-        end
         next unless line =~ re
 
-        if format_type == "Lysimeter"
+        if ["Lysimeter", "Lysimeter NO3", "Lysimeter NH4"].include?(format_type)
            s_date = $5
         elsif format_type ==  "CN Sample"
           s_date = $2
@@ -181,6 +185,10 @@ class Run < ActiveRecord::Base
         when 'Lysimeter'
           nh4_amount  = $6
           no3_amount  = $7
+        when 'Lysimeter NO3'
+          no3_amount = $6
+        when 'Lysimeter NH4'
+          nh4_amount = $6
         when 'CN GLBRC'
           percent_n   = $4
           percent_c   = $5
@@ -192,7 +200,7 @@ class Run < ActiveRecord::Base
         fourth = $4
 
         case format_type
-        when "Lysimeter"
+        when /Lysimeter/
           plot_name = "T#{first}R#{second}F#{third}"
           @plot = find_plot(plot_name)
           unless first.blank? || second.blank? || third.blank?
