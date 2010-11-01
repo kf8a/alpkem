@@ -231,7 +231,7 @@ class RunTest < ActiveSupport::TestCase
   
   def test_different_lysimeter_sample_file_load
     assert_difference 'Run.count' do
-      file_name = File.dirname(__FILE__) + '/../data/090615QL.TXT'
+      file_name = File.dirname(__FILE__) + "/../data/090615QL.TXT"
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 1))
@@ -243,6 +243,20 @@ class RunTest < ActiveSupport::TestCase
         assert_equal  0.055, r.samples[0].measurements[0]
       end
     end
+  end
+  
+  def test_lysimeter_file_with_negative_peaks_load
+    assert_difference 'Run.count' do
+      file_name = File.dirname(__FILE__) + "/../data/090701QL.TXT"
+      File.open(file_name, 'r') do |f|
+        s = StringIO.new(f.read)
+        r = Run.new(@attr.merge(:sample_type_id => 1))
+        r.load(s)
+        assert r.save
+        assert_equal 123, r.samples.size
+        assert_equal 2, r.samples[0].measurements.size
+      end
+    end 
   end
   
   
