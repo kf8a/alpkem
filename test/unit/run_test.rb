@@ -223,7 +223,8 @@ class RunTest < ActiveSupport::TestCase
         r = Run.new(@attr.merge(:sample_type_id => 1))
         r.load(s)
         assert r.save
-        assert r.samples.size > 1
+        #TODO add CF and DF plots to the test database
+        assert_equal 87, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
       end
     end
   end

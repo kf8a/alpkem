@@ -66,8 +66,8 @@ class Run < ActiveRecord::Base
 #--Things that need to be changed when adding a new file type begin here--
 
   LYSIMETER_OLD       = '\t(.{1,2})-(.)([A-C|a-c])( rerun)*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
-  LYSIMETER           = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\t\s+\d+\t\s+(-?\d+\.\d+)\t+\s+\d+\t\s+(-?\d+\.\d+)'
-  STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+)\s+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)\t'
+  LYSIMETER           = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8}).+\d+\t\s+(-?\d+\.\d+)\t+\s+\d+\t\s+(-?\d+\.\d+)'
+  STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+).+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_DEEP_CORE     = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
   GLBRC_CN            = '(\d+),\d+,\d+([G|L|M]\d+[R|S]\d{2}0\d{2})[ABC|abc],(\d+\.\d+),\d+,.+,(\d+\.\d+),(\d+\.\d+)'
@@ -150,6 +150,9 @@ class Run < ActiveRecord::Base
       data.each do | line |
       #   date,plot, sample = parser.parse(line)
       # end
+        unless line =~ re
+          p line
+        end
         next unless line =~ re
 
         if format_type == "Lysimeter"
