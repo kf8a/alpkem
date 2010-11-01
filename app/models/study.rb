@@ -6,38 +6,30 @@ class Study < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def create_plots(number_of_treatments, number_of_replicates, replicate_prefix)
-    1.upto(number_of_treatments) do |i|
-      Treatment.find_or_create_by_name_and_study_id(:name => "#{self.prefix}#{i}", :study_id => self.id)
-    end
-
-    1.upto(number_of_replicates) do |i|
-      Replicate.find_or_create_by_name_and_study_id(:name => "#{replicate_prefix}#{i}", :study_id => self.id)
-    end
+    create_treatments(number_of_treatments)
+    create_replicates(number_of_replicates, replicate_prefix)
 
     self.treatments.each do |treatment|
-      replicates = Replicate.find_all_by_study_id(self)
-      replicates.each do |replicate|
+      self.replicates.each do |replicate|
         Plot.find_or_create_by_name_and_study_id(:name => "#{treatment.name}#{replicate.name}", :study => self, :treatment => treatment, :replicate => replicate)
       end
     end
   end
 
-  def update_plots(number_of_treatments, number_of_replicates)
-    1.upto(number_of_treatments) do |i|
+  def create_treatments(amount)
+    1.upto(amount) do |i|
       Treatment.find_or_create_by_name_and_study_id(:name => "#{self.prefix}#{i}", :study_id => self.id)
     end
+  end
 
+  def create_replicates(amount, prefix)
+    1.upto(amount) do |i|
+      Replicate.find_or_create_by_name_and_study_id(:name => "#{prefix}#{i}", :study_id => self.id)
+    end
+  end
+
+  def update_plots(number_of_treatments, number_of_replicates)
     replicate_prefix = self.replicates.first.name.chop
-
-    1.upto(number_of_replicates) do |i|
-      Replicate.find_or_create_by_name_and_study_id(:name => "#{replicate_prefix}#{i}", :study_id => self.id)
-    end
-
-    self.treatments.each do |treatment|
-      replicates = Replicate.find_all_by_study_id(self)
-      replicates.each do |replicate|
-        Plot.find_or_create_by_name_and_study_id(:name => "#{treatment.name}#{replicate.name}", :study => self, :treatment => treatment, :replicate => replicate)
-      end
-    end
+    create_plots(number_of_treatments, number_of_replicates, replicate_prefix)
   end
 end
