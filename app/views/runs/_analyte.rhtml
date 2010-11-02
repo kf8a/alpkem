@@ -6,18 +6,13 @@
       <tr>
         <td>
           <% if sample.approved? %>
-            <%= number %>
+            <span class="deleted_<%=measurement.deleted?%>"><%= number %></span>
           <% else %>
-            <%= link_to "#{number}",
-                :url => {
-                    :id => measurement.id,
-                    :controller => 'measurements',
-                    :action => 'destroy',
-                    :sample_class => sample.class},
-                :method => 'delete',
-                :loading => update_page{|p| p[:spinner].show },
-                :complete => update_page{|p| p[:spinner].hide },
-                :html => {:class => "deleted_#{measurement.deleted?}"},
+            <%= link_to "#{number}", 
+                  measurement_path(measurement),
+                 :sample_class => sample.class,
+                 :method => 'delete',
+                 :class => "deleted_#{measurement.deleted?}",
                 :remote => true %>
           <% end %>
         </td>

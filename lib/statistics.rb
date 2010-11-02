@@ -22,6 +22,7 @@ class Statistics
   
   def Statistics.cv(x)
     return 0 unless x.size > 1
+    return 100 if Statistics.mean(x) == 0
     Statistics.sigma(x)/Statistics.mean(x)*100    
   end
 

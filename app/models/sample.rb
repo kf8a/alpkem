@@ -8,12 +8,14 @@ class Sample < ActiveRecord::Base
   
   validates_presence_of :plot
   
+  scope :approved, where(%q{approved = 't'})
+  
   def plot_name
     self.plot.try(:name)
   end
   
   def previous_measurements
-    approved_samples = Sample.find_approved
+    approved_samples = Sample.approved
     relevant_measurements = []
     approved_samples.each do |a|
       next unless a.plot == self.plot
@@ -50,9 +52,5 @@ class Sample < ActiveRecord::Base
     m = measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id)
     Statistics.cv(m.map {|x| x.amount})
   end
-
-  def Sample.find_approved()
-    Sample.where(%q{approved = 't'})
-  end
-  
+ 
 end

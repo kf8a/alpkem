@@ -5,7 +5,7 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.xml
   def index
-    @samples = Sample.find_approved
+    @samples = Sample.approved
     respond_to do |format|
       format.html
       format.csv do
