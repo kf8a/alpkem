@@ -24,4 +24,15 @@ module RunsHelper
 
     chart_script
   end
+
+  def average(measurements)
+    members = measurements.count
+    if members > 0
+      total = 0
+      measurements.each do |measurement|
+        total += measurement.amount
+      end
+      total / members
+    end
+  end
 end
