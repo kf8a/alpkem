@@ -1,10 +1,11 @@
 class Statistics
 
   def Statistics.mean(x) 
-    return 0 unless x.size > 0
+    members = x.count
+    return 0 unless members > 0
     sum = 0
     x.each { |v| sum += v }
-    sum/x.size
+    sum/members
   end
 
   def Statistics.variance(x)

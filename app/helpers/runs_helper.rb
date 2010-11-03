@@ -28,14 +28,7 @@ module RunsHelper
   end
 
   def average(measurements)
-    members = measurements.count
-    if members > 0
-      total = 0
-      measurements.each do |measurement|
-        total += measurement.amount
-      end
-      total / members
-    end
+    Statistics.mean(measurements.map {|x| x.amount})
   end
 
   def cv_help(measurements)

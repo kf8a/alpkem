@@ -29,12 +29,12 @@ class Sample < ActiveRecord::Base
   end
   
   def analytes
-    list_of_analytes = []
     analyte_no3       = Analyte.find_by_name('NO3')
     analyte_nh4       = Analyte.find_by_name('NH4')
-    list_of_analytes << analyte_no3
-    list_of_analytes << analyte_nh4
-    return list_of_analytes
+    [].tap do |list_of_analytes|
+      list_of_analytes << analyte_no3
+      list_of_analytes << analyte_nh4
+    end
   end
 
   #TODO This method is only used in tests now, so rewrite those tests and delete method.
@@ -46,5 +46,11 @@ class Sample < ActiveRecord::Base
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
     measurements.average(:amount, :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
+  end
+  
+  def cv(analyte)
+    raise ArgumentError unless analyte.class == Analyte
+    variance = measurements.calculate(:variance, :amount,  :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
+    variance/average
   end
 end
