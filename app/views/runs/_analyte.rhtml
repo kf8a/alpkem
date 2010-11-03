@@ -1,7 +1,8 @@
 <% cv = sample.cv(analyte) %>
 <td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
   <table>
-    <% sample.measurements_by_analyte(analyte).each do |measurement| %>
+    <% @measurements.each do |measurement| %>
+      <% next unless measurement.sample == sample && measurement.analyte == analyte %>
       <% number = number_with_precision(measurement.amount,:precision => 4) %>
       <tr>
         <td>
@@ -9,8 +10,11 @@
             <span class="deleted_<%=measurement.deleted?%>"><%= number %></span>
           <% else %>
             <%= link_to "#{number}", 
-                  measurement_path(measurement),
-                 :sample_class => sample.class,
+                 {:controller => 'measurements',
+                  :action => 'destroy',
+                  :id => measurement.id,
+                  :sample_class => sample.class,
+                  :run_id => @run.id},
                  :method => 'delete',
                  :class => "deleted_#{measurement.deleted?}",
                 :remote => true %>

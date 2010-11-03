@@ -38,6 +38,7 @@ class RunsController < ApplicationController
   def edit
     @samples    = @run.samples
     @analytes   = @run.analytes
+    @measurements = @run.measurements + @run.cn_measurements
   end
 
   # POST /runs
@@ -79,6 +80,8 @@ class RunsController < ApplicationController
   end
   
   def approve
+    @run = Run.find(params[:run_id])
+    @measurements = @run.measurements + @run.cn_measurements
     sample_class = params[:sample_class]
     if sample_class == "CnSample"
       @sample = CnSample.find(params[:id])

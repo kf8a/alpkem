@@ -36,21 +36,23 @@ class MeasurementsControllerTest < ActionController::TestCase
   end
   
   test "should destroy and undestroy measurement" do
-    @measurement = Factory.create(:measurement)
-    xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample"
+    @run = Factory.create(:run)
+    @measurement = Factory.create(:measurement, :run_id => @run.id)
+    xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample", :run_id => @run.id
     @measurement.reload
     assert @measurement.deleted
-    xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample"
+    xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample", :run_id => @run.id
     @measurement.reload
     assert ! @measurement.deleted
   end
   
   test "should destroy and undestroy cn measurement" do
-    @cnmeasurement  = Factory.create(:cn_measurement)
-    xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample"
+    @run = Factory.create(:cn_run)
+    @cnmeasurement  = Factory.create(:cn_measurement, :run_id => @run.id)
+    xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample", :run_id => @run.id
     @cnmeasurement.reload
     assert @cnmeasurement.deleted
-    xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample"
+    xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample", :run_id => @run.id
     @cnmeasurement.reload
     assert ! @cnmeasurement.deleted
   end

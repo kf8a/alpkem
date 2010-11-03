@@ -9,6 +9,8 @@ class MeasurementsController < ApplicationController
     end
     @m.toggle!(:deleted)
     dom_id = "sample_#{@m.sample.id}_#{@m.analyte.id}"
+    @run = Run.find(params[:run_id])
+    @measurements = @run.measurements + @run.cn_measurements
     render :update do |page|
       page.replace dom_id,
       :partial => 'runs/analyte',

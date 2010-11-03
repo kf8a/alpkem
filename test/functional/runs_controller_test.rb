@@ -151,20 +151,20 @@ class RunsControllerTest < ActionController::TestCase
 
   test "should approve and disapprove sample" do
     sample = Factory.create(:sample)
-    xhr :get, :approve, :id => sample, :sample_class => "Sample"
+    xhr :get, :approve, :id => sample, :sample_class => "Sample", :run_id => @run.id
     sample.reload
     assert sample.approved
-    xhr :get, :approve, :id => sample, :sample_class => "Sample"
+    xhr :get, :approve, :id => sample, :sample_class => "Sample", :run_id => @run.id
     sample.reload
     assert ! sample.approved
   end
   
   test "should approve and disapprove cn sample" do
     sample = Factory.create(:cn_sample)
-    xhr :get, :approve, :id => sample, :sample_class => "CnSample"
+    xhr :get, :approve, :id => sample, :sample_class => "CnSample", :run_id => @run.id
     sample.reload
     assert sample.approved
-    xhr :get, :approve, :id => sample, :sample_class => "CnSample"
+    xhr :get, :approve, :id => sample, :sample_class => "CnSample", :run_id => @run.id
     sample.reload
     assert ! sample.approved
   end
