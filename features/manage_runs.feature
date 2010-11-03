@@ -12,8 +12,7 @@ Feature: Manage runs
       And I attach the Soil Sample test file
       And I press "Upload"
       And I follow the redirect
-    Then I should see "Load failed."
-      And I should see "No data was able to be loaded from this file."
+    Then I should see "No data was able to be loaded from this file."
     
   Scenario: Upload nothing
     Given I am on the new run page
@@ -28,8 +27,7 @@ Feature: Manage runs
       And I select "Lysimeter" from "Sample Type"
       And I attach the blank test file
       And I press "Upload"
-    Then I should see "Load failed."
-      And I should see "Data file is empty."
+    Then I should see "Data file is empty."
 
   Scenario: Upload Lysimeter data
     Given I am on the new run page

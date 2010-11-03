@@ -46,7 +46,7 @@ class RunTest < ActiveSupport::TestCase
       r.load(empty_data)
     end
     assert !r.save
-    assert_equal r.display_load_errors, "Data file is empty."
+    assert_equal r.load_errors, "Data file is empty."
   end
 
   def test_save_requires_date

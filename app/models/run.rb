@@ -27,12 +27,12 @@ class Run < ActiveRecord::Base
     !cn_measurements.blank?
   end
   
-  def display_load_errors
-    @load_errors
+  def load_errors
+    @load_errors ||= ""
   end
 
   def plot_errors
-    @plot_errors
+    @plot_errors ||= ""
   end
   
   def measurements_by_analyte(analyte)
@@ -114,13 +114,25 @@ class Run < ActiveRecord::Base
     end
   end
   
+  def load_file(file)
+    if file && !file.class.eql?(String)
+      file_contents = StringIO.new(file.read)
+      self.load(file_contents)
+      if self.measurements.blank? && self.cn_measurements.blank?
+        @load_errors += "No data was able to be loaded from this file."
+      end
+    else
+      @load_errors = 'No file was selected to upload.'
+    end
+  end
+
   def load(data)
     @load_errors = ""
     @plot_errors = ""
     
-    @load_errors = "Data file is empty."      if data.size == 0 
-    @load_errors = "No Sample Type selected." unless sample_type_id
-    @load_errors = "No Sample Date selected." unless sample_date
+    @load_errors += "Data file is empty."      if data.size == 0
+    @load_errors += "No Sample Type selected." unless sample_type_id
+    @load_errors += "No Sample Date selected." unless sample_date
     
     if @load_errors.blank?
       format_type = file_format_by_sample_type_id(sample_type_id)

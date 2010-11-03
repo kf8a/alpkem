@@ -66,38 +66,20 @@ class RunsController < ApplicationController
     session[:run_date] = @run.run_date
     
     file = (!params[:data].blank? && params[:data][:file])
-    if file && !file.class.eql?(String)
-      file_contents = StringIO.new(file.read)
-      if @run.load(file_contents)
-        if @run.measurements.blank? && @run.cn_measurements.blank?
-          flash[:notice] = 'Load failed.' + @run.plot_errors
-          flash[:file_error] = "No data was able to be loaded from this file."
-        end
-      else
-        flash[:notice] = 'Load failed.'
-        flash[:file_error] = @run.display_load_errors
-      end
-    else
-      flash[:file_error] = 'No file was selected to upload.'
-    end
+    @run.load_file(file)
 
-    errors_exist = !flash[:file_error].blank?
-    if errors_exist
-      redirect_to :action => "new"
-    else
-      respond_to do |format|
-        if @run.save
-          flash[:notice] = 'Run was successfully uploaded.'
-          flash[:notice] += @run.plot_errors
-          format.html { redirect_to(@run) }
-          format.xml  { render :xml => @run, :status => :created, :location => @run }
-        else
-          flash[:notice] = 'Run was not uploaded.'
-          flash[:notice] += @run.plot_errors
-          flash[:file_error] = @run.display_load_errors
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @run.save
+        flash[:notice] = 'Run was successfully uploaded.'
+        flash[:notice] += @run.plot_errors
+        format.html { redirect_to(@run) }
+        format.xml  { render :xml => @run, :status => :created, :location => @run }
+      else
+        flash[:notice] = 'Run was not uploaded.'
+        flash[:notice] += @run.plot_errors
+        flash[:file_error] = @run.load_errors
+        format.html { redirect_to :action => "new" }
+        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
       end
     end
   end
