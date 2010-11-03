@@ -1,7 +1,7 @@
 require "bundler/capistrano"
 
 set :application, "alpkem"
-set :repository,  "/Users/bohms/code/alpkem2"
+set :repository,  "/Users/bohms/code/alpkem"
 set :scm, :git
 
 # If you aren't deploying to /u/apps/#{application} on the target
