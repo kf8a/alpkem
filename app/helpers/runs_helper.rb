@@ -1,3 +1,5 @@
+require 'statistics'
+
 module RunsHelper
 
   def google_chart_script_helper(measurements, analytes)
@@ -34,5 +36,9 @@ module RunsHelper
       end
       total / members
     end
+  end
+
+  def cv_help(measurements)
+    Statistics.cv(measurements.map {|x| x.amount})
   end
 end

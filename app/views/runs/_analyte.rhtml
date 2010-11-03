@@ -1,7 +1,10 @@
-<% cv = sample.cv(analyte) %>
+<% relevant_measurements = @measurements.collect {|measurement| measurement if measurement.sample == sample && measurement.analyte == analyte}.compact %>
+<% stat_measurements = relevant_measurements.collect {|measurement| measurement if measurement.deleted == false}.compact %>
+<% cv = cv_help(stat_measurements) %>
+
 <td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
   <table>
-    <% relevant_measurements = @measurements.collect {|measurement| measurement if measurement.sample == sample && measurement.analyte == analyte}.compact %>
+
     <% relevant_measurements.each do |measurement| %>
       <% number = number_with_precision(measurement.amount,:precision => 4) %>
       <tr>
@@ -22,10 +25,9 @@
         </td>
       </tr>
     <% end %>
-    <% relevant_measurements.keep_if {|measurement| measurement.deleted == false} %>
     <tr>
       <td>Mean:</td>
-      <td><%= number_with_precision(average(relevant_measurements), :precision => 4) %></td>
+      <td><%= number_with_precision(average(stat_measurements), :precision => 4) %></td>
     </tr>
     <tr>
       <td>CV:</td>
