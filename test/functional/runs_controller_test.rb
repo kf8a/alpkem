@@ -45,7 +45,7 @@ class RunsControllerTest < ActionController::TestCase
           :data => {:file => fixture_file_upload(file_name)}    
         end
 
-        should redirect_to("the new run page") {new_run_path}
+        should render_template "new"
       end
 
       context "POST :create with no file" do
@@ -53,7 +53,7 @@ class RunsControllerTest < ActionController::TestCase
           post :create, :run => @attr, :data => nil      
         end
 
-        should redirect_to("the new run page") {new_run_path}
+        should render_template "new"
       end
 
       context "POST :create with blank file" do
@@ -62,7 +62,7 @@ class RunsControllerTest < ActionController::TestCase
           post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
         end
 
-        should redirect_to("new run page") {new_run_path}
+        should render_template "new"
       end
 
       context "A cn_run" do

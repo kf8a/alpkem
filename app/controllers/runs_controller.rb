@@ -1,27 +1,20 @@
 class RunsController < ApplicationController
   
   before_filter :get_run, :only => [:edit, :update, :destroy]
+  respond_to :html, :xml
   
   # GET /runs
   # GET /runs.xml
   def index
     @runs = Run.runs
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @runs }
-    end
+    respond_with @runs
   end
   
   # GET /runs/cn
   # GET /runs/cn.xml
   def cn
     @runs = Run.cn_runs
-    
-    respond_to do |format|
-      format.html # cn.html.erb
-      format.xml  { render :xml => @runs }
-    end
+    respond_with @runs
   end
 
   # GET /runs/1
@@ -31,11 +24,8 @@ class RunsController < ApplicationController
     if @run.cn_measurements_exist?
       @back = cn_runs_path
     else  @back = runs_path
-    end        
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @run }
     end
+    respond_with @run
   end
 
   # GET /runs/new
@@ -44,11 +34,7 @@ class RunsController < ApplicationController
     @run = Run.new
     @run.sample_date  = session[:sample_date]
     @run.run_date     = session[:run_date]
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @run }
-    end
+    respond_with @run
   end
 
   # GET /runs/1/edit
@@ -68,46 +54,31 @@ class RunsController < ApplicationController
     file = (!params[:data].blank? && params[:data][:file])
     @run.load_file(file)
 
-    respond_to do |format|
-      if @run.save
-        flash[:notice] = 'Run was successfully uploaded.'
-        flash[:notice] += @run.plot_errors
-        format.html { redirect_to(@run) }
-        format.xml  { render :xml => @run, :status => :created, :location => @run }
-      else
-        flash[:notice] = 'Run was not uploaded.'
-        flash[:notice] += @run.plot_errors
-        flash[:file_error] = @run.load_errors
-        format.html { redirect_to :action => "new" }
-        format.xml  { render :xml => @run.errors, :status => :unprocessable_entity }
-      end
+    if @run.save
+      flash[:notice] = 'Run was successfully uploaded.'
+    else
+      flash[:notice] = 'Run was not uploaded.'
+      flash[:file_error] = @run.load_errors
     end
+    flash[:notice] += @run.plot_errors
+    
+    respond_with @run
   end
 
   # PUT /runs/1
   # PUT /runs/1.xml
   def update
-    respond_to do |format|
-      if @run.update_attributes(params[:run])
-        flash[:notice] = 'Run was successfully updated.'
-        format.html { redirect_to(@run) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @run.errors, :status  => :unprocessable_entity }
-      end
+    if @run.update_attributes(params[:run])
+      flash[:notice] = 'Run was successfully updated.'
     end
+    respond_with @run
   end
 
   # DELETE /runs/1
   # DELETE /runs/1.xml
   def destroy
     @run.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(runs_url) }
-      format.xml  { head :ok }
-    end
+    respond_with @run
   end
   
   def approve
