@@ -29,6 +29,7 @@ gem 'nokogiri'
 group :development do
   gem "nifty-generators"
   gem 'mongrel', '1.2.0.pre2'
+  gem 'rails-erd'
 end
 
 group :development, :test do
@@ -45,6 +46,7 @@ group :test do
   gem 'spork'
   gem 'launchy'
   gem "mocha"
+  gem 'ruby-prof'
 
   if RUBY_VERSION > "1.9"
     gem 'simplecov'
