@@ -18,8 +18,8 @@ Factory.define :sample do |s|
   s.association   :plot
 end
 
-Factory.define :sample_type do |sample_type|
-end
+#Factory.define :sample_type do |sample_type|
+#end
 
 Factory.define :measurement do |m|
   m.association     :sample
