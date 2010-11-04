@@ -1,5 +1,6 @@
 require 'statistics'
 
+# This repesents one field sample such as a soil core or a water sample
 class Sample < ActiveRecord::Base
   belongs_to :plot
   belongs_to :sample_type
@@ -10,6 +11,16 @@ class Sample < ActiveRecord::Base
   validates_presence_of :plot
   
   scope :approved, where(%q{approved = 't'})
+  
+  attr_reader :analytes
+  
+  def initialize
+    super
+      analyte_no3       = Analyte.find_by_name('NO3')
+      analyte_nh4       = Analyte.find_by_name('NH4')
+
+      @analytes = [analyte_no3, analyte_nh4]
+  end
   
   def plot_name
     self.plot.try(:name)
@@ -28,14 +39,11 @@ class Sample < ActiveRecord::Base
     end
     return relevant_measurements
   end
-  
-  def analytes
-    analyte_no3       = Analyte.find_by_name('NO3')
-    analyte_nh4       = Analyte.find_by_name('NH4')
-
-    [analyte_no3, analyte_nh4]
-  end
-
+   #  
+   # def analytes
+   # 
+   # end
+ 
   #TODO This method is only used in tests now, so rewrite those tests and delete method.
   def measurements_by_analyte(analyte)
     raise ArgumentError unless analyte.class == Analyte   

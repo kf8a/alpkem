@@ -15,8 +15,13 @@ class SamplesController < ApplicationController
         unless @samples.blank?
           csv_string = CSV.generate do |csv|
             csv << ['sample_id','sample_date','treatment','replicate','no3_ppm','nh4_ppm']
-            @samples.each do |s|
-              csv <<  [s.id, s.sample_date.to_s, s.plot.treatment.name, s.plot.replicate.name, s.average(no3), s.average(nh4)]
+            @samples.each do |sample|
+              csv <<  [sample.id, 
+                       sample.sample_date.to_s, 
+                       sample.plot.treatment.name, 
+                       sample.plot.replicate.name, 
+                       sample.average(no3), 
+                       sample.average(nh4)]
             end
           end
         end
