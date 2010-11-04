@@ -41,13 +41,10 @@ class Run < ActiveRecord::Base
   end
   
   def analytes
-    list_of_analytes = []
     if cn_measurements_exist?
-      list_of_analytes << Analyte.find_by_name('N')
-      list_of_analytes << Analyte.find_by_name('C')
+      [Analyte.find_by_name('N'),   Analyte.find_by_name('C')]
     else
-      list_of_analytes << Analyte.find_by_name('NH4')
-      list_of_analytes << Analyte.find_by_name('NO3')
+      [Analyte.find_by_name('NH4'), Analyte.find_by_name('NO3')]
     end
   end
   
