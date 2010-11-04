@@ -15,7 +15,9 @@ gem 'RedCloth'
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
-gem "metric_fu"
+gem 'autotest'  #use with 'bundle exec autotest'
+    gem 'autotest-rails-pure' #to use Test:Unit
+gem "metric_fu" #use with 'rake metrics:all'
 
 # Deploy with Capistrano
 gem 'capistrano'
@@ -39,6 +41,7 @@ end
 group :test do
   gem "shoulda"
   gem "factory_girl"
+  gem 'factory_girl_rails'
   gem 'capybara'
   gem "database_cleaner"
   gem "cucumber-rails"

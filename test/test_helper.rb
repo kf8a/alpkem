@@ -4,10 +4,6 @@ require 'rails/test_help'
 require 'shoulda'
 require 'factory_girl'
 
-Dir.glob(Rails.root.to_s + "/test/factories/*.rb").each do |factory|
-  require factory 
-end
-
 class ActiveSupport::TestCase
   #include Devise::TestHelpers
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
