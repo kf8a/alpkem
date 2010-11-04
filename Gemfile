@@ -47,11 +47,6 @@ group :test do
   gem 'launchy'
   gem "mocha"
   gem 'ruby-prof'
-
-  if RUBY_VERSION > "1.9"
-    gem 'simplecov'
-    gem 'simplecov-html'
-  end
 end
 
 group :production do
