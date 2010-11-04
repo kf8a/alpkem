@@ -5,7 +5,12 @@ Factory.define :cn_sample do |s|
   s.cn_plot     "Plot"
 end
 
+Factory.sequence :plot_name do |n|
+  "plot#{n}"
+end
+
 Factory.define :plot do |p|
+  p.name                 { Factory.next :plot_name }
 end
 
 Factory.define :study do |s|
