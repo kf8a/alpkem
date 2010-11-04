@@ -239,7 +239,7 @@ class RunTest < ActiveSupport::TestCase
         assert r.save
         assert_equal 126, r.samples.size
         assert_equal 2, r.samples[0].measurements.size
-        assert_equal  0.055, r.samples[0].measurements[0]
+        assert_equal  2.115, r.samples[0].measurements[0].amount
       end
     end
   end
