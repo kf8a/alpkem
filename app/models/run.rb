@@ -211,8 +211,7 @@ class Run < ActiveRecord::Base
         if sample_type_id == 2
           plot_name = "T#{first}R#{second}"
         elsif first.start_with?("L0")
-          first.slice!("L0")
-          plot_name = "L0#{first.to_i}S#{second}"
+          plot_name = "#{first}S#{second}"
         else
           plot_name = "G#{first}R#{second}"
         end
