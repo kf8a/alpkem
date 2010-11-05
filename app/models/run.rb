@@ -150,13 +150,11 @@ class Run < ActiveRecord::Base
       second = $2
       third = $3
 
-      plot_name = "T#{first}R#{second}F#{third}"
-      @plot = find_plot(plot_name)
       unless first.blank? || second.blank? || third.blank?
-        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        plot_name = "T#{first}R#{second}F#{third}"
+        find_plot(plot_name)
+        process_nhno_sample(s_date, nh4_amount, no3_amount)
       end
-
-      process_nhno_sample(s_date, nh4_amount, no3_amount)
     end
   end
 
@@ -171,13 +169,11 @@ class Run < ActiveRecord::Base
       second = $2
       third = $3
 
-      plot_name = "T#{first}R#{second}F#{third}"
-      @plot = find_plot(plot_name)
       unless first.blank? || second.blank? || third.blank?
-        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        plot_name = "T#{first}R#{second}F#{third}"
+        find_plot(plot_name)
+        process_nhno_sample(s_date, nh4_amount, no3_amount)
       end
-
-      process_nhno_sample(s_date, nh4_amount, no3_amount)
     end
   end
 
@@ -186,19 +182,17 @@ class Run < ActiveRecord::Base
 
       s_date = $5
       nh4_amount = $6
+      no3_amount = nil
 
       first = $1
       second = $2
       third = $3
-      fourth = $4
 
-      plot_name = "T#{first}R#{second}F#{third}"
-      @plot = find_plot(plot_name)
       unless first.blank? || second.blank? || third.blank?
-        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        plot_name = "T#{first}R#{second}F#{third}"
+        find_plot(plot_name)
+        process_nhno_sample(s_date, nh4_amount, no3_amount)
       end
-
-      process_nhno_sample(s_date, nh4_amount, no3_amount)
     end
   end
   
@@ -213,28 +207,18 @@ class Run < ActiveRecord::Base
       first = $1
       second = $2
 
-      if sample_type_id == 2
-        plot_name = "T#{first}R#{second}"
-        @plot = find_plot(plot_name)
-        unless first.blank? || second.blank?
-          @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+      unless first.blank? || second.blank?
+        if sample_type_id == 2
+          plot_name = "T#{first}R#{second}"
+        elsif first.start_with?("L0")
+          first.slice!("L0")
+          plot_name = "L0#{first.to_i}S#{second}"
+        else
+          plot_name = "G#{first}R#{second}"
         end
-      elsif first.start_with?("L0")
-        first.slice!("L0")
-        plot_name = "L0#{first.to_i}S#{second}"
-        @plot = find_plot(plot_name)
-        unless second.blank?
-          @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-        end
-      else
-        plot_name = "G#{first}R#{second}"
-        @plot = find_plot(plot_name)
-        unless first.blank? || second.blank?
-          @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-        end
+        find_plot(plot_name)
+        process_nhno_sample(s_date, nh4_amount, no3_amount)
       end
-
-      process_nhno_sample(s_date, nh4_amount, no3_amount)
     end
   end
   
@@ -249,13 +233,11 @@ class Run < ActiveRecord::Base
       first = $1
       second = $2
 
-      plot_name = "G#{first}R#{second}"
-      @plot = find_plot(plot_name)
       unless first.blank? || second.blank?
-        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        plot_name = "G#{first}R#{second}"
+        find_plot(plot_name)
+        process_nhno_sample(s_date, nh4_amount, no3_amount)
       end
-
-      process_nhno_sample(s_date, nh4_amount, no3_amount)
     end
   end
   
@@ -271,13 +253,11 @@ class Run < ActiveRecord::Base
       third = $3
       fourth = $4
 
-      plot_name = "G#{first}R#{second}S#{third}#{fourth}"
-      @plot = find_plot(plot_name)
       unless first.blank? || second.blank? || third.blank? || fourth.blank?
-        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        plot_name = "G#{first}R#{second}S#{third}#{fourth}"
+        find_plot(plot_name)
+        process_nhno_sample(s_date, nh4_amount, no3_amount)
       end
-
-      process_nhno_sample(s_date, nh4_amount, no3_amount)
     end
   end
 
@@ -359,7 +339,8 @@ class Run < ActiveRecord::Base
     if @plot.try(:name) == plot_to_find
       @plot
     else
-      Plot.find_by_name(plot_to_find)
+      @plot = Plot.find_by_name(plot_to_find)
+      @plot_errors += "There is no plot named #{plot_to_find}" if @plot.blank?
     end
   end
 
