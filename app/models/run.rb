@@ -294,13 +294,26 @@ class Run < ActiveRecord::Base
     end
   end
 
+
+  def require_sample_type_id
+    @load_errors += "No Sample Type selected." unless sample_type_id
+  end
+
+  def require_sample_date
+    @load_errors += "No Sample Date selected." unless sample_date
+  end
+
+  def require_data(data)
+    @load_errors += "Data file is empty."      if data.size == 0
+  end
+
   def load(data)
     @load_errors = ""
     @plot_errors = ""
-    
-    @load_errors += "Data file is empty."      if data.size == 0
-    @load_errors += "No Sample Type selected." unless sample_type_id
-    @load_errors += "No Sample Date selected." unless sample_date
+
+    require_data(data)
+    require_sample_type_id
+    require_sample_date
     
     if @load_errors.blank?
       format_type = file_format_by_sample_type_id(sample_type_id)
@@ -309,28 +322,31 @@ class Run < ActiveRecord::Base
       @sample = nil
 
       data.each do | line |
-
-        case format_type
-        when 'Lysimeter'
-          read_as_lysimeter(line, re)
-        when 'Lysimeter NO3'
-          read_as_lysimeter_no3(line, re)
-        when 'Lysimeter NH4'
-          read_as_lysimeter_nh4(line, re)
-        when 'Standard'
-          read_as_standard(line, re)
-        when 'Old Soil'
-          read_as_old_soil(line, re)
-        when 'GLBRC Deep'
-          read_as_glbrc_deep(line, re)
-        when 'CN Sample'
-          read_as_cn_sample(line, re)
-        when 'CN Deep'
-          read_as_cn_deep(line, re)
-        when 'CN GLBRC'
-          read_as_cn_glbrc(line, re)
-        end
+        process_by_format_type(format_type, line, re)
       end
+    end
+  end
+
+  def process_by_format_type(format_type, line, re)
+    case format_type
+    when 'Lysimeter'
+      read_as_lysimeter(line, re)
+    when 'Lysimeter NO3'
+      read_as_lysimeter_no3(line, re)
+    when 'Lysimeter NH4'
+      read_as_lysimeter_nh4(line, re)
+    when 'Standard'
+      read_as_standard(line, re)
+    when 'Old Soil'
+      read_as_old_soil(line, re)
+    when 'GLBRC Deep'
+      read_as_glbrc_deep(line, re)
+    when 'CN Sample'
+      read_as_cn_sample(line, re)
+    when 'CN Deep'
+      read_as_cn_deep(line, re)
+    when 'CN GLBRC'
+      read_as_cn_glbrc(line, re)
     end
   end
   
