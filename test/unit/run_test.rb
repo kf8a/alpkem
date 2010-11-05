@@ -23,14 +23,14 @@ class RunTest < ActiveSupport::TestCase
   def test_saves_with_good_data
     assert_difference "Run.count" do
       r = Run.new(@attr)
-      r.load(good_data)
+      r.load_file(good_data)
       assert r.save
     end
   end
 
   def test_load_requires_sample_type
     r = Run.new(@attr.merge(:sample_type_id => nil))
-    assert !r.load(good_data)
+    assert !r.load_file(good_data)
   end
 
   def test_save_requires_loaded_data
@@ -43,7 +43,7 @@ class RunTest < ActiveSupport::TestCase
     file_name = File.dirname(__FILE__) + '/../data/blank.txt'
     File.open(file_name, 'r') do |f|
       empty_data = StringIO.new(f.read)
-      r.load(empty_data)
+      r.load_file(empty_data)
     end
     assert !r.save
     assert_equal r.load_errors, "Data file is empty."
@@ -51,13 +51,13 @@ class RunTest < ActiveSupport::TestCase
 
   def test_save_requires_date
     r = Run.new(@attr.merge(:sample_date => nil))
-    r.load(good_data)
+    r.load_file(good_data)
     assert !r.save
   end
 
   def test_file_load_data
     r = Run.new(@attr)
-    r.load(good_data)
+    r.load_file(good_data)
     r.save
 
     assert r.samples.size > 1   
@@ -130,7 +130,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name,'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 4))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -143,7 +143,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 5))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -156,7 +156,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 6))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -169,7 +169,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 7))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -182,7 +182,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 9))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -195,7 +195,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 8))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -208,7 +208,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 8))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert r.samples.size > 1
       end
@@ -221,7 +221,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 1))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         #TODO add CF and DF plots to the test database
         assert_equal 87, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
@@ -235,7 +235,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 1))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert_equal 126, r.samples.size
         assert_equal 2, r.samples[0].measurements.size
@@ -251,7 +251,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r = Run.new(@attr.merge(:sample_type_id => 1))
-        r.load(s)
+        r.load_file(s)
         assert r.save
         assert_equal 132, r.samples.size
         assert_equal 2, r.samples[0].measurements.size
@@ -266,7 +266,7 @@ class RunTest < ActiveSupport::TestCase
       File.open(file_name, 'r') do |f|
          s = StringIO.new(f.read)
          r = Run.new(@attr.merge(:sample_type_id => 10))
-         r.load(s)
+         r.load_file(s)
          assert r.save
          assert_equal 114, r.samples.size 
        end    
