@@ -21,6 +21,29 @@ class Sample < ActiveRecord::Base
 
       @analytes = [analyte_no3, analyte_nh4]
   end
+
+  def Sample.samples_to_csv(samples)
+    unless samples.blank?
+      CSV.generate do |csv|
+        csv << ['sample_id','sample_date','treatment','replicate','no3_ppm','nh4_ppm']
+        samples.each do |sample|
+          csv << sample.to_array
+        end
+      end
+    end
+  end
+
+  def to_array
+    no3 = Analyte.find_by_name('NO3')
+    nh4 = Analyte.find_by_name('NH4')
+
+    [self.id,
+     self.sample_date.to_s,
+     self.plot.treatment.name,
+     self.plot.replicate.name,
+     self.average(no3),
+     self.average(nh4)]
+  end
   
   def plot_name
     self.plot.try(:name)
@@ -39,10 +62,6 @@ class Sample < ActiveRecord::Base
     end
     return relevant_measurements
   end
-   #  
-   # def analytes
-   # 
-   # end
  
   #TODO This method is only used in tests now, so rewrite those tests and delete method.
   def measurements_by_analyte(analyte)
