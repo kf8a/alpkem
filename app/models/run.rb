@@ -23,6 +23,10 @@ class Run < ActiveRecord::Base
     runs_index
   end
 
+  def measurement_by_id(id)
+    measurements.where(:id => id).first || cn_measurements.where(:id => id).first
+  end
+
   def cn_measurements_exist?
     !cn_measurements.blank?
   end
