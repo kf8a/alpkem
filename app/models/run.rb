@@ -139,6 +139,182 @@ class Run < ActiveRecord::Base
     end
   end
 
+  def read_as_lysimeter(line, re)
+    if line =~ re
+      s_date = $5
+      nh4_amount  = $6
+      no3_amount  = $8
+
+
+      first = $1
+      second = $2
+      third = $3
+
+      plot_name = "T#{first}R#{second}F#{third}"
+      @plot = find_plot(plot_name)
+      unless first.blank? || second.blank? || third.blank?
+        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+      end
+
+      process_nhno_sample(s_date, nh4_amount, no3_amount)
+    end
+  end
+
+  def read_as_lysimeter_no3(line, re)
+    if line =~ re
+
+      s_date = $5
+      nh4_amount = nil
+      no3_amount = $6
+
+      first = $1
+      second = $2
+      third = $3
+
+      plot_name = "T#{first}R#{second}F#{third}"
+      @plot = find_plot(plot_name)
+      unless first.blank? || second.blank? || third.blank?
+        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+      end
+
+      process_nhno_sample(s_date, nh4_amount, no3_amount)
+    end
+  end
+
+  def read_as_lysimeter_nh4(line, re)
+    if line =~ re
+
+      s_date = $5
+      nh4_amount = $6
+
+      first = $1
+      second = $2
+      third = $3
+      fourth = $4
+
+      plot_name = "T#{first}R#{second}F#{third}"
+      @plot = find_plot(plot_name)
+      unless first.blank? || second.blank? || third.blank?
+        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+      end
+
+      process_nhno_sample(s_date, nh4_amount, no3_amount)
+    end
+  end
+  
+  def read_as_standard(line, re)
+    if line =~ re
+
+      s_date = sample_date
+
+      nh4_amount = $5
+      no3_amount = $6
+
+      first = $1
+      second = $2
+
+      if sample_type_id == 2
+        plot_name = "T#{first}R#{second}"
+        @plot = find_plot(plot_name)
+        unless first.blank? || second.blank?
+          @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        end
+      elsif first.start_with?("L0")
+        first.slice!("L0")
+        plot_name = "L0#{first.to_i}S#{second}"
+        @plot = find_plot(plot_name)
+        unless second.blank?
+          @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        end
+      else
+        plot_name = "G#{first}R#{second}"
+        @plot = find_plot(plot_name)
+        unless first.blank? || second.blank?
+          @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+        end
+      end
+
+      process_nhno_sample(s_date, nh4_amount, no3_amount)
+    end
+  end
+  
+  def read_as_old_soil(line, re)
+    if line =~ re
+
+      s_date = sample_date
+
+      nh4_amount = $5
+      no3_amount = $6
+
+      first = $1
+      second = $2
+
+      plot_name = "G#{first}R#{second}"
+      @plot = find_plot(plot_name)
+      unless first.blank? || second.blank?
+        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+      end
+
+      process_nhno_sample(s_date, nh4_amount, no3_amount)
+    end
+  end
+  
+  def read_as_glbrc_deep(line, re)
+    if line =~ re
+      s_date = sample_date
+
+      nh4_amount = $5
+      no3_amount = $6
+
+      first = $1
+      second = $2
+      third = $3
+      fourth = $4
+
+      plot_name = "G#{first}R#{second}S#{third}#{fourth}"
+      @plot = find_plot(plot_name)
+      unless first.blank? || second.blank? || third.blank? || fourth.blank?
+        @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
+      end
+
+      process_nhno_sample(s_date, nh4_amount, no3_amount)
+    end
+  end
+
+  def read_as_cn_sample(line, re)
+    if line =~ re
+
+      s_date      = $2
+      cn_plot     = $3
+      percent_n   = $8
+      percent_c   = $9
+
+      process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+    end
+  end
+
+  def read_as_cn_deep(line, re)
+    if line =~ re
+      s_date      = sample_date
+      cn_plot     = $1
+      percent_n   = $4
+      percent_c   = $5
+
+      process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+    end
+  end
+
+  def read_as_cn_glbrc(line, re)
+    if line =~ re
+      s_date    = Date.parse($1)
+      cn_plot   = $2
+      percent_n = $4
+      percent_c = $5
+
+      process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+    end
+  end
+
   def load(data)
     @load_errors = ""
     @plot_errors = ""
@@ -153,113 +329,27 @@ class Run < ActiveRecord::Base
       @plot = nil
       @sample = nil
 
-#      parser = FileParser.create(sample_type_and_format)
-
       data.each do | line |
-      #   date,plot, sample = parser.parse(line)
-      # end
-        # unless line =~ re
-        #   p line
-        # end
-        next unless line =~ re
-
-        if ["Lysimeter", "Lysimeter NO3", "Lysimeter NH4"].include?(format_type)
-           s_date = $5
-        elsif format_type ==  "CN Sample"
-          s_date = $2
-        elsif format_type == 'CN GLBRC'
-          s_date = Date.parse($1)
-        else
-          s_date = sample_date
-        end
-        
-  
-        if ["GLBRC Deep","Standard","Old Soil"].include?(format_type)
-          nh4_amount = $5
-          no3_amount = $6
-        end
 
         case format_type
-        when 'CN Sample'
-          percent_n   = $8
-          percent_c   = $9
-        when 'CN Deep'
-          percent_n   = $4
-          percent_c   = $5
         when 'Lysimeter'
-          nh4_amount  = $6
-          no3_amount  = $8
+          read_as_lysimeter(line, re)
         when 'Lysimeter NO3'
-          no3_amount = $6
+          read_as_lysimeter_no3(line, re)
         when 'Lysimeter NH4'
-          nh4_amount = $6
+          read_as_lysimeter_nh4(line, re)
+        when 'Standard'
+          read_as_standard(line, re)
+        when 'Old Soil'
+          read_as_old_soil(line, re)
+        when 'GLBRC Deep'
+          read_as_glbrc_deep(line, re)
+        when 'CN Sample'
+          read_as_cn_sample(line, re)
+        when 'CN Deep'
+          read_as_cn_deep(line, re)
         when 'CN GLBRC'
-          percent_n   = $4
-          percent_c   = $5
-        end
-
-        first = $1
-        second = $2
-        third = $3
-        fourth = $4
-
-        case format_type
-        when /Lysimeter/
-          plot_name = "T#{first}R#{second}F#{third}"
-          @plot = find_plot(plot_name)
-          unless first.blank? || second.blank? || third.blank?
-            @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-          end
-        when "Standard"
-          if sample_type_id == 2
-            plot_name = "T#{first}R#{second}"
-            @plot = find_plot(plot_name)
-            unless first.blank? || second.blank?
-              @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-            end
-          elsif first.start_with?("L0")
-            first.slice!("L0")
-            plot_name = "L0#{first.to_i}S#{second}"
-            @plot = find_plot(plot_name)
-            unless second.blank?
-              @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-            end
-          else
-            plot_name = "G#{first}R#{second}"
-            @plot = find_plot(plot_name)
-            unless first.blank? || second.blank?
-              @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-            end
-          end
-        when "Old Soil"
-          
-          plot_name = "G#{first}R#{second}"
-          @plot = find_plot(plot_name)
-          unless first.blank? || second.blank?
-            @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-          end
-        when "GLBRC Deep"
-          plot_name = "G#{first}R#{second}S#{third}#{fourth}"
-          @plot = find_plot(plot_name)
-          unless first.blank? || second.blank? || third.blank? || fourth.blank?
-            @plot_errors += "There is no plot named #{plot_name}" if @plot.blank?
-          end
-        when "CN Sample"
-          cn_plot     = third
-        when "CN Deep"
-          cn_plot     = first
-        when "CN GLBRC"
-          cn_plot     = second
-        else
-          raise "not implemented"
-        end
-
-#--Things that need to be changed when adding new file type ends here--
-
-        if nh4_amount || no3_amount
-          process_nhno_sample(s_date, nh4_amount, no3_amount)
-        elsif percent_n || percent_c
-          process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+          read_as_cn_glbrc(line, re)
         end
       end
     end
