@@ -82,12 +82,7 @@ class RunsController < ApplicationController
   def approve
     @run = Run.find(params[:run_id])
     @measurements = @run.measurements + @run.cn_measurements
-    sample_class = params[:sample_class]
-    if sample_class == "CnSample"
-      @sample = CnSample.find(params[:id])
-    else
-      @sample = Sample.find(params[:id])
-    end
+    @sample = @run.sample_by_id(params[:id])
     @sample.toggle(:approved)
     @sample.save
     

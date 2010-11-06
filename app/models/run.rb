@@ -29,6 +29,10 @@ class Run < ActiveRecord::Base
     measurements.where(:id => id).first || cn_measurements.where(:id => id).first
   end
 
+  def sample_by_id(id)
+    samples.where(:id => id).first || cn_samples.where(:id => id).first
+  end
+
   def cn_measurements_exist?
     !cn_measurements.blank?
   end
