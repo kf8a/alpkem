@@ -326,8 +326,8 @@ class FileParser
     @analyte_N ||= Analyte.find_by_name('N')
     @analyte_C ||= Analyte.find_by_name('C')
 
-    create_measurement(percent_n, 'N')
-    create_measurement(percent_c, 'C')
+    create_measurement(percent_n, @analyte_N)
+    create_measurement(percent_c, @analyte_C)
   end
 
   def find_sample(plot, date)
