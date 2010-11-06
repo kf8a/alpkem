@@ -150,6 +150,7 @@ GEM
     rack (1.2.1)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
+    rack-offline (0.6.1)
     rack-openid (1.2.0)
       rack (>= 1.1.0)
       ruby-openid (>= 2.1.8)
@@ -240,6 +241,7 @@ DEPENDENCIES
   nifty-generators
   nokogiri
   pg
+  rack-offline
   rails (= 3.0.1)
   rails-erd
   ruby-prof

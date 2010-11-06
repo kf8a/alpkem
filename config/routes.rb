@@ -19,4 +19,6 @@ Alpkem::Application.routes.draw do
 
   resources :samples
   root :to => 'runs#index'
+  
+  match "/application.manifest" => Rails::Offline
 end
