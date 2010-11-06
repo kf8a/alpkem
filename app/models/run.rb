@@ -30,7 +30,7 @@ class Run < ActiveRecord::Base
   end
 
   def sample_by_id(id)
-    samples.where(:id => id).first || cn_samples.where(:id => id).first
+    samples.where(:id => id).first
   end
 
   def cn_measurements_exist?
