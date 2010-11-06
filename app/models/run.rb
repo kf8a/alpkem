@@ -5,13 +5,13 @@ class Run < ActiveRecord::Base
   has_many :cn_measurements, :dependent => :destroy
 
   validates :sample_type_id, :presence => true
-  validates :measurements, :presence => { :unless => :cn_measurements_exist? }
+  validates :measurements,   :presence => true
 
   def self.runs
     all_runs = Run.order('sample_date')
     runs_index = []
     all_runs.each do |run|
-      runs_index << run unless run.cn_measurements_exist?
+      runs_index << run if run.cn_measurements.blank?
     end
     runs_index
   end
@@ -20,30 +20,32 @@ class Run < ActiveRecord::Base
     all_runs = Run.order('sample_date')
     runs_index = []
     all_runs.each do |run|
-      runs_index << run if run.cn_measurements_exist?
+      runs_index << run unless run.cn_measurements.blank?
     end
     runs_index
   end
 
   def measurement_by_id(id)
-    measurements.where(:id => id).first || cn_measurements.where(:id => id).first
+    measurements.where(:id => id).first
   end
 
   def sample_by_id(id)
     samples.where(:id => id).first
   end
 
-  def cn_measurements_exist?
-    !cn_measurements.blank?
-  end
-  
   def measurements_by_analyte(analyte)
     raise ArgumentError unless analyte.class == Analyte
     measurements.find_all_by_analyte_id(analyte.id)
   end
+
+  def cn_measurements_exist?
+    cn = measurements.where(:analyte_id => Analyte.find_by_name('N').id)
+    cn += measurements.where(:analyte_id => Analyte.find_by_name('C').id)
+    !cn.blank?
+  end
   
   def analytes
-    if cn_measurements_exist?
+    if cn_measurements.count > 0
       [Analyte.find_by_name('N'),   Analyte.find_by_name('C')]
     else
       [Analyte.find_by_name('NH4'), Analyte.find_by_name('NO3')]
@@ -51,11 +53,7 @@ class Run < ActiveRecord::Base
   end
   
   def samples
-    if cn_measurements_exist?
-      CnSample.where('id in (select cn_sample_id from cn_measurements where run_id = ?)', self.id)
-    else
-      Sample.where('id in (select sample_id from measurements where run_id = ?)', self.id)
-    end
+    Sample.where('id in (select sample_id from measurements where run_id = ?)', self.id)
   end
     
   def updated?
@@ -83,7 +81,6 @@ class Run < ActiveRecord::Base
     @parser = FileParser.new(self.sample_date, self.sample_type_id)
     @parser.parse_file(file)
     @parser.measurements.each {|measurement| self.measurements << measurement}
-    @parser.cn_measurements.each {|measurement| self.cn_measurements << measurement}
     self.load_errors.blank?
   end
 

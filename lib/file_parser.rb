@@ -7,7 +7,6 @@ class FileParser
     @plot_errors = ""
     @load_errors = ""
     @measurements = []
-    @cn_measurements = []
   end
 
   def load_errors
@@ -20,10 +19,6 @@ class FileParser
 
   def measurements
     @measurements
-  end
-
-  def cn_measurements
-    @cn_measurements
   end
 
   def require_sample_type_id
@@ -56,7 +51,7 @@ class FileParser
     data.each do | line |
       process_line(line)
     end
-    if self.measurements.blank? && self.cn_measurements.blank?
+    if self.measurements.blank?
       @load_errors += "No data was able to be loaded from this file."
     end
   end
@@ -256,37 +251,52 @@ class FileParser
     if line =~ re
 
       s_date      = $2
-      cn_plot     = $3
+      plot_name   = $3
       percent_n   = $8
       percent_c   = $9
 
-      process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+      if cn_plot_name_ok?(plot_name)
+        find_plot(plot_name)
+        process_cn_sample(s_date, percent_n, percent_c)
+      end
     end
   end
 
   def read_as_cn_deep(line, re)
     if line =~ re
       s_date      = @sample_date
-      cn_plot     = $1
+      plot_name   = $1
       percent_n   = $4
       percent_c   = $5
 
-      process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+      if cn_plot_name_ok?(plot_name)
+        find_plot(plot_name)
+        process_cn_sample(s_date, percent_n, percent_c)
+      end
     end
   end
 
   def read_as_cn_glbrc(line, re)
     if line =~ re
       s_date    = Date.parse($1)
-      cn_plot   = $2
+      plot_name = $2
       percent_n = $4
       percent_c = $5
 
-      process_cn_sample(s_date, cn_plot, percent_n, percent_c)
+      if cn_plot_name_ok?(plot_name)
+        find_plot(plot_name)
+        process_cn_sample(s_date, percent_n, percent_c)
+      end
     end
   end
 
 #### Things that need to be changed when adding a new sample type ends here ###
+
+  def cn_plot_name_ok?(plot_name)
+    !plot_name.blank? &&
+        !plot_name.include?("Standard") &&
+        !plot_name.include?("Blindstd")
+  end
 
   def find_plot(plot_to_find)
     if @plot.try(:name) == plot_to_find
@@ -297,44 +307,27 @@ class FileParser
     end
   end
 
-  def find_cnsample(plot, date)
-    right_plot = @sample.try(:cn_plot) == plot
-    right_date = @sample.try(:sample_date) == date
-    unless right_plot && right_date
-      @sample = CnSample.find_by_cn_plot_and_sample_date(plot, date)
-      if @sample
-        @sample.approved = false
-        @sample.save
-      end
-    end
-  end
-
-  def process_cn_sample(s_date, cn_plot, percent_n, percent_c)
-    return if percent_n.blank? || percent_c.blank? || cn_plot.blank?
+  def process_cn_sample(s_date, percent_n, percent_c)
+    return if percent_n.blank? || percent_c.blank? || @plot.blank?
 
     unless s_date.nil? || s_date.class == Date
       s_date = Date.strptime(s_date, "%m/%d/%Y")
     end
 
-    find_cnsample(cn_plot, s_date)
+    find_sample(@plot, s_date)
 
     if @sample.nil? then
-      @sample                = CnSample.new
+      @sample                = Sample.new
       @sample.sample_date    = s_date
-      @sample.cn_plot        = cn_plot
+      @sample.plot           = @plot
       @sample.save
     end
 
-    create_cn_measurement(percent_n, 'N')
-    create_cn_measurement(percent_c, 'C')
-   end
+    @analyte_N ||= Analyte.find_by_name('N')
+    @analyte_C ||= Analyte.find_by_name('C')
 
-  def create_cn_measurement(amount, analyte_name)
-    analyte     = Analyte.find_by_name(analyte_name)
-    measurement = CnMeasurement.create(:amount => amount, :analyte => analyte)
-
-    @sample.cn_measurements << measurement
-    @cn_measurements    << measurement
+    create_measurement(percent_n, 'N')
+    create_measurement(percent_c, 'C')
   end
 
   def find_sample(plot, date)
@@ -373,6 +366,6 @@ class FileParser
   def create_measurement(amount, analyte)
     measurement = Measurement.new(:analyte => analyte, :amount => amount)
     @sample.measurements << measurement
-    @measurements    << measurement
+    @measurements        << measurement
   end
 end

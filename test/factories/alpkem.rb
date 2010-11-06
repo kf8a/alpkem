@@ -43,7 +43,13 @@ Factory.define :cn_measurement do |m|
   m.amount          0.5
 end
 
+Factory.define :cnm, :class => :measurement do |m|
+  m.association   :sample
+  m.association   :analyte, :name => "N"
+  m.amount        0.5
+end
+
 Factory.define :cn_run, :class => :run do |r|
   r.sample_type_id    6
-  r.cn_measurements   [Factory.create(:cn_measurement)]
+  r.measurements   [Factory.create(:cnm)]
 end

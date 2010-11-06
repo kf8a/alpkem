@@ -23,6 +23,7 @@ module RunsHelper
     measurements.each do |measurement|
       chart_measurements += add_measurement(measurement, analyte1)
     end
+    chart_measurements
   end
 
   def add_measurement(m, analyte1)

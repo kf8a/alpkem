@@ -159,15 +159,4 @@ class RunsControllerTest < ActionController::TestCase
     sample.reload
     assert ! sample.approved
   end
-  
-  test "should approve and disapprove cn sample" do
-    sample = Factory.create(:cn_sample)
-    Factory.create(:cn_measurement, :cn_sample_id => sample.id, :run_id => @run.id)
-    xhr :get, :approve, :id => sample, :sample_class => "CnSample", :run_id => @run.id
-    sample.reload
-    assert sample.approved
-    xhr :get, :approve, :id => sample, :sample_class => "CnSample", :run_id => @run.id
-    sample.reload
-    assert ! sample.approved
-  end
 end
