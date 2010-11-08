@@ -11,7 +11,7 @@ class Run < ActiveRecord::Base
     all_runs = Run.order('sample_date')
     runs_index = []
     all_runs.each do |run|
-      runs_index << run if run.cn_measurements.blank?
+      runs_index << run unless run.cn_measurements_exist?
     end
     runs_index
   end
@@ -20,7 +20,7 @@ class Run < ActiveRecord::Base
     all_runs = Run.order('sample_date')
     runs_index = []
     all_runs.each do |run|
-      runs_index << run unless run.cn_measurements.blank?
+      runs_index << run if run.cn_measurements_exist?
     end
     runs_index
   end
@@ -45,7 +45,7 @@ class Run < ActiveRecord::Base
   end
   
   def analytes
-    if cn_measurements.count > 0
+    if cn_measurements_exist?
       [Analyte.find_by_name('N'),   Analyte.find_by_name('C')]
     else
       [Analyte.find_by_name('NH4'), Analyte.find_by_name('NO3')]
