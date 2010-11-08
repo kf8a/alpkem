@@ -9,20 +9,16 @@ class Run < ActiveRecord::Base
 
   def self.runs
     all_runs = Run.order('sample_date')
-    runs_index = []
-    all_runs.each do |run|
-      runs_index << run unless run.cn_measurements_exist?
-    end
-    runs_index
+    all_runs.keep_if {|run| !run.cn_run?}
   end
 
   def self.cn_runs
     all_runs = Run.order('sample_date')
-    runs_index = []
-    all_runs.each do |run|
-      runs_index << run if run.cn_measurements_exist?
-    end
-    runs_index
+    all_runs.keep_if {|run| run.cn_run?}
+  end
+
+  def cn_run?
+    self.sample_type_name.include?("CN")
   end
 
   def measurement_by_id(id)
@@ -38,14 +34,8 @@ class Run < ActiveRecord::Base
     measurements.find_all_by_analyte_id(analyte.id)
   end
 
-  def cn_measurements_exist?
-    cn = measurements.where(:analyte_id => Analyte.find_by_name('N').id)
-    cn += measurements.where(:analyte_id => Analyte.find_by_name('C').id)
-    !cn.blank?
-  end
-  
   def analytes
-    if cn_measurements_exist?
+    if cn_run?
       [Analyte.find_by_name('N'),   Analyte.find_by_name('C')]
     else
       [Analyte.find_by_name('NH4'), Analyte.find_by_name('NO3')]
