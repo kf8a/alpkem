@@ -8,7 +8,75 @@ class CnSample < ActiveRecord::Base
   validates_presence_of :cn_plot
   
   scope :approved, where(%q{approved = 't'})
+
+  def convert_all_to_samples
+    CnSample.all.each {|sample| sample.convert_to_sample}
+  end
   
+  def copy_all_without_destroying
+    CnSample.all.each {|sample| sample.copy_without_destroying}
+  end
+
+  def copy_without_destroying
+    if self.plot_is_real?
+      if self.cn_measurements.count > 0
+        if self.get_sample_type_id
+          if self.cn_plot_to_plot #ensures there really is a plot by that name
+            self.copy_to_sample #ensures that measurements and sample transfer
+          end
+        end
+      end
+    end
+  end
+
+  def convert_to_sample
+    if self.bad_plot_name?
+      self.destroy
+    elsif self.cn_measurements.blank?
+      self.destroy
+    elsif self.get_sample_type_id.nil?
+      self.destroy
+    elsif self.cn_plot_to_plot #ensures there really is a plot by that name
+      if self.copy_to_sample #ensures that measurements and sample transfer
+        self.destroy
+      end
+    end
+  end
+
+  def copy_to_sample
+    @sample = Sample.new
+    @sample.plot_id = self.cn_plot_to_plot
+    @sample.sample_type_id = self.get_sample_type_id
+    @sample.sample_date = self.sample_date
+    @sample.approved = self.approved
+    @sample.save
+    self.cn_measurements.each {|measurement| measurement.copy_to_sample(@sample)}
+    @sample.reload
+    @sample.measurements.count == self.cn_measurements.count
+  end
+  
+  def cn_plot_to_plot
+    Plot.find_by_name(self.cn_plot).try(:id)
+  end
+  
+  def get_sample_type_id
+    self.cn_measurements.first.run.try(:sample_type_id)
+  end
+
+  def plot_is_real?
+    !self.cn_plot.blank? &&
+          !self.cn_plot.include?("Standard") &&
+          !self.cn_plot.include?("Blindstd")
+  end
+
+  def bad_plot_name?
+    !self.plot_is_real?
+  end
+
+  def plot_id_for_cn_plot
+
+  end
+
   def plot_name
     return self.cn_plot
   end
