@@ -1,6 +1,22 @@
 #Helper class to parse files for Run data
 class FileParser
 
+  def self.for(sample_type_id)
+    case sample_type_id
+    when 1; LysimeterParser
+    when 2; StandardParser
+    when 3; OldSoilParser
+    when 4; GLBRCDeepParser
+    when 5; StandardParser
+    when 6; CNSampleParser
+    when 7; CNDeepParser
+    when 8; StandardParser
+    when 9; CNGLBRCParser
+    when 10; LysimeterNO3Parser
+    when 11; LysimeterNH4Parser
+    end
+  end
+
   def initialize(date, id)
     @sample_date = date
     @sample_type_id = id

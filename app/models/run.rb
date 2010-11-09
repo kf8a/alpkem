@@ -68,10 +68,13 @@ class Run < ActiveRecord::Base
   end
   
   def load_file(file)
-    @parser = FileParser.new(self.sample_date, self.sample_type_id)
-    @parser.parse_file(file)
-    @parser.measurements.each {|measurement| self.measurements << measurement}
-    self.load_errors.blank?
+    @parser_type = FileParser.for(self.sample_type_id)
+    if @parser_type
+      @parser = @parser_type.new(self.sample_date, self.sample_type_id)
+      @parser.parse_file(file)
+      @parser.measurements.each {|measurement| self.measurements << measurement}
+      self.load_errors.blank?
+    end
   end
 
   def load_errors

@@ -1,5 +1,5 @@
 class CNSampleParser < FileParser
-  def initialize
-    
-  end
+#  def initialize
+#
+#  end
 end
