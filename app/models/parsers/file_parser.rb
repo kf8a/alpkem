@@ -94,14 +94,7 @@ class FileParser
       s_date = Date.strptime(s_date, "%m/%d/%Y")
     end
 
-    find_sample(@plot, s_date)
-
-    if @sample.nil? then
-      @sample                = Sample.new
-      @sample.sample_date    = s_date
-      @sample.plot           = @plot
-      @sample.save
-    end
+    find_or_create_sample(s_date)
 
     @analyte_N ||= Analyte.find_by_name('N')
     @analyte_C ||= Analyte.find_by_name('C')
@@ -110,11 +103,19 @@ class FileParser
     create_measurement(percent_c, @analyte_C)
   end
 
-  def find_sample(plot, date)
-    right_plot = @sample.try(:plot) == plot
+  def find_or_create_sample(date)
+    find_sample(date)
+
+    if @sample.nil? then
+      create_sample(date)
+    end
+  end
+
+  def find_sample(date)
+    right_plot = @sample.try(:plot) == @plot
     right_date = @sample.try(:sample_date) == date
     unless right_plot && right_date
-      @sample = Sample.find_by_plot_id_and_sample_date(plot.id, date)
+      @sample = Sample.find_by_plot_id_and_sample_date(@plot.id, date)
       if @sample
         @sample.approved = false    #unapprove sample when adding data
         @sample.save
@@ -123,18 +124,18 @@ class FileParser
     end
   end
 
+  def create_sample(date)
+    @sample                = Sample.new
+    @sample.sample_date    = date
+    @sample.plot           = @plot
+    @sample.sample_type_id = @sample_type_id
+    @sample.save
+  end
+
   def process_nhno_sample(s_date, nh4_amount, no3_amount)
     return if @plot.blank?
 
-    find_sample(@plot, s_date)
-
-    if @sample.nil? then
-      @sample                = Sample.new
-      @sample.sample_date    = s_date
-      @sample.plot           = @plot
-      @sample.sample_type_id = @sample_type_id
-      @sample.save
-    end
+    find_or_create_sample(s_date)
 
     @analyte_no3  = (@analyte_no3 || Analyte.find_by_name('NO3'))
     @analyte_nh4  = (@analyte_nh4 || Analyte.find_by_name('NH4'))

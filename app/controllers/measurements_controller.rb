@@ -6,7 +6,7 @@ class MeasurementsController < ApplicationController
     @measurement.toggle!(:deleted)
     dom_id = "sample_#{@measurement.sample.id}_#{@measurement.analyte.id}"
     
-    @measurements = @run.measurements + @run.cn_measurements
+    @measurements = @run.measurements
     render :update do |page|
       page.replace dom_id,
       :partial => 'runs/analyte',

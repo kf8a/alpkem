@@ -38,9 +38,7 @@ module RunsHelper
   end
 
   def measurement_date(measurement)
-    if measurement.sample && measurement.sample.sample_date
-      measurement.sample.sample_date
-    end
+    measurement.sample.try(:sample_date)
   end
 
   def average(measurements)
