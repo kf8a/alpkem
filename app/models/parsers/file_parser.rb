@@ -14,6 +14,7 @@ class FileParser
     when 9; CNGLBRCParser
     when 10; LysimeterNO3Parser
     when 11; LysimeterNH4Parser
+    else false
     end
   end
 
