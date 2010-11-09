@@ -38,5 +38,8 @@ module Alpkem
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    # Load subfolders of app/models
+    config.autoload_paths += Dir["#{Rails.root.to_s}/app/models/[a-z]*"]
   end
 end
