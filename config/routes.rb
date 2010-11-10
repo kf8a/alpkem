@@ -3,13 +3,6 @@ Alpkem::Application.routes.draw do
 
   resources :measurements
 
-  resources :studies do
-    collection do
-      post 'create_plots'
-      post 'update_plots'
-    end
-  end
-
   resources :runs do
     collection do
       get 'cn'
@@ -18,5 +11,7 @@ Alpkem::Application.routes.draw do
   end
 
   resources :samples
+  resources :studies
+
   root :to => 'runs#index'
 end

@@ -1,6 +1,6 @@
-<h1>New Plots</h1>
+<h1>New Study with Plots</h1>
 
-<%= form_tag '/studies/create_plots' do %>
+<%= form_for @study do %>
   <%= label_tag 'study_name' %>
   <%= text_field_tag 'study_name' %><br />
   <%= label_tag 'prefix' %>

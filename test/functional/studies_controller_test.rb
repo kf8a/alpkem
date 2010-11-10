@@ -25,7 +25,7 @@ class StudiesControllerTest < ActionController::TestCase
   context "POST :create_plots" do
     setup do
       @study = Factory.create(:study, :name => "teststudy")
-      post :create_plots, :study_name => @study.name
+      post :create, :study_name => @study.name
     end
 
     should redirect_to("the study's show page") { study_path(@study.id) }
@@ -51,7 +51,7 @@ class StudiesControllerTest < ActionController::TestCase
     context "with a study with no current replicates" do
       setup do
         @study = Factory.create(:study, :name => "teststudy")
-        put :update_plots, :id => @study.id
+        put :update, :id => @study.id
       end
 
       should redirect_to("the study's show page") { study_path(@study.id) }
@@ -62,7 +62,7 @@ class StudiesControllerTest < ActionController::TestCase
       setup do
         @study = Factory.create(:study, :name => "teststudy")
         @study.create_plots(2, 2, "te")
-        put :update_plots, :id => @study.id, :number_of_replicates => 3, :number_of_treatments => 3
+        put :update, :id => @study.id, :number_of_replicates => 3, :number_of_treatments => 3
       end
 
       should redirect_to("the study's show page") {study_path(@study.id)}
