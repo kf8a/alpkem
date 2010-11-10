@@ -1,6 +1,5 @@
-#Allows the creation of plots, including replicates, treatments, and studies
-class PlotsController < ApplicationController
-  #TODO This should really be StudiesController
+#Allows the creation of studes, including plots, replicates, and treatments
+class StudiesController < ApplicationController
 
   before_filter :get_study, :only => [:show, :edit]
 
@@ -13,7 +12,7 @@ class PlotsController < ApplicationController
 
   def create_plots
     study = Study.find_or_create_by_name(:name => params[:study_name], :prefix => params[:prefix])
-    
+
     number_of_treatments = params[:number_of_treatments].to_i
     replicate_prefix = params[:replicate_prefix]
     number_of_replicates = params[:number_of_replicates].to_i

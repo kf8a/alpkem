@@ -3,7 +3,7 @@ Alpkem::Application.routes.draw do
 
   resources :measurements
 
-  resources :plots do
+  resources :studies do
     collection do
       post 'create_plots'
       post 'update_plots'

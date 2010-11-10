@@ -1,6 +1,6 @@
 Given /^the Juniper study exists$/ do
   steps %Q{
-    Given I am on the new plot page
+    Given I am on the new study page
     When I fill in "Study name" with "Junipers"
       And I fill in "Prefix" with "J"
       And I fill in "Number of treatments" with "10"
