@@ -7,6 +7,6 @@ MetricFu::Configuration.run do |config|
 
   config.flay = {   :dirs_to_flay => ['app', 'lib'],
                     :minimum_score => 0,
-                    :filetypes => ['rb', 'erb'] }
+                    :filetypes => ['rb'] }
 
 end
