@@ -1,5 +1,3 @@
-require 'file_parser'
-
 class Run < ActiveRecord::Base
   has_many :measurements, :dependent => :destroy
   has_many :cn_measurements, :dependent => :destroy
@@ -15,6 +13,37 @@ class Run < ActiveRecord::Base
   def self.cn_runs
     all_runs = Run.order('sample_date')
     all_runs.keep_if {|run| run.cn_run?}
+  end
+
+  def self.sample_type_options
+    sample_type_options = []
+    20.times do |number|
+      unless sample_type_id_to_name(number) == "Unknown Sample Type"
+        sample_type_options += [[sample_type_id_to_name(number), "#{number}"]]
+      end
+    end
+    sample_type_options
+  end
+
+  def self.sample_type_id_to_name(id)
+    case id
+    when  1; "Lysimeter"
+    when  2; "Soil Sample"
+    when  3; "GLBRC Soil Sample"
+    when  4; "GLBRC Deep Core Nitrogen"
+    when  5; "GLBRC Resin Strips"
+    when  6; "CN Soil Sample"
+    when  7; "CN Deep Core"
+    when  8; "GLBRC Soil Sample (New)"
+    when  9; "GLBRC CN"
+    when 10; "Lysimeter NO3"
+    when 11; "Lysimeter NH4"
+    else    "Unknown Sample Type"
+    end
+  end
+
+  def sample_type_name
+    Run.sample_type_id_to_name(self.sample_type_id)
   end
 
   def cn_run?
@@ -50,23 +79,6 @@ class Run < ActiveRecord::Base
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
   end
 
-  def sample_type_name(id=sample_type_id)
-    case id
-    when  1; "Lysimeter"
-    when  2; "Soil Sample"
-    when  3; "GLBRC Soil Sample"
-    when  4; "GLBRC Deep Core Nitrogen"
-    when  5; "GLBRC Resin Strips"
-    when  6; "CN Soil Sample"
-    when  7; "CN Deep Core"
-    when  8; "GLBRC Soil Sample (New)"
-    when  9; "GLBRC CN"
-    when 10; "Lysimeter NO3"
-    when 11; "Lysimeter NH4"
-    else    "Unknown Sample Type"
-    end
-  end
-  
   def load_file(file)
     @parser_type = FileParser.for(self.sample_type_id)
     if @parser_type

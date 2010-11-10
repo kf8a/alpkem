@@ -1,12 +1,6 @@
 <h1>New Run</h1>
 
 <%= flash[:notice] %>
-<% @sample_type_options = [] %>
-<% 10.times do |number|
-    unless @run.sample_type_name(number) == "Unknown Sample Type"
-      @sample_type_options += [[@run.sample_type_name(number), "#{number}"]]
-    end
-end %>
 
 <%= form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
   <%= render "shared/error_messages", :target => @run %>
@@ -24,7 +18,7 @@ end %>
   </p>
   <p>
     <%= f.label :sample_type_id, "Sample Type" %>
-    <%= f.select :sample_type_id, options_for_select(@sample_type_options) %>
+    <%= f.select :sample_type_id, options_for_select(Run.sample_type_options) %>
   </p>
   <p>
     <%= f.label :data, "File"%>
