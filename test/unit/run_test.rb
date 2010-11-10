@@ -151,7 +151,7 @@ class RunTest < ActiveSupport::TestCase
   end
 
   def test_cn_file_load
-    #assert_difference 'Run.count' do
+    assert_difference 'Run.count' do
       file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
@@ -161,11 +161,11 @@ class RunTest < ActiveSupport::TestCase
         assert r.save
         assert r.samples.size > 1
       end
-    #end
+    end
   end
 
   def test_cn_deep_core_file_load
-    #assert_difference 'Run.count' do
+    assert_difference 'Run.count' do
       file_name = File.dirname(__FILE__) + '/../data/GLBRC_CN_deepcore.csv'
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
@@ -175,11 +175,11 @@ class RunTest < ActiveSupport::TestCase
         assert r.save
         assert r.samples.size > 1
       end
-    #end
+    end
   end
   
   def test_glbrc_cn_deep_core_new_format_file_load
-    #assert_difference 'Run.count' do
+    assert_difference 'Run.count' do
       file_name = File.dirname(__FILE__) + '/../data/GLBRC_cn.csv'
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
@@ -189,7 +189,7 @@ class RunTest < ActiveSupport::TestCase
         assert r.save
         assert r.samples.size > 1
       end
-    #end
+    end
   end
 
   def test_new_glbrc_soil_sample_file_load
