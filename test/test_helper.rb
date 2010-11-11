@@ -14,13 +14,16 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
-  setup :load_seeds
+  setup :load_data_if_necessary
 
   protected
 
-  def load_seeds
-    load "#{Rails.root}/db/seeds.rb"
+  def load_data_if_necessary
+    if Plot.find_by_name("DCL01S01010").blank?
+      load "#{Rails.root}/db/seeds.rb"
+    end
   end
+
 end
 
 class ActionController::TestCase
