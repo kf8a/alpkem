@@ -16,20 +16,6 @@ class RunsControllerTest < ActionController::TestCase
     }
   end
   
-  def teardown
-    Analyte.all.each {|a| a.destroy}
-    CnMeasurement.all.each {|c| c.destroy}
-    CnSample.all.each {|c| c.destroy}    
-    Measurement.all.each {|m| m.destroy}
-    Plot.all.each {|p| p.destroy}
-    Replicate.all.each {|r| r.destroy}
-    Run.all.each {|r| r.destroy}
-    Sample.all.each {|s| s.destroy}
-    Study.all.each {|s| s.destroy}
-    Treatment.all.each {|t| t.destroy}
-    User.all.each {|u| u.destroy}
-  end
-    
   test "should get new" do
     get :new
     assert_response :success
@@ -141,13 +127,13 @@ class RunsControllerTest < ActionController::TestCase
       end
     end
 
-    test "should create run" do
-      file_name = '/../data/new_format_soil_samples_090415.TXT'
-      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+  test "should create run" do
+    file_name = '/../data/new_format_soil_samples_090415.TXT'
+    post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
 
-      assert assigns(:run)
-      assert_redirected_to run_path(assigns(:run))
-    end
+    assert assigns(:run)
+    assert_redirected_to run_path(assigns(:run))
+  end
 
   test "should approve and disapprove sample" do
     sample = Factory.create(:sample)
