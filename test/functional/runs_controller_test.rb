@@ -5,7 +5,7 @@ class RunsControllerTest < ActionController::TestCase
   def setup
     @cn_run = Factory.create(:cn_run)
     @run = Factory.create(:run)
-    measurement = Factory.create(:measurement, :run => @run)
+    Factory.create(:measurement, :run => @run)
     @user = Factory.create :user
     sign_in @user
 
@@ -48,27 +48,18 @@ class RunsControllerTest < ActionController::TestCase
     should render_template "new"
   end
 
-  context "GET :cn" do
+  context "GET :index" do
     setup do
-      get :cn
+      get :index
     end
 
     should respond_with :success
     should assign_to :runs
   end
 
-  context "GET :show the cn run" do
+  context "GET :cn" do
     setup do
-      get :show, :id => @cn_run.id
-    end
-
-    should respond_with :success
-    should assign_to :run
-  end
-
-  context "GET :index" do
-    setup do
-      get :index
+      get :cn
     end
 
     should respond_with :success
@@ -81,6 +72,15 @@ class RunsControllerTest < ActionController::TestCase
     end
 
     should respond_with :success
+  end
+
+  context "GET :show the cn run" do
+    setup do
+      get :show, :id => @cn_run.id
+    end
+
+    should respond_with :success
+    should assign_to :run
   end
 
   context "GET :edit the non-CN run" do
