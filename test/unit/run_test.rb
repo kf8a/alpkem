@@ -33,6 +33,41 @@ class MiniRunTest < MiniTest::Unit::TestCase
     Run.all.each {|r| r.destroy}
   end
 
+  def test_runs
+    Run.all.each {|r| r.destroy}
+    run1 = Factory.create(:run, :sample_date => Date.today)
+    run2 = Factory.create(:run, :sample_date => Date.today - 20)
+    run3 = Factory.create(:run, :sample_date => Date.tomorrow)
+    cn_run = Factory.create(:cn_run)
+    assert_equal Run.runs, [run2, run1, run3]
+  end
+
+  def test_cn_runs
+    Run.all.each {|r| r.destroy}
+    run1 = Factory.create(:run, :sample_date => Date.today)
+    run2 = Factory.create(:run, :sample_date => Date.today - 20)
+    run3 = Factory.create(:run, :sample_date => Date.tomorrow)
+    cn_run1 = Factory.create(:cn_run, :sample_date => Date.today)
+    cn_run2 = Factory.create(:cn_run, :sample_date => Date.today + 20)
+    cn_run3 = Factory.create(:cn_run, :sample_date => Date.today - 10)
+    assert_equal Run.cn_runs, [cn_run3, cn_run1, cn_run2]
+  end
+
+  def test_sample_type_options
+    assert_equal Run.sample_type_options,
+        [["Lysimeter", "1"],
+        ["Soil Sample", "2"],
+        ["GLBRC Soil Sample", "3"],
+        ["GLBRC Deep Core Nitrogen", "4"],
+        ["GLBRC Resin Strips", "5"],
+        ["CN Soil Sample", "6"],
+        ["CN Deep Core", "7"],
+        ["GLBRC Soil Sample (New)", "8"],
+        ["GLBRC CN", "9"], 
+        ["Lysimeter NO3", "10"],
+        ["Lysimeter NH4", "11"]]
+  end
+
   def test_saves_with_good_data
     run_count = Run.count
     r = Run.new(@attr)
