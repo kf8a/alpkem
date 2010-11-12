@@ -52,7 +52,7 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.27)
       xpath (~> 0.1.2)
-    celerity (0.8.2)
+    celerity (0.8.4)
     childprocess (0.1.4)
       ffi (~> 0.6.3)
     chronic (0.2.3)
@@ -201,8 +201,8 @@ GEM
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
     rubyzip (0.9.4)
-    selenium-webdriver (0.0.29)
-      childprocess (>= 0.0.7)
+    selenium-webdriver (0.1.0)
+      childprocess (= 0.1.4)
       ffi (~> 0.6.3)
       json_pure
       rubyzip
@@ -239,7 +239,7 @@ DEPENDENCIES
   factory_girl
   factory_girl_rails
   launchy
-  metric_fu
+  metric_fu (= 1.5.1)
   mocha
   mongrel (= 1.2.0.pre2)
   nifty-generators

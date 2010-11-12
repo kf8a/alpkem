@@ -17,7 +17,6 @@ gem "escape_utils"
 
 gem 'autotest'  #use with 'bundle exec autotest'
     gem 'autotest-rails-pure' #to use Test:Unit
-gem "metric_fu" #use with 'rake metrics:all'
 
 # Deploy with Capistrano
 gem 'capistrano'
@@ -32,6 +31,7 @@ group :development do
   gem "nifty-generators"
   gem 'mongrel', '1.2.0.pre2'
   gem 'rails-erd'
+  gem "metric_fu", '1.5.1' #use with 'rake metrics:all RAILS_ENV="development"'
 end
 
 group :development, :test do

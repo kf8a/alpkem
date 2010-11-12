@@ -94,6 +94,14 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert cn_run.cn_run?
   end
 
+  def test_measurement_by_id
+    run = Factory.create(:run)
+    measurement = Factory.create(:measurement, :run => run)
+    measurement2 = Factory.create(:measurement, :run => run)
+    assert_equal run.measurement_by_id(measurement.id), measurement
+    assert_equal run.measurement_by_id(measurement2.id), measurement2
+  end
+
   def test_saves_with_good_data
     run_count = Run.count
     r = Run.new(@attr)
