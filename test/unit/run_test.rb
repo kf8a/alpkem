@@ -68,6 +68,32 @@ class MiniRunTest < MiniTest::Unit::TestCase
         ["Lysimeter NH4", "11"]]
   end
 
+  def test_sample_type_id_to_name
+    assert_equal "Lysimeter", Run.sample_type_id_to_name(1)
+    assert_equal "Soil Sample", Run.sample_type_id_to_name(2)
+    assert_equal "GLBRC Soil Sample", Run.sample_type_id_to_name(3)
+    assert_equal "GLBRC Deep Core Nitrogen", Run.sample_type_id_to_name(4)
+    assert_equal "GLBRC Resin Strips", Run.sample_type_id_to_name(5)
+    assert_equal "CN Soil Sample", Run.sample_type_id_to_name(6)
+    assert_equal "CN Deep Core", Run.sample_type_id_to_name(7)
+    assert_equal "GLBRC Soil Sample (New)", Run.sample_type_id_to_name(8)
+    assert_equal "GLBRC CN", Run.sample_type_id_to_name(9)
+    assert_equal "Lysimeter NO3", Run.sample_type_id_to_name(10)
+    assert_equal "Lysimeter NH4", Run.sample_type_id_to_name(11)
+  end
+
+  def test_sample_type_name
+    run = Factory.create(:run, :sample_type_id => 4)
+    assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
+  end
+
+  def test_cn_run
+    run = Factory.create(:run)
+    cn_run = Factory.create(:cn_run)
+    refute run.cn_run?
+    assert cn_run.cn_run?
+  end
+
   def test_saves_with_good_data
     run_count = Run.count
     r = Run.new(@attr)
