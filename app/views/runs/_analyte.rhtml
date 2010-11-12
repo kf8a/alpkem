@@ -16,7 +16,6 @@
                  {:controller => 'measurements',
                   :action => 'destroy',
                   :id => measurement.id,
-                  :sample_class => sample.class,
                   :run_id => @run.id},
                  :method => 'delete',
                  :class => "deleted_#{measurement.deleted?}",

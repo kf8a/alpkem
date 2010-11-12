@@ -4,7 +4,7 @@ Feature: Creating plots
   wants to be able to create a plot
 
   Scenario: Create a new plot set with a new study
-    Given I am on the new plot page
+    Given I am on the new study page
     When I fill in "Study name" with "Junipers"
       And I fill in "Prefix" with "J"
       And I fill in "Number of treatments" with "10"
@@ -17,7 +17,7 @@ Feature: Creating plots
 
   Scenario: Add to the plot set with an old study
     Given the Juniper study exists
-    When I go to the plots page
+    When I go to the studies page
       And I follow "Junipers"
       And I follow "Edit"
       And I fill in "How many total treatments should there be?" with "11"

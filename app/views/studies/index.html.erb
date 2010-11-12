@@ -1,0 +1,7 @@
+<h1>Studies</h1>
+
+<%= link_to "New Study", new_study_path %><br />
+
+<% @studies.each do |study| %>
+  <%= link_to study.name, study %><br />
+<%  end %>

@@ -12,7 +12,7 @@ class Statistics
   def Statistics.variance(data)
     length = data.count
     return 0 unless length > 1
-    mean = Statistics.mean(x)
+    mean = Statistics.mean(data)
     sum = 0.0
     data.each {|var| sum += (var - mean)**2 }
     sum/length

@@ -1,6 +1,6 @@
 <h1>Editing plots for <%= @study.name %> </h1>
 
-<%= form_tag '/plots/update_plots' do %>
+<%= form_for @study do %>
   Current Treatments: <%= @study.treatments.size %><br />
 
   <%= label_tag 'number_of_treatments', 'How many total treatments should there be?' %>

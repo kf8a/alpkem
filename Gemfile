@@ -33,13 +33,17 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem "metric_fu"
+  gem 'sqlite3-ruby', :require => 'sqlite3'  
+  gem 'autotest'  #use with 'bundle exec autotest'
+  gem 'autotest-rails-pure' #to use Test:Unit
+
+  gem "metric_fu"#use with 'rake metrics:all'
 end
 
 group :test do
   gem "shoulda"
   gem "factory_girl"
+  gem 'factory_girl_rails'
   gem 'capybara'
   gem "database_cleaner"
   gem "cucumber-rails"
@@ -48,11 +52,6 @@ group :test do
   gem 'launchy'
   gem "mocha"
   gem 'ruby-prof'
-
-  if RUBY_VERSION > "1.9"
-    gem 'simplecov'
-    gem 'simplecov-html'
-  end
 end
 
 group :production do

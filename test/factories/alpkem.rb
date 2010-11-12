@@ -5,7 +5,12 @@ Factory.define :cn_sample do |s|
   s.cn_plot     "Plot"
 end
 
+Factory.sequence :plot_name do |n|
+  "plot#{n}"
+end
+
 Factory.define :plot do |p|
+  p.name                 { Factory.next :plot_name }
 end
 
 Factory.define :study do |s|
@@ -18,8 +23,8 @@ Factory.define :sample do |s|
   s.association   :plot
 end
 
-Factory.define :sample_type do |sample_type|
-end
+#Factory.define :sample_type do |sample_type|
+#end
 
 Factory.define :measurement do |m|
   m.association     :sample
@@ -38,7 +43,13 @@ Factory.define :cn_measurement do |m|
   m.amount          0.5
 end
 
+Factory.define :cnm, :class => :measurement do |m|
+  m.association   :sample
+  m.association   :analyte, :name => "N"
+  m.amount        0.5
+end
+
 Factory.define :cn_run, :class => :run do |r|
   r.sample_type_id    6
-  r.cn_measurements   [Factory.create(:cn_measurement)]
+  r.measurements   [Factory.create(:cnm)]
 end

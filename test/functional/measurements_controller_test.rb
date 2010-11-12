@@ -45,16 +45,4 @@ class MeasurementsControllerTest < ActionController::TestCase
     @measurement.reload
     assert ! @measurement.deleted
   end
-  
-  test "should destroy and undestroy cn measurement" do
-    @run = Factory.create(:cn_run)
-    @cnmeasurement  = Factory.create(:cn_measurement, :run_id => @run.id)
-    xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample", :run_id => @run.id
-    @cnmeasurement.reload
-    assert @cnmeasurement.deleted
-    xhr :delete, :destroy, :id => @cnmeasurement, :sample_class => "CnSample", :run_id => @run.id
-    @cnmeasurement.reload
-    assert ! @cnmeasurement.deleted
-  end
-
 end

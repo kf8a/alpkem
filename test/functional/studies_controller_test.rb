@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PlotsControllerTest < ActionController::TestCase
+class StudiesControllerTest < ActionController::TestCase
 
   context "GET :index" do
     setup do
@@ -25,10 +25,10 @@ class PlotsControllerTest < ActionController::TestCase
   context "POST :create_plots" do
     setup do
       @study = Factory.create(:study, :name => "teststudy")
-      post :create_plots, :study_name => @study.name
+      post :create, :study_name => @study.name
     end
 
-    should redirect_to("the plot's show page") { plot_path(@study.id) }
+    should redirect_to("the study's show page") { study_path(@study.id) }
   end
 
   context "GET :show" do
@@ -51,10 +51,10 @@ class PlotsControllerTest < ActionController::TestCase
     context "with a study with no current replicates" do
       setup do
         @study = Factory.create(:study, :name => "teststudy")
-        put :update_plots, :id => @study.id
+        put :update, :id => @study.id
       end
 
-      should redirect_to("the study's show page") { plot_path(@study.id) }
+      should redirect_to("the study's show page") { study_path(@study.id) }
       should set_the_flash.to("There are no replicates to update.")
     end
 
@@ -62,10 +62,10 @@ class PlotsControllerTest < ActionController::TestCase
       setup do
         @study = Factory.create(:study, :name => "teststudy")
         @study.create_plots(2, 2, "te")
-        put :update_plots, :id => @study.id, :number_of_replicates => 3, :number_of_treatments => 3
+        put :update, :id => @study.id, :number_of_replicates => 3, :number_of_treatments => 3
       end
 
-      should redirect_to("the study's show page") {plot_path(@study.id)}
+      should redirect_to("the study's show page") {study_path(@study.id)}
       should_not set_the_flash
       should "create additional replicates, treatments, and plots as requested" do
         @study.reload

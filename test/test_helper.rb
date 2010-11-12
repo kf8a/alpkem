@@ -1,18 +1,8 @@
-# coding: UTF-8
-if RUBY_VERSION > "1.9"
-  # require 'simplecov'
-  # SimpleCov.start 'rails'
-end
-
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'shoulda'
 require 'factory_girl'
-
-Dir.glob(Rails.root.to_s + "/test/factories/*.rb").each do |factory|
-  require factory 
-end
 
 class ActiveSupport::TestCase
   #include Devise::TestHelpers

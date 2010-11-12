@@ -1,7 +1,0 @@
-<h1>Studies</h1>
-
-<%= link_to "New Study", new_plot_path %><br />
-
-<% @studies.each do |study| %>
-  <%= link_to study.name, plot_path(study) %><br />
-<%  end %>
