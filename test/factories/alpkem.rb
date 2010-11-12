@@ -6,14 +6,20 @@ Factory.define :cn_sample do |s|
 end
 
 Factory.sequence :plot_name do |n|
-  "plot#{n}"
+  "plot#{n}#{rand(n).to_i}#{rand(4)}"
 end
 
 Factory.define :plot do |p|
   p.name                 { Factory.next :plot_name }
 end
 
+Factory.define :replicate do |r|
+end
+
 Factory.define :study do |s|
+end
+
+Factory.define :treatment do |t|
 end
 
 Factory.define :user do |u|
@@ -22,9 +28,6 @@ end
 Factory.define :sample do |s|
   s.association   :plot
 end
-
-#Factory.define :sample_type do |sample_type|
-#end
 
 Factory.define :measurement do |m|
   m.association     :sample

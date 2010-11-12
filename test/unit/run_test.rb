@@ -1,6 +1,12 @@
 require 'test_helper'
 
-class RunTest < MiniTest::Unit::TestCase
+class RunTest < ActiveSupport::TestCase
+  should have_many :measurements
+  should validate_presence_of :sample_type_id
+  should validate_presence_of :measurements
+end
+
+class MiniRunTest < MiniTest::Unit::TestCase
 
   def good_data
     file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
