@@ -41,11 +41,6 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_load_requires_sample_type
-    r = Run.new(@attr.merge(:sample_type_id => nil))
-    assert !r.load_file(good_data)
-  end
-
   def test_save_requires_loaded_data
     r = Run.new(@attr)
     assert !r.save, "It should not save without data loaded."
