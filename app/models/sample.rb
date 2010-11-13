@@ -23,16 +23,28 @@ class Sample < ActiveRecord::Base
     end
   end
 
-  def to_array
-    no3 = Analyte.find_by_name('NO3')
-    nh4 = Analyte.find_by_name('NH4')
+  def Sample.all_analytes
+    Sample.all.collect {|sample| sample.analytes}.flatten.uniq.compact
+  end
 
-    [self.id,
-     self.sample_date.to_s,
-     self.plot.treatment.name,
-     self.plot.replicate.name,
-     self.average(no3),
-     self.average(nh4)]
+  def Sample.csv_titles
+    titles = ['sample_id','sample_date','treatment','replicate']
+    Sample.all_analytes.each do |analyte|
+      titles << "#{analyte.name}_#{analyte.unit}"
+    end
+    titles
+  end
+
+  def to_array
+    sample_array = [self.id,
+                    self.sample_date.to_s,
+                    self.plot.treatment.name,
+                    self.plot.replicate.name]
+
+    Sample.all_analytes.each do |analyte|
+      sample_array << self.average(analyte)
+    end
+    sample_array
   end
   
   def plot_name
