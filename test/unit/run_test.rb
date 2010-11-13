@@ -203,26 +203,21 @@ class MiniRunTest < MiniTest::Unit::TestCase
     r.save
 
     assert r.samples.size > 1   
-    #r.samples.each {|o| p o}
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot, Date.today)
     refute_nil sample
     assert sample.valid?
     no3 = Analyte.find_by_name('NO3')
     nh4 = Analyte.find_by_name('NH4')
-    measurements = sample.measurements_by_analyte(no3)
-    refute_nil measurements.index {|m| m.amount == 0.047}
-    measurements = sample.measurements_by_analyte(nh4)
-    refute_nil measurements.index {|m| m.amount == 0.379}
+    refute_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
+    refute_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
 
     plot = Plot.find_by_treatment_and_replicate('T7','R2')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     refute_nil sample
     assert sample.valid?
-    measurements = sample.measurements_by_analyte(no3)
-    refute_nil measurements.index {|m| m.amount == 0.070}
-    measurements = sample.measurements_by_analyte(nh4)
-    refute_nil measurements.index {|m| m.amount == 0.266}
+    refute_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
+    refute_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
 
     run = Run.find(:first)
     measurements = run.measurements_by_analyte(no3)

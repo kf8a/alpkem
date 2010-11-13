@@ -63,12 +63,6 @@ class Sample < ActiveRecord::Base
     return relevant_measurements
   end
  
-  #TODO This method is only used in tests now, so rewrite those tests and delete method.
-  def measurements_by_analyte(analyte)
-    raise ArgumentError unless analyte.class == Analyte   
-    measurements.where(%q{analyte_id = ?}, analyte.id)
-  end
-  
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
     measurements.average(:amount, :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
