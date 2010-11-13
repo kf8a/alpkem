@@ -1,13 +1,14 @@
 require 'test_helper'
 require 'minitest/autorun'
 
-describe Sample do
+class SampleTest < ActiveSupport::TestCase
+  should belong_to :plot
+  should have_many :measurements
+  should have_many(:runs).through(:measurements)
+  should validate_presence_of :plot
+end
 
-  it "should validate presence of plot" do
-    @sample = Factory.build(:sample)
-    @sample.plot = nil
-    refute @sample.valid?
-  end
+describe Sample do
 
   describe "plot_name method" do
     before do
@@ -63,18 +64,40 @@ describe Sample do
   end
 
   describe "analytes method" do
-    before do
-      @sample = Factory.create(:sample)
-    end
-    
-    it "should include NO3" do
-      no3 = Analyte.find_by_name("NO3")
-      assert @sample.analytes.include?(no3)
+    describe "for an NO3/NH4 type sample" do
+      before do
+        @sample = Factory.create(:sample)
+        @no3 = Analyte.find_by_name("NO3")
+        @nh4 = Analyte.find_by_name("NH4")
+        Factory.create(:measurement, :sample => @sample, :analyte => @no3)
+        Factory.create(:measurement, :sample => @sample, :analyte => @nh4)
+      end
+
+      it "should include NO3" do
+        assert @sample.analytes.include?(@no3)
+      end
+
+      it "should include NH4" do
+        assert @sample.analytes.include?(@nh4)
+      end
     end
 
-    it "should include NH4" do
-      nh4 = Analyte.find_by_name("NH4")
-      assert @sample.analytes.include?(nh4)
+    describe "for an N/C type sample" do
+      before do
+        @sample = Factory.create(:sample)
+        @nitrogen = Analyte.find_by_name("N")
+        @carbon = Analyte.find_by_name("C")
+        Factory.create(:measurement, :sample => @sample, :analyte => @nitrogen)
+        Factory.create(:measurement, :sample => @sample, :analyte => @carbon)
+      end
+
+      it "should include Nitrogen" do
+        assert @sample.analytes.include?(@nitrogen)
+      end
+
+      it "should include Carbon" do
+        assert @sample.analytes.include?(@carbon)
+      end
     end
   end
 

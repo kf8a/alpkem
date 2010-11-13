@@ -3,25 +3,15 @@ require 'statistics'
 # This repesents one field sample such as a soil core or a water sample
 class Sample < ActiveRecord::Base
   belongs_to :plot
-  belongs_to :sample_type
 
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
   has_many :runs, :through => :measurements, :order => 'run_date'
+  has_many :analytes, :through => :measurements
   
   validates_presence_of :plot
   
   scope :approved, where(%q{approved = 't'})
   
-  attr_reader :analytes
-  
-  def initialize
-    super
-      analyte_no3       = Analyte.find_by_name('NO3')
-      analyte_nh4       = Analyte.find_by_name('NH4')
-
-      @analytes = [analyte_no3, analyte_nh4]
-  end
-
   def Sample.samples_to_csv(samples)
     unless samples.blank?
       CSV.generate do |csv|
