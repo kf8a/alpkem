@@ -94,12 +94,77 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert cn_run.cn_run?
   end
 
+  def test_measurements_by_analyte
+    run = Factory.create(:run)
+    water = Factory.create(:analyte, :name => "H2O")
+    sugar = Factory.create(:analyte, :name => "C6H12O6")
+    water_measurement = Factory.create(:measurement, :run => run, :analyte => water)
+    sugar_measurement = Factory.create(:measurement, :run => run, :analyte => sugar)
+    assert_equal run.measurements_by_analyte(water), [water_measurement]
+    assert_equal run.measurements_by_analyte(sugar), [sugar_measurement]
+  end
+
   def test_measurement_by_id
     run = Factory.create(:run)
     measurement = Factory.create(:measurement, :run => run)
     measurement2 = Factory.create(:measurement, :run => run)
     assert_equal run.measurement_by_id(measurement.id), measurement
     assert_equal run.measurement_by_id(measurement2.id), measurement2
+  end
+
+  def test_samples
+    run = Factory.create(:run)
+    sample = Factory.create(:sample)
+    Factory.create(:measurement, :run => run, :sample => sample)
+    other_run = Factory.create(:run)
+    other_sample = Factory.create(:sample)
+    Factory.create(:measurement, :run => other_run, :sample => other_sample)
+    run.reload
+    other_run.reload
+    assert run.samples.include?(sample)
+    refute run.samples.include?(other_sample)
+    assert other_run.samples.include?(other_sample)
+    refute other_run.samples.include?(sample)
+  end
+
+  def test_sample_by_id
+    run = Factory.create(:run)
+    sample = Factory.create(:sample)
+    Factory.create(:measurement, :run => run, :sample => sample)
+    run.reload
+    assert_equal run.sample_by_id(sample.id), sample
+  end
+
+  def test_analytes
+    run = Factory.create(:run)
+    cn_run = Factory.create(:cn_run)
+    nh4 = Analyte.find_by_name("NH4")
+    no3 = Analyte.find_by_name("NO3")
+    nitrogen = Analyte.find_by_name("N")
+    carbon = Analyte.find_by_name("C")
+    assert run.analytes.include?(nh4)
+    assert run.analytes.include?(no3)
+    refute run.analytes.include?(nitrogen)
+    refute run.analytes.include?(carbon)
+    assert cn_run.analytes.include?(nitrogen)
+    assert cn_run.analytes.include?(carbon)
+    refute cn_run.analytes.include?(nh4)
+    refute cn_run.analytes.include?(no3)
+  end
+
+  def test_updated
+    changing_run = Factory.create(:run)
+    changing_sample = Factory.create(:sample)
+    Factory.create(:measurement, :sample => changing_sample, :run => changing_run)
+    changing_sample.sample_date = Date.yesterday #a change
+    changing_sample.save
+    static_run = Factory.create(:run)
+    static_sample = Factory.create(:sample)
+    Factory.create(:measurement, :sample => static_sample, :run => static_run)
+    changing_run.reload
+    static_run.reload
+    assert changing_run.updated?
+    refute static_run.updated?
   end
 
   def test_saves_with_good_data
