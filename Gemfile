@@ -29,7 +29,7 @@ group :development do
   gem "nifty-generators"
   gem 'mongrel', '1.2.0.pre2'
   gem 'rails-erd'
-  gem "metric_fu", '1.5.1' #use with 'rake metrics:all RAILS_ENV="development"'
+  gem "metric_fu", '2.0.1' #use with 'rake metrics:all RAILS_ENV="development"'
 end
 
 group :development, :test do
