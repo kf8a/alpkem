@@ -1,6 +1,12 @@
 require 'test_helper'
 
-class RunTest < MiniTest::Unit::TestCase
+class RunTest < ActiveSupport::TestCase
+  should have_many :measurements
+  should validate_presence_of :sample_type_id
+  should validate_presence_of :measurements
+end
+
+class MiniRunTest < MiniTest::Unit::TestCase
 
   def good_data
     file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
@@ -27,17 +33,146 @@ class RunTest < MiniTest::Unit::TestCase
     Run.all.each {|r| r.destroy}
   end
 
+  def test_runs
+    Run.all.each {|r| r.destroy}
+    run1 = Factory.create(:run, :sample_date => Date.today)
+    run2 = Factory.create(:run, :sample_date => Date.today - 20)
+    run3 = Factory.create(:run, :sample_date => Date.tomorrow)
+    cn_run = Factory.create(:cn_run)
+    assert_equal Run.runs, [run2, run1, run3]
+  end
+
+  def test_cn_runs
+    Run.all.each {|r| r.destroy}
+    run1 = Factory.create(:run, :sample_date => Date.today)
+    run2 = Factory.create(:run, :sample_date => Date.today - 20)
+    run3 = Factory.create(:run, :sample_date => Date.tomorrow)
+    cn_run1 = Factory.create(:cn_run, :sample_date => Date.today)
+    cn_run2 = Factory.create(:cn_run, :sample_date => Date.today + 20)
+    cn_run3 = Factory.create(:cn_run, :sample_date => Date.today - 10)
+    assert_equal Run.cn_runs, [cn_run3, cn_run1, cn_run2]
+  end
+
+  def test_sample_type_options
+    assert_equal Run.sample_type_options,
+        [["Lysimeter", "1"],
+        ["Soil Sample", "2"],
+        ["GLBRC Soil Sample", "3"],
+        ["GLBRC Deep Core Nitrogen", "4"],
+        ["GLBRC Resin Strips", "5"],
+        ["CN Soil Sample", "6"],
+        ["CN Deep Core", "7"],
+        ["GLBRC Soil Sample (New)", "8"],
+        ["GLBRC CN", "9"], 
+        ["Lysimeter NO3", "10"],
+        ["Lysimeter NH4", "11"]]
+  end
+
+  def test_sample_type_id_to_name
+    assert_equal "Lysimeter", Run.sample_type_id_to_name(1)
+    assert_equal "Soil Sample", Run.sample_type_id_to_name(2)
+    assert_equal "GLBRC Soil Sample", Run.sample_type_id_to_name(3)
+    assert_equal "GLBRC Deep Core Nitrogen", Run.sample_type_id_to_name(4)
+    assert_equal "GLBRC Resin Strips", Run.sample_type_id_to_name(5)
+    assert_equal "CN Soil Sample", Run.sample_type_id_to_name(6)
+    assert_equal "CN Deep Core", Run.sample_type_id_to_name(7)
+    assert_equal "GLBRC Soil Sample (New)", Run.sample_type_id_to_name(8)
+    assert_equal "GLBRC CN", Run.sample_type_id_to_name(9)
+    assert_equal "Lysimeter NO3", Run.sample_type_id_to_name(10)
+    assert_equal "Lysimeter NH4", Run.sample_type_id_to_name(11)
+  end
+
+  def test_sample_type_name
+    run = Factory.create(:run, :sample_type_id => 4)
+    assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
+  end
+
+  def test_cn_run
+    run = Factory.create(:run)
+    cn_run = Factory.create(:cn_run)
+    refute run.cn_run?
+    assert cn_run.cn_run?
+  end
+
+  def test_measurements_by_analyte
+    run = Factory.create(:run)
+    water = Factory.create(:analyte, :name => "H2O")
+    sugar = Factory.create(:analyte, :name => "C6H12O6")
+    water_measurement = Factory.create(:measurement, :run => run, :analyte => water)
+    sugar_measurement = Factory.create(:measurement, :run => run, :analyte => sugar)
+    assert_equal run.measurements_by_analyte(water), [water_measurement]
+    assert_equal run.measurements_by_analyte(sugar), [sugar_measurement]
+  end
+
+  def test_measurement_by_id
+    run = Factory.create(:run)
+    measurement = Factory.create(:measurement, :run => run)
+    measurement2 = Factory.create(:measurement, :run => run)
+    assert_equal run.measurement_by_id(measurement.id), measurement
+    assert_equal run.measurement_by_id(measurement2.id), measurement2
+  end
+
+  def test_samples
+    run = Factory.create(:run)
+    sample = Factory.create(:sample)
+    Factory.create(:measurement, :run => run, :sample => sample)
+    other_run = Factory.create(:run)
+    other_sample = Factory.create(:sample)
+    Factory.create(:measurement, :run => other_run, :sample => other_sample)
+    run.reload
+    other_run.reload
+    assert run.samples.include?(sample)
+    refute run.samples.include?(other_sample)
+    assert other_run.samples.include?(other_sample)
+    refute other_run.samples.include?(sample)
+  end
+
+  def test_sample_by_id
+    run = Factory.create(:run)
+    sample = Factory.create(:sample)
+    Factory.create(:measurement, :run => run, :sample => sample)
+    run.reload
+    assert_equal run.sample_by_id(sample.id), sample
+  end
+
+  def test_analytes
+    run = Factory.create(:run)
+    cn_run = Factory.create(:cn_run)
+    nh4 = Analyte.find_by_name("NH4")
+    no3 = Analyte.find_by_name("NO3")
+    nitrogen = Analyte.find_by_name("N")
+    carbon = Analyte.find_by_name("C")
+    assert run.analytes.include?(nh4)
+    assert run.analytes.include?(no3)
+    refute run.analytes.include?(nitrogen)
+    refute run.analytes.include?(carbon)
+    assert cn_run.analytes.include?(nitrogen)
+    assert cn_run.analytes.include?(carbon)
+    refute cn_run.analytes.include?(nh4)
+    refute cn_run.analytes.include?(no3)
+  end
+
+  def test_updated
+    changing_run = Factory.create(:run)
+    changing_sample = Factory.create(:sample)
+    Factory.create(:measurement, :sample => changing_sample, :run => changing_run)
+    changing_sample.sample_date = Date.yesterday #a change
+    changing_sample.save
+    static_run = Factory.create(:run)
+    static_sample = Factory.create(:sample)
+    Factory.create(:measurement, :sample => static_sample, :run => static_run)
+    changing_run.reload
+    static_run.reload
+    assert changing_run.updated?
+    refute static_run.updated?
+  end
+
   def test_saves_with_good_data
     run_count = Run.count
     r = Run.new(@attr)
     r.load_file(good_data)
     assert r.save
     assert_equal run_count + 1, Run.count
-  end
-
-  def test_load_requires_sample_type
-    r = Run.new(@attr.merge(:sample_type_id => nil))
-    assert !r.load_file(good_data)
   end
 
   def test_save_requires_loaded_data
@@ -68,26 +203,21 @@ class RunTest < MiniTest::Unit::TestCase
     r.save
 
     assert r.samples.size > 1   
-    #r.samples.each {|o| p o}
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot, Date.today)
     refute_nil sample
     assert sample.valid?
     no3 = Analyte.find_by_name('NO3')
     nh4 = Analyte.find_by_name('NH4')
-    measurements = sample.measurements_by_analyte(no3)
-    refute_nil measurements.index {|m| m.amount == 0.047}
-    measurements = sample.measurements_by_analyte(nh4)
-    refute_nil measurements.index {|m| m.amount == 0.379}
+    refute_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
+    refute_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
 
     plot = Plot.find_by_treatment_and_replicate('T7','R2')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     refute_nil sample
     assert sample.valid?
-    measurements = sample.measurements_by_analyte(no3)
-    refute_nil measurements.index {|m| m.amount == 0.070}
-    measurements = sample.measurements_by_analyte(nh4)
-    refute_nil measurements.index {|m| m.amount == 0.266}
+    refute_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
+    refute_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
 
     run = Run.find(:first)
     measurements = run.measurements_by_analyte(no3)

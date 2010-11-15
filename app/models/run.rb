@@ -50,17 +50,21 @@ class Run < ActiveRecord::Base
     self.sample_type_name.include?("CN")
   end
 
+  def measurements_by_analyte(analyte)
+    raise ArgumentError unless analyte.class == Analyte
+    measurements.find_all_by_analyte_id(analyte.id)
+  end
+
   def measurement_by_id(id)
-    measurements.where(:id => id).first
+    measurements.find_by_id(id)
+  end
+
+  def samples
+    Sample.where('id in (select sample_id from measurements where run_id = ?)', self.id)
   end
 
   def sample_by_id(id)
     samples.where(:id => id).first
-  end
-
-  def measurements_by_analyte(analyte)
-    raise ArgumentError unless analyte.class == Analyte
-    measurements.find_all_by_analyte_id(analyte.id)
   end
 
   def analytes
@@ -71,10 +75,6 @@ class Run < ActiveRecord::Base
     end
   end
   
-  def samples
-    Sample.where('id in (select sample_id from measurements where run_id = ?)', self.id)
-  end
-    
   def updated?
     samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
   end
