@@ -1,3 +1,4 @@
+#For parsing Lysimeter samples that only have NO3 measurements (no NH4).
 class LysimeterNO3Parser < LysimeterParser
 
   LYSIMETER_SINGLE = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\s+-?\d+\t\s+(-?\d+\.\d+)'

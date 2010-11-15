@@ -1,3 +1,4 @@
+#This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
   
   before_filter :get_run, :only => [:edit, :update, :destroy]

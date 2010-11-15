@@ -1,3 +1,4 @@
+#Represents a single measurement, e.g. an amount of carbon or nitric acid.
 class Measurement < ActiveRecord::Base
 
   belongs_to :analyte

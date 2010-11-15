@@ -1,3 +1,4 @@
+#A study is a collection of plots which go together for analysis.
 class Study < ActiveRecord::Base
   has_many :treatments
   has_many :replicates

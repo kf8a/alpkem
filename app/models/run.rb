@@ -1,3 +1,4 @@
+#Main model in this app. Runs represent a set of measurements taken at one time.
 class Run < ActiveRecord::Base
   has_many :measurements, :dependent => :destroy
   has_many :cn_measurements, :dependent => :destroy
