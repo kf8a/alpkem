@@ -87,7 +87,7 @@ class RunsController < ApplicationController
     @sample.save
     
     dom_id      = "sample_#{@sample.id}"
-    @analytes   = @sample.analytes
+    @analytes   = @run.analytes
     
     respond_to do |format|
       format.js do 
