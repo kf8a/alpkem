@@ -36,8 +36,6 @@ group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'  
   gem 'autotest'  #use with 'bundle exec autotest'
   gem 'autotest-rails-pure' #to use Test:Unit
-
-  gem "metric_fu"#use with 'rake metrics:all'
 end
 
 group :test do
@@ -52,6 +50,8 @@ group :test do
   gem 'launchy'
   gem "mocha"
   gem 'ruby-prof'
+  #gem "metric_fu" #use with 'rake metrics:all'
+  
 end
 
 group :production do

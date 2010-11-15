@@ -152,7 +152,7 @@ class RunTest < MiniTest::Unit::TestCase
       r = Run.new(@attr.merge(:sample_type_id => 5))
       r.load_file(s)
       assert r.save
-      assert r.samples.size > 1
+      assert_equal 30, r.samples.size
     end
     assert_equal run_count + 1, Run.count
   end
@@ -234,7 +234,7 @@ class RunTest < MiniTest::Unit::TestCase
       r.load_file(s)
       assert r.save
       #TODO add CF and DF plots to the test database
-      assert_equal 87, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
+      assert_equal 31, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
     end
     assert_equal run_count + 1, Run.count
   end
