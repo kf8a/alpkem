@@ -123,10 +123,10 @@ GEM
     main (4.3.0)
       arrayfields (>= 4.7.4)
       fattr (>= 2.1.0)
-    metric_fu (1.5.1)
+    metric_fu (2.0.1)
       Saikuro (>= 1.1.0)
       activesupport (>= 2.0.0)
-      chronic (>= 0.2.3)
+      chronic (~> 0.2.3)
       churn (>= 0.0.7)
       flay (>= 1.2.1)
       flog (>= 2.2.0)
@@ -239,7 +239,7 @@ DEPENDENCIES
   factory_girl
   factory_girl_rails
   launchy
-  metric_fu (= 1.5.1)
+  metric_fu (= 2.0.1)
   mocha
   mongrel (= 1.2.0.pre2)
   nifty-generators
