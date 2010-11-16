@@ -35,22 +35,22 @@ class MiniRunTest < MiniTest::Unit::TestCase
 
   def test_runs
     Run.all.each {|r| r.destroy}
-    run1 = Factory.create(:run, :sample_date => Date.today)
-    run2 = Factory.create(:run, :sample_date => Date.today - 20)
-    run3 = Factory.create(:run, :sample_date => Date.tomorrow)
+    middle = Factory.create(:run, :sample_date => Date.today)
+    earliest = Factory.create(:run, :sample_date => Date.today - 20)
+    latest = Factory.create(:run, :sample_date => Date.tomorrow)
     cn_run = Factory.create(:cn_run)
-    assert_equal Run.runs, [run2, run1, run3]
+    refute Run.runs.include?(cn_run)
+    assert_equal Run.runs, [earliest, middle, latest]
   end
 
   def test_cn_runs
     Run.all.each {|r| r.destroy}
-    run1 = Factory.create(:run, :sample_date => Date.today)
-    run2 = Factory.create(:run, :sample_date => Date.today - 20)
-    run3 = Factory.create(:run, :sample_date => Date.tomorrow)
-    cn_run1 = Factory.create(:cn_run, :sample_date => Date.today)
-    cn_run2 = Factory.create(:cn_run, :sample_date => Date.today + 20)
-    cn_run3 = Factory.create(:cn_run, :sample_date => Date.today - 10)
-    assert_equal Run.cn_runs, [cn_run3, cn_run1, cn_run2]
+    run = Factory.create(:run, :sample_date => Date.today)
+    middle = Factory.create(:cn_run, :sample_date => Date.today)
+    latest = Factory.create(:cn_run, :sample_date => Date.today + 20)
+    earliest = Factory.create(:cn_run, :sample_date => Date.today - 10)
+    refute Run.cn_runs.include?(run)
+    assert_equal Run.cn_runs, [earliest, middle, latest]
   end
 
   def test_sample_type_options
