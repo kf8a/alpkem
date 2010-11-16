@@ -4,7 +4,7 @@ class Statistics
   def Statistics.mean(data) 
     length = data.count
     return 0 unless length > 0
-    sum = 0
+    sum = 0.0
     data.each { |var| sum += var }
     sum/length
   end
