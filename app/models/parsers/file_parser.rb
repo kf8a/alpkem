@@ -1,19 +1,21 @@
 #Helper class to parse files for Run data
 class FileParser
-
-  def self.for(sample_type_id)
+  
+  attr_reader :load_errors, :plot_errors, :measurements, :sample_type_id, :plot
+  
+  def self.for(sample_type_id,date)
     case sample_type_id
-    when 1; LysimeterParser
-    when 2; StandardParser
-    when 3; OldSoilParser
-    when 4; GLBRCDeepParser
-    when 5; StandardParser
-    when 6; CNSampleParser
-    when 7; CNDeepParser
-    when 8; StandardParser
-    when 9; CNGLBRCParser
-    when 10; LysimeterNO3Parser
-    when 11; LysimeterNH4Parser
+    when 1; LysimeterParser.new(    date, sample_type_id)
+    when 2; StandardParser.new(     date, sample_type_id)
+    when 3; OldSoilParser.new(      date, sample_type_id)
+    when 4; GLBRCDeepParser.new(    date, sample_type_id)
+    when 5; StandardParser.new(     date, sample_type_id)
+    when 6; CNSampleParser.new(     date, sample_type_id)
+    when 7; CNDeepParser.new(       date, sample_type_id)
+    when 8; StandardParser.new(     date, sample_type_id)
+    when 9; CNGLBRCParser.new(      date, sample_type_id)
+    when 10; LysimeterNO3Parser.new(date, sample_type_id)
+    when 11; LysimeterNH4Parser.new(date, sample_type_id)
     else false
     end
   end
@@ -24,18 +26,6 @@ class FileParser
     @plot_errors = ""
     @load_errors = ""
     @measurements = []
-  end
-
-  def load_errors
-    @load_errors
-  end
-
-  def plot_errors
-    @plot_errors
-  end
-
-  def measurements
-    @measurements
   end
 
   def require_sample_type_id
@@ -86,6 +76,7 @@ class FileParser
       @plot = Plot.find_by_name(plot_to_find)
       @plot_errors += "There is no plot named #{plot_to_find}" if @plot.blank?
     end
+    @plot
   end
 
   def process_cn_sample(s_date, percent_n, percent_c)
@@ -105,24 +96,28 @@ class FileParser
   end
 
   def find_or_create_sample(date)
-    find_sample(date)
+    @sample = find_sample(date)
 
     if @sample.nil? then
       create_sample(date)
+    else
+      @sample
     end
   end
 
   def find_sample(date)
-    right_plot = @sample.try(:plot) == @plot
-    right_date = @sample.try(:sample_date) == date
-    unless right_plot && right_date
-      @sample = Sample.find_by_plot_id_and_sample_date(@plot.id, date)
-      if @sample
-        @sample.approved = false    #unapprove sample when adding data
-        @sample.save
-      end
-      @sample
-    end
+     right_plot = @sample.try(:plot) == @plot
+     right_date = @sample.try(:sample_date) == date
+     unless right_plot && right_date
+       @sample = Sample.find_by_plot_id_and_sample_type_id_and_sample_date(@plot.id, @sample_type_id, date)
+       if @sample
+         @sample.approved = false    #unapprove sample when adding data
+         @sample.save
+       end
+       @sample
+     else
+       @sample
+     end
   end
 
   def create_sample(date)
@@ -131,6 +126,7 @@ class FileParser
     @sample.plot           = @plot
     @sample.sample_type_id = @sample_type_id
     @sample.save
+    @sample
   end
 
   def process_nhno_sample(s_date, nh4_amount, no3_amount)
