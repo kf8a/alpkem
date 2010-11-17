@@ -1,5 +1,6 @@
 #Helper class to parse files for Run data
 class FileParser
+  attr_accessor :load_errors, :plot_errors, :measurements
 
   def self.for(sample_type_id)
     case sample_type_id
@@ -21,49 +22,25 @@ class FileParser
   def initialize(date, id)
     @sample_date = date
     @sample_type_id = id
-    @plot_errors = ""
-    @load_errors = ""
-    @measurements = []
-  end
-
-  def load_errors
-    @load_errors
-  end
-
-  def plot_errors
-    @plot_errors
-  end
-
-  def measurements
-    @measurements
-  end
-
-  def analyte_no3
-    @analyte_no3  ||= Analyte.find_by_name('NO3')
-  end
-
-  def analyte_nh4
-    @analyte_nh4  ||= Analyte.find_by_name('NH4')
-  end
-
-  def analyte_n
-    @analyte_n ||= Analyte.find_by_name('N')
-  end
-
-  def analyte_c
-    @analyte_c ||= Analyte.find_by_name('C')
+    self.plot_errors = ""
+    self.load_errors = ""
+    self.measurements = []
+    @no3_analyte = Analyte.find_by_name('NO3')
+    @nh4_analyte = Analyte.find_by_name('NH4')
+    @nitrogen_analyte = Analyte.find_by_name('N')
+    @carbon_analyte = Analyte.find_by_name('C')
   end
 
   def require_sample_type_id
-    @load_errors += "No Sample Type selected." unless @sample_type_id
+    self.load_errors += "No Sample Type selected." unless @sample_type_id
   end
 
   def require_sample_date
-    @load_errors += "No Sample Date selected." unless @sample_date
+    self.load_errors += "No Sample Date selected." unless @sample_date
   end
 
   def require_data(data)
-    @load_errors += "Data file is empty."      if data.size == 0
+    self.load_errors += "Data file is empty."      if data.size == 0
   end
 
   def parse_file(file)
@@ -72,11 +49,11 @@ class FileParser
       require_data(file_contents)
       require_sample_type_id
       require_sample_date
-      if @load_errors.blank?
+      if self.load_errors.blank?
         self.parse_data(file_contents)
       end
     else
-      @load_errors = 'No file was selected to upload.'
+      self.load_errors = 'No file was selected to upload.'
     end
   end
 
@@ -85,33 +62,36 @@ class FileParser
       process_line(line)
     end
     if self.measurements.blank?
-      @load_errors += "No data was able to be loaded from this file."
+      self.load_errors += "No data was able to be loaded from this file."
     end
   end
 
-  def cn_plot_name_ok?(plot_name)
-    !plot_name.blank? &&
-        !plot_name.include?("Standard") &&
-        !plot_name.include?("Blindstd")
+  def cn_plot_name_ok?
+    !@plot_name.blank? &&
+        !@plot_name.include?("Standard") &&
+        !@plot_name.include?("Blindstd")
   end
 
   def find_plot(plot_to_find)
     unless @plot.try(:name) == plot_to_find
       @plot = Plot.find_by_name(plot_to_find)
-      @plot_errors += "There is no plot named #{plot_to_find}" if @plot.blank?
+      self.plot_errors += "There is no plot named #{plot_to_find}" if @plot.blank?
     end
   end
 
-  def process_cn_sample(percent_n, percent_c)
-    return if percent_n.blank? || percent_c.blank? || @plot.blank?
+  def process_cn_sample
+    unless @plot.blank?
+      format_sample_date
+      find_or_create_sample
+      create_measurement(@percent_n, @nitrogen_analyte) if @percent_n
+      create_measurement(@percent_c, @carbon_analyte) if @percent_c
+    end
+  end
 
+  def format_sample_date
     unless @sample_date.nil? || @sample_date.class == Date
       @sample_date = Date.strptime(@sample_date, "%m/%d/%Y")
     end
-
-    find_or_create_sample
-    create_measurement(percent_n, analyte_n)
-    create_measurement(percent_c, analyte_c)
   end
 
   def find_or_create_sample
@@ -143,13 +123,13 @@ class FileParser
     return if @plot.blank?
 
     find_or_create_sample
-    create_measurement(nh4_amount, analyte_nh4) if nh4_amount
-    create_measurement(no3_amount, analyte_no3) if no3_amount
+    create_measurement(nh4_amount, @nh4_analyte) if nh4_amount
+    create_measurement(no3_amount, @no3_analyte) if no3_amount
   end
 
   def create_measurement(amount, analyte)
     measurement = Measurement.new(:analyte => analyte, :amount => amount)
     @sample.measurements << measurement
-    @measurements        << measurement
+    self.measurements    << measurement
   end
 end
