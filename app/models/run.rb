@@ -3,6 +3,7 @@ class Run < ActiveRecord::Base
   has_many :measurements, :dependent => :destroy
   has_many :cn_measurements, :dependent => :destroy
   has_many :samples, :through => :measurements, :uniq => true
+  has_many :analytes, :through => :measurements, :uniq => true
 
   validates :sample_type_id, :presence => true
   validates :measurements,   :presence => true
@@ -65,14 +66,6 @@ class Run < ActiveRecord::Base
     samples.find_by_id(id)
   end
 
-  def analytes
-    if cn_run?
-      [Analyte.find_by_name('N'),   Analyte.find_by_name('C')]
-    else
-      [Analyte.find_by_name('NH4'), Analyte.find_by_name('NO3')]
-    end
-  end
-  
   def updated?
     samples.collect {|sample| sample.updated?}.include?(true)
   end
