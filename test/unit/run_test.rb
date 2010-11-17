@@ -135,23 +135,6 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run.sample_by_id(sample.id), sample
   end
 
-  def test_analytes
-    run = Factory.create(:run)
-    cn_run = Factory.create(:cn_run)
-    nh4 = Analyte.find_by_name("NH4")
-    no3 = Analyte.find_by_name("NO3")
-    nitrogen = Analyte.find_by_name("N")
-    carbon = Analyte.find_by_name("C")
-    assert run.analytes.include?(nh4)
-    assert run.analytes.include?(no3)
-    refute run.analytes.include?(nitrogen)
-    refute run.analytes.include?(carbon)
-    assert cn_run.analytes.include?(nitrogen)
-    assert cn_run.analytes.include?(carbon)
-    refute cn_run.analytes.include?(nh4)
-    refute cn_run.analytes.include?(no3)
-  end
-
   def test_updated
     changing_run = Factory.create(:run)
     changing_sample = Factory.create(:sample)
