@@ -18,10 +18,10 @@ class Run < ActiveRecord::Base
 
   def self.sample_type_options
     sample_type_options = []
-    20.times do |number|
-      unless sample_type_id_to_name(number) == "Unknown Sample Type"
-        sample_type_options += [[sample_type_id_to_name(number), "#{number}"]]
-      end
+    number = 1
+    until sample_type_id_to_name(number) == "Unknown Sample Type"
+      sample_type_options += [[sample_type_id_to_name(number), "#{number}"]]
+      number += 1
     end
     sample_type_options
   end
@@ -77,7 +77,7 @@ class Run < ActiveRecord::Base
   end
   
   def updated?
-    samples.collect {|x| x.updated_at > x.created_at}.uniq.include?(true)
+    samples.collect {|sample| sample.updated?}.include?(true)
   end
 
   def load_file(file)

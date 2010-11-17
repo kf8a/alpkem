@@ -65,4 +65,8 @@ class Sample < ActiveRecord::Base
     variance = measurements.calculate(:variance, :amount,  :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
     variance/average
   end
+
+  def updated?
+    self.updated_at > self.created_at
+  end
 end
