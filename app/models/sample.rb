@@ -22,7 +22,7 @@ class Sample < ActiveRecord::Base
   end
 
   def Sample.all_analytes
-    Sample.all.collect {|sample| sample.analytes}.flatten.uniq.compact
+    Sample.all.collect {|sample| sample.analytes}.flatten.uniq.compact.sort
   end
 
   def Sample.csv_titles

@@ -1,28 +1,26 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.1'
+gem 'rails', '3.0.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise'#, :git => 'git://github.com/plataformatec/devise.git', :branch => 'omniauth'
+# Bundle authentication
+gem 'devise'
 #gem 'omniauth'
 gem 'devise_openid_authenticatable'
 
+# Bundle the extra gems:
 gem 'will_paginate', :require => 'will_paginate'
 gem 'RedCloth'
+gem 'nokogiri'
+gem 'rack-offline'
 
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
-gem 'autotest'  #use with 'bundle exec autotest'
-    gem 'autotest-rails-pure' #to use Test:Unit
-
 # Deploy with Capistrano
 gem 'capistrano'
-
-# Bundle the extra gems:
-gem 'nokogiri'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -35,7 +33,14 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'sqlite3-ruby', :require => 'sqlite3'  
+  gem 'autotest'  #use with 'bundle exec autotest'
+  gem 'autotest-growl'
+  gem 'autotest-rails-pure' #to use Test:Unit
+end
+
+group :maconly do #if not using mac, run "bundle install --without maconly"
+  gem 'autotest-fsevent'
 end
 
 group :test do
@@ -50,6 +55,8 @@ group :test do
   gem 'launchy'
   gem "mocha"
   gem 'ruby-prof'
+  #gem "metric_fu" #use with 'rake metrics:all'
+  
 end
 
 group :production do
