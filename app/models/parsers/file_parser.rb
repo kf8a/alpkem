@@ -100,17 +100,18 @@ class FileParser
 
   def find_or_create_sample
     find_sample
-    create_sample if self.sample.nil?
+    if self.sample then unapprove_sample else create_sample end
   end
 
   def find_sample
     unless sample_already_found?
       self.sample = Sample.find_by_plot_id_and_sample_date(self.plot.id, self.sample_date)
-      if self.sample
-        self.sample.approved = false    #unapprove sample when adding data
-        self.sample.save
-      end
     end
+  end
+
+  def unapprove_sample
+    self.sample.approved = false #New data makes sample unapproved
+    self.sample.save
   end
 
   def sample_already_found?
