@@ -7,10 +7,13 @@ class FileParserTest < ActiveSupport::TestCase
     end
     
     def test_that_the_same_sample_is_returned
-      plot = @parser.find_plot('T1R1')
-      sample = @parser.create_sample
-      assert_equal sample, @parser.find_sample(Date.today)
-      assert_equal sample, @parser.find_or_create_sample(Date.today)
+      @parser.find_plot('T1R1')
+      @parser.create_sample
+      sample = @parser.sample
+      @parser.find_sample
+      assert_equal sample, @parser.sample
+      @parser.find_or_create_sample
+      assert_equal sample, @parser.sample
     end
  
 end

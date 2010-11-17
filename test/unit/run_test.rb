@@ -360,17 +360,10 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r = Run.new(@attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
-#      assert_equal 126, r.samples.size
-#      measurement = r.measurements.find_by_amount(0.055)
-#      no3 = Analyte.find_by_name('NO3')
-#      nh4 = Analyte.find_by_name('NH4')
-#      assert_equal nh4, measurement.analyte
-#      sample = measurement.sample
-#      refute_nil sample.measurements.find_by_amount_and_analyte_id(2.115, no3)
       assert_equal 32, r.samples.size
       assert_equal 6, r.samples[0].measurements.size
-      assert_equal  0.055, r.samples[0].measurements[1].amount
-      assert_equal 2.115, r.samples[0].measurements[0].amount
+      assert_equal  0.055, r.samples[0].measurements[0].amount
+      assert_equal 2.115, r.samples[0].measurements[1].amount
     end
     assert_equal run_count + 1, Run.count
   end
