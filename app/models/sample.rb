@@ -53,16 +53,10 @@ class Sample < ActiveRecord::Base
   
   def previous_measurements
     approved_samples = Sample.approved
-    relevant_measurements = []
-    approved_samples.each do |a|
-      next unless a.plot == self.plot
-      next unless a.sample_date
-      a.measurements.each do |m|
-        next if m.deleted?
-        relevant_measurements << m
-      end
-    end
-    return relevant_measurements
+    approved_samples.keep_if {|sample| sample.sample_date}
+    approved_samples.keep_if {|sample| sample.plot == self.plot}
+    relevant_measurements = approved_samples.collect {|sample| sample.measurements}.flatten
+    relevant_measurements.keep_if {|measurement| !measurement.deleted}
   end
  
   def average(analyte)
