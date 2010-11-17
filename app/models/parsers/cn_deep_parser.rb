@@ -7,7 +7,6 @@ class CNDeepParser < CNSampleParser
     re = Regexp.new(CN_DEEP_CORE)
 
     if line =~ re
-      @s_date      = @sample_date
       @plot_name   = $1
       @percent_n   = $4
       @percent_c   = $5

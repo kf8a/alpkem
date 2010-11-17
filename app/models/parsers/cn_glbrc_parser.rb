@@ -7,10 +7,10 @@ class CNGLBRCParser < CNSampleParser
     re = Regexp.new(GLBRC_CN)
 
     if line =~ re
-      @s_date    = Date.parse($1)
-      @plot_name = $2
-      @percent_n = $4
-      @percent_c = $5
+      @sample_date  = Date.parse($1)
+      @plot_name    = $2
+      @percent_n    = $4
+      @percent_c    = $5
 
       process_data
     end

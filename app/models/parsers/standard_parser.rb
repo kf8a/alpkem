@@ -1,14 +1,12 @@
 #Generic parser to convert files to measurements.
 class StandardParser < FileParser
 
-  STANDARD_SAMPLE     = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+).+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
+  STANDARD_SAMPLE = '\t\d{3}\t(L?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+).+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
 
   def process_line(line)
     re = Regexp.new(STANDARD_SAMPLE)
 
     if line =~ re
-      s_date = @sample_date
-
       nh4_amount = $5
       no3_amount = $6
 
@@ -16,16 +14,20 @@ class StandardParser < FileParser
       second = $2
 
       unless first.blank? || second.blank?
-        if @sample_type_id == 2
-          plot_name = "T#{first}R#{second}"
-        elsif first.start_with?("L0")
-          plot_name = "#{first}S#{second}"
-        else
-          plot_name = "G#{first}R#{second}"
-        end
+        plot_name = get_plot_name(first, second)
         find_plot(plot_name)
-        process_nhno_sample(s_date, nh4_amount, no3_amount)
+        process_nhno_sample(nh4_amount, no3_amount)
       end
+    end
+  end
+
+  def get_plot_name(first, second)
+    if @sample_type_id == 2
+      "T#{first}R#{second}"
+    elsif first.start_with?("L0")
+      "#{first}S#{second}"
+    else
+      "G#{first}R#{second}"
     end
   end
 

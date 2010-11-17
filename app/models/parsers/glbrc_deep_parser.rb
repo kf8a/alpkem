@@ -7,8 +7,6 @@ class GLBRCDeepParser < FileParser
     re = Regexp.new(GLBRC_DEEP_CORE)
 
     if line =~ re
-      s_date = @sample_date
-
       nh4_amount = $5
       no3_amount = $6
 
@@ -20,7 +18,7 @@ class GLBRCDeepParser < FileParser
       unless first.blank? || second.blank? || third.blank? || fourth.blank?
         plot_name = "G#{first}R#{second}S#{third}#{fourth}"
         find_plot(plot_name)
-        process_nhno_sample(s_date, nh4_amount, no3_amount)
+        process_nhno_sample(nh4_amount, no3_amount)
       end
     end
   end

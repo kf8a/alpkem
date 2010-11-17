@@ -7,7 +7,7 @@ class LysimeterParser < FileParser
     re = Regexp.new(LYSIMETER)
 
     if line =~ re
-      @s_date = $5
+      @sample_date = $5
       @nh4_amount  = $6
       @no3_amount  = $8
 
@@ -23,7 +23,7 @@ class LysimeterParser < FileParser
     unless @first.blank? || @second.blank? || @third.blank?
       plot_name = "T#{@first}R#{@second}F#{@third}"
       find_plot(plot_name)
-      process_nhno_sample(@s_date, @nh4_amount, @no3_amount)
+      process_nhno_sample(@nh4_amount, @no3_amount)
     end
   end
 

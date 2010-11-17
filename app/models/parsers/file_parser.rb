@@ -38,6 +38,22 @@ class FileParser
     @measurements
   end
 
+  def analyte_no3
+    @analyte_no3  ||= Analyte.find_by_name('NO3')
+  end
+
+  def analyte_nh4
+    @analyte_nh4  ||= Analyte.find_by_name('NH4')
+  end
+
+  def analyte_n
+    @analyte_n ||= Analyte.find_by_name('N')
+  end
+
+  def analyte_c
+    @analyte_c ||= Analyte.find_by_name('C')
+  end
+
   def require_sample_type_id
     @load_errors += "No Sample Type selected." unless @sample_type_id
   end
@@ -80,69 +96,55 @@ class FileParser
   end
 
   def find_plot(plot_to_find)
-    if @plot.try(:name) == plot_to_find
-      @plot
-    else
+    unless @plot.try(:name) == plot_to_find
       @plot = Plot.find_by_name(plot_to_find)
       @plot_errors += "There is no plot named #{plot_to_find}" if @plot.blank?
     end
   end
 
-  def process_cn_sample(s_date, percent_n, percent_c)
+  def process_cn_sample(percent_n, percent_c)
     return if percent_n.blank? || percent_c.blank? || @plot.blank?
 
-    unless s_date.nil? || s_date.class == Date
-      s_date = Date.strptime(s_date, "%m/%d/%Y")
+    unless @sample_date.nil? || @sample_date.class == Date
+      @sample_date = Date.strptime(@sample_date, "%m/%d/%Y")
     end
 
-    find_or_create_sample(s_date)
-
-    @analyte_N ||= Analyte.find_by_name('N')
-    @analyte_C ||= Analyte.find_by_name('C')
-
-    create_measurement(percent_n, @analyte_N)
-    create_measurement(percent_c, @analyte_C)
+    find_or_create_sample
+    create_measurement(percent_n, analyte_n)
+    create_measurement(percent_c, analyte_c)
   end
 
-  def find_or_create_sample(date)
-    find_sample(date)
-
-    if @sample.nil? then
-      create_sample(date)
-    end
+  def find_or_create_sample
+    find_sample
+    create_sample if @sample.nil?
   end
 
-  def find_sample(date)
+  def find_sample
     right_plot = @sample.try(:plot) == @plot
-    right_date = @sample.try(:sample_date) == date
+    right_date = @sample.try(:sample_date) == @sample_date
     unless right_plot && right_date
-      @sample = Sample.find_by_plot_id_and_sample_date(@plot.id, date)
+      @sample = Sample.find_by_plot_id_and_sample_date(@plot.id, @sample_date)
       if @sample
         @sample.approved = false    #unapprove sample when adding data
         @sample.save
       end
-      @sample
     end
   end
 
-  def create_sample(date)
+  def create_sample
     @sample                = Sample.new
-    @sample.sample_date    = date
+    @sample.sample_date    = @sample_date
     @sample.plot           = @plot
     @sample.sample_type_id = @sample_type_id
     @sample.save
   end
 
-  def process_nhno_sample(s_date, nh4_amount, no3_amount)
+  def process_nhno_sample(nh4_amount, no3_amount)
     return if @plot.blank?
 
-    find_or_create_sample(s_date)
-
-    @analyte_no3  = (@analyte_no3 || Analyte.find_by_name('NO3'))
-    @analyte_nh4  = (@analyte_nh4 || Analyte.find_by_name('NH4'))
-
-    create_measurement(no3_amount, @analyte_no3) if no3_amount
-    create_measurement(nh4_amount, @analyte_nh4) if nh4_amount
+    find_or_create_sample
+    create_measurement(nh4_amount, analyte_nh4) if nh4_amount
+    create_measurement(no3_amount, analyte_no3) if no3_amount
   end
 
   def create_measurement(amount, analyte)

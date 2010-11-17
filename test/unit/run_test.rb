@@ -361,9 +361,8 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r.load_file(s)
       assert r.save
       assert_equal 126, r.samples.size
-      assert_equal 2, r.samples[0].measurements.size
-      assert_equal  0.055, r.samples[0].measurements[1].amount
-      assert_equal 2.115, r.samples[0].measurements[0].amount
+      refute_nil r.measurements.find_by_amount(0.055)
+      refute_nil r.measurements.find_by_amount(2.115)
     end
     assert_equal run_count + 1, Run.count
   end
