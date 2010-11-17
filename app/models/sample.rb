@@ -15,10 +15,8 @@ class Sample < ActiveRecord::Base
   def Sample.samples_to_csv(samples)
     unless samples.blank?
       CSV.generate do |csv|
-        csv << ['sample_id','sample_date','treatment','replicate','no3_ppm','nh4_ppm']
-        samples.each do |sample|
-          csv << sample.to_array
-        end
+        csv << Sample.csv_titles
+        samples.each {|sample| csv << sample.to_array}
       end
     end
   end
@@ -52,11 +50,9 @@ class Sample < ActiveRecord::Base
   end
   
   def previous_measurements
-    approved_samples = Sample.approved
-    approved_samples.keep_if {|sample| sample.sample_date}
-    approved_samples.keep_if {|sample| sample.plot == self.plot}
-    relevant_measurements = approved_samples.collect {|sample| sample.measurements}.flatten
-    relevant_measurements.keep_if {|measurement| !measurement.deleted}
+    right_samples = Sample.approved.where(:plot => self.plot)
+    right_samples.keep_if {|sample| sample.sample_date}
+    right_samples.collect {|sample| sample.measurements.where(:deleted => false)}.flatten
   end
  
   def average(analyte)
