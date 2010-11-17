@@ -1,7 +1,7 @@
 #Helper class to parse files for Run data
 class FileParser
   
-  attr_reader :load_errors, :plot_errors, :measurements, :sample_type_id, :plot
+  attr_reader :load_errors, :plot_errors, :measurements, :sample_type_id, :plot, :sample
   
   def self.for(sample_type_id,date)
     case sample_type_id
@@ -62,7 +62,7 @@ class FileParser
       @load_errors += "No data was able to be loaded from this file."
     end
   end
-
+  
   def cn_plot_name_ok?(plot_name)
     !plot_name.blank? &&
         !plot_name.include?("Standard") &&
@@ -132,7 +132,7 @@ class FileParser
   def process_nhno_sample(s_date, nh4_amount, no3_amount)
     return if @plot.blank?
 
-    find_or_create_sample(s_date)
+    sample = find_or_create_sample(s_date)
 
     @analyte_no3  = (@analyte_no3 || Analyte.find_by_name('NO3'))
     @analyte_nh4  = (@analyte_nh4 || Analyte.find_by_name('NH4'))

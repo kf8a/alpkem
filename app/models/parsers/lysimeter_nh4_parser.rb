@@ -6,7 +6,7 @@ class LysimeterNH4Parser < LysimeterParser
     re = Regexp.new(LYSIMETER_SINGLE)
 
     if line =~ re
-      @s_date = $5
+      @s_date = Date.parse($5)
       @nh4_amount = $6
       @no3_amount = nil
 

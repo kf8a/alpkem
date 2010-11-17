@@ -282,7 +282,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r = Run.new(@attr.merge(:sample_type_id => 5))
       r.load_file(s)
       assert r.save
-      assert_equal 30, r.samples.size
+      assert_equal 38, r.samples.size
     end
     assert_equal run_count + 1, Run.count
   end
@@ -364,7 +364,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r.load_file(s)
       assert r.save
       #TODO add CF and DF plots to the test database
-      assert_equal 31, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
+      assert_equal 29, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
     end
     assert_equal run_count + 1, Run.count
   end
@@ -377,8 +377,8 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r = Run.new(@attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
-      assert_equal 126, r.samples.size
-      assert_equal 2, r.samples[0].measurements.size
+      assert_equal 32, r.samples.size
+      assert_equal 6, r.samples[0].measurements.size
       assert_equal  0.055, r.samples[0].measurements[1].amount
       assert_equal 2.115, r.samples[0].measurements[0].amount
     end
@@ -393,8 +393,8 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r = Run.new(@attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
-      assert_equal 132, r.samples.size
-      assert_equal 2, r.samples[0].measurements.size
+      assert_equal 38, r.samples.size
+      assert_equal 6, r.samples[0].measurements.size
     end
     assert_equal run_count + 1, Run.count
   end
@@ -408,7 +408,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r = Run.new(@attr.merge(:sample_type_id => 10))
       r.load_file(s)
       assert r.save
-      assert_equal 114, r.samples.size
+      assert_equal 38, r.samples.size
     end
     assert_equal run_count + 1, Run.count
   end

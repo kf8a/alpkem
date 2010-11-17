@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.1'
+gem 'rails', '3.0.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -35,6 +35,8 @@ end
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'  
   gem 'autotest'  #use with 'bundle exec autotest'
+  gem 'autotest-growl'
+  gem 'autotest-fsevent'
   gem 'autotest-rails-pure' #to use Test:Unit
 end
 
