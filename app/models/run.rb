@@ -2,6 +2,7 @@
 class Run < ActiveRecord::Base
   has_many :measurements, :dependent => :destroy
   has_many :cn_measurements, :dependent => :destroy
+  has_many :samples, :through => :measurements, :uniq => true
 
   validates :sample_type_id, :presence => true
   validates :measurements,   :presence => true
@@ -58,10 +59,6 @@ class Run < ActiveRecord::Base
 
   def measurement_by_id(id)
     measurements.find_by_id(id)
-  end
-
-  def samples
-    Sample.where('id in (select sample_id from measurements where run_id = ?)', self.id)
   end
 
   def sample_by_id(id)
