@@ -361,8 +361,12 @@ class MiniRunTest < MiniTest::Unit::TestCase
       r.load_file(s)
       assert r.save
       assert_equal 126, r.samples.size
-      refute_nil r.measurements.find_by_amount(0.055)
-      refute_nil r.measurements.find_by_amount(2.115)
+      measurement = r.measurements.find_by_amount(0.055)
+      no3 = Analyte.find_by_name('NO3')
+      nh4 = Analyte.find_by_name('NH4')
+      assert_equal nh4, measurement.analyte
+      sample = measurement.sample
+      refute_nil sample.measurements.find_by_amount_and_analyte_id(2.115, no3)
     end
     assert_equal run_count + 1, Run.count
   end

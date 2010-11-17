@@ -1,6 +1,6 @@
 #Helper class to parse files for Run data
 class FileParser
-  attr_accessor :load_errors, :plot_errors, :measurements
+  attr_accessor :load_errors, :plot_errors, :measurements, :sample_type_id, :sample_date
 
   def self.for(sample_type_id)
     case sample_type_id
@@ -19,9 +19,7 @@ class FileParser
     end
   end
 
-  def initialize(date, id)
-    @sample_date = date
-    @sample_type_id = id
+  def initialize
     self.plot_errors = ""
     self.load_errors = ""
     self.measurements = []
@@ -32,11 +30,11 @@ class FileParser
   end
 
   def require_sample_type_id
-    self.load_errors += "No Sample Type selected." unless @sample_type_id
+    self.load_errors += "No Sample Type selected." unless self.sample_type_id
   end
 
   def require_sample_date
-    self.load_errors += "No Sample Date selected." unless @sample_date
+    self.load_errors += "No Sample Date selected." unless self.sample_date
   end
 
   def require_data(data)
@@ -75,12 +73,16 @@ class FileParser
   def find_plot(plot_to_find)
     unless @plot.try(:name) == plot_to_find
       @plot = Plot.find_by_name(plot_to_find)
-      self.plot_errors += "There is no plot named #{plot_to_find}" if @plot.blank?
+      self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
     end
   end
 
+  def plot_exists?
+    !@plot.blank?
+  end
+
   def process_cn_sample
-    unless @plot.blank?
+    if plot_exists?
       format_sample_date
       find_or_create_sample
       create_measurement(@percent_n, @nitrogen_analyte) if @percent_n
@@ -89,8 +91,8 @@ class FileParser
   end
 
   def format_sample_date
-    unless @sample_date.nil? || @sample_date.class == Date
-      @sample_date = Date.strptime(@sample_date, "%m/%d/%Y")
+    unless self.sample_date.nil? || self.sample_date.class == Date
+      self.sample_date = Date.strptime(self.sample_date, "%m/%d/%Y")
     end
   end
 
@@ -120,11 +122,11 @@ class FileParser
   end
 
   def process_nhno_sample(nh4_amount, no3_amount)
-    return if @plot.blank?
-
-    find_or_create_sample
-    create_measurement(nh4_amount, @nh4_analyte) if nh4_amount
-    create_measurement(no3_amount, @no3_analyte) if no3_amount
+    if plot_exists?
+      find_or_create_sample
+      create_measurement(nh4_amount, @nh4_analyte) if nh4_amount
+      create_measurement(no3_amount, @no3_analyte) if no3_amount
+    end
   end
 
   def create_measurement(amount, analyte)
