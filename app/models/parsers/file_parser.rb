@@ -104,9 +104,7 @@ class FileParser
   end
 
   def find_sample
-    right_plot = self.sample.try(:plot) == self.plot
-    right_date = self.sample.try(:sample_date) == self.sample_date
-    unless right_plot && right_date
+    unless sample_already_found?
       self.sample = Sample.find_by_plot_id_and_sample_date(self.plot.id, self.sample_date)
       if self.sample
         self.sample.approved = false    #unapprove sample when adding data
@@ -115,12 +113,19 @@ class FileParser
     end
   end
 
+  def sample_already_found?
+    right_plot = self.sample.try(:plot) == self.plot
+    right_date = self.sample.try(:sample_date) == self.sample_date
+    right_plot && right_date
+  end
+
   def create_sample
-    self.sample                = Sample.new
-    self.sample.sample_date    = self.sample_date
-    self.sample.plot           = self.plot
-    self.sample.sample_type_id = self.sample_type_id
-    self.sample.save
+    new_sample                = Sample.new
+    new_sample.sample_date    = self.sample_date
+    new_sample.plot           = self.plot
+    new_sample.sample_type_id = self.sample_type_id
+    new_sample.save
+    self.sample = new_sample
   end
 
   def process_nhno_sample(nh4_amount, no3_amount)

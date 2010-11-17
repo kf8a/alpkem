@@ -23,11 +23,17 @@ class LysimeterParserTest < ActiveSupport::TestCase
     end
     
     should 'have the right nh4 amounts' do
+      nh4 = Analyte.find_by_name("NH4")
       sample = @samples[0]
-#      sample.measurements
+      sample.measurements.find_all_by_analyte(nh4).include?(0.046)
+      sample.measurements.find_all_by_analyte(nh4).include?(0.055)
     end
     
     should 'have the right no3 amounts' do
+      no3 = Analyte.find_by_name("NO3")
+      sample = @samples[0]
+      sample.measurements.find_all_by_analyte(no3).include?(-0.030)
+      sample.measurements.find_all_by_analyte(no3).include?(-0.031)
     end
   end
 
