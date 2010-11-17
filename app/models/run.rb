@@ -62,7 +62,7 @@ class Run < ActiveRecord::Base
   end
 
   def sample_by_id(id)
-    samples.where(:id => id).first
+    samples.find_by_id(id)
   end
 
   def analytes
