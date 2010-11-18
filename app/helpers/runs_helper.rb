@@ -2,7 +2,7 @@ require 'statistics'
 
 module RunsHelper
 
-  def google_chart_script_helper(measurements, analytes)
+  def self.google_chart_script_helper(measurements, analytes)
     analyte1 = analytes[0]
     analyte2 = analytes[1]
     
@@ -12,13 +12,13 @@ module RunsHelper
     chart_script += "]);"
   end
 
-  def setup_columns(analyte1, analyte2)
+  def self.setup_columns(analyte1, analyte2)
     "data.addColumn('date', 'Date');" +
     "data.addColumn('number', '#{analyte1.name}');" +
     "data.addColumn('number', '#{analyte2.name}');"
   end
 
-  def add_measurements(measurements, analyte1)
+  def self.add_measurements(measurements, analyte1)
     chart_measurements = "data.addRows(["
     measurements.each do |measurement|
       chart_measurements += add_measurement(measurement, analyte1)
@@ -26,7 +26,7 @@ module RunsHelper
     chart_measurements
   end
 
-  def add_measurement(m, analyte1)
+  def self.add_measurement(m, analyte1)
     mdate = measurement_date(m)
     if mdate && m.amount
       if m.analyte == analyte1
@@ -37,15 +37,15 @@ module RunsHelper
     end
   end
 
-  def measurement_date(measurement)
+  def self.measurement_date(measurement)
     measurement.sample.try(:sample_date)
   end
 
-  def average(measurements)
+  def self.average(measurements)
     Statistics.mean(measurements.map {|x| x.amount})
   end
 
-  def cv_help(measurements)
+  def self.cv_help(measurements)
     Statistics.cv(measurements.map {|x| x.amount})
   end
 end

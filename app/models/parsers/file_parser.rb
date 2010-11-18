@@ -87,8 +87,8 @@ class FileParser
     if plot_exists?
       format_sample_date
       find_or_create_sample
-      create_measurement(@percent_n, @nitrogen_analyte) if @percent_n
-      create_measurement(@percent_c, @carbon_analyte) if @percent_c
+      create_measurement(@percent_n, @nitrogen_analyte)
+      create_measurement(@percent_c, @carbon_analyte)
     end
   end
 
@@ -132,14 +132,16 @@ class FileParser
   def process_nhno_sample(nh4_amount, no3_amount)
     if plot_exists?
       find_or_create_sample
-      create_measurement(nh4_amount, @nh4_analyte) if nh4_amount
-      create_measurement(no3_amount, @no3_analyte) if no3_amount
+      create_measurement(nh4_amount, @nh4_analyte)
+      create_measurement(no3_amount, @no3_analyte)
     end
   end
 
   def create_measurement(amount, analyte)
-    measurement = Measurement.new(:analyte => analyte, :amount => amount)
-    self.sample.measurements  << measurement
-    self.measurements         << measurement
+    unless amount.blank?
+      measurement = Measurement.new(:analyte => analyte, :amount => amount)
+      self.sample.measurements  << measurement
+      self.measurements         << measurement
+    end
   end
 end

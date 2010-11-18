@@ -6,7 +6,7 @@
 
     // Create our data table.
     var data = new google.visualization.DataTable();
-    <%= google_chart_script_helper(sample.previous_measurements, analytes) %>
+    <%= RunsHelper.google_chart_script_helper(sample.previous_measurements, analytes) %>
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('my_chart_div_<%=sample.id%>'));

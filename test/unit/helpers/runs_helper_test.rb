@@ -87,7 +87,7 @@ class RunsHelperTest < ActionView::TestCase
         "]);"
 
     assert_equal proper_chart_script,
-                  google_chart_script_helper(@measurements, @analytes)
+        RunsHelper.google_chart_script_helper(@measurements, @analytes)
   end
   
   test "should not crash if there is no analyte2 amounts" do
@@ -95,7 +95,7 @@ class RunsHelperTest < ActionView::TestCase
 
     @analytes = [@analyte1, @analyte2]
 
-    assert google_chart_script_helper(@measurements, @analytes)
+    assert RunsHelper.google_chart_script_helper(@measurements, @analytes)
   end
 
   test "should make a google chart script with all the measurements even when they are unbalanced" do
@@ -117,6 +117,7 @@ class RunsHelperTest < ActionView::TestCase
         "[new Date(#{@measurement6_date.year}, #{@measurement6_date.month}, #{@measurement6_date.day}), undefined, #{@measurement6_amount}]" +
         "]);"
 
-    assert_equal proper_chart_script, google_chart_script_helper(@measurements, @analytes)
+    assert_equal proper_chart_script, 
+        RunsHelper.google_chart_script_helper(@measurements, @analytes)
   end
 end
