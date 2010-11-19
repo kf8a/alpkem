@@ -21,7 +21,7 @@ class RunsController < ApplicationController
   # GET /runs/1
   # GET /runs/1.xml
   def show
-    @run = Run.includes(:measurements).find(params[:id])
+    @run = Run.includes(:measurements).includes(:samples).find(params[:id])
     @back = if @run.cn_run? then cn_runs_path else runs_path end
     respond_with @run
   end
@@ -39,7 +39,8 @@ class RunsController < ApplicationController
   def edit
     @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
-    @measurements = @run.measurements + @run.cn_measurements
+    @measurements = @run.measurements.includes(:sample).includes(:analyte) +
+        @run.cn_measurements.includes(:cn_sample).includes(:analyte)
   end
 
   # POST /runs
@@ -82,7 +83,8 @@ class RunsController < ApplicationController
   
   def approve
     @run = Run.find(params[:run_id])
-    @measurements = @run.measurements + @run.cn_measurements
+    @measurements = @run.measurements.includes(:sample).includes(:analyte) +
+        @run.cn_measurements.includes(:cn_sample).includes(:analyte)
     @sample = @run.sample_by_id(params[:id])
     @sample.toggle(:approved)
     @sample.save
