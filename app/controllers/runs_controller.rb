@@ -21,7 +21,7 @@ class RunsController < ApplicationController
   # GET /runs/1
   # GET /runs/1.xml
   def show
-    @run = Run.includes(:measurements).includes(:samples).find(params[:id])
+    @run = Run.includes(:measurements).find(params[:id])
     @back = if @run.cn_run? then cn_runs_path else runs_path end
     respond_with @run
   end
