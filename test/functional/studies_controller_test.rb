@@ -2,6 +2,11 @@ require 'test_helper'
 
 class StudiesControllerTest < ActionController::TestCase
 
+  def setup
+    @user = Factory.create :user
+    sign_in @user
+  end
+
   context "GET :index" do
     setup do
       get :index
