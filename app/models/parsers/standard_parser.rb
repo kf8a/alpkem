@@ -19,6 +19,8 @@ class StandardParser < FileParser
           plot_name = "T#{first}R#{second}"
         elsif first.start_with?("L0")
           plot_name = "#{first}S#{second}"
+        elsif first.starts_With("M0")
+          plot_name = "#{first}S#{second}"
         else
           plot_name = "G#{first}R#{second}"
         end
