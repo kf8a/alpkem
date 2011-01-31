@@ -211,6 +211,7 @@ GEM
       rubyzip
     sexp_processor (3.0.5)
     shoulda (2.11.3)
+    single_test (0.3.7)
     spork (0.8.4)
     sqlite3-ruby (1.3.2)
     sys-uname (0.8.4)
@@ -256,6 +257,7 @@ DEPENDENCIES
   rails-erd
   ruby-prof
   shoulda
+  single_test
   spork
   sqlite3-ruby
   will_paginate
