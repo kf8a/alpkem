@@ -4,6 +4,14 @@ require 'rails/test_help'
 require 'shoulda'
 require 'factory_girl'
 
+def find_or_factory(model, attributes = Hash.new)
+  model_as_constant = model.to_s.titleize.gsub(' ', '').constantize
+  object = model_as_constant.where(attributes).first
+  object ||= Factory.create(model.to_sym, attributes)
+
+  object
+end
+
 class ActiveSupport::TestCase
   #include Devise::TestHelpers
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.

@@ -1,21 +1,29 @@
 require 'test_helper'
+require 'minitest/autorun'
 
-class PlotTest < ActiveSupport::TestCase
+describe Plot do
+  before do
+    @study = find_or_factory(:study, :name => "Default Study")
+    @plot = find_or_factory(:plot, :name => "Default Plot", :study_id => @study.id)
+  end
 
-  should belong_to :study
-  should belong_to :treatment
-  should belong_to :replicate
+  it "should validate uniqueness of name with study" do
+    another_study = Factory.create(:study, :name => "Another Study")
+    another_study_plot = another_study.plots.new(:name => "Default Plot")
+    assert another_study_plot.valid?
 
-  should validate_uniqueness_of(:name).scoped_to(:study_id)
+    repeat_name_plot = @study.plots.new(:name => "Default Plot")
+    refute repeat_name_plot.valid?
+  end
 
-  context "a new treatment and replicate with a plot" do
-    setup do
-      @treatment = Factory.create(:treatment, :name => "Treatment")
-      @replicate = Factory.create(:replicate, :name => "Replicate")
-      @plot = Factory.create(:plot, :treatment => @treatment, :replicate => @replicate)
+  describe "a new treatment and replicate with a plot" do
+    before do
+      @treatment = find_or_factory(:treatment, :name => "Treatment")
+      @replicate = find_or_factory(:replicate, :name => "Replicate")
+      @plot = find_or_factory(:plot, :treatment_id => @treatment.id, :replicate_id => @replicate.id)
     end
 
-    should "be found by Plot.find_by_treatment_and_replicate" do
+    it "should be found by Plot.find_by_treatment_and_replicate" do
       assert_equal @plot, Plot.find_by_treatment_and_replicate("Treatment", "Replicate")
     end
   end

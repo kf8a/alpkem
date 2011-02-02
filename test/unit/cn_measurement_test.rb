@@ -5,8 +5,8 @@ describe CnMeasurement do
     
   describe "a sample with a cn measurement" do
     before do
-      @sample = Factory.create(:cn_sample)
-      @measurement = Factory.create(:cn_measurement, :cn_sample => @sample)
+      @sample = find_or_factory(:cn_sample)
+      @measurement = find_or_factory(:cn_measurement, :cn_sample_id => @sample.id)
     end
 
     it "should return its cn_sample when asked for sample" do
