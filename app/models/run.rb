@@ -68,10 +68,10 @@ class Run < ActiveRecord::Base
   end
 
   def load_errors
-    parser.try(:load_errors) || ""
+    parser.load_errors
   end
 
   def plot_errors
-    parser.try(:plot_errors) || ""
+    parser.plot_errors
   end
 end

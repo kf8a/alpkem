@@ -164,15 +164,15 @@ describe Run do
     assert sample.valid?
     no3 = Analyte.find_by_name('NO3')
     nh4 = Analyte.find_by_name('NH4')
-    refute sample.measurements.where(:amount => 0.047, :analyte_id => no3.id).blank?
-    refute sample.measurements.where(:amount => 0.379, :analyte_id => nh4.id).blank?
+    refute_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
+    refute_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
 
     plot = Plot.find_by_treatment_and_replicate('T7','R2')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     refute_nil sample
     assert sample.valid?
-    refute sample.measurements.where(:amount => 0.070, :analyte_id => no3.id).blank?
-    refute sample.measurements.where(:amount => 0.266, :analyte_id => nh4.id).blank?
+    refute_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
+    refute_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
 
     run = Run.find(r.id)
     measurements = run.measurements.where(:analyte_id => no3.id)
