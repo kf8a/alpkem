@@ -54,23 +54,24 @@ class Run < ActiveRecord::Base
   end
 
   def updated?
-    samples.collect {|sample| sample.updated?}.include?(true)
+    samples.index {|sample| sample.updated?}
   end
 
   def load_file(file)
-    @parser = FileParser.for(sample_type_id, sample_date)
-    if @parser
-      @parser.parse_file(file)
-      self.measurements = @parser.measurements
-      self.load_errors.blank?
-    end
+    parser.parse_file(file)
+    self.measurements = parser.measurements
+    self.load_errors.blank?
+  end
+
+  def parser
+    @parser ||= FileParser.for(sample_type_id, sample_date)
   end
 
   def load_errors
-    @parser.try(:load_errors) || ""
+    parser.try(:load_errors) || ""
   end
 
   def plot_errors
-    @parser.try(:plot_errors) || ""
+    parser.try(:plot_errors) || ""
   end
 end
