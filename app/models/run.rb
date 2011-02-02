@@ -53,14 +53,6 @@ class Run < ActiveRecord::Base
     self.sample_type_name.include?("CN")
   end
 
-  def measurement_by_id(id)
-    measurements.find_by_id(id)
-  end
-
-  def sample_by_id(id)
-    samples.find_by_id(id)
-  end
-
   def updated?
     samples.collect {|sample| sample.updated?}.include?(true)
   end

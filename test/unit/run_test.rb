@@ -94,14 +94,6 @@ describe Run do
     assert cn_run.cn_run?
   end
 
-  it "should find measurement by id" do
-    run = Run.find(@standard_run.id)
-    measurement = Factory.create(:measurement, :run => run)
-    measurement2 = Factory.create(:measurement, :run => run)
-    assert_equal run.measurement_by_id(measurement.id), measurement
-    assert_equal run.measurement_by_id(measurement2.id), measurement2
-  end
-
   it "should find the associated samples" do
     run = Run.find(@standard_run.id)
     sample = Factory.create(:sample)
@@ -115,14 +107,6 @@ describe Run do
     refute run.samples.include?(other_sample)
     assert other_run.samples.include?(other_sample)
     refute other_run.samples.include?(sample)
-  end
-
-  it "should find a sample by id" do
-    run = Run.find(@standard_run.id)
-    sample = Factory.create(:sample)
-    Factory.create(:measurement, :run => run, :sample => sample)
-    run.reload
-    assert_equal run.sample_by_id(sample.id), sample
   end
 
   it "should know if it has been updated" do
@@ -349,7 +333,6 @@ describe Run do
       assert_equal 6, r.samples[0].measurements.size
     end
   end
-  
   
   it "loads lysimeter files with a single sample" do
     file_name = File.dirname(__FILE__) + '/../data/Lysimeter_single_format.TXT'

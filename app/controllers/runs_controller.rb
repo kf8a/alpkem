@@ -85,7 +85,7 @@ class RunsController < ApplicationController
     @run = Run.find(params[:run_id])
     @measurements = @run.measurements.includes(:sample).includes(:analyte) +
         @run.cn_measurements.includes(:cn_sample).includes(:analyte)
-    @sample = @run.sample_by_id(params[:id])
+    @sample = Sample.find(params[:id])
     @sample.toggle(:approved)
     @sample.save
     
