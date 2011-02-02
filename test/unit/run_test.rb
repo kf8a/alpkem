@@ -43,22 +43,14 @@ describe Run do
     refute run.valid?
   end
 
-  it "runs should include runs but not cn runs" do
-    middle = Factory.create(:run, :sample_date => Date.today)
-    earliest = Factory.create(:run, :sample_date => Date.today - 20)
-    latest = Factory.create(:run, :sample_date => Date.tomorrow)
+  it "runs should include runs but not cn runs and vice versa" do
+    run = Factory.create(:run, :sample_date => Date.today)
     cn_run = Factory.create(:cn_run)
     refute Run.runs.include?(cn_run)
-    assert_equal [], [earliest, middle, latest] - Run.runs
-  end
+    assert Run.runs.include?(run)
 
-  it "cn_runs should include cn runs but not runs" do
-    run = Factory.create(:run, :sample_date => Date.today)
-    middle = Factory.create(:cn_run, :sample_date => Date.today)
-    latest = Factory.create(:cn_run, :sample_date => Date.today + 20)
-    earliest = Factory.create(:cn_run, :sample_date => Date.today - 10)
     refute Run.cn_runs.include?(run)
-    assert_equal [], [earliest, middle, latest] - Run.cn_runs
+    assert Run.cn_runs.include?(cn_run)
   end
 
   it "should have the right sample_type_options" do
@@ -76,7 +68,7 @@ describe Run do
         ["Lysimeter NH4", "11"]]
   end
 
-  it "should convert sample_type_id to name" do
+  it "should get the right name for each sample_type_id" do
     assert_equal "Lysimeter", Run.sample_type_id_to_name(1)
     assert_equal "Soil Sample", Run.sample_type_id_to_name(2)
     assert_equal "GLBRC Soil Sample", Run.sample_type_id_to_name(3)
@@ -90,7 +82,7 @@ describe Run do
     assert_equal "Lysimeter NH4", Run.sample_type_id_to_name(11)
   end
 
-  it "should provide the name of its sample type" do
+  it "should give sample_type_name for a run" do
     run = Factory.create(:run, :sample_type_id => 4)
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
   end
