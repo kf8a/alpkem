@@ -1,14 +1,18 @@
 require 'test_helper'
 require 'minitest/autorun'
 
-class SampleTest < ActiveSupport::TestCase
-  should belong_to :plot
-  should have_many :measurements
-  should have_many(:runs).through(:measurements)
-  should validate_presence_of :plot
-end
-
 describe Sample do
+
+  describe "validates presence of plot" do
+    before do
+      @sample = Factory.create(:sample)
+    end
+
+    it "should require plot to be valid" do
+      @sample.plot = nil
+      refute @sample.valid?
+    end
+  end
 
   describe "plot_name method" do
     before do
@@ -67,8 +71,8 @@ describe Sample do
     describe "for an NO3/NH4 type sample" do
       before do
         @sample = Factory.create(:sample)
-        @no3 = Analyte.find_by_name("NO3")
-        @nh4 = Analyte.find_by_name("NH4")
+        @no3 = find_or_factory(:analyte, :name => "NO3")
+        @nh4 = find_or_factory(:analyte, :name => "NH4")
         Factory.create(:measurement, :sample => @sample, :analyte => @no3)
         Factory.create(:measurement, :sample => @sample, :analyte => @nh4)
       end
@@ -85,8 +89,8 @@ describe Sample do
     describe "for an N/C type sample" do
       before do
         @sample = Factory.create(:sample)
-        @nitrogen = Analyte.find_by_name("N")
-        @carbon = Analyte.find_by_name("C")
+        @nitrogen = find_or_factory(:analyte, :name => "N")
+        @carbon = find_or_factory(:analyte, :name => "C")
         Factory.create(:measurement, :sample => @sample, :analyte => @nitrogen)
         Factory.create(:measurement, :sample => @sample, :analyte => @carbon)
       end
@@ -104,8 +108,8 @@ describe Sample do
   describe "average method" do
     before do
       @sample = Factory.create(:sample)
-      @no3 = Analyte.find_by_name("NO3")
-      @nh4 = Analyte.find_by_name("NH4")
+      @no3 = find_or_factory(:analyte, :name => "NO3")
+      @nh4 = find_or_factory(:analyte, :name => "NH4")
       @measurement1 = Factory.create(:measurement, :sample => @sample, :amount => 1, :analyte => @no3)
       @measurement2 = Factory.create(:measurement, :sample => @sample, :amount => 2, :analyte => @no3)
       @measurement3 = Factory.create(:measurement, :sample => @sample, :amount => 3, :analyte => @no3)
