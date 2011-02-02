@@ -3,10 +3,10 @@ require 'test_helper'
 class RunsControllerTest < ActionController::TestCase
   
   def setup
-    @cn_run = Factory.create(:cn_run)
-    @run = Factory.create(:run)
-    Factory.create(:measurement, :run => @run)
-    @user = Factory.create :user
+    @cn_run ||= Factory.create(:cn_run)
+    @run ||= Factory.create(:run)
+    @measurement ||= Factory.create(:measurement, :run => @run)
+    @user ||= find_or_factory(:user)
     sign_in @user
 
     @attr = {
