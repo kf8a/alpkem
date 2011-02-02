@@ -1,14 +1,13 @@
 require 'test_helper'
+require 'minitest/autorun'
 
-class RunTest < ActiveSupport::TestCase
-  should have_many :measurements
-  should validate_presence_of :sample_type_id
-  should validate_presence_of :measurements
-end
-
-class MiniRunTest < MiniTest::Unit::TestCase
+describe Run do
 
   def good_data
+    @good_data ||= set_good_data
+  end
+
+  def set_good_data
     file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
     File.open(file_name, 'r') do |f|
       return StringIO.new(f.read)
@@ -16,24 +15,33 @@ class MiniRunTest < MiniTest::Unit::TestCase
   end
 
   def load_data_if_necessary
-    if Plot.find_by_name("DCL01S01010").blank?
+    @plot ||= Plot.find_by_name("DCL01S01010")
+    if @plot.nil?
       load "#{Rails.root}/db/seeds.rb"
     end
   end
 
-  def setup
-    @attr = {
+  before do
+    @attr ||= {
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
     load_data_if_necessary
   end
 
-  def teardown
-    Run.all.each {|r| r.destroy}
+  it "should validate sample_type_id and measurements" do
+    run = Factory.create(:run)
+    assert run.valid?
+    run.sample_type_id = nil
+    refute run.valid?
+
+    run = Factory.create(:run)
+    assert run.valid?
+    run.measurements = []
+    refute run.valid?
   end
 
-  def test_runs
+  it "runs should include runs but not cn runs" do
     Run.all.each {|r| r.destroy}
     middle = Factory.create(:run, :sample_date => Date.today)
     earliest = Factory.create(:run, :sample_date => Date.today - 20)
@@ -43,7 +51,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal Run.runs, [earliest, middle, latest]
   end
 
-  def test_cn_runs
+  it "cn_runs should include cn runs but not runs" do
     Run.all.each {|r| r.destroy}
     run = Factory.create(:run, :sample_date => Date.today)
     middle = Factory.create(:cn_run, :sample_date => Date.today)
@@ -53,7 +61,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal Run.cn_runs, [earliest, middle, latest]
   end
 
-  def test_sample_type_options
+  it "should have the right sample_type_options" do
     assert_equal Run.sample_type_options,
         [["Lysimeter", "1"],
         ["Soil Sample", "2"],
@@ -68,7 +76,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
         ["Lysimeter NH4", "11"]]
   end
 
-  def test_sample_type_id_to_name
+  it "should convert sample_type_id to name" do
     assert_equal "Lysimeter", Run.sample_type_id_to_name(1)
     assert_equal "Soil Sample", Run.sample_type_id_to_name(2)
     assert_equal "GLBRC Soil Sample", Run.sample_type_id_to_name(3)
@@ -82,19 +90,19 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal "Lysimeter NH4", Run.sample_type_id_to_name(11)
   end
 
-  def test_sample_type_name
+  it "should provide the name of its sample type" do
     run = Factory.create(:run, :sample_type_id => 4)
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
   end
 
-  def test_cn_run
+  it "should identify what is and is not a cn_run" do
     run = Factory.create(:run)
     cn_run = Factory.create(:cn_run)
     refute run.cn_run?
     assert cn_run.cn_run?
   end
 
-  def test_measurements_by_analyte
+  it "should find measurements by analyte" do
     run = Factory.create(:run)
     water = Factory.create(:analyte, :name => "H2O")
     sugar = Factory.create(:analyte, :name => "C6H12O6")
@@ -104,7 +112,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run.measurements_by_analyte(sugar), [sugar_measurement]
   end
 
-  def test_measurement_by_id
+  it "should find measurement by id" do
     run = Factory.create(:run)
     measurement = Factory.create(:measurement, :run => run)
     measurement2 = Factory.create(:measurement, :run => run)
@@ -112,7 +120,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run.measurement_by_id(measurement2.id), measurement2
   end
 
-  def test_samples
+  it "should find the associated samples" do
     run = Factory.create(:run)
     sample = Factory.create(:sample)
     Factory.create(:measurement, :run => run, :sample => sample)
@@ -127,7 +135,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     refute other_run.samples.include?(sample)
   end
 
-  def test_sample_by_id
+  it "should find a sample by id" do
     run = Factory.create(:run)
     sample = Factory.create(:sample)
     Factory.create(:measurement, :run => run, :sample => sample)
@@ -135,7 +143,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run.sample_by_id(sample.id), sample
   end
 
-  def test_updated
+  it "should know if it has been updated" do
     changing_run = Factory.create(:run)
     changing_sample = Factory.create(:sample)
     Factory.create(:measurement, :sample => changing_sample, :run => changing_run)
@@ -150,7 +158,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     refute static_run.updated?
   end
 
-  def test_saves_with_good_data
+  it "saves with good data" do
     run_count = Run.count
     r = Run.new(@attr)
     r.load_file(good_data)
@@ -158,12 +166,12 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_save_requires_loaded_data
+  it "requires loaded data to save" do
     r = Run.new(@attr)
     assert !r.save, "It should not save without data loaded."
   end
 
-  def test_save_requires_nonempty_data
+  it "requires non empty data to save" do
     r = Run.new(@attr)
     file_name = File.dirname(__FILE__) + '/../data/blank.txt'
     File.open(file_name, 'r') do |f|
@@ -174,13 +182,13 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal r.load_errors, "Data file is empty."
   end
 
-  def test_save_requires_date
+  it "requires a date to save" do
     r = Run.new(@attr.merge(:sample_date => nil))
     r.load_file(good_data)
     assert !r.save
   end
 
-  def test_file_load_data
+  it "properly loads the data" do
     r = Run.new(@attr)
     r.load_file(good_data)
     r.save
@@ -202,7 +210,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     refute_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
     refute_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
 
-    run = Run.find(:first)
+    run = Run.find(r.id)
     measurements = run.measurements_by_analyte(no3)
     refute_nil measurements.index {|m| m.amount == 0.098}
     measurements = run.measurements_by_analyte(nh4)
@@ -216,7 +224,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
   # TODO these next 2 test fail because I am now using the new format for sample type 2 rather than the old format
   # I will need to get some new files with negatives and reruns for these test
   # TODO separate out the sample type from the sample format.
-  def test_file_load_with_negatives
+  it "loads files with negatives" do
     # assert_difference "Run.count" do
     #    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
     #    File.open(file_name,'r') do |f|
@@ -230,7 +238,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     #  end
   end
 
-  def test_file_load_with_reruns
+  it "loads files with reruns" do
     # assert_difference "Run.count" do
     #    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
     #    File.open(file_name,'r') do |f|
@@ -244,7 +252,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     #  end
   end
 
-  def test_glbrc_file_load
+  it "loads glbrc files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/GLBRC_deep_core_1106R4R5.TXT'
     File.open(file_name,'r') do |f|
@@ -257,7 +265,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_glbrc_resin_strips_file_load
+  it "loads glbrc_resin_strips files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
     File.open(file_name, 'r') do |f|
@@ -270,7 +278,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_cn_file_load
+  it "loads cn files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
     File.open(file_name, 'r') do |f|
@@ -284,7 +292,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_cn_deep_core_file_load
+  it "loads cn_deep_core files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/GLBRC_CN_deepcore.csv'
     File.open(file_name, 'r') do |f|
@@ -298,7 +306,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
   
-  def test_glbrc_cn_deep_core_new_format_file_load
+  it "loads glbrc_cn_deep_core new format files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/GLBRC_cn.csv'
     File.open(file_name, 'r') do |f|
@@ -312,7 +320,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_new_glbrc_soil_sample_file_load
+  it "loads new glbrc soil sample files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/glbrc_soil_sample_new_format.txt'
     File.open(file_name, 'r') do |f|
@@ -325,7 +333,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
 
-  def test_another_glbrc_soil_sample_file_load
+  it "loads more glbrc soil sample files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/100419L.TXT'
     File.open(file_name, 'r') do |f|
@@ -338,7 +346,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
   
-  def test_lysimeter_sample_file_load
+  it "loads lysimeter files" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/new_lysimeter.TXT'
     File.open(file_name, 'r') do |f|
@@ -352,7 +360,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
   
-  def test_different_lysimeter_sample_file_load
+  it "loads another lysimeter file" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + "/../data/090615QL.TXT"
     File.open(file_name, 'r') do |f|
@@ -368,7 +376,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
     assert_equal run_count + 1, Run.count
   end
   
-  def test_lysimeter_file_with_negative_peaks_load
+  it "loads lysimeter files with negative peaks" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + "/../data/090701QL.TXT"
     File.open(file_name, 'r') do |f|
@@ -383,7 +391,7 @@ class MiniRunTest < MiniTest::Unit::TestCase
   end
   
   
-  def test_lysimeter_single_sample_file_load
+  it "loads lysimeter files with a single sample" do
     run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/Lysimeter_single_format.TXT'
     File.open(file_name, 'r') do |f|
