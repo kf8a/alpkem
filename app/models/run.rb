@@ -53,11 +53,6 @@ class Run < ActiveRecord::Base
     self.sample_type_name.include?("CN")
   end
 
-  def measurements_by_analyte(analyte)
-    raise ArgumentError unless analyte.class == Analyte
-    measurements.find_all_by_analyte_id(analyte.id)
-  end
-
   def measurement_by_id(id)
     measurements.find_by_id(id)
   end

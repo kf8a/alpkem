@@ -94,16 +94,6 @@ describe Run do
     assert cn_run.cn_run?
   end
 
-  it "should find measurements by analyte" do
-    run = Run.find(@standard_run.id)
-    water = Factory.create(:analyte, :name => "H2O")
-    sugar = Factory.create(:analyte, :name => "C6H12O6")
-    water_measurement = Factory.create(:measurement, :run => run, :analyte => water)
-    sugar_measurement = Factory.create(:measurement, :run => run, :analyte => sugar)
-    assert_equal run.measurements_by_analyte(water), [water_measurement]
-    assert_equal run.measurements_by_analyte(sugar), [sugar_measurement]
-  end
-
   it "should find measurement by id" do
     run = Run.find(@standard_run.id)
     measurement = Factory.create(:measurement, :run => run)
@@ -190,21 +180,21 @@ describe Run do
     assert sample.valid?
     no3 = Analyte.find_by_name('NO3')
     nh4 = Analyte.find_by_name('NH4')
-    refute_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
-    refute_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
+    refute sample.measurements.where(:amount => 0.047, :analyte_id => no3.id).blank?
+    refute sample.measurements.where(:amount => 0.379, :analyte_id => nh4.id).blank?
 
     plot = Plot.find_by_treatment_and_replicate('T7','R2')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
     refute_nil sample
     assert sample.valid?
-    refute_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
-    refute_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
+    refute sample.measurements.where(:amount => 0.070, :analyte_id => no3.id).blank?
+    refute sample.measurements.where(:amount => 0.266, :analyte_id => nh4.id).blank?
 
     run = Run.find(r.id)
-    measurements = run.measurements_by_analyte(no3)
-    refute_nil measurements.index {|m| m.amount == 0.098}
-    measurements = run.measurements_by_analyte(nh4)
-    refute_nil measurements.index {|m| m.amount == 0.036}
+    measurements = run.measurements.where(:analyte_id => no3.id)
+    refute measurements.where(:amount => 0.098).blank?
+    measurements = run.measurements.where(:analyte_id => nh4.id)
+    refute measurements.where(:amount => 0.036).blank?
 
     refute_nil run.samples.index {|s| s.plot.treatment.name == "T6"}
 
