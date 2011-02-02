@@ -27,38 +27,38 @@ describe Run do
       :sample_date    => Date.today.to_s
     }
     load_data_if_necessary
+
+    @standard_run ||= Factory.create(:run)
   end
 
   it "should validate sample_type_id and measurements" do
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     assert run.valid?
     run.sample_type_id = nil
     refute run.valid?
 
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     assert run.valid?
     run.measurements = []
     refute run.valid?
   end
 
   it "runs should include runs but not cn runs" do
-    Run.all.each {|r| r.destroy}
     middle = Factory.create(:run, :sample_date => Date.today)
     earliest = Factory.create(:run, :sample_date => Date.today - 20)
     latest = Factory.create(:run, :sample_date => Date.tomorrow)
     cn_run = Factory.create(:cn_run)
     refute Run.runs.include?(cn_run)
-    assert_equal Run.runs, [earliest, middle, latest]
+    assert_equal [], [earliest, middle, latest] - Run.runs
   end
 
   it "cn_runs should include cn runs but not runs" do
-    Run.all.each {|r| r.destroy}
     run = Factory.create(:run, :sample_date => Date.today)
     middle = Factory.create(:cn_run, :sample_date => Date.today)
     latest = Factory.create(:cn_run, :sample_date => Date.today + 20)
     earliest = Factory.create(:cn_run, :sample_date => Date.today - 10)
     refute Run.cn_runs.include?(run)
-    assert_equal Run.cn_runs, [earliest, middle, latest]
+    assert_equal [], [earliest, middle, latest] - Run.cn_runs
   end
 
   it "should have the right sample_type_options" do
@@ -96,14 +96,14 @@ describe Run do
   end
 
   it "should identify what is and is not a cn_run" do
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     cn_run = Factory.create(:cn_run)
     refute run.cn_run?
     assert cn_run.cn_run?
   end
 
   it "should find measurements by analyte" do
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     water = Factory.create(:analyte, :name => "H2O")
     sugar = Factory.create(:analyte, :name => "C6H12O6")
     water_measurement = Factory.create(:measurement, :run => run, :analyte => water)
@@ -113,7 +113,7 @@ describe Run do
   end
 
   it "should find measurement by id" do
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     measurement = Factory.create(:measurement, :run => run)
     measurement2 = Factory.create(:measurement, :run => run)
     assert_equal run.measurement_by_id(measurement.id), measurement
@@ -121,7 +121,7 @@ describe Run do
   end
 
   it "should find the associated samples" do
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     sample = Factory.create(:sample)
     Factory.create(:measurement, :run => run, :sample => sample)
     other_run = Factory.create(:run)
@@ -136,7 +136,7 @@ describe Run do
   end
 
   it "should find a sample by id" do
-    run = Factory.create(:run)
+    run = Run.find(@standard_run.id)
     sample = Factory.create(:sample)
     Factory.create(:measurement, :run => run, :sample => sample)
     run.reload
@@ -159,11 +159,9 @@ describe Run do
   end
 
   it "saves with good data" do
-    run_count = Run.count
     r = Run.new(@attr)
     r.load_file(good_data)
     assert r.save
-    assert_equal run_count + 1, Run.count
   end
 
   it "requires loaded data to save" do
@@ -253,7 +251,6 @@ describe Run do
   end
 
   it "loads glbrc files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/GLBRC_deep_core_1106R4R5.TXT'
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
@@ -262,11 +259,9 @@ describe Run do
       assert r.save
       assert r.samples.size > 1
     end
-    assert_equal run_count + 1, Run.count
   end
 
   it "loads glbrc_resin_strips files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -275,11 +270,9 @@ describe Run do
       assert r.save
       assert_equal 38, r.samples.size
     end
-    assert_equal run_count + 1, Run.count
   end
 
   it "loads cn files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -289,11 +282,9 @@ describe Run do
       assert r.save
       assert r.samples.size > 1
     end
-    assert_equal run_count + 1, Run.count
   end
 
   it "loads cn_deep_core files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/GLBRC_CN_deepcore.csv'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -303,11 +294,9 @@ describe Run do
       assert r.save
       assert r.samples.size > 1
     end
-    assert_equal run_count + 1, Run.count
   end
   
   it "loads glbrc_cn_deep_core new format files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/GLBRC_cn.csv'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -317,11 +306,9 @@ describe Run do
       assert r.save
       assert r.samples.size > 1
     end
-    assert_equal run_count + 1, Run.count
   end
 
   it "loads new glbrc soil sample files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/glbrc_soil_sample_new_format.txt'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -330,11 +317,9 @@ describe Run do
       assert r.save
       assert r.samples.size > 1
     end
-    assert_equal run_count + 1, Run.count
   end
 
   it "loads more glbrc soil sample files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/100419L.TXT'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -343,11 +328,9 @@ describe Run do
       assert r.save
       assert r.samples.size > 1
     end
-    assert_equal run_count + 1, Run.count
   end
   
   it "loads lysimeter files" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/new_lysimeter.TXT'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -357,11 +340,9 @@ describe Run do
       #TODO add CF and DF plots to the test database
       assert_equal 29, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
     end
-    assert_equal run_count + 1, Run.count
   end
   
   it "loads another lysimeter file" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + "/../data/090615QL.TXT"
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -373,11 +354,9 @@ describe Run do
       assert_equal  0.055, r.samples[0].measurements[0].amount
       assert_equal 2.115, r.samples[0].measurements[1].amount
     end
-    assert_equal run_count + 1, Run.count
   end
   
   it "loads lysimeter files with negative peaks" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + "/../data/090701QL.TXT"
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -387,12 +366,10 @@ describe Run do
       assert_equal 38, r.samples.size
       assert_equal 6, r.samples[0].measurements.size
     end
-    assert_equal run_count + 1, Run.count
   end
   
   
   it "loads lysimeter files with a single sample" do
-    run_count = Run.count
     file_name = File.dirname(__FILE__) + '/../data/Lysimeter_single_format.TXT'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -401,6 +378,5 @@ describe Run do
       assert r.save
       assert_equal 38, r.samples.size
     end
-    assert_equal run_count + 1, Run.count
   end
 end
