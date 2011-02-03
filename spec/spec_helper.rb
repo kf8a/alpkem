@@ -7,6 +7,14 @@ require 'rspec/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+def find_or_factory(model, attributes = Hash.new)
+  model_as_constant = model.to_s.titleize.gsub(' ', '').constantize
+  object = model_as_constant.where(attributes).first
+  object ||= Factory.create(model.to_sym, attributes)
+
+  object
+end
+
 RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   # == Mock Framework
