@@ -1,9 +1,8 @@
-require File.expand_path('../../../test_helper',__FILE__) 
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe FileParser do
 
-  before do
+  before(:each) do
     @parser = FileParser.for(9, Date.today)
   end
 
@@ -16,6 +15,5 @@ describe FileParser do
     @parser.find_or_create_sample
     assert_equal sample, @parser.sample
   end
- 
-end
 
+end

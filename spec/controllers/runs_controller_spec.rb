@@ -27,9 +27,7 @@ describe RunsController do
           :data => {:file => fixture_file_upload(file_name)}
     end
 
-    it "should render new" do
-      response.should render_template "new"
-    end
+    it { should render_template "new" }
   end
 
   describe "POST :create with no file" do
@@ -37,9 +35,7 @@ describe RunsController do
       post :create, :run => @attr, :data => nil
     end
 
-    it "should render new" do
-      response.should render_template "new"
-    end
+    it { should render_template "new" }
   end
 
   describe "POST :create with blank file" do
@@ -48,9 +44,7 @@ describe RunsController do
       post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
     end
 
-    it "should render new" do
-      response.should render_template "new"
-    end
+    it { should render_template "new" }
   end
 
   describe "GET :index" do
@@ -58,10 +52,8 @@ describe RunsController do
       get :index
     end
 
-    it "should be successful" do
-      should respond_with :success
-      should assign_to :runs
-    end
+    it { should respond_with :success }
+    it { should assign_to :runs }
   end
 
   describe "GET :cn" do
@@ -69,10 +61,8 @@ describe RunsController do
       get :cn
     end
 
-    it "should be successful" do
-      should respond_with :success
-      should assign_to :runs
-    end
+    it { should respond_with :success }
+    it { should assign_to :runs }
   end
 
   describe "GET :show the non-CN run" do
@@ -80,9 +70,7 @@ describe RunsController do
       get :show, :id => @run.id
     end
 
-    it "should be successful" do
-      should respond_with :success
-    end
+    it { should respond_with :success }
   end
 
   describe "GET :show the cn run" do
@@ -90,10 +78,8 @@ describe RunsController do
       get :show, :id => @cn_run.id
     end
 
-    it "should be successful" do
-      should respond_with :success
-      should assign_to :run
-    end
+    it { should respond_with :success }
+    it { should assign_to :run }
   end
 
   describe "GET :edit the non-CN run" do
@@ -101,9 +87,7 @@ describe RunsController do
       get :edit, :id => @run.id
     end
 
-    it "should be successful" do
-      should respond_with :success
-    end
+    it { should respond_with :success }
   end
 
   describe "PUT :update the non-CN run" do
@@ -111,10 +95,8 @@ describe RunsController do
       put :update, :id => @run.id, :run => {:sample_date => Date.yesterday}
     end
 
-    it "should redirect to the run page" do
-      should assign_to :run
-      should redirect_to run_path(@run)
-    end
+    it { should assign_to :run }
+    it { should redirect_to run_path(@run) }
   end
 
   describe "DELETE :destroy the run" do
@@ -126,17 +108,17 @@ describe RunsController do
       assert_nil Run.find_by_id(@run.id)
     end
 
-    it "should redirect to the runs index page" do
-      should redirect_to runs_path
-    end
+    it { should redirect_to runs_path }
   end
 
-  it "should create run" do
-    file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
-    post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+  describe "should create run" do
+    before(:each) do
+      file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
+      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+    end
 
-    assert assigns(:run)
-    assert_redirected_to run_path(assigns(:run))
+    it { should assign_to(:run) }
+    it { should redirect_to run_path(assigns(:run)) }
   end
 
   it "should approve and disapprove sample" do

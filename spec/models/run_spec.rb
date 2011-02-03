@@ -1,5 +1,4 @@
-require 'test_helper'
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe Run do
 
@@ -8,16 +7,9 @@ describe Run do
   end
 
   def set_good_data
-    file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
+    file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
       return StringIO.new(f.read)
-    end
-  end
-
-  def load_data_if_necessary
-    @plot ||= Plot.find_by_name("DCL01S01010")
-    if @plot.nil?
-      load "#{Rails.root}/db/seeds.rb"
     end
   end
 
@@ -26,30 +18,31 @@ describe Run do
       :sample_type_id => 2,
       :sample_date    => Date.today.to_s
     }
-    load_data_if_necessary
 
-    @standard_run ||= Factory.create(:run)
+    @standard_run = Run.new(@attr)
+    @standard_run.measurements = [Factory.create(:measurement)]
+    assert @standard_run.save
   end
 
   it "should validate sample_type_id and measurements" do
     run = Run.find(@standard_run.id)
     assert run.valid?
     run.sample_type_id = nil
-    refute run.valid?
+    assert !run.valid?
 
     run = Run.find(@standard_run.id)
     assert run.valid?
     run.measurements = []
-    refute run.valid?
+    assert !run.valid?
   end
 
   it "runs should include runs but not cn runs and vice versa" do
     run = Factory.create(:run, :sample_date => Date.today)
     cn_run = Factory.create(:cn_run)
-    refute Run.runs.include?(cn_run)
+    assert !Run.runs.include?(cn_run)
     assert Run.runs.include?(run)
 
-    refute Run.cn_runs.include?(run)
+    assert !Run.cn_runs.include?(run)
     assert Run.cn_runs.include?(cn_run)
   end
 
@@ -63,7 +56,7 @@ describe Run do
         ["CN Soil Sample", "6"],
         ["CN Deep Core", "7"],
         ["GLBRC Soil Sample (New)", "8"],
-        ["GLBRC CN", "9"], 
+        ["GLBRC CN", "9"],
         ["Lysimeter NO3", "10"],
         ["Lysimeter NH4", "11"]]
   end
@@ -90,7 +83,7 @@ describe Run do
   it "should identify what is and is not a cn_run" do
     run = Run.find(@standard_run.id)
     cn_run = Factory.create(:cn_run)
-    refute run.cn_run?
+    assert !run.cn_run?
     assert cn_run.cn_run?
   end
 
@@ -104,9 +97,9 @@ describe Run do
     run.reload
     other_run.reload
     assert run.samples.include?(sample)
-    refute run.samples.include?(other_sample)
+    assert !run.samples.include?(other_sample)
     assert other_run.samples.include?(other_sample)
-    refute other_run.samples.include?(sample)
+    assert !other_run.samples.include?(sample)
   end
 
   it "should know if it has been updated" do
@@ -121,7 +114,7 @@ describe Run do
     changing_run.reload
     static_run.reload
     assert changing_run.updated?
-    refute static_run.updated?
+    assert !static_run.updated?
   end
 
   it "saves with good data" do
@@ -137,7 +130,7 @@ describe Run do
 
   it "requires non empty data to save" do
     r = Run.new(@attr)
-    file_name = File.dirname(__FILE__) + '/../data/blank.txt'
+    file_name = Rails.root.join('test', 'data', 'blank.txt')
     File.open(file_name, 'r') do |f|
       empty_data = StringIO.new(f.read)
       r.load_file(empty_data)
@@ -157,30 +150,29 @@ describe Run do
     r.load_file(good_data)
     r.save
 
-    assert r.samples.size > 1   
+    assert r.samples.size > 1
     plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
     sample = Sample.find_by_plot_id_and_sample_date(plot, Date.today)
-    refute_nil sample
     assert sample.valid?
     no3 = Analyte.find_by_name('NO3')
     nh4 = Analyte.find_by_name('NH4')
-    refute_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
-    refute_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
+    assert_not_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
+    assert_not_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
 
     plot = Plot.find_by_treatment_and_replicate('T7','R2')
     sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
-    refute_nil sample
+    assert_not_nil sample
     assert sample.valid?
-    refute_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
-    refute_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
+    assert_not_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
+    assert_not_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
 
     run = Run.find(r.id)
     measurements = run.measurements.where(:analyte_id => no3.id)
-    refute measurements.where(:amount => 0.098).blank?
+    assert !measurements.where(:amount => 0.098).blank?
     measurements = run.measurements.where(:analyte_id => nh4.id)
-    refute measurements.where(:amount => 0.036).blank?
+    assert !measurements.where(:amount => 0.036).blank?
 
-    refute_nil run.samples.index {|s| s.plot.treatment.name == "T6"}
+    assert_not_nil run.samples.index {|s| s.plot.treatment.name == "T6"}
 
     assert_equal 330, run.measurements.size
   end
@@ -217,7 +209,7 @@ describe Run do
   end
 
   it "loads glbrc files" do
-    file_name = File.dirname(__FILE__) + '/../data/GLBRC_deep_core_1106R4R5.TXT'
+    file_name = Rails.root.join('test', 'data', 'GLBRC_deep_core_1106R4R5.TXT')
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 4))
@@ -228,18 +220,18 @@ describe Run do
   end
 
   it "loads glbrc_resin_strips files" do
-    file_name = File.dirname(__FILE__) + '/../data/new_format_soil_samples_090415.TXT'
+    file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 5))
       r.load_file(s)
       assert r.save
-      assert_equal 38, r.samples.size
+      assert r.samples.size > 1 #We'll have better tests in the parser
     end
   end
 
   it "loads cn files" do
-    file_name = File.dirname(__FILE__) + '/../data/DC01CFR1.csv'
+    file_name = Rails.root.join('test', 'data', 'DC01CFR1.csv')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 6))
@@ -251,7 +243,7 @@ describe Run do
   end
 
   it "loads cn_deep_core files" do
-    file_name = File.dirname(__FILE__) + '/../data/GLBRC_CN_deepcore.csv'
+    file_name = Rails.root.join('test', 'data', 'GLBRC_CN_deepcore.csv')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 7))
@@ -261,9 +253,9 @@ describe Run do
       assert r.samples.size > 1
     end
   end
-  
+
   it "loads glbrc_cn_deep_core new format files" do
-    file_name = File.dirname(__FILE__) + '/../data/GLBRC_cn.csv'
+    file_name = Rails.root.join('test', 'data', 'GLBRC_cn.csv')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 9))
@@ -275,7 +267,7 @@ describe Run do
   end
 
   it "loads new glbrc soil sample files" do
-    file_name = File.dirname(__FILE__) + '/../data/glbrc_soil_sample_new_format.txt'
+    file_name = Rails.root.join('test', 'data', 'glbrc_soil_sample_new_format.txt')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 8))
@@ -286,7 +278,7 @@ describe Run do
   end
 
   it "loads more glbrc soil sample files" do
-    file_name = File.dirname(__FILE__) + '/../data/100419L.TXT'
+    file_name = Rails.root.join('test', 'data', '100419L.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 8))
@@ -295,9 +287,9 @@ describe Run do
       assert r.samples.size > 1
     end
   end
-  
+
   it "loads lysimeter files" do
-    file_name = File.dirname(__FILE__) + '/../data/new_lysimeter.TXT'
+    file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 1))
@@ -307,9 +299,9 @@ describe Run do
       assert_equal 29, r.samples.size # there are 93 samples but we don't have DF and CF in the test database
     end
   end
-  
+
   it "loads another lysimeter file" do
-    file_name = File.dirname(__FILE__) + "/../data/090615QL.TXT"
+    file_name = Rails.root.join('test', 'data', '090615QL.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 1))
@@ -321,9 +313,9 @@ describe Run do
       assert_equal 2.115, r.samples[0].measurements[1].amount
     end
   end
-  
+
   it "loads lysimeter files with negative peaks" do
-    file_name = File.dirname(__FILE__) + "/../data/090701QL.TXT"
+    file_name = Rails.root.join('test', 'data', '090701QL.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 1))
@@ -333,9 +325,9 @@ describe Run do
       assert_equal 6, r.samples[0].measurements.size
     end
   end
-  
+
   it "loads lysimeter files with a single sample" do
-    file_name = File.dirname(__FILE__) + '/../data/Lysimeter_single_format.TXT'
+    file_name = Rails.root.join('test', 'data', 'Lysimeter_single_format.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 10))

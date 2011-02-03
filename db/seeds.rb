@@ -16,22 +16,22 @@ end
 g_study = Study.find_or_create_by_name({:name => 'glbrc', :prefix => 'G'})
 
 1.upto(10) do |i|
-  Treatment.find_or_create_by_name_and_study_id("G#{i}", g_study)
+  Treatment.find_or_create_by_name_and_study_id("G#{i}", g_study.id)
 end
 
 1.upto(5) do |i|
-  Replicate.find_or_create_by_name_and_study_id("R#{i}", g_study)
+  Replicate.find_or_create_by_name_and_study_id("R#{i}", g_study.id)
 end
 
 
 l_study = Study.find_or_create_by_name(:name => 'Lux Arbor', :prefix => 'M')
  
 1.upto(3) do |i|
-  Treatment.find_or_create_by_name_and_study_id("L0#{i}", l_study)
+  Treatment.find_or_create_by_name_and_study_id("L0#{i}", l_study.id)
 end
  
 1.upto(10) do |i|
-  Replicate.find_or_create_by_name_and_study_id("S#{i}", l_study)
+  Replicate.find_or_create_by_name_and_study_id("S#{i}", l_study.id)
 end
  
 
@@ -54,9 +54,9 @@ m_study.treatments.each do |treatment|
   end
 end
 
-
+g_study.reload
 g_study.treatments.each do |treatment|
-  replicates = Replicate.find_all_by_study_id(g_study)
+  replicates = Replicate.find_all_by_study_id(g_study.id)
   replicates.each do |replicate|
     1.upto(3) do |station|
       [10,25].each do |depth|
