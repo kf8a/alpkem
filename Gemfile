@@ -55,6 +55,7 @@ group :test do
   gem "mocha"
   gem 'ruby-prof'
   gem 'single_test'
+  gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'
   
 end

@@ -1,4 +1,9 @@
+Factory.sequence :analyte_name do |a|
+  "analyte#{a}#{rand(a).to_i}#{rand(4)}"
+end
+
 Factory.define :analyte do |a|
+  a.name                 { Factory.next :analyte_name }
 end
 
 Factory.define :cn_sample do |s|
@@ -6,7 +11,7 @@ Factory.define :cn_sample do |s|
 end
 
 Factory.sequence :plot_name do |n|
-  "plot#{n}#{rand(n).to_i}#{rand(4)}"
+  "plot#{n}#{rand(n).to_i}#{rand(4)}#{Time.now}"
 end
 
 Factory.define :plot do |p|
