@@ -1,7 +1,6 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    RedCloth (4.2.3)
     Saikuro (1.1.0)
     abstract (1.0.0)
     actionmailer (3.0.3)
@@ -230,7 +229,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth
   autotest
   autotest-fsevent
   autotest-growl

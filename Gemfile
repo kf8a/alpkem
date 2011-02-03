@@ -12,7 +12,6 @@ gem 'devise_openid_authenticatable'
 
 # Bundle the extra gems:
 gem 'will_paginate', :require => 'will_paginate'
-gem 'RedCloth'
 gem 'nokogiri'
 gem 'rack-offline'
 
