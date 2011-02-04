@@ -1,23 +1,22 @@
-require 'test_helper'
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe Plot do
-  before do
+  before(:each) do
     @study = find_or_factory(:study, :name => "Default Study")
     @plot = find_or_factory(:plot, :name => "Default Plot", :study_id => @study.id)
   end
 
   it "should validate uniqueness of name with study" do
-    another_study = Factory.create(:study, :name => "Another Study")
+    another_study = find_or_factory(:study, :name => "Another Study")
     another_study_plot = another_study.plots.new(:name => "Default Plot")
     assert another_study_plot.valid?
 
     repeat_name_plot = @study.plots.new(:name => "Default Plot")
-    refute repeat_name_plot.valid?
+    assert !repeat_name_plot.valid?
   end
 
   describe "a new treatment and replicate with a plot" do
-    before do
+    before(:each) do
       @treatment = find_or_factory(:treatment, :name => "Treatment")
       @replicate = find_or_factory(:replicate, :name => "Replicate")
       @plot = find_or_factory(:plot, :treatment_id => @treatment.id, :replicate_id => @replicate.id)

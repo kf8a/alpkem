@@ -1,6 +1,6 @@
-require 'test_helper'
+require 'spec_helper'
 
-class RunsHelperTest < ActionView::TestCase
+describe RunsHelper do
 #TODO Uncomment this stuff if we bring back 
 #  def setup
 #    @plot = Plot.first

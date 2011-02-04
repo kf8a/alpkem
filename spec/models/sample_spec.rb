@@ -1,21 +1,20 @@
-require 'test_helper'
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe Sample do
 
   describe "validates presence of plot" do
-    before do
+    before(:each) do
       @sample = Factory.create(:sample)
     end
 
     it "should require plot to be valid" do
       @sample.plot = nil
-      refute @sample.valid?
+      assert !@sample.valid?
     end
   end
 
   describe "plot_name method" do
-    before do
+    before(:each) do
       @sample = Factory.create(:sample)
     end
 
@@ -26,7 +25,7 @@ describe Sample do
   
   describe "previous_measurements method" do
     describe "with some previous approved measurements for the same plot" do
-      before do
+      before(:each) do
         @sample = Factory.create(:sample, :sample_date => Date.today)
         @prev_sample = Factory.create(:sample,
             :sample_date => 1.year.ago.to_date,
@@ -69,7 +68,7 @@ describe Sample do
 
   describe "analytes method" do
     describe "for an NO3/NH4 type sample" do
-      before do
+      before(:each) do
         @sample = Factory.create(:sample)
         @no3 = find_or_factory(:analyte, :name => "NO3")
         @nh4 = find_or_factory(:analyte, :name => "NH4")
@@ -87,7 +86,7 @@ describe Sample do
     end
 
     describe "for an N/C type sample" do
-      before do
+      before(:each) do
         @sample = Factory.create(:sample)
         @nitrogen = find_or_factory(:analyte, :name => "N")
         @carbon = find_or_factory(:analyte, :name => "C")
@@ -106,7 +105,7 @@ describe Sample do
   end
 
   describe "average method" do
-    before do
+    before(:each) do
       @sample = Factory.create(:sample)
       @no3 = find_or_factory(:analyte, :name => "NO3")
       @nh4 = find_or_factory(:analyte, :name => "NH4")
