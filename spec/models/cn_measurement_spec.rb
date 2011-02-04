@@ -1,10 +1,8 @@
-require 'test_helper'
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe CnMeasurement do
-    
   describe "a sample with a cn measurement" do
-    before do
+    before(:each) do
       @sample = find_or_factory(:cn_sample)
       @measurement = find_or_factory(:cn_measurement, :cn_sample_id => @sample.id)
     end
@@ -14,3 +12,4 @@ describe CnMeasurement do
     end
   end
 end
+

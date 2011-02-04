@@ -1,13 +1,11 @@
-require 'test_helper'
-require 'minitest/autorun'
+require 'spec_helper'
 
 describe CnSample do
-  #TODO Rewrite this if necessary
-  #it { should validate_presence_of(:cn_plot) }
+  it { should validate_presence_of(:cn_plot) }
 
   describe 'plot_name method' do
-    before do
-      @sample = find_or_factory(:cn_sample)
+    before(:each) do
+      @sample = Factory.create(:cn_sample)
     end
 
     it 'should return the name of the plot' do
@@ -17,26 +15,26 @@ describe CnSample do
 
   describe "previous_measurements method" do
     describe "with some previous approved measurements for the same plot" do
-      before do
-        @sample = find_or_factory(:cn_sample, :sample_date => Date.today)
-        @prev_sample = find_or_factory(:cn_sample,
+      before(:each) do
+        @sample = Factory.create(:cn_sample, :sample_date => Date.today)
+        @prev_sample = Factory.create(:cn_sample,
             :sample_date => 1.year.ago.to_date,
             :cn_plot => @sample.cn_plot,
             :approved => true)
-        @prev_approved1 = find_or_factory(:cn_measurement, :cn_sample_id => @prev_sample.id)
-        @prev_approved2 = find_or_factory(:cn_measurement, :cn_sample_id => @prev_sample.id)
-        @unapproved_sample = find_or_factory(:cn_sample,
+        @prev_approved1 = Factory.create(:cn_measurement, :cn_sample => @prev_sample)
+        @prev_approved2 = Factory.create(:cn_measurement, :cn_sample => @prev_sample)
+        @unapproved_sample = Factory.create(:cn_sample,
              :sample_date => 1.year.ago.to_date,
              :cn_plot => @sample.cn_plot,
              :approved => false)
-        @prev_unapproved = find_or_factory(:cn_measurement, :cn_sample_id => @unapproved_sample.id)
+        @prev_unapproved = Factory.create(:cn_measurement, :cn_sample => @unapproved_sample)
         new_plot = "Different"
         @wrong_plot_sample = Factory.create(:cn_sample,
              :sample_date => 1.year.ago.to_date,
              :cn_plot => new_plot,
              :approved => true)
-        @prev_wrong_plot = find_or_factory(:cn_measurement, :cn_sample_id => @wrong_plot_sample.id)
-        @prev_deleted = find_or_factory(:cn_measurement, :cn_sample_id => @prev_sample.id, :deleted => true)
+        @prev_wrong_plot = Factory.create(:cn_measurement, :cn_sample => @wrong_plot_sample)
+        @prev_deleted = Factory.create(:cn_measurement, :cn_sample => @prev_sample, :deleted => true)
       end
 
       it 'should list those previous measurements' do
@@ -59,7 +57,7 @@ describe CnSample do
   end
 
   describe "analytes method" do
-    before do
+    before(:each) do
       @sample = Factory.create(:cn_sample)
     end
 
@@ -74,3 +72,4 @@ describe CnSample do
     end
   end
 end
+
