@@ -5,7 +5,7 @@ class MeasurementsController < ApplicationController
     @run = Run.find(params[:run_id])
     @measurement = Measurement.find(params[:id])
     @measurement.toggle!(:deleted)
-    dom_id = "sample_#{@measurement.sample.id}_#{@measurement.analyte.id}"
+    dom_id = "sample_#{@measurement.sample_id}_#{@measurement.analyte_id}"
     
     @measurements = @run.measurements
     render :update do |page|
