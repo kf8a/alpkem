@@ -9,14 +9,6 @@ class Measurement < ActiveRecord::Base
   validates_presence_of :analyte
   validates_presence_of :sample
 
-  def analyte_id
-    self.analyte.id
-  end
-
-  def sample_id
-    self.sample.id
-  end
-
   def sample_date
     self.sample.sample_date
   end
