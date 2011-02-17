@@ -27,7 +27,7 @@ namespace :deploy do
     [:stop, :start, :restart].each do |t|
       desc "#{t.to_s.capitalize} the thin appserver"
       task t, :roles => :app do
-        invoke_command "cd #{release_path}; bundle exec thin -C /etc/thin/alpkem.yml #{t.to_s}"
+        invoke_command "cd #{current_path}; bundle exec thin -C /etc/thin/alpkem.yml #{t.to_s}"
       end
     end
   end
@@ -51,8 +51,15 @@ namespace :deploy do
   after 'deploy:symlink', :link_production_db
 end
 
+# seed database
+desc "seed the database"
+task :seed_database do
+  run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
+end
+
 # database.yml task
 desc "Link in the production database.yml"
 task :link_production_db do
   run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
 end
+
