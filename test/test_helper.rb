@@ -4,6 +4,16 @@ require 'rails/test_help'
 require 'shoulda'
 require 'factory_girl'
 
+load "#{Rails.root}/db/seeds.rb"
+
+def find_or_factory(model, attributes = Hash.new)
+  model_as_constant = model.to_s.titleize.gsub(' ', '').constantize
+  object = model_as_constant.where(attributes).first
+  object ||= Factory.create(model.to_sym, attributes)
+
+  object
+end
+
 class ActiveSupport::TestCase
   #include Devise::TestHelpers
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -13,16 +23,6 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-
-  setup :load_data_if_necessary
-
-  protected
-
-  def load_data_if_necessary
-    if Plot.find_by_name("DCL01S01010").blank?
-      load "#{Rails.root}/db/seeds.rb"
-    end
-  end
 
 end
 

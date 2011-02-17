@@ -1,3 +1,4 @@
+#Represents the specific location that a set of measurements are taken from.
 class Plot < ActiveRecord::Base
   belongs_to :study
   belongs_to :treatment

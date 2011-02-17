@@ -1,7 +1,7 @@
 #Allows the creation of studes, including plots, replicates, and treatments
 class StudiesController < ApplicationController
 
-  before_filter :get_study, :only => [:show, :edit, :update]
+  before_filter :get_study, :only => [:edit, :update]
 
   respond_to :html, :xml
 
@@ -25,6 +25,7 @@ class StudiesController < ApplicationController
   end
 
   def show
+    @study = Study.where(:id => params[:id]).includes(:plots).first
   end
 
   def edit

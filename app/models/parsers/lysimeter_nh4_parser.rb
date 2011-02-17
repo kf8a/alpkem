@@ -1,3 +1,4 @@
+#For parsing Lysimeter samples that only have NH4 measurements (no NO3).
 class LysimeterNH4Parser < LysimeterParser
 
   LYSIMETER_SINGLE = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\s+-?\d+\t\s+(-?\d+\.\d+)'
@@ -6,7 +7,8 @@ class LysimeterNH4Parser < LysimeterParser
     re = Regexp.new(LYSIMETER_SINGLE)
 
     if line =~ re
-      @s_date = Date.parse($5)
+      @sample_date = Date.parse($5)
+
       @nh4_amount = $6
       @no3_amount = nil
 

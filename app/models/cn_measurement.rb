@@ -1,3 +1,5 @@
+#DEPRECATED: This model handled Carbon and Nitrogen measurements,
+#but these have now been incorpoprated into the measurement model.
 class CnMeasurement < ActiveRecord::Base
 
   belongs_to :analyte

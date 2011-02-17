@@ -12,7 +12,6 @@ gem 'devise_openid_authenticatable'
 
 # Bundle the extra gems:
 gem 'will_paginate', :require => 'will_paginate'
-gem 'RedCloth'
 gem 'nokogiri'
 gem 'rack-offline'
 
@@ -29,15 +28,18 @@ group :development do
   gem "nifty-generators"
   gem 'mongrel', '1.2.0.pre2'
   gem 'rails-erd'
-  gem "metric_fu", '2.0.1' #use with 'rake metrics:all RAILS_ENV="development"'
+  gem "metric_fu", '2.0.1' #use with 'rake metrics:all'
 end
 
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'  
   gem 'autotest'  #use with 'bundle exec autotest'
   gem 'autotest-growl'
-  gem 'autotest-fsevent'
   gem 'autotest-rails-pure' #to use Test:Unit
+end
+
+group :maconly do #if not using mac, run "bundle install --without maconly"
+  gem 'autotest-fsevent'
 end
 
 group :test do
@@ -52,6 +54,8 @@ group :test do
   gem 'launchy'
   gem "mocha"
   gem 'ruby-prof'
+  gem 'single_test'
+  gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'
   
 end

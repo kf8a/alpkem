@@ -15,10 +15,8 @@ class Sample < ActiveRecord::Base
   def Sample.samples_to_csv(samples)
     unless samples.blank?
       CSV.generate do |csv|
-        csv << ['sample_id','sample_date','treatment','replicate','no3_ppm','nh4_ppm']
-        samples.each do |sample|
-          csv << sample.to_array
-        end
+        csv << Sample.csv_titles
+        samples.each {|sample| csv << sample.to_array}
       end
     end
   end
@@ -52,17 +50,9 @@ class Sample < ActiveRecord::Base
   end
   
   def previous_measurements
-    approved_samples = Sample.approved
-    relevant_measurements = []
-    approved_samples.each do |a|
-      next unless a.plot == self.plot
-      next unless a.sample_date
-      a.measurements.each do |m|
-        next if m.deleted?
-        relevant_measurements << m
-      end
-    end
-    return relevant_measurements
+    right_samples = Sample.approved.where(:plot_id => self.plot.id)
+    right_samples.keep_if {|sample| sample.sample_date}
+    right_samples.collect {|sample| sample.measurements.where(:deleted => false)}.flatten
   end
  
   def average(analyte)
@@ -74,5 +64,9 @@ class Sample < ActiveRecord::Base
     raise ArgumentError unless analyte.class == Analyte
     variance = measurements.calculate(:variance, :amount,  :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
     variance/average
+  end
+
+  def updated?
+    self.updated_at > self.created_at
   end
 end

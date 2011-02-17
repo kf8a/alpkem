@@ -7,7 +7,7 @@
     <th>Size</th>
   </tr>
   
-<%= render :partial => 'run', :collection => @runs %>
+  <%= render @runs %>
 </table>
 <%= link_to "new", new_run_path %>
 <%= link_to "CN runs", cn_runs_path %>

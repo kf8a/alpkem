@@ -1,5 +1,7 @@
 require 'statistics'
 
+#DEPRECATED: This model represented samples with Carbon or Nitrogen measurements,
+#but these have now been incorporated into the Sample model.
 class CnSample < ActiveRecord::Base
 
   has_many :cn_measurements, :include => :run, :order => 'runs.run_date, cn_measurements.id'

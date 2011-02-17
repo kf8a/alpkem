@@ -1,37 +1,37 @@
 m_study = Study.find_or_create_by_name(:name => 'Main Site', :prefix => 'T')
 
 1.upto(8) do |i|
-  Treatment.find_or_create_by_name_and_study_id("T#{i}", m_study)
+  m_study.treatments.find_or_create_by_name("T#{i}")
 end
-Treatment.find_or_create_by_name_and_study_id('TDF', m_study)
-Treatment.find_or_create_by_name_and_study_id('TSF', m_study)
-Treatment.find_or_create_by_name_and_study_id('TCF', m_study)
-Treatment.find_or_create_by_name_and_study_id('T21', m_study)
+m_study.treatments.find_or_create_by_name('TDF')
+m_study.treatments.find_or_create_by_name('TSF')
+m_study.treatments.find_or_create_by_name('TCF')
+m_study.treatments.find_or_create_by_name('T21')
 
 1.upto(6) do |i|
-  Replicate.find_or_create_by_name_and_study_id("R#{i}", m_study)
+  m_study.replicates.find_or_create_by_name("R#{i}")
 end
 
 
 g_study = Study.find_or_create_by_name({:name => 'glbrc', :prefix => 'G'})
 
 1.upto(10) do |i|
-  Treatment.find_or_create_by_name_and_study_id("G#{i}", g_study)
+  g_study.treatments.find_or_create_by_name("G#{i}")
 end
 
 1.upto(5) do |i|
-  Replicate.find_or_create_by_name_and_study_id("R#{i}", g_study)
+  g_study.replicates.find_or_create_by_name("R#{i}")
 end
 
 
 l_study = Study.find_or_create_by_name(:name => 'Lux Arbor', :prefix => 'M')
  
 1.upto(3) do |i|
-  Treatment.find_or_create_by_name_and_study_id("L0#{i}", l_study)
+  l_study.treatments.find_or_create_by_name("L0#{i}")
 end
  
 1.upto(10) do |i|
-  Replicate.find_or_create_by_name_and_study_id("S#{i}", l_study)
+  l_study.replicates.find_or_create_by_name("S#{i}")
 end
  
 
@@ -45,18 +45,19 @@ studies.each do |study|
   end
 end
 
+m_study.reload
 m_study.treatments.each do |treatment|
-  replicates = Replicate.find_all_by_study_id(m_study)
+  replicates = Replicate.find_all_by_study_id(m_study.id)
   replicates.each do |replicate|
-    1.upto(3) do |f|
+    1.upto(5) do |f|
       p = Plot.find_or_create_by_name_and_study_id(:name => "#{treatment.name}#{replicate.name}F#{f}", :study => m_study, :treatment => treatment, :replicate => replicate)
     end
   end
 end
 
-
+g_study.reload
 g_study.treatments.each do |treatment|
-  replicates = Replicate.find_all_by_study_id(g_study)
+  replicates = Replicate.find_all_by_study_id(g_study.id)
   replicates.each do |replicate|
     1.upto(3) do |station|
       [10,25].each do |depth|

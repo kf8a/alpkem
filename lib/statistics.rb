@@ -4,8 +4,7 @@ class Statistics
   def Statistics.mean(data) 
     length = data.count
     return 0 unless length > 0
-    sum = 0
-    data.each { |var| sum += var }
+    sum = data.reduce(0.0, :+)
     sum/length
   end
 
@@ -13,13 +12,11 @@ class Statistics
     length = data.count
     return 0 unless length > 1
     mean = Statistics.mean(data)
-    sum = 0.0
-    data.each {|var| sum += (var - mean)**2 }
+    sum = data.reduce(0.0) {|memo, var| memo + (var - mean)**2 }
     sum/length
   end
 
   def Statistics.sigma(data)
-    return 0 unless data.count > 1
     Math.sqrt(Statistics.variance(data))
   end
   

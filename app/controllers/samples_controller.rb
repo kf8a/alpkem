@@ -1,3 +1,4 @@
+#Pages for showing/manipulating samples.
 class SamplesController < ApplicationController
   
   require 'csv' or require 'fastercsv'

@@ -1,3 +1,4 @@
+#This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
   
   before_filter :get_run, :only => [:edit, :update, :destroy]
@@ -38,7 +39,8 @@ class RunsController < ApplicationController
   def edit
     @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
-    @measurements = @run.measurements + @run.cn_measurements
+    @measurements = @run.measurements.includes(:sample).includes(:analyte) +
+        @run.cn_measurements.includes(:cn_sample).includes(:analyte)
   end
 
   # POST /runs
@@ -81,8 +83,9 @@ class RunsController < ApplicationController
   
   def approve
     @run = Run.find(params[:run_id])
-    @measurements = @run.measurements + @run.cn_measurements
-    @sample = @run.sample_by_id(params[:id])
+    @measurements = @run.measurements.includes(:sample).includes(:analyte) +
+        @run.cn_measurements.includes(:cn_sample).includes(:analyte)
+    @sample = Sample.find(params[:id])
     @sample.toggle(:approved)
     @sample.save
     

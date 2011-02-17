@@ -1,3 +1,4 @@
+#A study is a collection of plots which go together for analysis.
 class Study < ActiveRecord::Base
   has_many :treatments
   has_many :replicates
@@ -11,20 +12,28 @@ class Study < ActiveRecord::Base
 
     self.treatments.each do |treatment|
       self.replicates.each do |replicate|
-        Plot.find_or_create_by_name_and_study_id(:name => "#{treatment.name}#{replicate.name}", :study => self, :treatment => treatment, :replicate => replicate)
+        Plot.find_or_create_by_name_and_study_id(
+            :name => "#{treatment.name}#{replicate.name}",
+            :study => self,
+            :treatment => treatment,
+            :replicate => replicate)
       end
     end
   end
 
   def create_treatments(amount)
-    1.upto(amount) do |i|
-      Treatment.find_or_create_by_name_and_study_id(:name => "#{self.prefix}#{i}", :study_id => self.id)
+    1.upto(amount) do |number|
+      Treatment.find_or_create_by_name_and_study_id(
+          :name => "#{self.prefix}#{number}",
+          :study_id => self.id)
     end
   end
 
   def create_replicates(amount, prefix)
-    1.upto(amount) do |i|
-      Replicate.find_or_create_by_name_and_study_id(:name => "#{prefix}#{i}", :study_id => self.id)
+    1.upto(amount) do |number|
+      Replicate.find_or_create_by_name_and_study_id(
+          :name => "#{prefix}#{number}",
+          :study_id => self.id)
     end
   end
 

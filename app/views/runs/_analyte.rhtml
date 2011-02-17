@@ -1,6 +1,6 @@
 <% relevant_measurements = @measurements.collect {|measurement| measurement if measurement.sample == sample && measurement.analyte == analyte}.compact %>
 <% stat_measurements = relevant_measurements.collect {|measurement| measurement if measurement.deleted == false}.compact %>
-<% cv = cv_help(stat_measurements) %>
+<% cv = RunsHelper.cv_help(stat_measurements) %>
 
 <td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
   <table>
@@ -26,11 +26,11 @@
     <% end %>
     <tr>
       <td>Mean:</td>
-      <td><%= number_with_precision(average(stat_measurements), :precision => 4) %></td>
+      <td><%= number_with_precision(RunsHelper.average(stat_measurements), :precision => 4) %></td>
     </tr>
     <tr>
       <td>CV:</td>
-      <td><%= number_with_precision(cv, :precision=>4) %></td>
+      <td><%= number_with_precision(RunsHelper.cv_help(stat_measurements), :precision=>4) %></td>
     </tr>
   </table>
 </td>

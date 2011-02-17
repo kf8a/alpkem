@@ -1,3 +1,4 @@
+#Generic parser to convert files to measurements.
 class StandardParser < FileParser
 
   STANDARD_SAMPLE     = '\t([M|L]?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\t\s+-*(\d+).+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
@@ -6,8 +7,6 @@ class StandardParser < FileParser
     re = Regexp.new(STANDARD_SAMPLE)
 
     if line =~ re
-      s_date = @sample_date
-
       nh4_amount = $5
       no3_amount = $6
 
@@ -25,8 +24,18 @@ class StandardParser < FileParser
           plot_name = "G#{first}R#{second}"
         end
         find_plot(plot_name)
-        process_nhno_sample(s_date, nh4_amount, no3_amount)
+        process_nhno_sample(nh4_amount, no3_amount)
       end
+    end
+  end
+
+  def get_plot_name(first, second)
+    if @sample_type_id == 2
+      "T#{first}R#{second}"
+    elsif first.start_with?("L0")
+      "#{first}S#{second}"
+    else
+      "G#{first}R#{second}"
     end
   end
 
