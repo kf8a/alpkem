@@ -27,7 +27,7 @@ namespace :deploy do
     [:stop, :start, :restart].each do |t|
       desc "#{t.to_s.capitalize} the thin appserver"
       task t, :roles => :app do
-        invoke_command "bundle exec thin -C /etc/thin/alpkem.yml #{t.to_s}"
+        invoke_command "cd #{release_path}; bundle exec thin -C /etc/thin/alpkem.yml #{t.to_s}"
       end
     end
   end
@@ -48,7 +48,7 @@ namespace :deploy do
   end
   
  # after :deploy, :link_paperclip_storage, 
-  after :deploy, :link_production_db
+  after 'deploy:symlink', :link_production_db
 end
 
 # database.yml task
