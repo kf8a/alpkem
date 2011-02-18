@@ -16,6 +16,7 @@ describe CNDeepParser do
   end
   it "should have the right measurement" do
     assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.1558
+    assert_includes @parser.sample.measurements.collect {|x| x.amount}, 1.5256
   end
   end
 
@@ -33,6 +34,7 @@ describe CNDeepParser do
   end
   it "should have the right measurement" do
     assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.1558
+    assert_includes @parser.sample.measurements.collect {|x| x.amount}, 1.5256
   end
   end
 end
