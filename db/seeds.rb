@@ -75,12 +75,14 @@ Analyte.find_or_create_by_name({:name => 'C',   :unit => 'ppm'})
 
 cn_deep_study = Study.find_or_create_by_name(:name => 'CN Deep Core', :prefix => 'D')
 
+['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |plot|
 1.upto(6) do |replicate|
   1.upto(3) do |station|
   ['010', '025', '050', '100'].each do |depth|
-    Plot.find_or_create_by_name_and_study_id({:name => "G01R#{replicate}S#{station}#{depth}", :study => cn_deep_study})
+    Plot.find_or_create_by_name_and_study_id({:name => "G#{plot}R#{replicate}S#{station}#{depth}", :study => cn_deep_study})
   end
   end
+end
 end
 
 cn_soil_study = Study.find_or_create_by_name(:name => 'CN Soil Sample', :prefix => 'C')
