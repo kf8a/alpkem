@@ -39,7 +39,7 @@ group :development, :test do
 end
 
 group :maconly do #if not using mac, run "bundle install --without maconly"
-  gem 'autotest-fsevent'
+#  gem 'autotest-fsevent'
 end
 
 group :test do
@@ -62,4 +62,5 @@ end
 
 group :production do
   gem 'pg'
+  gem 'thin'
 end
