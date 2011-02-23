@@ -3,20 +3,22 @@ class FileParser
   attr_accessor :load_errors, :plot_errors, :measurements, :plot, :sample, :sample_type_id, :sample_date
 
   def self.for(sample_type_id,date)
-    case sample_type_id
-    when 1; LysimeterParser.new(    date, sample_type_id)
-    when 2; StandardParser.new(     date, sample_type_id)
-    when 3; OldSoilParser.new(      date, sample_type_id)
-    when 4; GLBRCDeepParser.new(    date, sample_type_id)
-    when 5; StandardParser.new(     date, sample_type_id)
-    when 6; CNSampleParser.new(     date, sample_type_id)
-    when 7; CNDeepParser.new(       date, sample_type_id)
-    when 8; StandardParser.new(     date, sample_type_id)
-    when 9; CNGLBRCParser.new(      date, sample_type_id)
-    when 10; LysimeterNO3Parser.new(date, sample_type_id)
-    when 11; LysimeterNH4Parser.new(date, sample_type_id)
-    else false
-    end
+    klass = case sample_type_id
+        when 1; LysimeterParser
+        when 2; StandardParser
+        when 3; OldSoilParser
+        when 4; GLBRCDeepParser
+        when 5; StandardParser
+        when 6; CNSampleParser
+        when 7; CNDeepParser
+        when 8; StandardParser
+        when 9; CNGLBRCParser
+        when 10; LysimeterNO3Parser
+        when 11; LysimeterNH4Parser
+        else false
+        end
+
+    klass.new(date, sample_type_id) if klass
   end
 
   def initialize(date, id)
