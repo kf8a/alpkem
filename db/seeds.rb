@@ -76,13 +76,13 @@ Analyte.find_or_create_by_name({:name => 'C',   :unit => 'ppm'})
 cn_deep_study = Study.find_or_create_by_name(:name => 'CN Deep Core', :prefix => 'D')
 
 ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |plot|
-1.upto(5) do |replicate|
-  1.upto(3) do |station|
-  ['010', '025', '050', '100'].each do |depth|
-    Plot.find_or_create_by_name_and_study_id({:name => "G#{plot}R#{replicate}S#{station}#{depth}", :study => cn_deep_study})
+  1.upto(5) do |replicate|
+    1.upto(3) do |station|
+      ['010', '025', '050', '100'].each do |depth|
+        Plot.find_or_create_by_name_and_study_id({:name => "G#{plot}R#{replicate}S#{station}#{depth}", :study => cn_deep_study})
+      end
+    end
   end
-  end
-end
 end
 
 cn_soil_study = Study.find_or_create_by_name(:name => 'CN Soil Sample', :prefix => 'C')
@@ -99,8 +99,20 @@ cn_glbrc_study = Study.find_or_create_by_name(:name => 'CN GLBRC', :prefix => 'L
 ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |station|
   ['010', '025','050','100'].each do |depth|
     ['01','02','03'].each do |field|
-    Plot.find_or_create_by_name_and_study_id({:name => "L#{field}S#{station}#{depth}", :study => cn_glbrc_study})
-    Plot.find_or_create_by_name_and_study_id({:name => "M#{field}S#{station}#{depth}", :study => cn_glbrc_study})
+      Plot.find_or_create_by_name_and_study_id({:name => "L#{field}S#{station}#{depth}", :study => cn_glbrc_study})
+      Plot.find_or_create_by_name_and_study_id({:name => "M#{field}S#{station}#{depth}", :study => cn_glbrc_study})
+    end
   end
 end
-end
+
+SampleType.find_or_create_by_name('Lysimeter')
+SampleType.find_or_create_by_name("Soil Sample")
+SampleType.find_or_create_by_name("GLBRC Soil Sample")
+SampleType.find_or_create_by_name("GLBRC Deep Core Nitrogen")
+SampleType.find_or_create_by_name("GLBRC Resin Strips")
+SampleType.find_or_create_by_name("CN Soil Sample")
+SampleType.find_or_create_by_name("CN Deep Core")
+SampleType.find_or_create_by_name("GLBRC Soil Sample (New)")
+SampleType.find_or_create_by_name("GLBRC CN")
+SampleType.find_or_create_by_name("Lysimeter NO3")
+SampleType.find_or_create_by_name("Lysimeter NH4")
