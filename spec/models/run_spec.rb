@@ -242,18 +242,6 @@ describe Run do
     end
   end
 
-  it "loads cn_deep_core files" do
-    file_name = Rails.root.join('test', 'data', 'GLBRC_CN_deepcore.csv')
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 7))
-      r.load_file(s)
-      assert_equal r.plot_errors, ""
-      assert r.save
-      assert r.samples.size > 1
-    end
-  end
-
   it "loads glbrc_cn_deep_core new format files" do
     file_name = Rails.root.join('test', 'data', 'GLBRC_cn.csv')
     File.open(file_name, 'r') do |f|

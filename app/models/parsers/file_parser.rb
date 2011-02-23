@@ -31,6 +31,11 @@ class FileParser
     @carbon_analyte = Analyte.find_by_name('C')
   end
 
+  # subclasses need to implement this
+  def process_line(line)
+    raise NotImplementedError
+  end
+
   def require_sample_type_id
     self.load_errors += "No Sample Type selected." unless self.sample_type_id
   end
@@ -144,4 +149,5 @@ class FileParser
       self.measurements         << measurement
     end
   end
+
 end

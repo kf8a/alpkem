@@ -51,7 +51,10 @@ class CnSample < ActiveRecord::Base
     @sample.sample_type_id = self.get_sample_type_id
     @sample.sample_date = self.sample_date
     @sample.approved = self.approved
+    @sample.created_at = self.created_at
     @sample.save
+    p @sample
+    p @sample.errors
     self.cn_measurements.each {|measurement| measurement.copy_to_sample(@sample)}
     @sample.reload
     @sample.measurements.count == self.cn_measurements.count
