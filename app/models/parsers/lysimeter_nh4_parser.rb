@@ -16,7 +16,9 @@ class LysimeterNH4Parser < LysimeterParser
       @second = $2
       @third = $3
 
-      process_data
+      unless @first.blank? || @second.blank? || @third.blank?
+        process_data
+      end
     end
   end
 

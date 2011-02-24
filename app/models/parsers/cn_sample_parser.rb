@@ -12,15 +12,15 @@ class CNSampleParser < FileParser
       @percent_n   = $8
       @percent_c   = $9
 
-      process_data
+      if cn_plot_name_ok?
+        process_data
+      end
     end
   end
 
   def process_data
-    if cn_plot_name_ok?
-      find_plot(@plot_name)
-      process_cn_sample
-    end
+    find_plot(@plot_name)
+    process_cn_sample if plot_exists?
   end
 
 end

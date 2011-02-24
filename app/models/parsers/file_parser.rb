@@ -113,12 +113,10 @@ class FileParser
   end
 
   def process_cn_sample
-    if plot_exists?
-      format_sample_date
-      find_or_create_sample
-      create_measurement(@percent_n, @nitrogen_analyte)
-      create_measurement(@percent_c, @carbon_analyte)
-    end
+    format_sample_date
+    find_or_create_sample
+    create_measurement(@percent_n, @nitrogen_analyte)
+    create_measurement(@percent_c, @carbon_analyte)
   end
 
   def format_sample_date

@@ -15,16 +15,16 @@ class LysimeterParser < FileParser
       @second = $2
       @third = $3
 
-      process_data
+      unless @first.blank? || @second.blank? || @third.blank?
+        process_data
+      end
     end
   end
 
   def process_data
-    unless @first.blank? || @second.blank? || @third.blank?
-      plot_name = "T#{@first}R#{@second}F#{@third}"
-      find_plot(plot_name)
-      process_nhno_sample(@nh4_amount, @no3_amount)
-    end
+    plot_name = "T#{@first}R#{@second}F#{@third}"
+    find_plot(plot_name)
+    process_nhno_sample(@nh4_amount, @no3_amount)
   end
 
 end

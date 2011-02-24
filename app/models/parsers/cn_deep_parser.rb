@@ -13,7 +13,9 @@ class CNDeepParser < CNSampleParser
       @percent_n   = $3
       @percent_c   = $4
 
-      process_data
+      if cn_plot_name_ok?
+        process_data
+      end
     end
   end
 
