@@ -1,5 +1,6 @@
 #Main model in this app. Runs represent a set of measurements taken at one time.
 class Run < ActiveRecord::Base
+  belongs_to :sample_type
   has_many :measurements, :dependent => :destroy
   has_many :cn_measurements, :dependent => :destroy
   has_many :samples, :through => :measurements, :uniq => true
@@ -29,24 +30,11 @@ class Run < ActiveRecord::Base
   end
 
   def self.sample_type_id_to_name(id)
-    case id
-    when  1; "Lysimeter"
-    when  2; "Soil Sample"
-    when  3; "GLBRC Soil Sample"
-    when  4; "GLBRC Deep Core Nitrogen"
-    when  5; "GLBRC Resin Strips"
-    when  6; "CN Soil Sample"
-    when  7; "CN Deep Core"
-    when  8; "GLBRC Soil Sample (New)"
-    when  9; "GLBRC CN"
-    when 10; "Lysimeter NO3"
-    when 11; "Lysimeter NH4"
-    else    "Unknown Sample Type"
-    end
+    SampleType.find_by_id(id).try(:name) || "Unknown Sample Type"
   end
 
   def sample_type_name
-    Run.sample_type_id_to_name(self.sample_type_id)
+    self.sample_type.name
   end
 
   def cn_run?
