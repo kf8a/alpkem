@@ -38,18 +38,6 @@ class FileParser
     raise NotImplementedError
   end
 
-  def require_sample_type_id
-    self.load_errors += "No Sample Type selected." unless self.sample_type_id
-  end
-
-  def require_sample_date
-    self.load_errors += "No Sample Date selected." unless self.sample_date
-  end
-
-  def require_data(data)
-    self.load_errors += "Data file is empty."      if data.size == 0
-  end
-
   def parse_file(file)
     if file && !file.class.eql?(String)
       file_contents = StringIO.new(file.read)
@@ -73,17 +61,51 @@ class FileParser
     end
   end
 
-  def cn_plot_name_ok?
-    !@plot_name.blank? &&
-        !@plot_name.include?("Standard") &&
-        !@plot_name.include?("Blindstd")
-  end
-
   def find_plot(plot_to_find)
     unless self.plot.try(:name) == plot_to_find
       self.plot = Plot.find_by_name(plot_to_find)
       self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
     end
+  end
+
+  def find_or_create_sample
+    find_sample
+    self.sample ? unapprove_sample : create_sample
+  end
+
+  def find_sample
+    unless sample_already_found?
+      self.sample = Sample.find_by_plot_id_and_sample_date(self.plot.id, self.sample_date)
+    end
+  end
+
+  def create_sample
+    new_sample                = Sample.new
+    new_sample.sample_date    = self.sample_date
+    new_sample.plot           = self.plot
+    new_sample.sample_type_id = self.sample_type_id
+    new_sample.save
+    self.sample = new_sample
+  end
+
+  private##########################
+
+  def require_sample_type_id
+    self.load_errors += "No Sample Type selected." unless self.sample_type_id
+  end
+
+  def require_sample_date
+    self.load_errors += "No Sample Date selected." unless self.sample_date
+  end
+
+  def require_data(data)
+    self.load_errors += "Data file is empty."      if data.size == 0
+  end
+
+  def cn_plot_name_ok?
+    !@plot_name.blank? &&
+        !@plot_name.include?("Standard") &&
+        !@plot_name.include?("Blindstd")
   end
 
   def plot_exists?
@@ -105,17 +127,6 @@ class FileParser
     end
   end
 
-  def find_or_create_sample
-    find_sample
-    self.sample ? unapprove_sample : create_sample
-  end
-
-  def find_sample
-    unless sample_already_found?
-      self.sample = Sample.find_by_plot_id_and_sample_date(self.plot.id, self.sample_date)
-    end
-  end
-
   def unapprove_sample
     self.sample.approved = false #New data makes sample unapproved
     self.sample.save
@@ -132,17 +143,6 @@ class FileParser
   def right_date?
     self.sample.try(:sample_date) == self.sample_date
   end
-
-  def create_sample
-    new_sample                = Sample.new
-    new_sample.sample_date    = self.sample_date
-    new_sample.plot           = self.plot
-    new_sample.sample_type_id = self.sample_type_id
-    new_sample.save
-    self.sample = new_sample
-  end
-
-  private##########################
 
   def process_nhno_sample(nh4_amount, no3_amount)
     if plot_exists?
