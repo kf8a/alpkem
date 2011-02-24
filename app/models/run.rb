@@ -19,20 +19,6 @@ class Run < ActiveRecord::Base
     all_runs.keep_if {|run| run.cn_run?}
   end
 
-  def self.sample_type_options
-    sample_type_options = []
-    number = 1
-    until sample_type_id_to_name(number) == "Unknown Sample Type"
-      sample_type_options += [[sample_type_id_to_name(number), "#{number}"]]
-      number += 1
-    end
-    sample_type_options
-  end
-
-  def self.sample_type_id_to_name(id)
-    SampleType.find_by_id(id).try(:name) || "Unknown Sample Type"
-  end
-
   def sample_type_name
     self.sample_type.name
   end
