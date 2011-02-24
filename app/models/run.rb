@@ -19,6 +19,11 @@ class Run < ActiveRecord::Base
     all_runs.keep_if {|run| run.cn_run?}
   end
 
+  def all_measurements
+    self.measurements.includes(:sample).includes(:analyte) +
+        self.cn_measurements.includes(:cn_sample).includes(:analyte)
+  end
+
   def sample_type_name
     self.sample_type.name
   end
