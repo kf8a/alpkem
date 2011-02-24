@@ -107,7 +107,7 @@ class FileParser
 
   def find_or_create_sample
     find_sample
-    if self.sample then unapprove_sample else create_sample end
+    self.sample ? unapprove_sample : create_sample
   end
 
   def find_sample
@@ -122,9 +122,15 @@ class FileParser
   end
 
   def sample_already_found?
-    right_plot = self.sample.try(:plot) == self.plot
-    right_date = self.sample.try(:sample_date) == self.sample_date
-    right_plot && right_date
+    right_plot? && right_date?
+  end
+
+  def right_plot?
+    self.sample.try(:plot) == self.plot
+  end
+
+  def right_date?
+    self.sample.try(:sample_date) == self.sample_date
   end
 
   def create_sample
@@ -135,6 +141,8 @@ class FileParser
     new_sample.save
     self.sample = new_sample
   end
+
+  private##########################
 
   def process_nhno_sample(nh4_amount, no3_amount)
     if plot_exists?
