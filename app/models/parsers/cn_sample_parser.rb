@@ -12,9 +12,7 @@ class CNSampleParser < FileParser
       @percent_n   = $8
       @percent_c   = $9
 
-      if cn_plot_name_ok?
-        process_data
-      end
+      process_data if cn_plot_name_ok?
     end
   end
 

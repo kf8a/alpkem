@@ -15,9 +15,7 @@ class LysimeterParser < FileParser
       @second = $2
       @third = $3
 
-      unless @first.blank? || @second.blank? || @third.blank?
-        process_data
-      end
+      process_data unless @first.blank? || @second.blank? || @third.blank?
     end
   end
 
