@@ -18,7 +18,7 @@ class GLBRCDeepParser < FileParser
       unless first.blank? || second.blank? || third.blank? || fourth.blank?
         plot_name = "G#{first}R#{second}S#{third}#{fourth}"
         find_plot(plot_name) unless self.plot.try(:name) == plot_name
-        process_nhno_sample(nh4_amount, no3_amount)
+        process_nhno_sample(nh4_amount, no3_amount) if plot_exists?
       end
     end
   end

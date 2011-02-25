@@ -109,8 +109,8 @@ class FileParser
   def process_cn_sample
     format_sample_date if self.sample_date.class == String
     find_or_create_sample
-    create_measurement(@percent_n, @nitrogen_analyte)
-    create_measurement(@percent_c, @carbon_analyte)
+    create_measurement(@percent_n, @nitrogen_analyte) unless @percent_n.blank?
+    create_measurement(@percent_c, @carbon_analyte) unless @percent_c.blank?
   end
 
   def format_sample_date
@@ -135,19 +135,15 @@ class FileParser
   end
 
   def process_nhno_sample(nh4_amount, no3_amount)
-    if plot_exists?
-      find_or_create_sample
-      create_measurement(nh4_amount, @nh4_analyte)
-      create_measurement(no3_amount, @no3_analyte)
-    end
+    find_or_create_sample
+    create_measurement(nh4_amount, @nh4_analyte) unless nh4_amount.blank?
+    create_measurement(no3_amount, @no3_analyte) unless no3_amount.blank?
   end
 
   def create_measurement(amount, analyte)
-    unless amount.blank?
-      measurement = Measurement.new(:analyte => analyte, :amount => amount)
-      self.sample.measurements  << measurement
-      self.measurements         << measurement
-    end
+    measurement = Measurement.new(:analyte => analyte, :amount => amount)
+    self.sample.measurements  << measurement
+    self.measurements         << measurement
   end
 
 end
