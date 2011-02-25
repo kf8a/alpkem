@@ -2,7 +2,6 @@
 class Run < ActiveRecord::Base
   belongs_to :sample_type
   has_many :measurements, :dependent => :destroy
-  has_many :cn_measurements, :dependent => :destroy
   has_many :samples, :through => :measurements, :uniq => true
   has_many :analytes, :through => :measurements, :uniq => true
 
@@ -20,8 +19,7 @@ class Run < ActiveRecord::Base
   end
 
   def all_measurements
-    self.measurements.includes(:sample).includes(:analyte) +
-        self.cn_measurements.includes(:cn_sample).includes(:analyte)
+    self.measurements.includes(:sample).includes(:analyte)
   end
 
   def sample_type_name

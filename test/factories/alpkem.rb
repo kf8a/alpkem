@@ -6,10 +6,6 @@ Factory.define :analyte do |a|
   a.name                 { Factory.next :analyte_name }
 end
 
-Factory.define :cn_sample do |s|
-  s.cn_plot     "Plot"
-end
-
 Factory.sequence :plot_name do |n|
   "plot#{n}#{rand(n).to_i}#{rand(4)}#{Time.now}"
 end
@@ -43,12 +39,6 @@ end
 Factory.define :run do  |r|
   r.sample_type_id    1
   r.measurements      [Factory.create(:measurement)]
-end
-
-Factory.define :cn_measurement do |m|
-  m.association     :cn_sample
-  m.association     :analyte
-  m.amount          0.5
 end
 
 Factory.define :cnm, :class => :measurement do |m|
