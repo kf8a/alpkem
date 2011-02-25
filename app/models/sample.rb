@@ -40,6 +40,11 @@ class Sample < ActiveRecord::Base
     variance/average
   end
 
+  def unapprove
+    self.approved = false
+    self.save
+  end
+
   def updated?
     self.updated_at > self.created_at
   end

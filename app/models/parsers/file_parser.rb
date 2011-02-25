@@ -118,20 +118,19 @@ class FileParser
   end
 
   def unapprove_sample
-    self.sample.approved = false #New data makes sample unapproved
-    self.sample.save
+    self.sample.unapprove #New data makes sample unapproved
   end
 
   def sample_already_found?
-    right_plot? && right_date?
+    self.sample && right_plot? && right_date?
   end
 
   def right_plot?
-    self.sample.try(:plot) == self.plot
+    self.sample.plot == self.plot
   end
 
   def right_date?
-    self.sample.try(:sample_date) == self.sample_date
+    self.sample.sample_date == self.sample_date
   end
 
   def process_nhno_sample(nh4_amount, no3_amount)
