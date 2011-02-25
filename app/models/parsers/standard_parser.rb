@@ -23,7 +23,7 @@ class StandardParser < FileParser
         else
           plot_name = "G#{first}R#{second}"
         end
-        find_plot(plot_name)
+        find_plot(plot_name) unless self.plot.try(:name) == plot_name
         process_nhno_sample(nh4_amount, no3_amount)
       end
     end

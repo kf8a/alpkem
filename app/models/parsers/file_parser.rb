@@ -53,30 +53,24 @@ class FileParser
   end
 
   def parse_data(data)
-    data.each do | line |
-      process_line(line)
-    end
+    data.each { | line | process_line(line) }
     if self.measurements.blank?
       self.load_errors += "No data was able to be loaded from this file."
     end
   end
 
   def find_plot(plot_to_find)
-    unless self.plot.try(:name) == plot_to_find
-      self.plot = Plot.find_by_name(plot_to_find)
-      self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
-    end
+    self.plot = Plot.find_by_name(plot_to_find)
+    self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
   end
 
   def find_or_create_sample
-    find_sample
+    find_sample unless sample_already_found?
     self.sample ? unapprove_sample : create_sample
   end
 
   def find_sample
-    unless sample_already_found?
-      self.sample = Sample.find_by_plot_id_and_sample_date(self.plot.id, self.sample_date)
-    end
+    self.sample = self.plot.samples.find_by_sample_date(self.sample_date)
   end
 
   def create_sample
@@ -113,16 +107,14 @@ class FileParser
   end
 
   def process_cn_sample
-    format_sample_date
+    format_sample_date if self.sample_date.class == String
     find_or_create_sample
     create_measurement(@percent_n, @nitrogen_analyte)
     create_measurement(@percent_c, @carbon_analyte)
   end
 
   def format_sample_date
-    unless self.sample_date.nil? || self.sample_date.class == Date
-      self.sample_date = Date.strptime(self.sample_date, "%m/%d/%Y")
-    end
+    self.sample_date = Date.strptime(self.sample_date, "%m/%d/%Y")
   end
 
   def unapprove_sample
