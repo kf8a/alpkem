@@ -7,18 +7,12 @@ class StandardParser < FileParser
     re = Regexp.new(STANDARD_SAMPLE)
 
     if line =~ re
-      nh4_amount = $5
-      no3_amount = $6
-
-      first = $1
-      second = $2
+      first, second, nh4_amount, no3_amount = $1, $2, $5, $6
 
       unless first.blank? || second.blank?
         if @sample_type_id == 2
           plot_name = "T#{first}R#{second}"
-        elsif first.start_with?("L0")
-          plot_name = "#{first}S#{second}"
-        elsif first.starts_with?("M0")
+        elsif first.start_with?("L0") || first.start_with?("M0")
           plot_name = "#{first}S#{second}"
         else
           plot_name = "G#{first}R#{second}"

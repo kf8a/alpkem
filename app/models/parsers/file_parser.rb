@@ -40,16 +40,18 @@ class FileParser
 
   def parse_file(file)
     if file && !file.class.eql?(String)
-      file_contents = StringIO.new(file.read)
-      require_data(file_contents)
-      require_sample_type_id
-      require_sample_date
-      if self.load_errors.blank?
-        self.parse_data(file_contents)
-      end
+      parse_contents(file)
     else
       self.load_errors = 'No file was selected to upload.'
     end
+  end
+
+  def parse_contents(file)
+    file_contents = StringIO.new(file.read)
+    require_data(file_contents)
+    require_sample_type_id
+    require_sample_date
+    self.parse_data(file_contents) if self.load_errors.blank?
   end
 
   def parse_data(data)
@@ -74,12 +76,9 @@ class FileParser
   end
 
   def create_sample
-    new_sample                = Sample.new
-    new_sample.sample_date    = self.sample_date
-    new_sample.plot           = self.plot
-    new_sample.sample_type_id = self.sample_type_id
-    new_sample.save
-    self.sample = new_sample
+    self.sample = Sample.create(:sample_date => self.sample_date,
+                                :plot => self.plot,
+                                :sample_type_id => self.sample_type_id)
   end
 
   private##########################
