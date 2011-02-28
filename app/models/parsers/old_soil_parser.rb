@@ -7,11 +7,7 @@ class OldSoilParser < FileParser
     re = Regexp.new(OLD_SOIL_SAMPLE)
 
     if line =~ re
-      nh4_amount = $5
-      no3_amount = $6
-
-      first = $1
-      second = $2
+      first, second, nh4_amount, no3_amount = $1, $2, $5, $6
 
       unless first.blank? || second.blank?
         plot_name = "G#{first}R#{second}"

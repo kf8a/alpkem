@@ -7,14 +7,9 @@ class LysimeterNH4Parser < LysimeterParser
     re = Regexp.new(LYSIMETER_SINGLE)
 
     if line =~ re
-      @sample_date = Date.parse($5)
-
-      @nh4_amount = $6
-      @no3_amount = nil
-
-      @first = $1
-      @second = $2
-      @third = $3
+      @first, @second, @third   = $1, $2, $3
+      @sample_date              = Date.parse($5)
+      @nh4_amount, @no3_amount  = $6, nil
 
       process_data unless @first.blank? || @second.blank? || @third.blank?
     end
