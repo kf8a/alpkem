@@ -1,17 +1,15 @@
 #For parsing Lysimeter samples
 class LysimeterParser < FileParser
 
-  LYSIMETER = '(\w{1,2})-(\d)-(\d)([ABC|abc]), (\d{8})\s+-?\d+\t\s+(-?\d+\.\d+)\t(\w+)?\t+\s+-?\d+\t\s+(-?\d+\.\d+)'
+  LYSIMETER = '(\w{1,2})-(\d)-(\d)[ABC|abc], (\d{8})\s+-?\d+\t\s+(-?\d+\.\d+)\t\w*\t+\s+-?\d+\t\s+(-?\d+\.\d+)'
 
   def process_line(line)
     re = Regexp.new(LYSIMETER)
-    if line =~ re
-      @first, @second, @third   = $1, $2, $3
-      @sample_date              = Date.parse($5)
-      @nh4_amount, @no3_amount  = $6, $8
+    @first, @second, @third, raw_date, @nh4_amount, @no3_amount =
+        re.match(line).try(:captures)
+    @sample_date = Date.parse(raw_date) if raw_date
 
-      process_data unless @first.blank? || @second.blank? || @third.blank?
-    end
+    process_data unless @first.blank? || @second.blank? || @third.blank?
   end
 
   def process_data
