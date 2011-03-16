@@ -1,26 +1,22 @@
 td {
 	text-align:right;
+  border-bottom: solid 1px;
+	border-color: green;
+  width: 9em;
 }
 
 .even {
 	background-color: #f7ffe9;
 }
 
-.even td {
-	border-style: solid;
-	border-width: thin;
-	border-color: black;
-}
-
 .even td td {
   border-style: none;
 }
 
-.odd td {
-  border-style: solid;
-  border-width: thin;
-  border-color: black;
+tr:hover {
+  background-color: #FCF;
 }
+
 
 .odd td td {
   border-style: none;
