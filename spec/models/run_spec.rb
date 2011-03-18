@@ -47,8 +47,7 @@ describe Run do
   end
 
   it "should have the right sample_type_options" do
-    assert_equal Run.sample_type_options,
-        [["Lysimeter", "1"],
+    assert_equal [["Lysimeter", "1"],
         ["Soil Sample", "2"],
         ["GLBRC Soil Sample", "3"],
         ["GLBRC Deep Core Nitrogen", "4"],
@@ -58,7 +57,8 @@ describe Run do
         ["GLBRC Soil Sample (New)", "8"],
         ["GLBRC CN", "9"],
         ["Lysimeter NO3", "10"],
-        ["Lysimeter NH4", "11"]]
+        ["Lysimeter NH4", "11"],
+        ['GLBRC CN Plant', "12"]] , Run.sample_type_options
   end
 
   it "should get the right name for each sample_type_id" do
