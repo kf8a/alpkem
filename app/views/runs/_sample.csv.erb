@@ -1,0 +1,1 @@
+<%= sample.sample_date %>, <%= sample.plot.name %>,<%= render(:partial=>'analyte', :locals=> {:sample=>sample}, :collection=>@run.analytes).split(/\n/).join(', ') %>

@@ -2,7 +2,7 @@
 class RunsController < ApplicationController
   
   before_filter :get_run, :only => [:edit, :update, :destroy]
-  respond_to :html, :xml
+  respond_to :html, :xml, :csv
   
   # GET /runs
   # GET /runs.xml
@@ -41,6 +41,7 @@ class RunsController < ApplicationController
     @analytes   = @run.analytes
     @measurements = @run.measurements.includes(:sample).includes(:analyte) +
         @run.cn_measurements.includes(:cn_sample).includes(:analyte)
+    respond_with @run
   end
 
   # POST /runs

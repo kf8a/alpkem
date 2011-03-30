@@ -1,0 +1,4 @@
+<% relevant_measurements = analyte.measurements.collect {|measurement| measurement if measurement.sample == sample && measurement.analyte == analyte}.compact -%>
+<% stat_measurements = relevant_measurements.collect {|measurement| measurement if measurement.deleted == false}.compact -%>
+<% cv = RunsHelper.cv_help(stat_measurements) -%>
+<%= number_with_precision(RunsHelper.average(stat_measurements), :precision => 4) %>
