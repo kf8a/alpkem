@@ -41,9 +41,6 @@ module RunsHelper
     measurement.sample.try(:sample_date)
   end
 
-  def self.clean_average(compound)
-  end
-
   def self.average(measurements)
     Statistics.mean(measurements.map {|x| x.amount})
   end
