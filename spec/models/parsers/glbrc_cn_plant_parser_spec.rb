@@ -40,6 +40,25 @@ describe GLBRCCNPlantParser do
     end
   end
 
+  describe 'another line of data' do
+    before do
+      @parser = FileParser.for(12,Date.today)
+      @parser.process_line('11/11/2010,83,G10R4COMBMb,2.918,GLBRC10JS1G11,Unknown,,,,0.5135,47.1139')
+    end
+
+    it "should have the right date" do
+      assert_equal Date.civil(2010,11,11), @parser.sample.sample_date 
+    end
+    it "should have the right plot" do
+      assert_equal 'G10R4COMBM', @parser.sample.plot.name
+    end
+    it "should have the right measurement" do
+      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 47.1139
+      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.5135
+    end
+    
+  end
+
   describe 'an excel file with improper string escaping' do
     before do
       @parser = FileParser.for(12,Date.today)

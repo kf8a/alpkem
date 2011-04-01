@@ -12,7 +12,7 @@ class GLBRCCNPlantParser < CNSampleParser
       @percent_n   = $3
       @percent_c   = $4
 
-      @plot_name = @plot_name.gsub(/0/,'')
+      @plot_name = @plot_name.gsub(/0(\d)/,'\1')
 
       Plot.find_or_create_by_name(:name=>@plot_name, :study_id => 8)
 
