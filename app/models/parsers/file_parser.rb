@@ -16,6 +16,7 @@ class FileParser
     when 10; LysimeterNO3Parser.new(date, sample_type_id)
     when 11; LysimeterNH4Parser.new(date, sample_type_id)
     when 12; GLBRCCNPlantParser.new(date, sample_type_id)
+    when 13; LeileiSampleParser.new(date, sample_type_id)
     else false
     end
   end
