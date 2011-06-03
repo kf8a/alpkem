@@ -1,26 +1,25 @@
 
 class LeileiSampleParser < FileParser
 
-  LEILEI_SAMPLE = '\t\d{3}\tG(\d+)R(\d)S(\d)(\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+  LEILEI_SAMPLE = '\t\d{3}\t(\w\d+\w\d*-\d)\s+(\d+/\d+/\d+)\s+\d+\s+(-*\d\.\d+)\s+\d+\s+(-*\d+\.\d+)'
 
   def process_line(line)
     re = Regexp.new(LEILEI_SAMPLE)
 
     if line =~ re
-      nh4_amount = $5
-      no3_amount = $6
+      nh4_amount = $3
+      no3_amount = $4
 
-      first = $1
-      second = $2
-      third = $3
-      fourth = $4
+      plot = $1
+      date = $2
 
-      unless first.blank? || second.blank? || third.blank? || fourth.blank?
-        plot_name = "G#{first}R#{second}S#{third}#{fourth}"
-        find_plot(plot_name)
-        process_nhno_sample(nh4_amount, no3_amount)
-      end
+      self.sample_date = Chronic.parse(date).to_date
+      #try to find plot
+      self.plot = Plot.find_by_name(plot)
+      #create it if you can't find it
+      self.plot = Plot.create(:name => plot) if self.plot.blank?
+
+      process_nhno_sample(nh4_amount, no3_amount)
     end
   end
-
 end

@@ -42,6 +42,7 @@ class Run < ActiveRecord::Base
     when 10; "Lysimeter NO3"
     when 11; "Lysimeter NH4"
     when 12; "GLBRC CN Plant"
+    when 13; 'Leilei Samples NO3 NH4'
     else    "Unknown Sample Type"
     end
   end
