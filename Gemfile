@@ -14,6 +14,7 @@ gem 'devise_openid_authenticatable'
 gem 'will_paginate', :require => 'will_paginate'
 gem 'nokogiri'
 gem 'rack-offline'
+gem 'chronic'   #parsing dates
 
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
