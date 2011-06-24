@@ -11,6 +11,7 @@ tmp/*
 doc/api
 doc/app
 config/database.yml
+.bundle
 coverage/*
 nbproject/*
 rcov/*
