@@ -58,7 +58,8 @@ describe Run do
         ["GLBRC CN", "9"],
         ["Lysimeter NO3", "10"],
         ["Lysimeter NH4", "11"],
-        ['GLBRC CN Plant', "12"]] , Run.sample_type_options
+        ['GLBRC CN Plant', "12"],
+        ["Leilei Samples NO3 NH4", "13"]] , Run.sample_type_options
   end
 
   it "should get the right name for each sample_type_id" do
