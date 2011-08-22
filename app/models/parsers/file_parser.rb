@@ -15,6 +15,8 @@ class FileParser
         when 9; CNGLBRCParser
         when 10; LysimeterNO3Parser
         when 11; LysimeterNH4Parser
+        when 12; GLBRCCNPlantParser
+        when 13; LeileiSampleParser
         else false
         end
 

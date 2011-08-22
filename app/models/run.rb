@@ -18,36 +18,6 @@ class Run < ActiveRecord::Base
     all_runs.keep_if {|run| run.cn_run?}
   end
 
-  def self.sample_type_options
-    sample_type_options = []
-    number = 1
-    until sample_type_id_to_name(number) == "Unknown Sample Type"
-      sample_type_options += [[sample_type_id_to_name(number), "#{number}"]]
-      number += 1
-    end
-    sample_type_options
-  end
-
-  def self.sample_type_id_to_name(id)
-    case id
-    when  1; "Lysimeter"
-    when  2; "Soil Sample"
-    when  3; "GLBRC Soil Sample"
-    when  4; "GLBRC Deep Core Nitrogen"
-    when  5; "GLBRC Resin Strips"
-    when  6; "CN Soil Sample"
-    when  7; "CN Deep Core"
-    when  8; "GLBRC Soil Sample (New)"
-    when  9; "GLBRC CN"
-    when 10; "Lysimeter NO3"
-    when 11; "Lysimeter NH4"
-    when 12; "GLBRC CN Plant"
-    when 13; 'Leilei Samples NO3 NH4'
-    else    "Unknown Sample Type"
-    end
-
-  end
-
   def all_measurements
     self.measurements.includes(:sample).includes(:analyte)
   end

@@ -46,36 +46,6 @@ describe Run do
     assert Run.cn_runs.include?(cn_run)
   end
 
-  it "should have the right sample_type_options" do
-    assert_equal [["Lysimeter", "1"],
-        ["Soil Sample", "2"],
-        ["GLBRC Soil Sample", "3"],
-        ["GLBRC Deep Core Nitrogen", "4"],
-        ["GLBRC Resin Strips", "5"],
-        ["CN Soil Sample", "6"],
-        ["CN Deep Core", "7"],
-        ["GLBRC Soil Sample (New)", "8"],
-        ["GLBRC CN", "9"],
-        ["Lysimeter NO3", "10"],
-        ["Lysimeter NH4", "11"],
-        ['GLBRC CN Plant', "12"],
-        ["Leilei Samples NO3 NH4", "13"]] , Run.sample_type_options
-  end
-
-  it "should get the right name for each sample_type_id" do
-    assert_equal "Lysimeter", Run.sample_type_id_to_name(1)
-    assert_equal "Soil Sample", Run.sample_type_id_to_name(2)
-    assert_equal "GLBRC Soil Sample", Run.sample_type_id_to_name(3)
-    assert_equal "GLBRC Deep Core Nitrogen", Run.sample_type_id_to_name(4)
-    assert_equal "GLBRC Resin Strips", Run.sample_type_id_to_name(5)
-    assert_equal "CN Soil Sample", Run.sample_type_id_to_name(6)
-    assert_equal "CN Deep Core", Run.sample_type_id_to_name(7)
-    assert_equal "GLBRC Soil Sample (New)", Run.sample_type_id_to_name(8)
-    assert_equal "GLBRC CN", Run.sample_type_id_to_name(9)
-    assert_equal "Lysimeter NO3", Run.sample_type_id_to_name(10)
-    assert_equal "Lysimeter NH4", Run.sample_type_id_to_name(11)
-  end
-
   it "should give sample_type_name for a run" do
     run = Factory.create(:run, :sample_type_id => 4)
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
