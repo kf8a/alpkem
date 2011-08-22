@@ -46,7 +46,6 @@ describe Run do
     assert Run.cn_runs.include?(cn_run)
   end
 
-<<<<<<< HEAD
   it "should have the right sample_type_options" do
     assert_equal [["Lysimeter", "1"],
         ["Soil Sample", "2"],
@@ -77,8 +76,6 @@ describe Run do
     assert_equal "Lysimeter NH4", Run.sample_type_id_to_name(11)
   end
 
-=======
->>>>>>> b722f2a9570b407180c8ffa6f0a672aceeb92c87
   it "should give sample_type_name for a run" do
     run = Factory.create(:run, :sample_type_id => 4)
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name

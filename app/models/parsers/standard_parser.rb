@@ -1,11 +1,7 @@
 #Generic parser to convert files to measurements.
 class StandardParser < FileParser
 
-<<<<<<< HEAD
-  STANDARD_SAMPLE     = '\t([M|L]?\w{1,2})-?S?(\d{1,2})[abc|ABC]( rerun)*\s*\t\s+-*(\d+).+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
-=======
   STANDARD_SAMPLE     = '\t([M|L]?\w{1,2})-?S?(\d{1,2})[abc|ABC](?: rerun)*\t\s+-*\d+.+(-*\d\.\d+)\t.*\t *-*\d+\t\s*(-*\d\.\d+)'
->>>>>>> b722f2a9570b407180c8ffa6f0a672aceeb92c87
 
   def process_line(line)
     re = Regexp.new(STANDARD_SAMPLE)

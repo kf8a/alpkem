@@ -18,7 +18,6 @@ class Run < ActiveRecord::Base
     all_runs.keep_if {|run| run.cn_run?}
   end
 
-<<<<<<< HEAD
   def self.sample_type_options
     sample_type_options = []
     number = 1
@@ -46,10 +45,11 @@ class Run < ActiveRecord::Base
     when 13; 'Leilei Samples NO3 NH4'
     else    "Unknown Sample Type"
     end
-=======
+
+  end
+
   def all_measurements
     self.measurements.includes(:sample).includes(:analyte)
->>>>>>> b722f2a9570b407180c8ffa6f0a672aceeb92c87
   end
 
   def sample_type_name
