@@ -1,7 +1,7 @@
 #Main model in this app. Runs represent a set of measurements taken at one time.
 class Run < ActiveRecord::Base
+  belongs_to :sample_type
   has_many :measurements, :dependent => :destroy
-  has_many :cn_measurements, :dependent => :destroy
   has_many :samples, :through => :measurements, :uniq => true
   has_many :analytes, :through => :measurements, :uniq => true
 
@@ -18,6 +18,7 @@ class Run < ActiveRecord::Base
     all_runs.keep_if {|run| run.cn_run?}
   end
 
+<<<<<<< HEAD
   def self.sample_type_options
     sample_type_options = []
     number = 1
@@ -45,10 +46,14 @@ class Run < ActiveRecord::Base
     when 13; 'Leilei Samples NO3 NH4'
     else    "Unknown Sample Type"
     end
+=======
+  def all_measurements
+    self.measurements.includes(:sample).includes(:analyte)
+>>>>>>> b722f2a9570b407180c8ffa6f0a672aceeb92c87
   end
 
   def sample_type_name
-    Run.sample_type_id_to_name(self.sample_type_id)
+    self.sample_type.name
   end
 
   def cn_run?

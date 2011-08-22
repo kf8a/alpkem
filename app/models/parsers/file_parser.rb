@@ -3,6 +3,7 @@ class FileParser
   attr_accessor :load_errors, :plot_errors, :measurements, :plot, :sample, :sample_type_id, :sample_date
 
   def self.for(sample_type_id,date)
+<<<<<<< HEAD
     case sample_type_id
     when 1; LysimeterParser.new(    date, sample_type_id)
     when 2; StandardParser.new(     date, sample_type_id)
@@ -19,6 +20,24 @@ class FileParser
     when 13; LeileiSampleParser.new(date, sample_type_id)
     else false
     end
+=======
+    klass = case sample_type_id
+        when 1; LysimeterParser
+        when 2; StandardParser
+        when 3; OldSoilParser
+        when 4; GLBRCDeepParser
+        when 5; StandardParser
+        when 6; CNSampleParser
+        when 7; CNDeepParser
+        when 8; StandardParser
+        when 9; CNGLBRCParser
+        when 10; LysimeterNO3Parser
+        when 11; LysimeterNH4Parser
+        else false
+        end
+
+    klass.new(date, sample_type_id) if klass
+>>>>>>> b722f2a9570b407180c8ffa6f0a672aceeb92c87
   end
 
   def initialize(date, id)
@@ -38,6 +57,51 @@ class FileParser
     raise NotImplementedError
   end
 
+  def parse_file(file)
+    if file && !file.class.eql?(String)
+      parse_contents(file)
+    else
+      self.load_errors = 'No file was selected to upload.'
+    end
+  end
+
+  def parse_contents(file)
+    file_contents = StringIO.new(file.read)
+    require_data(file_contents)
+    require_sample_type_id
+    require_sample_date
+    self.parse_data(file_contents) if self.load_errors.blank?
+  end
+
+  def parse_data(data)
+    data.each { | line | process_line(line) }
+    if self.measurements.blank?
+      self.load_errors += "No data was able to be loaded from this file."
+    end
+  end
+
+  def find_plot(plot_to_find)
+    self.plot = Plot.find_by_name(plot_to_find)
+    self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
+  end
+
+  def find_or_create_sample
+    find_sample unless sample_already_found?
+    self.sample ? unapprove_sample : create_sample
+  end
+
+  def find_sample
+    self.sample = self.plot.samples.find_by_sample_date(self.sample_date)
+  end
+
+  def create_sample
+    self.sample = Sample.create(:sample_date => self.sample_date,
+                                :plot => self.plot,
+                                :sample_type_id => self.sample_type_id)
+  end
+
+  private##########################
+
   def require_sample_type_id
     self.load_errors += "No Sample Type selected." unless self.sample_type_id
   end
@@ -50,40 +114,10 @@ class FileParser
     self.load_errors += "Data file is empty."      if data.size == 0
   end
 
-  def parse_file(file)
-    if file && !file.class.eql?(String)
-      file_contents = StringIO.new(file.read)
-      require_data(file_contents)
-      require_sample_type_id
-      require_sample_date
-      if self.load_errors.blank?
-        self.parse_data(file_contents)
-      end
-    else
-      self.load_errors = 'No file was selected to upload.'
-    end
-  end
-
-  def parse_data(data)
-    data.each do | line |
-      process_line(line)
-    end
-    if self.measurements.blank?
-      self.load_errors += "No data was able to be loaded from this file."
-    end
-  end
-
   def cn_plot_name_ok?
     !@plot_name.blank? &&
         !@plot_name.include?("Standard") &&
         !@plot_name.include?("Blindstd")
-  end
-
-  def find_plot(plot_to_find)
-    unless self.plot.try(:name) == plot_to_find
-      self.plot = Plot.find_by_name(plot_to_find)
-      self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
-    end
   end
 
   def plot_exists?
@@ -91,65 +125,42 @@ class FileParser
   end
 
   def process_cn_sample
-    if plot_exists?
-      format_sample_date
-      find_or_create_sample
-      create_measurement(@percent_n, @nitrogen_analyte)
-      create_measurement(@percent_c, @carbon_analyte)
-    end
+    format_sample_date if self.sample_date.class == String
+    find_or_create_sample
+    create_measurement(@percent_n, @nitrogen_analyte) unless @percent_n.blank?
+    create_measurement(@percent_c, @carbon_analyte) unless @percent_c.blank?
   end
 
   def format_sample_date
-    unless self.sample_date.nil? || self.sample_date.class == Date
-      self.sample_date = Date.strptime(self.sample_date, "%m/%d/%Y")
-    end
-  end
-
-  def find_or_create_sample
-    find_sample
-    if self.sample then unapprove_sample else create_sample end
-  end
-
-  def find_sample
-    unless sample_already_found?
-      self.sample = Sample.find_by_plot_id_and_sample_date(self.plot.id, self.sample_date)
-    end
+    self.sample_date = Date.strptime(self.sample_date, "%m/%d/%Y")
   end
 
   def unapprove_sample
-    self.sample.approved = false #New data makes sample unapproved
-    self.sample.save
+    self.sample.unapprove #New data makes sample unapproved
   end
 
   def sample_already_found?
-    right_plot = self.sample.try(:plot) == self.plot
-    right_date = self.sample.try(:sample_date) == self.sample_date
-    right_plot && right_date
+    self.sample && right_plot? && right_date?
   end
 
-  def create_sample
-    new_sample                = Sample.new
-    new_sample.sample_date    = self.sample_date
-    new_sample.plot           = self.plot
-    new_sample.sample_type_id = self.sample_type_id
-    new_sample.save
-    self.sample = new_sample
+  def right_plot?
+    self.sample.plot == self.plot
+  end
+
+  def right_date?
+    self.sample.sample_date == self.sample_date
   end
 
   def process_nhno_sample(nh4_amount, no3_amount)
-    if plot_exists?
-      find_or_create_sample
-      create_measurement(nh4_amount, @nh4_analyte)
-      create_measurement(no3_amount, @no3_analyte)
-    end
+    find_or_create_sample
+    create_measurement(nh4_amount, @nh4_analyte) unless nh4_amount.blank?
+    create_measurement(no3_amount, @no3_analyte) unless no3_amount.blank?
   end
 
   def create_measurement(amount, analyte)
-    unless amount.blank?
-      measurement = Measurement.new(:analyte => analyte, :amount => amount)
-      self.sample.measurements  << measurement
-      self.measurements         << measurement
-    end
+    measurement = Measurement.new(:analyte => analyte, :amount => amount)
+    self.sample.measurements  << measurement
+    self.measurements         << measurement
   end
 
 end

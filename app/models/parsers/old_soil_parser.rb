@@ -7,16 +7,12 @@ class OldSoilParser < FileParser
     re = Regexp.new(OLD_SOIL_SAMPLE)
 
     if line =~ re
-      nh4_amount = $5
-      no3_amount = $6
-
-      first = $1
-      second = $2
+      first, second, nh4_amount, no3_amount = $1, $2, $5, $6
 
       unless first.blank? || second.blank?
         plot_name = "G#{first}R#{second}"
-        find_plot(plot_name)
-        process_nhno_sample(nh4_amount, no3_amount)
+        find_plot(plot_name) unless self.plot.try(:name) == plot_name
+        process_nhno_sample(nh4_amount, no3_amount) if plot_exists?
       end
     end
   end

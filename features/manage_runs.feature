@@ -137,12 +137,13 @@ Feature: Manage runs
     Then I should see "CFR1S1C1SUR 2001-09-17 0.1183 0.1314"
       And I should see "1.6748"
 
-  Scenario: Upload GLBRC deepcore CN data file
-    Given I am on the new run page
-    When I select "June 25, 2010" as the "run_sample_date" date
-      And I select "June 25, 2010" as the "run_start_date" date
-      And I select "June 25, 2010" as the "run_run_date" date
-      And I select "CN Deep Core" from "Sample Type"
-      And I attach GLBRC deepcore CN test file
-      And I press "Upload"
-    Then I should see "Run was successfully uploaded."
+# There is no such file right now
+#  Scenario: Upload GLBRC deepcore CN data file
+#    Given I am on the new run page
+#    When I select "June 25, 2010" as the "run_sample_date" date
+#      And I select "June 25, 2010" as the "run_start_date" date
+#      And I select "June 25, 2010" as the "run_run_date" date
+#      And I select "CN Deep Core" from "Sample Type"
+#      And I attach GLBRC deepcore CN test file
+#      And I press "Upload"
+#    Then I should see "Run was successfully uploaded."

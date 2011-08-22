@@ -18,7 +18,7 @@
   </p>
   <p>
     <%= f.label :sample_type_id, "Sample Type" %>
-    <%= f.select :sample_type_id, options_for_select(Run.sample_type_options) %>
+    <%= f.select :sample_type_id, options_for_select(SampleType.sample_type_options) %>
   </p>
   <p>
     <%= f.label :data, "File"%>

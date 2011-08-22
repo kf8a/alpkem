@@ -10,7 +10,7 @@ class SamplesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do
-        csv_string = Sample.samples_to_csv(@samples)
+        csv_string = @samples ? Sample.samples_to_csv(@samples) : ""
 
         # send it to the browsah
         if csv_string.blank?

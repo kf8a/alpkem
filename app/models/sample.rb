@@ -10,41 +10,15 @@ class Sample < ActiveRecord::Base
   
   validates_presence_of :plot
   
-  scope :approved, where(%q{approved = 't'})
+  scope :approved, where(:approved => true)
   
   def Sample.samples_to_csv(samples)
-    unless samples.blank?
-      CSV.generate do |csv|
-        csv << Sample.csv_titles
-        samples.each {|sample| csv << sample.to_array}
-      end
+    CSV.generate do |csv|
+      csv << csv_titles
+      samples.each {|sample| csv << sample.to_array}
     end
   end
 
-  def Sample.all_analytes
-    Sample.all.collect {|sample| sample.analytes}.flatten.uniq.compact.sort
-  end
-
-  def Sample.csv_titles
-    titles = ['sample_id','sample_date','treatment','replicate']
-    Sample.all_analytes.each do |analyte|
-      titles << "#{analyte.name}_#{analyte.unit}"
-    end
-    titles
-  end
-
-  def to_array
-    sample_array = [self.id,
-                    self.sample_date.to_s,
-                    self.plot.treatment.name,
-                    self.plot.replicate.name]
-
-    Sample.all_analytes.each do |analyte|
-      sample_array << self.average(analyte)
-    end
-    sample_array
-  end
-  
   def plot_name
     self.plot.try(:name)
   end
@@ -66,7 +40,37 @@ class Sample < ActiveRecord::Base
     variance/average
   end
 
+  def unapprove
+    self.approved = false
+    self.save
+  end
+
   def updated?
     self.updated_at > self.created_at
   end
+
+  private##########################
+
+  def Sample.all_analytes
+    all.collect {|sample| sample.analytes}.flatten.uniq.compact.sort
+  end
+
+  def Sample.csv_titles
+    titles = ['sample_id','sample_date','treatment','replicate']
+    all_analytes.each { |analyte| titles << "#{analyte.name}_#{analyte.unit}" }
+
+    titles
+  end
+
+  def to_array
+    sample_array = [self.id,
+                    self.sample_date.to_s,
+                    self.plot.treatment.name,
+                    self.plot.replicate.name]
+
+    Sample.all_analytes.each { |analyte| sample_array << self.average(analyte) }
+
+    sample_array
+  end
+
 end

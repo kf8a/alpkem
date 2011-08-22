@@ -8,5 +8,8 @@ class Measurement < ActiveRecord::Base
   validates_presence_of :amount
   validates_presence_of :analyte
   validates_presence_of :sample
-  
+
+  def sample_date
+    self.sample.sample_date
+  end
 end

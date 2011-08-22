@@ -22,7 +22,7 @@ class RunsController < ApplicationController
   # GET /runs/1.xml
   def show
     @run = Run.includes(:measurements).find(params[:id])
-    @back = if @run.cn_run? then cn_runs_path else runs_path end
+    @back = @run.cn_run? ? cn_runs_path : runs_path
     respond_with @run
   end
 
@@ -84,8 +84,7 @@ class RunsController < ApplicationController
   
   def approve
     @run = Run.find(params[:run_id])
-    @measurements = @run.measurements.includes(:sample).includes(:analyte) +
-        @run.cn_measurements.includes(:cn_sample).includes(:analyte)
+    @measurements = @run.all_measurements
     @sample = Sample.find(params[:id])
     @sample.toggle(:approved)
     @sample.save

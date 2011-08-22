@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.9'
+gem 'rails', '3.0.10'
 
 # Bundle authentication
 gem 'devise'
@@ -51,7 +51,6 @@ group :test do
   gem 'spork'
   gem 'launchy'
   gem "mocha"
-  gem 'ruby-prof'
   gem 'single_test'
   gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'

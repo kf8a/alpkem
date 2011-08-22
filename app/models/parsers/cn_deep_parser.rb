@@ -6,15 +6,9 @@ class CNDeepParser < CNSampleParser
 
   def process_line(line)
     re = Regexp.new(CN_DEEP_CORE)
-
-    if line =~ re
-      @sample_date = Date.parse($1)
-      @plot_name   = $2
-      @percent_n   = $3
-      @percent_c   = $4
-
-      process_data
-    end
+    raw_date, @plot_name, @percent_n, @percent_c = re.match(line).try(:captures)
+    @sample_date = Date.parse(raw_date) if raw_date
+    process_data if cn_plot_name_ok?
   end
 
 end
