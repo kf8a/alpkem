@@ -22,6 +22,10 @@ class Run < ActiveRecord::Base
     self.measurements.includes(:sample).includes(:analyte)
   end
 
+  def similar_runs
+    Run.where(:sample_date => sample_date, :sample_type_id => sample_type_id)
+  end
+
   def sample_type_name
     self.sample_type.name
   end

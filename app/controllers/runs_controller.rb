@@ -1,16 +1,16 @@
 #This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
-  
+
   before_filter :get_run, :only => [:edit, :update, :destroy]
   respond_to :html, :xml, :csv
-  
+
   # GET /runs
   # GET /runs.xml
   def index
     @runs = Run.runs
     respond_with @runs
   end
-  
+
   # GET /runs/cn
   # GET /runs/cn.xml
   def cn
@@ -39,7 +39,7 @@ class RunsController < ApplicationController
   def edit
     @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
-    @measurements = @run.all_measurements
+    @measurements = @run.all_measurements + @run.similar_runs.collect{|run| run.all_measurements}
   end
 
   # POST /runs
@@ -49,7 +49,7 @@ class RunsController < ApplicationController
 
     session[:sample_date] = @run.sample_date
     session[:run_date] = @run.run_date
-    
+
     file = (!params[:data].blank? && params[:data][:file])
     @run.load_file(file)
 
@@ -60,7 +60,7 @@ class RunsController < ApplicationController
       flash[:file_error] = @run.load_errors
     end
     flash[:notice] += @run.plot_errors
-    
+
     respond_with @run
   end
 
@@ -79,22 +79,22 @@ class RunsController < ApplicationController
     @run.destroy
     respond_with @run
   end
-  
+
   def approve
     @run = Run.find(params[:run_id])
     @measurements = @run.all_measurements
     @sample = Sample.find(params[:id])
     @sample.toggle(:approved)
     @sample.save
-    
+
     dom_id      = "sample_#{@sample.id}"
     @analytes   = @run.analytes
-    
+
     respond_to do |format|
-      format.js do 
+      format.js do
         render :update do |page|
           page.replace dom_id,
-          :partial => 'runs/sample', 
+          :partial => 'runs/sample',
           :locals => {:sample => @sample}
           page.visual_effect :highlight,  dom_id, :duration => 1
         end
