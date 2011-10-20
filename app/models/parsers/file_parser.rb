@@ -17,6 +17,7 @@ class FileParser
         when 11; LysimeterNH4Parser
         when 12; GLBRCCNPlantParser
         when 13; LeileiSampleParser
+        when 14; LTERCNPlantParser
         else false
         end
 

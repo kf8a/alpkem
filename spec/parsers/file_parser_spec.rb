@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FileParser do
 
@@ -16,4 +16,14 @@ describe FileParser do
     assert_equal sample, @parser.sample
   end
 
+  it 'should create a new sample if there is not one already' do
+    @parser.find_plot('T1R1')
+    @parser.create_sample
+    sample = @parser.sample
+    p sample
+    @parser.find_plot('T2R1')
+    @parser.find_or_create_sample
+    sample = @parser.sample
+    p sample
+  end
 end

@@ -1,4 +1,4 @@
-
+# parsing leilei's samples
 class LeileiSampleParser < FileParser
 
   LEILEI_SAMPLE = '\t\d{3}\t(\w\d+\w\d*-\d)\s+(\d+/\d+/\d+)\s+\d+\s+(-*\d\.\d+)\s+\d+\s+(-*\d+\.\d+)'
