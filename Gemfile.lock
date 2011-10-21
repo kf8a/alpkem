@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/nbudin/devise_openid_authenticatable.git
+  revision: 1080b2196f5c2c22d051a28a4d9b8ea0ebcb8673
+  specs:
+    devise_openid_authenticatable (1.0.0)
+      devise (>= 1.0.6)
+      rack-openid (>= 1.2.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -79,9 +87,6 @@ GEM
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
-    devise_openid_authenticatable (1.0.0)
-      devise (>= 1.0.6)
-      rack-openid (>= 1.2.0)
     diff-lcs (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -255,7 +260,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
-  devise_openid_authenticatable
+  devise_openid_authenticatable!
   escape_utils
   factory_girl
   factory_girl_rails

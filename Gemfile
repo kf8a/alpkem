@@ -5,7 +5,7 @@ gem 'rails', '3.0.10'
 # Bundle authentication
 gem 'devise'
 #gem 'omniauth'
-gem 'devise_openid_authenticatable'
+gem 'devise_openid_authenticatable', :git => 'git://github.com/nbudin/devise_openid_authenticatable.git'
 
 # Bundle the extra gems:
 gem 'will_paginate', :require => 'will_paginate'
