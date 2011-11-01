@@ -5,6 +5,10 @@
 <%= form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
   <%= render "shared/error_messages", :target => @run %>
   <p>
+  <%= f.label :comment, "Comment" %>
+  <%= f.text_area :comment %>
+  </p>
+  <p>
     <%= f.label :sample_date, "Sample Date" %>
     <%= f.date_select :sample_date %>
   </p>
