@@ -98,7 +98,7 @@ cn_glbrc_study = Study.find_or_create_by_name(:name => 'CN GLBRC', :prefix => 'L
 
 ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |station|
   ['010', '025','050','100'].each do |depth|
-    ['01','02','03'].each do |field|
+    ['01','02','03','04'].each do |field|
       Plot.find_or_create_by_name_and_study_id({:name => "L#{field}S#{station}#{depth}", :study => cn_glbrc_study})
       Plot.find_or_create_by_name_and_study_id({:name => "M#{field}S#{station}#{depth}", :study => cn_glbrc_study})
     end
