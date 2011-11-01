@@ -6,4 +6,5 @@
 <td><%= link_to "qc", edit_run_path(run) %></td>
 <td><%= link_to "download", run_path(run, :format=>:csv) %>
 <td><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
+<td><%= run.comment %></td>
 </tr>
