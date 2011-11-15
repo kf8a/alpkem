@@ -40,7 +40,7 @@ group :maconly do #if not using mac, run "bundle install --without maconly"
 #  gem 'autotest-fsevent'
 end
 
-group :test do
+group :development, :test do
   gem "shoulda"
   gem "factory_girl"
   gem 'factory_girl_rails'

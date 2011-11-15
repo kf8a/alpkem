@@ -18,6 +18,7 @@ class FileParser
         when 12; GLBRCCNPlantParser
         when 13; LeileiSampleParser
         when 14; LTERCNPlantParser
+        when 15; LterCnDeepParser
         else false
         end
 

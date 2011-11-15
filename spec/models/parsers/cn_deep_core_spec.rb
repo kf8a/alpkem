@@ -20,6 +20,7 @@ describe CNDeepParser do
   end
   end
 
+
   describe 'excel csv format' do
   before do
     @parser = FileParser.for(7,Date.today)
