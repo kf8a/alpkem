@@ -20,7 +20,6 @@ describe FileParser do
     @parser.find_plot('T1R1')
     @parser.create_sample
     sample = @parser.sample
-    p sample
     @parser.find_plot('T2R1')
     @parser.find_or_create_sample
     sample = @parser.sample

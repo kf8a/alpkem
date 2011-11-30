@@ -106,7 +106,7 @@ class FileParser
   end
 
   def plot_exists?
-    !self.plot.blank?
+    self.plot.present?
   end
 
   def process_cn_sample

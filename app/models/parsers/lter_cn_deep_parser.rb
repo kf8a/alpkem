@@ -1,6 +1,6 @@
 class LterCnDeepParser < CNSampleParser
 
-  REGEX = '(\d+),\d+,(T\d\dR\dS\dC\d[SMD])[ABC],.+,(\d+\.\d+),(\d+\.\d+)'
+  REGEX = '(\d+),\d+,(T\d\d(?:nt)?R\dS\dC\d[SMD])[ABC],.+,(\d+\.\d+),(\d+\.\d+)'
   
   def process_line(line)
     re = Regexp.new(REGEX)
