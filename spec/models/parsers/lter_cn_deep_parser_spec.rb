@@ -39,4 +39,21 @@ describe LterCnDeepParser do
       assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.1526
     end
   end
+
+  describe 'a forest plot' do
+    before do
+      Factory.create :plot, :name=>'TSFR1S5C2M'
+      @parser = FileParser.for(15, Date.today)
+      @parser.process_line('20101027,82,TSFR1S5C2MA,18.779,LTERDC20G10,Unknown,,,,0.0045,0.0431')
+    end
+
+    it 'has the right plot' do
+      assert_equal 'TSFR1S5C2M', @parser.sample.plot.name
+    end
+
+    it 'has the right measurements' do
+      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.0045
+      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.0431
+    end
+  end
 end
