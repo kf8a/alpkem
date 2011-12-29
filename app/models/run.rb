@@ -38,6 +38,15 @@ class Run < ActiveRecord::Base
     samples.index {|sample| sample.updated?}
   end
 
+  def sample_date_range
+    dates = samples.collect {|x| x.sample_date }
+    if dates.min == dates.max
+      "#{dates.min}"
+    else
+      "#{dates.min} - #{dates.max}"
+    end
+  end
+
   def load_file(file)
     parser.parse_file(file)
     self.measurements = parser.measurements

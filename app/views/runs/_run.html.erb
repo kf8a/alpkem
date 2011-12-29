@@ -1,6 +1,7 @@
 <tr class="updated_<%=run.updated?%> <%=cycle('even','odd')%>">
 <td><%= run.run_date %></td>
 <td><%= run.sample_date %></td>
+<td><%= run.sample_date_range %></td>
 <td><%= run.sample_type_name %></td>
 <td><%= run.samples.size %> samples</td>
 <td><%= link_to "qc", edit_run_path(run) %></td>
