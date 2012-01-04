@@ -8,6 +8,10 @@ class Run < ActiveRecord::Base
   validates :sample_type_id, :presence => true
   validates :measurements,   :presence => true
 
+  def approved_samples
+    samples.collect(&:approved).compact.size
+  end
+
   def self.runs
     all_runs = Run.order('sample_date')
     all_runs.keep_if {|run| !run.cn_run?}

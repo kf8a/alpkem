@@ -4,7 +4,7 @@
 <td><%= run.sample_date_range %></td>
 <td><%= run.sample_type_name %></td>
 <td><%= run.samples.size %> samples</td>
-<td><%= run.samples.approved.count%></td>
+<td><%= run.approved_samples%></td>
 <td><%= link_to "qc", edit_run_path(run) %></td>
 <td><%= link_to "download", run_path(run, :format=>:csv) %>
 <td><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
