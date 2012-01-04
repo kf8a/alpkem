@@ -9,7 +9,9 @@ class Run < ActiveRecord::Base
   validates :measurements,   :presence => true
 
   def approved_samples
-    samples.collect(&:approved).compact.size
+    samples.collect do |sample|
+      sample unless sample.approved
+    end.compact.size
   end
 
   def self.runs
