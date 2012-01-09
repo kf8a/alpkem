@@ -3,7 +3,7 @@ class Run < ActiveRecord::Base
   belongs_to :sample_type
   has_many :measurements, :dependent => :destroy
   has_many :samples, :through => :measurements, :uniq => true
-  has_many :analytes, :through => :measurements, :uniq => true
+ has_many :analytes, :through => :measurements, :uniq => true, :order => 'name'
 
   validates :sample_type_id, :presence => true
   validates :measurements,   :presence => true
