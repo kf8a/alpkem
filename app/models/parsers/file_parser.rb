@@ -67,9 +67,7 @@ class FileParser
   end
 
   def find_plot(plot_to_find)
-    logger.info "Finding plot #{plot_to_find}"
     self.plot = Plot.find_by_name(plot_to_find)
-    logger.info "Found plot #{plot}"
     self.plot_errors += "There is no plot named #{plot_to_find}" unless plot.present?
   end
 
