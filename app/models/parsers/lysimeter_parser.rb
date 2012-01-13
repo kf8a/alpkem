@@ -15,7 +15,7 @@ class LysimeterParser < FileParser
   def process_data
     plot_name = "T#{@first}R#{@second}F#{@third}"
     find_plot(plot_name) unless self.plot.try(:name) == plot_name
-    process_nhno_sample(@nh4_amount, @no3_amount) if plot_exists?
+    process_nhno_sample(@nh4_amount, @no3_amount) if plot.present?
   end
 
 end

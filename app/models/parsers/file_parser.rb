@@ -67,8 +67,10 @@ class FileParser
   end
 
   def find_plot(plot_to_find)
+    logger.info "Finding plot #{plot_to_find}"
     self.plot = Plot.find_by_name(plot_to_find)
-    self.plot_errors += "There is no plot named #{plot_to_find}" unless plot_exists?
+    logger.info "Found plot #{plot}"
+    self.plot_errors += "There is no plot named #{plot_to_find}" unless plot.present?
   end
 
   def find_or_create_sample
@@ -104,10 +106,6 @@ class FileParser
     !@plot_name.blank? &&
         !@plot_name.include?("Standard") &&
         !@plot_name.include?("Blindstd")
-  end
-
-  def plot_exists?
-    self.plot.present?
   end
 
   def process_cn_sample

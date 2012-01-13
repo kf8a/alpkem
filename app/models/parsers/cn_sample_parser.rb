@@ -11,7 +11,7 @@ class CNSampleParser < FileParser
 
   def process_data
     find_plot(@plot_name) unless self.plot.try(:name) == @plot_name
-    process_cn_sample if plot_exists?
+    process_cn_sample if plot.present?
   end
 
 end

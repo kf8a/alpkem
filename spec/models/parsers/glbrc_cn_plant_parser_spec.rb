@@ -15,8 +15,8 @@ describe GLBRCCNPlantParser do
       assert_equal 'G1R2ZEAGR', @parser.sample.plot.name
     end
     it "should have the right measurement" do
-      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 40.6730
-      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 1.9310
+      assert_includes @parser.measurements.collect {|x| x.amount}, 40.6730
+      assert_includes @parser.measurements.collect {|x| x.amount}, 1.9310
     end
   end
 
@@ -33,8 +33,8 @@ describe GLBRCCNPlantParser do
       assert_equal 'G2R2ZEAST', @parser.sample.plot.name
     end
     it "should have the right measurement" do
-      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 43.4679
-      assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.8120
+      assert_includes @parser.measurements.collect {|x| x.amount}, 43.4679
+      assert_includes @parser.measurements.collect {|x| x.amount}, 0.8120
     end
   end
 end

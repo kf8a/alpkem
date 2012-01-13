@@ -8,7 +8,7 @@ class GLBRCDeepParser < FileParser
     plot_name, nh4_amount, no3_amount = re.match(line).try(:captures)
     if plot_name && nh4_amount && no3_amount
       find_plot(plot_name) unless self.plot.try(:name) == plot_name
-      process_nhno_sample(nh4_amount, no3_amount) if plot_exists?
+      process_nhno_sample(nh4_amount, no3_amount) if plot.present?
     end
   end
 

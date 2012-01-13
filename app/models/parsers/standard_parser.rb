@@ -9,7 +9,7 @@ class StandardParser < FileParser
     unless first.blank? || second.blank?
       plot_name = get_plot_name(first, second)
       find_plot(plot_name) unless self.plot.try(:name) == plot_name
-      process_nhno_sample(nh4_amount, no3_amount) if plot_exists?
+      process_nhno_sample(nh4_amount, no3_amount) if plot.present?
     end
   end
 

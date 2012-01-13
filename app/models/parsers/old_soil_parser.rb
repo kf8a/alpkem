@@ -12,7 +12,7 @@ class OldSoilParser < FileParser
       unless first.blank? || second.blank?
         plot_name = "G#{first}R#{second}"
         find_plot(plot_name) unless self.plot.try(:name) == plot_name
-        process_nhno_sample(nh4_amount, no3_amount) if plot_exists?
+        process_nhno_sample(nh4_amount, no3_amount) if plot.present?
       end
     end
   end

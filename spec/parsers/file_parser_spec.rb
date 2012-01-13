@@ -23,6 +23,5 @@ describe FileParser do
     @parser.find_plot('T2R1')
     @parser.find_or_create_sample
     sample = @parser.sample
-    p sample
   end
 end
