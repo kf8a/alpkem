@@ -104,7 +104,7 @@ class RunsController < ApplicationController
     end
   end
 
-  private###############################
+  private  ###############################
 
   def get_run
     @run = Run.find(params[:id])

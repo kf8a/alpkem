@@ -40,7 +40,7 @@ studies.each do |study|
   study.treatments.each do |treatment|
     replicates = Replicate.find_all_by_study_id(study)
     replicates.each do |replicate|
-      p = Plot.find_or_create_by_name_and_study_id({:name => "#{treatment.name}#{replicate.name}", :study => study, :treatment => treatment, :replicate => replicate})
+      p = Plot.where(:name => "#{treatment.name}#{replicate.name}", :study_id => study,).first_or_create({:name => "#{treatment.name}#{replicate.name}", :study => study,:treatment => treatment, :replicate => replicate})
     end
   end
 end
@@ -50,7 +50,7 @@ m_study.treatments.each do |treatment|
   replicates = Replicate.find_all_by_study_id(m_study.id)
   replicates.each do |replicate|
     1.upto(5) do |f|
-      p = Plot.find_or_create_by_name_and_study_id(:name => "#{treatment.name}#{replicate.name}F#{f}", :study => m_study, :treatment => treatment, :replicate => replicate)
+      p = Plot.where(:name => "#{treatment.name}#{replicate.name}F#{f}", :study_id => m_study).first_or_create(:name => "#{treatment.name}#{replicate.name}F#{f}", :study => m_study, :treatment => treatment, :replicate => replicate)
     end
   end
 end
@@ -61,7 +61,7 @@ g_study.treatments.each do |treatment|
   replicates.each do |replicate|
     1.upto(3) do |station|
       [10,25].each do |depth|
-        Plot.find_or_create_by_name_and_study_id({:name => "#{treatment.name}#{replicate.name}S#{station}#{depth}", :study => g_study,
+        Plot.where(:name => "#{treatment.name}#{replicate.name}S#{station}#{depth}", :study_id => g_study).first_or_create({:name => "#{treatment.name}#{replicate.name}S#{station}#{depth}", :study => g_study,
             :treatment => treatment, :replicate => replicate})
       end
     end
@@ -79,7 +79,7 @@ cn_deep_study = Study.find_or_create_by_name(:name => 'CN Deep Core', :prefix =>
   1.upto(5) do |replicate|
     1.upto(3) do |station|
       ['010', '025', '050', '100'].each do |depth|
-        Plot.find_or_create_by_name_and_study_id({:name => "G#{plot}R#{replicate}S#{station}#{depth}", :study => cn_deep_study})
+        Plot.where(:name => "G#{plot}R#{replicate}S#{station}#{depth}", :study_id => cn_deep_study).first_or_create({:name => "G#{plot}R#{replicate}S#{station}#{depth}", :study => cn_deep_study})
       end
     end
   end
@@ -89,8 +89,8 @@ cn_soil_study = Study.find_or_create_by_name(:name => 'CN Soil Sample', :prefix 
 
 1.upto(5) do |station|
   ['SUR', 'MID', 'DEE'].each do |depth|
-    Plot.find_or_create_by_name_and_study_id({:name => "CFR1S#{station}C1#{depth}", :study => cn_soil_study})
-    Plot.find_or_create_by_name_and_study_id({:name => "DFR1S#{station}C1#{depth}", :study => cn_soil_study})
+    Plot.where(:name => "CFR1S#{station}C1#{depth}", :study_id => cn_soil_study).first_or_create({:name => "CFR1S#{station}C1#{depth}", :study => cn_soil_study})
+    Plot.where(:name => "DFR1S#{station}C1#{depth}", :study_id => cn_soil_study).first_or_create({:name => "DFR1S#{station}C1#{depth}", :study => cn_soil_study})
   end
 end
 
@@ -99,8 +99,8 @@ cn_glbrc_study = Study.find_or_create_by_name(:name => 'CN GLBRC', :prefix => 'L
 ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |station|
   ['010', '025','050','100'].each do |depth|
     ['01','02','03','04'].each do |field|
-      Plot.find_or_create_by_name_and_study_id({:name => "L#{field}S#{station}#{depth}", :study => cn_glbrc_study})
-      Plot.find_or_create_by_name_and_study_id({:name => "M#{field}S#{station}#{depth}", :study => cn_glbrc_study})
+      Plot.where(:name => "L#{field}S#{station}#{depth}", :study_id => cn_glbrc_study).first_or_create({:name => "L#{field}S#{station}#{depth}", :study => cn_glbrc_study})
+      Plot.where(:name => "M#{field}S#{station}#{depth}", :study_id => cn_glbrc_study).first_or_create({:name => "M#{field}S#{station}#{depth}", :study => cn_glbrc_study})
     end
   end
 end

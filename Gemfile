@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.11'
+gem 'rails', '3.2.1'
 
 # Bundle authentication
 gem 'devise'
@@ -13,6 +13,9 @@ gem 'nokogiri'
 gem 'rack-offline'
 gem 'chronic'   #parsing dates
 
+#until I rewrite the rjs code
+gem 'prototype-rails'
+
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
@@ -24,9 +27,8 @@ gem 'capistrano'
 # and rake tasks are available in development mode:
 group :development do
   gem "nifty-generators"
-  gem 'mongrel', '1.2.0.pre2'
   gem 'rails-erd'
-  gem "metric_fu", '2.0.1' #use with 'rake metrics:all'
+  #gem "metric_fu", '2.0.1' #use with 'rake metrics:all'
 end
 
 group :development, :test do
@@ -41,8 +43,9 @@ group :maconly do #if not using mac, run "bundle install --without maconly"
 end
 
 group :development, :test do
-  gem "shoulda"
-  gem "factory_girl"
+#  gem "shoulda"
+  gem 'shoulda-matchers'
+  #gem "factory_girl"
   gem 'factory_girl_rails'
   gem 'capybara'
   gem "database_cleaner"
@@ -50,7 +53,7 @@ group :development, :test do
   gem "cucumber"
   gem 'spork'
   gem 'launchy'
-  gem "mocha"
+  #gem "mocha"
   gem 'single_test'
   gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'
@@ -60,4 +63,10 @@ end
 group :production do
   gem 'pg'
   gem 'thin'
+end
+
+group :assets do
+  gem 'sass-rails', "  ~> 3.2.3"
+  gem 'coffee-rails', "~> 3.2.1"
+  gem 'uglifier', '>= 1.0.3'
 end

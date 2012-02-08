@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Alpkem::Application.config.secret_token = '4d40517a0a7a1884d83beafb54a8d7c845fd1cef735169e3508c9f728a73889855898f294d5fb420fa56bb76dac37633e1c556faef11211700af385e70d95342'
+Alpkem::Application.config.secret_token = '013664a568440f37508aa585c2a570e7667c370924102ac317a82114991fb2e38199e424c4bcda218fd27ead1e08486a9676efac83a78ff1ac92f9da7d8ab79e'

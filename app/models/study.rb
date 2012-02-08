@@ -12,7 +12,7 @@ class Study < ActiveRecord::Base
 
     treatments_and_replicates = self.treatments.product(self.replicates)
     treatments_and_replicates.each do |treatment, replicate|
-      Plot.find_or_create_by_name_and_study_id(
+      Plot.where(:name => "#{treatment.name}#{replicate.name}", :study_id => self).first_or_create(
             :name => "#{treatment.name}#{replicate.name}",
             :study => self,
             :treatment => treatment,
