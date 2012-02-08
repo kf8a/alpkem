@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+load 'deploy/assets'
 
 set :application, "alpkem"
 set :repository,  "/Users/bohms/code/alpkem"

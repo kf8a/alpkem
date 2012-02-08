@@ -17,3 +17,4 @@ nbproject/*
 rcov/*
 webrat.log
 *.swp
+public/assets/*

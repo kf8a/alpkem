@@ -32,7 +32,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3-ruby', :require => 'sqlite3'  
+  gem 'sqlite3-ruby' #, :require => 'sqlite3'  
   gem 'autotest'  #use with 'bundle exec autotest'
   gem 'autotest-growl'
   gem 'autotest-rails-pure' #to use Test:Unit
