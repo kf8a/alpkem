@@ -19,6 +19,8 @@ gem 'prototype-rails'
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
+gem 'therubyracer'
+
 # Deploy with Capistrano
 gem 'capistrano'
 
@@ -28,7 +30,6 @@ gem 'capistrano'
 group :development do
   gem "nifty-generators"
   gem 'rails-erd'
-  #gem "metric_fu", '2.0.1' #use with 'rake metrics:all'
 end
 
 group :development, :test do
