@@ -2,7 +2,7 @@
 class LTERCNPlantParser < CNSampleParser
 
 #  CN_PLANT_SAMPLE           = '(\d{1,2}\/\d{1,2}\/\d\d\d\d),\d+,"?(T\d\dR\d\w+)[abc]"?,\d+\.\d+,"?\w+"?,"?\w+"?,,,,(\d+\.\d+),(\d+\.\d+)'
-   CN_PLANT_SAMPLE           = '(\d+),\d+,\d+(T..R\d\w+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+   CN_PLANT_SAMPLE           = '(\d+),\d+,\d+(T..R\d.+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
   def process_line(line)
     re = Regexp.new(CN_PLANT_SAMPLE)

@@ -2,7 +2,7 @@
 class GLBRCCNPlantParser < CNSampleParser
 
  # CN_PLANT_SAMPLE           = '(\d{1,2}\/\d{1,2}\/\d\d\d\d),\d+,"?(G\d\dR\dm?\w+)[abc]"?,\d+\.\d+,"?\w+"?,"?\w+"?,,,,(\d+\.\d+),(\d+\.\d+)'
-  CN_PLANT_SAMPLE           = '(\d+),\d+,\d+(G..R\d\w+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+  CN_PLANT_SAMPLE           = '(\d+),\d+,\d+(G..R\d.+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
   def process_line(line)
     re = Regexp.new(CN_PLANT_SAMPLE)
