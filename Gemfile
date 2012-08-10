@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.8'
 
 # Bundle authentication
 gem 'devise'
@@ -40,26 +40,27 @@ group :development, :test do
 end
 
 group :maconly do #if not using mac, run "bundle install --without maconly"
-#  gem 'autotest-fsevent'
+  gem 'autotest-fsevent'
 end
 
 group :development, :test do
-#  gem "shoulda"
-  gem 'shoulda-matchers'
-  #gem "factory_girl"
-  gem 'factory_girl_rails'
-  gem 'capybara'
-  gem "database_cleaner"
-  gem "cucumber-rails"
-  gem "cucumber"
-  gem 'spork'
-  gem 'launchy'
-  #gem "mocha"
   gem 'single_test'
   gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'
   
 end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem "database_cleaner"
+  gem "cucumber-rails"
+  gem 'single_test'
+  gem 'spork'
+  # gem 'launchy'
+end
+
 
 group :production do
   gem 'pg'
