@@ -40,7 +40,7 @@ group :development, :test do
 end
 
 group :maconly do #if not using mac, run "bundle install --without maconly"
-  gem 'autotest-fsevent'
+  # gem 'autotest-fsevent'
 end
 
 group :development, :test do
