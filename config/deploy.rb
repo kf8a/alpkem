@@ -49,7 +49,7 @@ namespace :deploy do
   end
   
  # after :deploy, :link_paperclip_storage, 
-  after 'deploy:symlink', :link_production_db
+  after 'deploy:finalize_update', :link_production_db
 end
 
 # seed database
