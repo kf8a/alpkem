@@ -33,6 +33,15 @@ class Sample < ActiveRecord::Base
     raise ArgumentError unless analyte.class == Analyte
     measurements.average(:amount, :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
   end
+
+  def toggle_approval
+    if self.approved?
+      self.approved = false
+    else
+      self.approved = true
+    end
+    self.save
+  end
   
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
