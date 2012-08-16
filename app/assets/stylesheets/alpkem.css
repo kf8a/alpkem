@@ -29,7 +29,7 @@ tr:hover {
   background-color: yellow;
 }
 
-.cv_high_true {
+.cv-high-true {
 	background-color: red;
 }
 
@@ -37,11 +37,11 @@ a:visited {
 	color: blue;
 }
 
-a.deleted_true:hover {
+a.deleted-true:hover {
 	text-decoration: underline;
 }
 
-.deleted_true  {
+.deleted-true  {
 	text-decoration: line-through;
 }
 
@@ -55,7 +55,7 @@ ul {
 	list-style-type: none;
 }
 
-.updated_true {
+.updated-true {
 	color: silver;
 }
 .run_errors {
