@@ -84,7 +84,7 @@ class RunsController < ApplicationController
     @run = Run.find(params[:run_id])
     @measurements = @run.all_measurements
     @sample = Sample.find(params[:id])
-    @sample.toggle_approval
+    @sample.toggle(:approved)
     @sample.save
 
     dom_id      = "sample_#{@sample.id}"
