@@ -5,14 +5,11 @@ class MeasurementsController < ApplicationController
     @run = Run.find(params[:run_id])
     @measurement = Measurement.find(params[:id])
     @measurement.toggle!(:deleted)
-    dom_id = "sample_#{@measurement.sample_id}_#{@measurement.analyte_id}"
+    @dom_id = "sample-#{@measurement.sample_id}-#{@measurement.analyte_id}"
     
     @measurements = @run.measurements
-    render :update do |page|
-      page.replace dom_id,
-      :partial => 'runs/analyte',
-      :locals => {:sample => @measurement.sample, :analyte => @measurement.analyte}
-      page.visual_effect :highlight,  dom_id, :duration => 1
+    respond_to do |format|
+      format.js
     end
   end
 end

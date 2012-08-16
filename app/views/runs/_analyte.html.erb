@@ -2,7 +2,7 @@
 <% stat_measurements = relevant_measurements.collect {|measurement| measurement if measurement.deleted == false}.compact %>
 <% cv = RunsHelper.cv_help(stat_measurements) %>
 
-<td class="cv_high_<%= cv > 10 || cv < 0 %>"  id="sample_<%= sample.id %>_<%= analyte.id %>">
+<td class="cv-high-<%= cv > 10 || cv < 0 %>"  id="sample-<%= sample.id %>-<%= analyte.id %>">
   <table>
 
     <% relevant_measurements.each do |measurement| %>
@@ -10,15 +10,15 @@
       <tr>
         <td>
           <% if sample.approved? %>
-            <span class="deleted_<%=measurement.deleted?%>"><%= number %></span>
+            <span class="deleted-<%=measurement.deleted?%>"><%= number %></span>
           <% else %>
-            <%= link_to "#{number}", 
+            <%= link_to "#{number}",
                  {:controller => 'measurements',
                   :action => 'destroy',
                   :id => measurement.id,
                   :run_id => @run.id},
                  :method => 'delete',
-                 :class => "deleted_#{measurement.deleted?}",
+                 :class => "deleted-#{measurement.deleted?}",
                 :remote => true %>
           <% end %>
         </td>

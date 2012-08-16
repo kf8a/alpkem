@@ -87,18 +87,11 @@ class RunsController < ApplicationController
     @sample.toggle(:approved)
     @sample.save
 
-    dom_id      = "sample_#{@sample.id}"
+    @dom_id     = "sample-#{@sample.id}"
     @analytes   = @run.analytes
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace dom_id,
-          :partial => 'runs/sample',
-          :locals => {:sample => @sample}
-          page.visual_effect :highlight,  dom_id, :duration => 1
-        end
-      end
+      format.js
       format.html { render :nothing => true }
       format.xml { head :ok }
     end

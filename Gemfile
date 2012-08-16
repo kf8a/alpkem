@@ -13,8 +13,7 @@ gem 'nokogiri'
 gem 'rack-offline'
 gem 'chronic'   #parsing dates
 
-#until I rewrite the rjs code
-gem 'prototype-rails'
+gem 'jquery-rails'
 
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
