@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe RunsController do
   before(:each) do
-    @cn_run ||= Factory.create(:cn_run)
-    @run ||= Factory.create(:run)
-    @measurement ||= Factory.create(:measurement, :run => @run)
+    @cn_run ||= FactoryGirl.create(:cn_run)
+    @run ||= FactoryGirl.create(:run)
+    @measurement ||= FactoryGirl.create(:measurement, :run => @run)
     @user ||= find_or_factory(:user)
     sign_in @user
 
@@ -122,8 +122,8 @@ describe RunsController do
   end
 
   it "should approve and disapprove sample" do
-    sample = Factory.create(:sample)
-    Factory.create(:measurement, :sample_id => sample.id, :run_id => @run.id)
+    sample = FactoryGirl.create(:sample)
+    FactoryGirl.create(:measurement, :sample_id => sample.id, :run_id => @run.id)
     xhr :get, :approve, :id => sample, :sample_class => "Sample", :run_id => @run.id
     sample.reload
     assert sample.approved

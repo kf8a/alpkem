@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe LterCnDeepParser do
+describe Parsers::LterCnDeepParser do
 
   describe 'lter deep core data' do
     before do
-      Factory.create :plot, :name => 'T06R3S3C2M'
-      @parser = FileParser.for(15, Date.today)
+      FactoryGirl.create :plot, :name => 'T06R3S3C2M'
+      @parser = Parsers::FileParser.for(15, Date.today)
       @parser.process_line("20100825,48,T06R3S3C2MB,17.12,LTERDC1D12,Unknown,,,,0.0261,0.1986")
     end
 
@@ -25,8 +25,8 @@ describe LterCnDeepParser do
 
   describe 'a T8nt plot' do
     before do
-      Factory.create :plot, :name => "T08ntR3S2C1S"
-      @parser = FileParser.for(15, Date.today)
+      FactoryGirl.create :plot, :name => "T08ntR3S2C1S"
+      @parser = Parsers::FileParser.for(15, Date.today)
       @parser.process_line('20101029,21,T08ntR3S2C1SA,16.67,LTERDC20B9,Unknown,,,,0.0248,0.1526')
     end
 
@@ -42,8 +42,8 @@ describe LterCnDeepParser do
 
   describe 'a forest plot' do
     before do
-      Factory.create :plot, :name=>'TSFR1S5C2M'
-      @parser = FileParser.for(15, Date.today)
+      FactoryGirl.create :plot, :name=>'TSFR1S5C2M'
+      @parser = Parsers::FileParser.for(15, Date.today)
       @parser.process_line('20101027,82,TSFR1S5C2MA,18.779,LTERDC20G10,Unknown,,,,0.0045,0.0431')
     end
 

@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe FileParser do
+describe Parsers::FileParser do
 
   before(:each) do
-    @parser = FileParser.for(9, Date.today)
+    @parser = Parsers::FileParser.for(9, Date.today)
   end
 
   it "should return the right sample on find_sample and find_or_create_sample" do

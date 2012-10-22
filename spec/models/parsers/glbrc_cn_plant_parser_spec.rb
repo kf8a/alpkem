@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe GLBRCCNPlantParser do
+describe Parsers::GLBRCCNPlantParser do
 
   describe 'an excel file with improper string escaping' do
     before do
-      @parser = FileParser.for(12,Date.today)
+      @parser = Parsers::FileParser.for(12,Date.today)
     end
     describe 'a line of data' do
       before do

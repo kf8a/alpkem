@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe CNDeepParser do
+describe Parsers::CNDeepParser do
 
   describe 'openoffice csv format' do
   before do
-    @parser = FileParser.for(7,Date.today)
+    @parser = Parsers::FileParser.for(7,Date.today)
     @parser.process_line('20090424,9,"09DCL01S01010B",18.456,13555,"Unknown",,,,0.1558,1.5256')
   end
 
@@ -23,7 +23,7 @@ describe CNDeepParser do
 
   describe 'excel csv format' do
   before do
-    @parser = FileParser.for(7,Date.today)
+    @parser = Parsers::FileParser.for(7,Date.today)
     @parser.process_line('20090424,9,09DCL01S01010B,18.456,13555,Unknown,,,,0.1558,1.5256')
   end
 

@@ -20,7 +20,7 @@ describe Run do
     }
 
     @standard_run = Run.new(@attr)
-    @standard_run.measurements = [Factory.create(:measurement)]
+    @standard_run.measurements = [FactoryGirl.create(:measurement)]
     assert @standard_run.save
   end
 
@@ -37,8 +37,8 @@ describe Run do
   end
 
   it "runs should include runs but not cn runs and vice versa" do
-    run = Factory.create(:run, :sample_date => Date.today)
-    cn_run = Factory.create(:cn_run)
+    run = FactoryGirl.create(:run, :sample_date => Date.today)
+    cn_run = FactoryGirl.create(:cn_run)
     assert !Run.runs.include?(cn_run)
     assert Run.runs.include?(run)
 
@@ -47,24 +47,24 @@ describe Run do
   end
 
   it "should give sample_type_name for a run" do
-    run = Factory.create(:run, :sample_type_id => 4)
+    run = FactoryGirl.create(:run, :sample_type_id => 4)
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
   end
 
   it "should identify what is and is not a cn_run" do
     run = Run.find(@standard_run.id)
-    cn_run = Factory.create(:cn_run)
+    cn_run = FactoryGirl.create(:cn_run)
     assert !run.cn_run?
     assert cn_run.cn_run?
   end
 
   it "should find the associated samples" do
     run = Run.find(@standard_run.id)
-    sample = Factory.create(:sample)
-    Factory.create(:measurement, :run => run, :sample => sample)
-    other_run = Factory.create(:run)
-    other_sample = Factory.create(:sample)
-    Factory.create(:measurement, :run => other_run, :sample => other_sample)
+    sample = FactoryGirl.create(:sample)
+    FactoryGirl.create(:measurement, :run => run, :sample => sample)
+    other_run = FactoryGirl.create(:run)
+    other_sample = FactoryGirl.create(:sample)
+    FactoryGirl.create(:measurement, :run => other_run, :sample => other_sample)
     run.reload
     other_run.reload
     assert run.samples.include?(sample)
@@ -74,14 +74,14 @@ describe Run do
   end
 
   it "should know if it has been updated" do
-    changing_run = Factory.create(:run)
-    changing_sample = Factory.create(:sample)
-    Factory.create(:measurement, :sample => changing_sample, :run => changing_run)
+    changing_run = FactoryGirl.create(:run)
+    changing_sample = FactoryGirl.create(:sample)
+    FactoryGirl.create(:measurement, :sample => changing_sample, :run => changing_run)
     changing_sample.sample_date = Date.yesterday #a change
     changing_sample.save
-    static_run = Factory.create(:run)
-    static_sample = Factory.create(:sample)
-    Factory.create(:measurement, :sample => static_sample, :run => static_run)
+    static_run = FactoryGirl.create(:run)
+    static_sample = FactoryGirl.create(:sample)
+    FactoryGirl.create(:measurement, :sample => static_sample, :run => static_run)
     changing_run.reload
     static_run.reload
     assert changing_run.updated?

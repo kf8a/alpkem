@@ -1,25 +1,25 @@
 #Helper class to parse files for Run data
-class FileParser
+class Parsers::FileParser
   attr_accessor :load_errors, :plot_errors, :measurements, :plot, :sample, :sample_type_id, :sample_date
 
   def self.for(sample_type_id,date)
     klass = case sample_type_id
-        when 1; LysimeterParser
-        when 2; StandardParser
-        when 3; OldSoilParser
-        when 4; GLBRCDeepParser
-        when 5; StandardParser
-        when 6; CNSampleParser
-        when 7; CNDeepParser
-        when 8; StandardParser
-        when 9; CNGLBRCParser
-        when 10; LysimeterNO3Parser
-        when 11; LysimeterNH4Parser
-        when 12; GLBRCCNPlantParser
-        when 13; LeileiSampleParser
-        when 14; LTERCNPlantParser
-        when 15; LterCnDeepParser
-        when 16; StandardParser
+        when 1; Parsers::LysimeterParser
+        when 2; Parsers::StandardParser
+        when 3; Parsers::OldSoilParser
+        when 4; Parsers::GLBRCDeepParser
+        when 5; Parsers::StandardParser
+        when 6; Parsers::CNSampleParser
+        when 7; Parsers::CNDeepParser
+        when 8; Parsers::StandardParser
+        when 9; Parsers::CNGLBRCParser
+        when 10; Parsers::LysimeterNO3Parser
+        when 11; Parsers::LysimeterNH4Parser
+        when 12; Parsers::GLBRCCNPlantParser
+        when 13; Parsers::LeileiSampleParser
+        when 14; Parsers::LTERCNPlantParser
+        when 15; Parsers::LterCnDeepParser
+        when 16; Parsers::StandardParser
         else false
         end
 

@@ -4,7 +4,7 @@ describe Sample do
 
   describe "validates presence of plot" do
     before(:each) do
-      @sample = Factory.create(:sample)
+      @sample = FactoryGirl.create(:sample)
     end
 
     it "should require plot to be valid" do
@@ -15,7 +15,7 @@ describe Sample do
 
   describe "plot_name method" do
     before(:each) do
-      @sample = Factory.create(:sample)
+      @sample = FactoryGirl.create(:sample)
     end
 
     it "should return the name of the plot" do
@@ -26,25 +26,25 @@ describe Sample do
   describe "previous_measurements method" do
     describe "with some previous approved measurements for the same plot" do
       before(:each) do
-        @sample = Factory.create(:sample, :sample_date => Date.today)
-        @prev_sample = Factory.create(:sample,
+        @sample = FactoryGirl.create(:sample, :sample_date => Date.today)
+        @prev_sample = FactoryGirl.create(:sample,
             :sample_date => 1.year.ago.to_date,
             :plot => @sample.plot,
             :approved => true)
-        @prev_approved1 = Factory.create(:measurement, :sample => @prev_sample)
-        @prev_approved2 = Factory.create(:measurement, :sample => @prev_sample)
-        @unapproved_sample = Factory.create(:sample,
+        @prev_approved1 = FactoryGirl.create(:measurement, :sample => @prev_sample)
+        @prev_approved2 = FactoryGirl.create(:measurement, :sample => @prev_sample)
+        @unapproved_sample = FactoryGirl.create(:sample,
              :sample_date => 1.year.ago.to_date,
              :plot => @sample.plot,
              :approved => false)
-        @prev_unapproved = Factory.create(:measurement, :sample => @unapproved_sample)
-        new_plot = Factory.create(:plot)
-        @wrong_plot_sample = Factory.create(:sample,
+        @prev_unapproved = FactoryGirl.create(:measurement, :sample => @unapproved_sample)
+        new_plot = FactoryGirl.create(:plot)
+        @wrong_plot_sample = FactoryGirl.create(:sample,
              :sample_date => 1.year.ago.to_date,
              :plot => new_plot,
              :approved => true)
-        @prev_wrong_plot = Factory.create(:measurement, :sample => @wrong_plot_sample)
-        @prev_deleted = Factory.create(:measurement, :sample => @prev_sample, :deleted => true)
+        @prev_wrong_plot = FactoryGirl.create(:measurement, :sample => @wrong_plot_sample)
+        @prev_deleted = FactoryGirl.create(:measurement, :sample => @prev_sample, :deleted => true)
       end
 
       it "should list those previous measurements" do
@@ -69,11 +69,11 @@ describe Sample do
   describe "analytes method" do
     describe "for an NO3/NH4 type sample" do
       before(:each) do
-        @sample = Factory.create(:sample)
+        @sample = FactoryGirl.create(:sample)
         @no3 = find_or_factory(:analyte, :name => "NO3")
         @nh4 = find_or_factory(:analyte, :name => "NH4")
-        Factory.create(:measurement, :sample => @sample, :analyte => @no3)
-        Factory.create(:measurement, :sample => @sample, :analyte => @nh4)
+        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @no3)
+        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @nh4)
       end
 
       it "should include NO3" do
@@ -87,11 +87,11 @@ describe Sample do
 
     describe "for an N/C type sample" do
       before(:each) do
-        @sample = Factory.create(:sample)
+        @sample = FactoryGirl.create(:sample)
         @nitrogen = find_or_factory(:analyte, :name => "N")
         @carbon = find_or_factory(:analyte, :name => "C")
-        Factory.create(:measurement, :sample => @sample, :analyte => @nitrogen)
-        Factory.create(:measurement, :sample => @sample, :analyte => @carbon)
+        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @nitrogen)
+        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @carbon)
       end
 
       it "should include Nitrogen" do
@@ -106,15 +106,15 @@ describe Sample do
 
   describe "average method" do
     before(:each) do
-      @sample = Factory.create(:sample)
+      @sample = FactoryGirl.create(:sample)
       @no3 = find_or_factory(:analyte, :name => "NO3")
       @nh4 = find_or_factory(:analyte, :name => "NH4")
-      @measurement1 = Factory.create(:measurement, :sample => @sample, :amount => 1, :analyte => @no3)
-      @measurement2 = Factory.create(:measurement, :sample => @sample, :amount => 2, :analyte => @no3)
-      @measurement3 = Factory.create(:measurement, :sample => @sample, :amount => 3, :analyte => @no3)
+      @measurement1 = FactoryGirl.create(:measurement, :sample => @sample, :amount => 1, :analyte => @no3)
+      @measurement2 = FactoryGirl.create(:measurement, :sample => @sample, :amount => 2, :analyte => @no3)
+      @measurement3 = FactoryGirl.create(:measurement, :sample => @sample, :amount => 3, :analyte => @no3)
       @correct_average = (1 + 2 + 3)/3
-      @other_analyte_measurement = Factory.create(:measurement, :sample => @sample, :amount => 4, :analyte => @nh4)
-      @deleted_measurement = Factory.create(:measurement, :sample => @sample, :amount => 5, :analyte => @no3, :deleted => true)
+      @other_analyte_measurement = FactoryGirl.create(:measurement, :sample => @sample, :amount => 4, :analyte => @nh4)
+      @deleted_measurement = FactoryGirl.create(:measurement, :sample => @sample, :amount => 5, :analyte => @no3, :deleted => true)
       @sample.reload
     end
 

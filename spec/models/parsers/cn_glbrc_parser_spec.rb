@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe CNGLBRCParser do
+describe Parsers::CNGLBRCParser do
 
   describe 'openoffice csv format' do
   before do
-    @parser = FileParser.for(9,Date.today)
+    @parser = Parsers::FileParser.for(9,Date.today)
     @parser.process_line('20090505,10,"0905L01S01010C",15.63,12716,"Unknown",,,,0.1291,1.2557 ')
   end
 
@@ -22,7 +22,7 @@ describe CNGLBRCParser do
 
   describe 'excel csv format' do
   before do
-    @parser = FileParser.for(9,Date.today)
+    @parser = Parsers::FileParser.for(9,Date.today)
     @parser.process_line('20090505,10,0905L01S01010C,15.63,12716,Unknown,,,,0.1291,1.2557')
   end
 

@@ -1,5 +1,5 @@
 #For parsing CN Deep Core files into Carbon/Nitrogen measurements.
-class CNDeepParser < CNSampleParser
+class Parsers::CNDeepParser < Parsers::CNSampleParser
 
 #  CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[abc|ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
   CN_DEEP_CORE = '(\d+),\d+,"?\d*DC(.{1,11})[ABC]"?,.+,(\d+\.\d+),(\d+\.\d+)'

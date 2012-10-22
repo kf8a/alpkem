@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LysimeterParser do
+describe Parsers::LysimeterParser do
 
   describe 'parsing lysimeter files' do
     before(:each) do
@@ -10,7 +10,7 @@ describe LysimeterParser do
       "13:16	203	2-2-1c, 20090615	     2564	   0.055					     1709	  -0.031	LO	"
         	]
 
-       parser = FileParser.for(1, Date.today)
+       parser = Parsers::FileParser.for(1, Date.today)
 
        @samples = data.collect do |line|
          parser.process_line(line)

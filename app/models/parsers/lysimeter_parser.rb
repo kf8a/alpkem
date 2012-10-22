@@ -1,5 +1,5 @@
 #For parsing Lysimeter samples
-class LysimeterParser < FileParser
+class Parsers::LysimeterParser < Parsers::FileParser
 
   LYSIMETER = '(\w{1,2})-(\d)-(\d)[ABC|abc], (\d{8})\s+-?\d+\t\s+(-?\d+\.\d+)\t\w*\t+\s+-?\d+\t\s+(-?\d+\.\d+)'
 

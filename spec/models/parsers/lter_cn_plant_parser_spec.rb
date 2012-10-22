@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe LTERCNPlantParser do
+describe Parsers::LTERCNPlantParser do
 
   describe 'excel csv format' do
     before do
-       @parser = FileParser.for(14,Date.today)
+       @parser = Parsers::FileParser.for(14,Date.today)
     end
     describe 'a line of data' do
       before do

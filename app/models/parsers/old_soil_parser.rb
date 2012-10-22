@@ -1,5 +1,5 @@
 #For getting soil samples out of old-style files.
-class OldSoilParser < FileParser
+class Parsers::OldSoilParser < Parsers::FileParser
 
   OLD_SOIL_SAMPLE     = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]( rerun)*\t\s+-*(\d+)\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 
