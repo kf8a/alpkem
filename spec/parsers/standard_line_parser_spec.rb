@@ -1,4 +1,4 @@
-require './app/models/parsers/standard_line_parser.rb'
+require 'spec_helper'
 
 describe StandardLineParser do
   it 'parses soil sample lines' do
