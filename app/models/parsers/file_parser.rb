@@ -14,8 +14,8 @@ class Parsers::FileParser
         when 7; Parsers::CNDeepParser
         when 8; Parsers::StandardParser
         when 9; Parsers::CNGLBRCParser
-        when 10; Parsers::LysimeterNO3Parser
-        when 11; Parsers::LysimeterNH4Parser
+        # when 10; Parsers::LysimeterNO3Parser
+        # when 11; Parsers::LysimeterNH4Parser
         when 12; Parsers::GLBRCCNPlantParser
         when 13; Parsers::LeileiSampleParser
         when 14; Parsers::LTERCNPlantParser

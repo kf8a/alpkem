@@ -13,7 +13,7 @@ describe Parsers::LysimeterParser do
        parser = Parsers::FileParser.for(1, Date.today)
 
        @samples = data.collect do |line|
-         parser.process_line(line)
+         parser.process_line(line, LysimeterLineParser)
          parser.sample
        end
     end

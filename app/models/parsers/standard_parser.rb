@@ -10,11 +10,21 @@ class Parsers::StandardParser < Parsers::FileParser
     end
   end
 
+  def analysis_header_line(lines)
+    i = 0
+    lines.each do |line|
+      break if line =~ /Time acquired/
+      i = i + 1
+    end
+    lines[i + 2]
+  end
+
   def check_file_type(data)
     lines = data.readlines
     data.rewind
 
-    case lines[15]
+    header = analysis_header_line(lines)
+    case header
     when /NH4.+NO3/ then 
       StandardLineParser
     when /NH4/ then

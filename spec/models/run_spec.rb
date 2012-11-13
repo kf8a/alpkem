@@ -303,7 +303,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'Lysimeter_single_format.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 10))
+      r = Run.new(@attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
