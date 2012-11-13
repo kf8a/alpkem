@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+#source 'http://rubygems.org'
 
 gem 'rails', '3.2.8'
 
@@ -54,7 +54,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem "database_cleaner"
-  gem "cucumber-rails"
+  gem "cucumber-rails", :require => false
   gem 'single_test'
   gem 'spork'
   # gem 'launchy'
