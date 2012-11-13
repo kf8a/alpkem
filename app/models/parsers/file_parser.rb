@@ -2,6 +2,7 @@
 class Parsers::FileParser
   attr_accessor :load_errors, :plot_errors, :measurements, :plot, :sample, :sample_type_id, :sample_date
 
+  # These subclasses are really line parsers.
   def self.for(sample_type_id,date)
     klass = case sample_type_id
         when 1; Parsers::LysimeterParser
