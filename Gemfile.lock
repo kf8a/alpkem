@@ -7,6 +7,7 @@ GIT
       rack-openid (>= 1.2.0)
 
 GEM
+  remote: http://rubygems.org/
   specs:
     ZenTest (4.8.2)
     actionmailer (3.2.8)

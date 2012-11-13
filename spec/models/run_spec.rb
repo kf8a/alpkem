@@ -190,6 +190,17 @@ describe Run do
     end
   end
 
+  it 'loads single element files' do
+    file_name = Rails.root.join 'test', 'data', '3262012B.TXT'
+    File.open(file_name, 'r') do |f|
+      s = StringIO.new(f.read)
+      r = Run.new(@attr.merge(:sample_type_id => 2))
+      r.load_file(s)
+      assert r.save
+      assert r.samples.size > 1
+    end
+  end
+
   it "loads glbrc_resin_strips files" do
     file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
