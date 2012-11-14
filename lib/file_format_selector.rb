@@ -5,7 +5,7 @@ class FileFormatSelector
     data.rewind
 
     if old_format?(lines)
-      '2005'
+      'Old'
     else
 
       header = analysis_header_line(lines)
