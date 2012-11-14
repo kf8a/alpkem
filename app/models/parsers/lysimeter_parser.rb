@@ -2,39 +2,12 @@
 class Parsers::LysimeterParser < Parsers::FileParser
 
   def parse_data(data)
-    line_parser = check_file_type(data)
+    line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'LysimeterLineParser'
 
-    data.each { | line | process_line(line, line_parser) }
+    data.each { | line | process_line(line, line_parser_name.constantize) }
     if self.measurements.blank?
       self.load_errors += "No data was able to be loaded from this file."
     end
-  end
-
-  def analysis_header_line(lines)
-    i = 0
-    lines.each do |line|
-      break if line =~ /Time acquired/
-      i = i + 1
-    end
-    lines[i + 2]
-  end
-
-  def check_file_type(data)
-    lines = data.readlines
-    data.rewind
-
-    header = analysis_header_line(lines)
-    case header
-    when /NH4.+NO3/ then 
-      LysimeterLineParser
-    when /NH4/ then
-      NH4LysimeterLineParser
-    when /NO3/ then 
-      NO3LysimeterLineParser
-    else
-      raise 'Unkown file type'
-    end
-
   end
 
   def process_line(line, line_parser)

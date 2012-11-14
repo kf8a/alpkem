@@ -60,6 +60,8 @@ class Parsers::FileParser
     self.parse_data(file_contents) if self.load_errors.blank?
   end
 
+  # subclasses should override this if they need to specifiy
+  # different line parsers for the sample type
   def parse_data(data)
     data.each { | line | process_line(line) }
     if self.measurements.blank?
