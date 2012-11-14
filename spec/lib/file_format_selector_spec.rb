@@ -13,4 +13,8 @@ describe FileFormatSelector do
     file = File.open('test/data/100419L.TXT')
     FileFormatSelector.new.get_line_parser_prefix(file).should == ''
   end
+  it 'finds the right line parser prefix for old alpkem files' do
+    file = File.open('test/data/072709SN.TXT')
+    FileFormatSelector.new.get_line_parser_prefix(file).should == '2005'
+  end
 end
