@@ -1,0 +1,3 @@
+Create a preview from the uploaded file and ask the user to fill in the
+plot and replicate info if we don't have have it. Don't allow it to be approved 
+until the info is there.
