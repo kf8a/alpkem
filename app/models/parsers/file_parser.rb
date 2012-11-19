@@ -21,6 +21,7 @@ class Parsers::FileParser
         when 14; Parsers::LTERCNPlantParser
         when 15; Parsers::LterCnDeepParser
         when 16; Parsers::StandardParser
+        when 17; Parsers::GLBRCScaleupBaseParser
         else false
         end
 
