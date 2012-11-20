@@ -24,7 +24,7 @@ end
 end
 
 
-l_study = Study.find_or_create_by_name(:name => 'Lux Arbor', :prefix => 'M')
+l_study = Study.find_or_create_by_name(:name => 'Lux Arbor', :prefix => 'L')
  
 1.upto(3) do |i|
   l_study.treatments.find_or_create_by_name("L0#{i}")
