@@ -36,4 +36,39 @@ describe OldStandardLineParser do
       @no3.should      == '2.272032022'
     end
   end
+
+  describe 'a scaleup data line' do
+    before do
+      @first, @second, @nh4, @no3 = OldStandardLineParser.parse('10:24	111	L01S3B	   10924.598632812	       0.125434265		    7629.784179688	       0.082236394	')
+    end
+    it 'parses the plot' do
+      @first.should    == 'L01'
+    end
+    it' parses the rep' do
+      @second.should   == '3'
+    end
+    it 'parses the nh4' do
+      @nh4.should      == '0.125434265'
+    end
+    it 'parses the no3' do
+      @no3.should      == '0.082236394'
+    end
+  end
+  describe 'another scaleup data line' do
+    before do
+      @first, @second, @nh4, @no3 = OldStandardLineParser.parse(' 11:52	161	L02S10A	   11500.867187500	       0.131874472		    8088.541503906	       0.087122686	')
+    end
+    it 'parses the plot' do
+      @first.should    == 'L02'
+    end
+    it' parses the rep' do
+      @second.should   == '10'
+    end
+    it 'parses the nh4' do
+      @nh4.should      == '0.131874472'
+    end
+    it 'parses the no3' do
+      @no3.should      == '0.087122686'
+    end
+  end
 end

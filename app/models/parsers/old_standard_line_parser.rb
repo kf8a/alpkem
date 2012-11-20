@@ -1,6 +1,6 @@
 class OldStandardLineParser
 
-  STANDARD_SAMPLE   = '\t\d{3}\t(\w{1,2})-(\d)[abc|ABC]\t\s+-?\d+\.\d+\s+(-?\d+\.\d+).+-?\d+\.\d+\s+(-?\d+\.\d+).+'
+  STANDARD_SAMPLE   = '([L|M]?\w{1,2})[-|S](\d{1,2})[abc|ABC]\s+-?\d+\.\d+\s+(-?\d+\.\d+).+-?\d+\.\d+\s+(-?\d+\.\d+).+'
 
   def self.parse(line)
     re = Regexp.new(STANDARD_SAMPLE)
