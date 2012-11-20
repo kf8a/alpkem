@@ -3,6 +3,7 @@ class Plot < ActiveRecord::Base
   belongs_to :study
   belongs_to :treatment
   belongs_to :replicate
+  belongs_to :station
   has_many :samples
 
   validates_uniqueness_of :name, :scope => :study_id

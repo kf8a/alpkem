@@ -7,7 +7,7 @@ class Parsers::FileParser
     klass = case sample_type_id
         when 1; Parsers::LysimeterParser
         when 2; Parsers::StandardParser
-        when 3; Parsers::OldSoilParser
+        when 3; Parsers::StandardParser
         when 4; Parsers::GLBRCDeepParser
         when 5; Parsers::StandardParser
         when 6; Parsers::CNSampleParser
