@@ -132,4 +132,31 @@ describe RunsController do
     assert ! sample.approved
   end
 
+  describe 'POST merge a split run' do
+    before do
+      file1_name = Rails.root.join('test','data', '03262012.TXT')
+      file2_name = Rails.root.join('test','data', '3262012B.TXT')
+      file1 = fixture_file_upload(file1_name, 'text/plain')
+      @file2 = fixture_file_upload(file2_name, 'text/plain')
+
+      post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
+        :data => {:file => file1}
+      run = assigns(:run)
+      @sample = run.samples[35]
+
+    end
+
+    it 'uploads the right number of measurements' do
+      @sample.measurements.count.should == 6
+    end
+
+
+    it 'should group the samples together' do
+      post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
+        :data => {:file => @file2}
+
+      @sample.measurements.count.should == 9
+    end
+  end
+
 end
