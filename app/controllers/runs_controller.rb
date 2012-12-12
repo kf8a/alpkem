@@ -39,7 +39,7 @@ class RunsController < ApplicationController
   def edit
     @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
-    @measurements = @run.all_measurements + @run.similar_runs.collect{|run| run.all_measurements}
+    # @measurements = @run.all_measurements + @run.similar_runs.collect{|run| run.all_measurements}
   end
 
   # POST /runs
