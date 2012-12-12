@@ -18,6 +18,7 @@ gem 'jquery-rails'
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
+gem 'libv8'
 gem 'therubyracer'
 
 # Deploy with Capistrano
@@ -46,7 +47,6 @@ group :development, :test do
   gem 'single_test'
   gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'
-  
 end
 
 group :test do
