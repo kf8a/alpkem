@@ -1,8 +1,9 @@
 GIT
   remote: git://github.com/nbudin/devise_openid_authenticatable.git
-  revision: a442042fc88bb9ed8cf8b27cc46cb1d887621c56
+  revision: 19cb6191544611262d57a5e08ea78a8501dea61b
+  tag: v1.1.1
   specs:
-    devise_openid_authenticatable (1.1.2)
+    devise_openid_authenticatable (1.1.1)
       devise (>= 1.3)
       rack-openid (>= 1.2.0)
 
