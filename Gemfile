@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle authentication
 gem 'devise'
@@ -17,8 +17,6 @@ gem 'jquery-rails'
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
-gem 'libv8'
-gem 'therubyracer'
 
 # Deploy with Capistrano
 gem 'capistrano'
@@ -33,13 +31,6 @@ end
 
 group :development, :test do
   gem 'sqlite3-ruby' #, :require => 'sqlite3'  
-  gem 'autotest'  #use with 'bundle exec autotest'
-  gem 'autotest-growl'
-  gem 'autotest-rails-pure' #to use Test:Unit
-end
-
-group :maconly do #if not using mac, run "bundle install --without maconly"
-  # gem 'autotest-fsevent'
 end
 
 group :development, :test do
@@ -69,4 +60,5 @@ group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
 end
