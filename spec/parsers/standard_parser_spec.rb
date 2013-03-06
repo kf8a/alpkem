@@ -47,6 +47,22 @@ describe Parsers::StandardParser do
 
   end
 
+  describe 'another line of glbrc data' do
+    before do 
+      @parser = Parsers::FileParser.for(8,Date.today)
+      @parser.process_line('14:38	264	3-1a	     236629	   11.523					    157358	   10.109				', StandardLineParser)
+    end
+
+    it "should have the right plot" do
+      @parser.sample.plot.name.should == 'G3R1'
+    end
+    it "should have the right measurement" do
+      assert_includes @parser.measurements.collect {|x| x.amount}, 11.523
+      assert_includes @parser.measurements.collect {|x| x.amount}, 10.109
+    end
+  end
+
+
   describe 'a line of junk' do
     before do
       @parser = Parsers::FileParser.for(2,Date.today)
