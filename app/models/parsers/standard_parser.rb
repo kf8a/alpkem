@@ -23,7 +23,7 @@ class Parsers::StandardParser < Parsers::FileParser
   end
 
   def get_plot_name(first, second)
-    if @sample_type_id == 2
+    if [2,16].include?(@sample_type_id)
       "T#{first}R#{second}"
     elsif first.start_with?("L0") || first.start_with?("M0")
       "#{first}S#{second}"
