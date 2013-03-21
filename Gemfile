@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Bundle authentication
 gem 'devise'
@@ -35,6 +35,7 @@ end
 
 group :development, :test do
   gem 'single_test'
+  gem 'rspec'
   gem 'rspec-rails'
   #gem "metric_fu" #use with 'rake metrics:all'
 end
