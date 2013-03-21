@@ -53,7 +53,6 @@ describe RunsController do
     end
 
     it { should respond_with :success }
-    it { should assign_to :runs }
   end
 
   describe "GET :cn" do
@@ -62,7 +61,6 @@ describe RunsController do
     end
 
     it { should respond_with :success }
-    it { should assign_to :runs }
   end
 
   describe "GET :show the non-CN run" do
@@ -79,7 +77,6 @@ describe RunsController do
     end
 
     it { should respond_with :success }
-    it { should assign_to :run }
   end
 
   describe "GET :edit the non-CN run" do
@@ -95,7 +92,6 @@ describe RunsController do
       put :update, :id => @run.id, :run => {:sample_date => Date.yesterday}
     end
 
-    it { should assign_to :run }
     it { should redirect_to run_path(@run) }
   end
 
@@ -117,7 +113,6 @@ describe RunsController do
       post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
     end
 
-    it { should assign_to(:run) }
     it { should redirect_to run_path(assigns(:run)) }
   end
 
