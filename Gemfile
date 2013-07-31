@@ -4,7 +4,7 @@ gem 'rails', '3.2.13'
 
 # Bundle authentication
 gem 'devise'
-gem 'devise_openid_authenticatable', :git => 'git://github.com/nbudin/devise_openid_authenticatable.git', :tag => 'v1.1.1'
+gem 'devise_openid_authenticatable', :git => 'git://github.com/nbudin/devise_openid_authenticatable.git' #, :tag => 'v1.1.1'
 
 # Bundle the extra gems:
 gem 'will_paginate', :require => 'will_paginate'
