@@ -54,6 +54,7 @@ end
 group :production do
   gem 'pg'
   gem 'thin'
+  gem 'unicorn'
 end
 
 group :assets do
