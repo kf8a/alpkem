@@ -67,8 +67,9 @@ Alpkem::Application.configure do
   #
   config.action_mailer.default_url_options = { :host => 'sebewa.kbs.msu.edu:4075' }
 
-  config.action_mailer.smtp_settings = {
-    :enable_starttls_auto => true,··
-    :openssl_verify_mode  => 'none'·
-  }
+  # config.action_mailer.smtp_settings = {
+  #   :enable_starttls_auto => true,
+  #   :openssl_verify_mode  => 'none'·
+  # }
+
 end
