@@ -6,7 +6,4 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :remember_me, :email, :password
-
-  #HACK to make the newer devise work with openid_authenticatable
-  attr :encrypted_password
 end
