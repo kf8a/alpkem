@@ -18,7 +18,7 @@ gem "escape_utils"
 
 
 # Deploy with Capistrano
-gem 'capistrano'
+gem 'capistrano', '2.15.5'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
