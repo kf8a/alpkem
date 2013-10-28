@@ -22,32 +22,27 @@ role :app, 'sebewa.kbs.msu.edu'
 role :web, 'sebewa.kbs.msu.edu'
 role :db,  'sebewa.kbs.msu.edu', :primary => true
 
+set :unicorn_binary, "/usr/local/bin/unicorn"
+set :unicorn_config, "/etc/unicorn/alpkem"
+set :unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid"
 
 namespace :deploy do
-  namespace :thin do
-    [:stop, :start, :restart].each do |t|
-      desc "#{t.to_s.capitalize} the thin appserver"
-      task t, :roles => :app do
-        invoke_command "cd #{current_path}; bundle exec thin -C /etc/thin/alpkem.yml #{t.to_s}"
-      end
-    end
+  task :start, :roles => :app, :except => { :no_release => true } do 
+    run "cd #{current_path} && #{try_sudo} bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
   end
-
-  desc "Custom restart task for thin cluster"
+  task :stop, :roles => :app, :except => { :no_release => true } do 
+    run "#{try_sudo} kill `cat #{unicorn_pid}`"
+  end
+  task :graceful_stop, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} kill -s QUIT `cat #{unicorn_pid}`"
+  end
+  task :reload, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} kill -s USR2 `cat #{unicorn_pid}`"
+  end
   task :restart, :roles => :app, :except => { :no_release => true } do
-    deploy.thin.restart
+    stop
+    start
   end
-
-  desc "Custom start task for thin cluster"
-  task :start, :roles => :app do
-    deploy.thin.start
-  end
-
-  desc "Custom stop task for thin cluster"
-  task :stop, :roles => :app do
-    deploy.thin.stop
-  end
-  
  # after :deploy, :link_paperclip_storage, 
   after 'deploy:finalize_update', :link_production_db
 end
