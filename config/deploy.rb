@@ -43,8 +43,10 @@ namespace :deploy do
     stop
     start
   end
+
  # after :deploy, :link_paperclip_storage, 
   after 'deploy:finalize_update', :link_production_db
+  after 'deploy:finalize_update', :link_site_keys
 end
 
 # seed database
@@ -59,3 +61,8 @@ task :link_production_db do
   run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
 end
 
+desc "Link in the site_keys.rb file"
+task :link_site_keys do
+  run "ln -nfs #{deploy_to}/shared/config/site_keys.rb #{release_path}/config/initializers/site_keys.rb"
+  run "ln -nfs #{deploy_to}/shared/config/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
+end
