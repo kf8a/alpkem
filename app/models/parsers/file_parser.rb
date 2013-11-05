@@ -22,6 +22,7 @@ class Parsers::FileParser
         when 15; Parsers::LterCnDeepParser
         when 16; Parsers::StandardParser
         when 17; Parsers::GLBRCScaleupBaseParser
+        when 18; Parsers::SWFParser
         else false
         end
 
@@ -90,7 +91,7 @@ class Parsers::FileParser
                                 :sample_type_id => self.sample_type_id)
   end
 
-  private##########################
+  private
 
   def require_sample_type_id
     self.load_errors += "No Sample Type selected." unless self.sample_type_id
