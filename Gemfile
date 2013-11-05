@@ -4,6 +4,7 @@ gem 'rails', '3.2.15'
 
 # Bundle authentication
 gem 'devise'
+gem 'devise-encryptable'
 
 # Bundle the extra gems:
 gem 'will_paginate', :require => 'will_paginate'

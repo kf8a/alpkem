@@ -88,6 +88,8 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-encryptable (0.1.2)
+      devise (>= 2.1.0)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     escape_utils (0.3.2)
@@ -286,6 +288,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
+  devise-encryptable
   escape_utils
   factory_girl_rails
   jquery-rails
