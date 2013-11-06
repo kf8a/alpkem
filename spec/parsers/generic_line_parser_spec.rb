@@ -1,5 +1,5 @@
 #require 'spec_helper'
-require './app/models/parsers/generic_line_parser.rb'
+require File.dirname(__FILE__) + '/../../app/parsers/generic_line_parser.rb'
 
 
 describe GenericLineParser do
