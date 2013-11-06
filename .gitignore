@@ -18,3 +18,4 @@ rcov/*
 webrat.log
 *.swp
 public/assets/*
+.secret
