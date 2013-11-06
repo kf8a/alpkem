@@ -1,4 +1,4 @@
-#Generic parser to convert files to measurements.
+#Standard parser to convert files to measurements.
 class Parsers::StandardParser < Parsers::FileParser
 
   def parse_data(data)
