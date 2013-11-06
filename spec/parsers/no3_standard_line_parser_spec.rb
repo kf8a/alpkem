@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.dirname(__FILE__) + '/../../app/models/parsers/no3_standard_line_parser.rb'
 
 describe NO3StandardLineParser do
   it 'parses an NO3 only line' do
