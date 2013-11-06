@@ -88,4 +88,5 @@ describe Parsers::StandardParser do
       @parser.sample.should be_nil
     end
   end
+
 end

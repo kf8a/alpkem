@@ -4,7 +4,7 @@ class StandardLineParser
 
   def self.parse(line)
     re = Regexp.new(STANDARD_SAMPLE)
-    first, second, nh4_amount, no3_amount = re.match(line).try(:captures)
-    [first, second, nh4_amount, no3_amount]
+    matches = re.match(line)
+    matches.captures if matches
   end
 end

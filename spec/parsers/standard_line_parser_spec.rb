@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.dirname(__FILE__) + '/../../app/models/parsers/standard_line_parser.rb'
 
 describe StandardLineParser do
   it 'parses a soil sample lines' do
