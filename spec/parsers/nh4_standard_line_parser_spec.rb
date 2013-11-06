@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../app/models/parsers/nh4_standard_line_parser.rb'
+require File.dirname(__FILE__) + '/../../lib/parser_matcher.rb'
 
 describe NH4StandardLineParser do
   it 'parses an NH4 only line' do

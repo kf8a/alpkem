@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../app/models/parsers/standard_line_parser.rb'
+require File.dirname(__FILE__) + '/../../lib/parser_matcher.rb'
 
 describe StandardLineParser do
   it 'parses a soil sample lines' do

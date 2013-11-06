@@ -1,4 +1,3 @@
-#require 'spec_helper'
 require File.dirname(__FILE__) + '/../../app/parsers/generic_line_parser.rb'
 
 

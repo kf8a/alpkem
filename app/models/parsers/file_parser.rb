@@ -23,6 +23,8 @@ class Parsers::FileParser
         when 16; Parsers::StandardParser
         when 17; Parsers::GLBRCScaleupBaseParser
         when 18; Parsers::SWFParser
+        when 19; Parsers::GenericParser   #T21 glbrc soil data
+        when 20; Parsers::GenericParser   #glbrc soil data
         else false
         end
 
