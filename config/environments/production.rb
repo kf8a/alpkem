@@ -65,7 +65,7 @@ Alpkem::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   #
-  config.action_mailer.default_url_options = { :host => 'sebewa.kbs.msu.edu:4075' }
+  config.action_mailer.default_url_options = { :host => 'sebewa.kbs.msu.edu' }
 
   # config.action_mailer.smtp_settings = {
   #   :enable_starttls_auto => true,
