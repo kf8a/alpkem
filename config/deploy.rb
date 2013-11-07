@@ -63,6 +63,8 @@ end
 
 desc "Link in the site_keys.rb file"
 task :link_site_keys do
-  run "ln -nfs #{deploy_to}/shared/config/site_keys.rb #{release_path}/config/initializers/site_keys.rb"
+  run 'rm -rf #{release_path}/config/initializers/devise.rb'
+  run 'rm -rf #{release_path}/config/initializers/secret_token.rb'
+  run "ln -nfs #{deploy_to}/shared/config/devise.rb #{release_path}/config/initializers/devise.rb"
   run "ln -nfs #{deploy_to}/shared/config/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
 end
