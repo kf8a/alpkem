@@ -20,6 +20,17 @@ describe Parsers::CNGLBRCParser do
   end
  end
 
+  describe 'an empty line' do
+    before do 
+      @parser = Parsers::FileParser.for(9,Date.today)
+      @parser.process_line('')
+    end
+
+    it 'should have no plot' do
+      @parser.plot.should be_nil
+    end
+  end
+
   describe 'excel csv format' do
   before do
     @parser = Parsers::FileParser.for(9,Date.today)
