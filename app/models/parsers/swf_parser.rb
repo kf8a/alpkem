@@ -4,9 +4,12 @@ class Parsers::SWFParser < Parsers::CNSampleParser
 
   def process_line(line)
     raw_date, @prefix, @rate, @plot_name, @harvest, @percent_n, @percent_c = ParserMatcher.parse(SWF_CN, line)
-    @plot_name = @prefix + @plot_name
-    @sample_date = Date.parse(raw_date) if raw_date
-    process_data if cn_plot_name_ok?
+
+    if cn_plot_name_ok?
+      @plot_name = @prefix + @plot_name
+      @sample_date = Date.parse(raw_date) if raw_date
+      process_data 
+    end
   end
 
 end
