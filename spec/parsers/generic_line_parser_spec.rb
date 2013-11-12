@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../../app/parsers/generic_line_parser.rb'
+require File.dirname(__FILE__) + '/../../lib/parser_matcher.rb'
 
 
 describe GenericLineParser do
@@ -18,6 +19,16 @@ describe GenericLineParser do
     nh4.should      == '0.099'
     no3.should      == '1.325'
   end
+
+  it 'parses a line with a space after the a' do
+    date, plot, modifier, nh4, no3 = GenericLineParser.parse('	10:44	122	20130708G10R1-25-a 	    12545	   0.099					   128171	   1.325')	
+    date.should     == '20130708'
+    plot.should     == 'G10R1'
+    modifier.should == '25'
+    nh4.should      == '0.099'
+    no3.should      == '1.325'
+  end
+
   it 'does not parse a wrong line' do
     date, plot, modifier, nh4, no3 = GenericLineParser.parse('aa')
     date.should     == nil
