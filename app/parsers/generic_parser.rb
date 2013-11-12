@@ -13,9 +13,11 @@ class Parsers::GenericParser < Parsers::FileParser
   def process_line(line, line_parser)
     date, plot_name, modifier, nh4_amount, no3_amount = line_parser.parse(line)
  
-    plot_name = plot_name + '-' + modifier
-    find_plot(plot_name)
-    process_nhno_sample(nh4_amount, no3_amount) if plot.present?
+    if plot_name && modifier
+      plot_name = plot_name + '-' + modifier
+      find_plot(plot_name)
+      process_nhno_sample(nh4_amount, no3_amount) if plot.present?
+    end
   end
 
 end
