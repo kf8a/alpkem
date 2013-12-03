@@ -12,7 +12,7 @@ class Parsers::FileParser
         when 5; Parsers::StandardParser
         when 6; Parsers::CNSampleParser
         when 7; Parsers::CNDeepParser
-        when 8; Parsers::StandardParser
+        when 8; Parsers::StandardParser # glbrc inorganic N 0-25
         when 9; Parsers::CNGLBRCParser
         # when 10; Parsers::LysimeterNO3Parser
         # when 11; Parsers::LysimeterNH4Parser
@@ -21,10 +21,11 @@ class Parsers::FileParser
         when 14; Parsers::LTERCNPlantParser
         when 15; Parsers::LterCnDeepParser
         when 16; Parsers::StandardParser
-        when 17; Parsers::GLBRCScaleupBaseParser
+        when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
         when 18; Parsers::SWFParser
         when 19; Parsers::GenericParser   #T21 glbrc soil data
         when 20; Parsers::GenericParser   #glbrc soil data
+        when 21; Parsers::GenericParser   #glbrc scaleup soil N
         else false
         end
 
