@@ -46,7 +46,7 @@ namespace :deploy do
 
  # after :deploy, :link_paperclip_storage, 
   after 'deploy:finalize_update', :link_production_db
-  after 'deploy:finalize_update', :link_site_keys
+  after 'deploy:finalize_update', :link_local_env
 end
 
 # seed database
@@ -60,11 +60,9 @@ desc "Link in the production database.yml"
 task :link_production_db do
   run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
 end
-
-desc "Link in the site_keys.rb file"
-task :link_site_keys do
-  run 'rm -rf #{release_path}/config/initializers/devise.rb'
-  run 'rm -rf #{release_path}/config/initializers/secret_token.rb'
-  run "ln -nfs #{deploy_to}/shared/config/devise.rb #{release_path}/config/initializers/devise.rb"
-  run "ln -nfs #{deploy_to}/shared/config/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
+# local env
+desc "Link in the local_env.yml"
+task :link_local_env do
+  run "ln -nfs #{deploy_to}/shared/config/local_env.yml #{release_path}/config/local_env.yml"
 end
+

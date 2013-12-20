@@ -47,9 +47,9 @@ Devise.setup do |config|
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = SecureRandom.hex(64)
-  config.secret_key = 'i08e3374242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p4242l5353p2be6eab0d4d485431fc38635f382ec2cb01e6297579bef236b769c4d30e8fcf5a718088aaa03ed4ea8be67203dbb7fe0e556467ae9bfaf21483a99071a'
+  config.secret_key = ENV['DEVISE_KEY']
 
-  # ==> Configuration for :confirmable
+	# ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
   # he will be able to access your application without confirming. Default is nil.
   # When confirm_within is zero, the user won't be able to sign in without confirming. 
