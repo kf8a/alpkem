@@ -24,16 +24,18 @@ describe Run do
     assert @standard_run.save
   end
 
-  it "should validate sample_type_id and measurements" do
+  it "should validate sample_type_id" do
     run = Run.find(@standard_run.id)
-    assert run.valid?
+    run.should be_valid
     run.sample_type_id = nil
-    assert !run.valid?
+    run.should_not be_valid
+  end
 
+  it "should validate measurements" do 
     run = Run.find(@standard_run.id)
-    assert run.valid?
+    run.should be_valid
     run.measurements = []
-    assert !run.valid?
+    run.should_not be_valid
   end
 
   it "runs should include runs but not cn runs and vice versa" do
@@ -161,20 +163,6 @@ describe Run do
     #      assert r.save
     #      assert r.samples.size > 1
     #      assert_equal 330, r.measurements.size
-    #    end
-    #  end
-  end
-
-  it "loads files with reruns" do
-    # assert_difference "Run.count" do
-    #    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20041102.TXT'
-    #    File.open(file_name,'r') do |f|
-    #      s = StringIO.new(f.read)
-    #      r = Run.new(@attr)
-    #      r.load(s)
-    #      assert r.save
-    #      assert r.samples.size > 1
-    #      assert_equal 342, r.measurements.size
     #    end
     #  end
   end
