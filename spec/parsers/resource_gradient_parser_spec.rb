@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 describe Parsers::ResourceGradientParser do
+  describe 'processing a line of data' do
     before do
       FactoryGirl.create(:plot, name: '403')
       @parser = Parsers::FileParser.for(22,Date.today)
@@ -17,4 +18,5 @@ describe Parsers::ResourceGradientParser do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.154
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.124
     end
+  end
 end
