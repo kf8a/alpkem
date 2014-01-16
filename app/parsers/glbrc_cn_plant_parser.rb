@@ -6,6 +6,7 @@ class Parsers::GLBRCCNPlantParser < Parsers::CNSampleParser
 
   def process_line(line)
     date, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(CN_PLANT_SAMPLE, line)
+    return unless date
     year  = date[0..3].to_i
     month = date[4..5].to_i
     day   = date[6..7].to_i

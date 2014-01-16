@@ -23,6 +23,16 @@ describe Parsers::GLBRCCNPlantParser do
       end
     end
 
+    describe 'a line of non data' do
+      before do
+        @parser.process_line 'Material for Analysis:  plants,,,Calibration Standard: Acetanilide,,Plate Label: GLBRC12 P04,,,,,'
+      end
+
+      it 'should not find a sample' do
+        @parser.sample.should be_nil
+      end
+    end
+
     describe 'another MSExcel line' do
       before do
         @parser.process_line('20081010,68,0810G02R2ZEASTC,2.592,GLBRC08P01F8,Unknown,,,,0.8120,43.4679')
