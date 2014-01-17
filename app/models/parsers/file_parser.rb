@@ -27,6 +27,7 @@ class Parsers::FileParser
         when 20; Parsers::GenericParser   #glbrc soil data
         when 21; Parsers::GenericParser   #glbrc scaleup soil N
         when 22; Parsers::ResourceGradientParser
+        when 23; Parsers::GLBRCSwitchgrassCNParser
         else false
         end
 
