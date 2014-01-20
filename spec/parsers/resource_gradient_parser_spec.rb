@@ -5,13 +5,13 @@ require 'spec_helper'
 describe Parsers::ResourceGradientParser do
   describe 'processing a line of data' do
     before do
-      FactoryGirl.create(:plot, name: '403')
+      FactoryGirl.create(:plot, name: 'F403')
       @parser = Parsers::FileParser.for(22,Date.today)
       @parser.process_line('13:40	188	Sample ID:  403   F4	    21017	   0.124					    14794	   0.154				')
     end
 
     it 'has the right plot' do
-      @parser.sample.plot.name.should == '403'
+      @parser.sample.plot.name.should == 'F403'
     end
 
     it 'has the right measurements' do
