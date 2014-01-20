@@ -10,8 +10,9 @@ class Parsers::ResourceGradientParser < Parsers::FileParser
 
   def process_line(line)
     plot, fert, nh4, no3 = ParserMatcher.parse(GENERIC_SAMPLE, line)
+    return unless plot
 
     find_plot("F#{plot}")
-    process_nhno_sample(nh4, no3)
+    process_nhno_sample(nh4, no3) 
   end
 end
