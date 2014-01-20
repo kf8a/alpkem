@@ -41,7 +41,3 @@ FactoryGirl.define do
     r.measurements   [FactoryGirl.create(:cnm)]
   end
 end
-
-
-
-
