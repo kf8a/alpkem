@@ -7,12 +7,12 @@ describe Parsers::SWFParser do
     end
   describe 'a line of data' do
     before do
-      FactoryGirl.create :plot, name: 'SWF404'
+      FactoryGirl.create :plot, name: 'SWF404H1'
       @parser.process_line('20111101,15,SWF5404H1B,,2.822,GLBRC11P16B3,Unknown,,,,0.7014,45.972')
     end
 
     it 'returns the right plot' do
-      @parser.plot.name.should == 'SWF404'
+      @parser.plot.name.should == 'SWF404H1'
     end
 
     it 'returns the right C value' do
@@ -22,12 +22,12 @@ describe Parsers::SWFParser do
 
   describe 'another line of data' do
     before do 
-      FactoryGirl.create :plot, name: 'SWF201'
+      FactoryGirl.create :plot, name: 'SWF201H2'
       @parser.process_line('20120706,44,SWF1201H2B,3.037,GLBRC12P14D8,Unknown,,,,1.1108,44.82')
     end
 
     it 'returns the right plot' do
-      @parser.plot.name.should == 'SWF201'
+      @parser.plot.name.should == 'SWF201H2'
     end
   end
 
