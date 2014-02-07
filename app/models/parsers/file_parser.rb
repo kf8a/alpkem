@@ -23,11 +23,12 @@ class Parsers::FileParser
         when 16; Parsers::StandardParser
         when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
         when 18; Parsers::SWFParser
-        when 19; Parsers::GenericParser   #T21 glbrc soil data
+        when 19; Parsers::GenericParser   #T28 glbrc mineralization data
         when 20; Parsers::GenericParser   #glbrc soil data
         when 21; Parsers::GenericParser   #glbrc scaleup soil N
         when 22; Parsers::ResourceGradientParser
         when 23; Parsers::GLBRCSwitchgrassCNParser
+        when 24; Parsers::GenericParser   #T0 glbrc mineralization
         else false
         end
 
