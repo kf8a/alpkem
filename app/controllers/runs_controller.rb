@@ -1,7 +1,7 @@
 #This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
 
-  before_filter :get_run, :only => [:edit, :update, :destroy]
+  before_filter :get_run, :only => [:qc, :edit, :update, :destroy]
   respond_to :html, :xml, :csv
 
   # GET /runs
@@ -35,8 +35,11 @@ class RunsController < ApplicationController
     respond_with @run
   end
 
-  # GET /runs/1/edit
   def edit
+  end
+
+  # GET /runs/1/qc
+  def qc
     @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
     # @measurements = @run.all_measurements + @run.similar_runs.collect{|run| run.all_measurements}

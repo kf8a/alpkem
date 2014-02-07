@@ -4,6 +4,9 @@ Alpkem::Application.routes.draw do
   resources :measurements
 
   resources :runs do
+    member do
+      get 'qc'
+    end
     collection do
       get 'cn'
       post 'approve'

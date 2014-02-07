@@ -1,30 +1,28 @@
-<!--Load the AJAX API-->
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-
-<h1>qc</h1><span id='spinner' style="display:none"><img src='/images/spinner.gif'/></span>
-
-<p>
-  Run Date: <%= @run.run_date %>
-</p>
-<p>
-  Sample Date: <%= @run.sample_date %>
-</p>
-<p>
-  Sample Type: <%= @run.sample_type_name %>
-</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Plot</th>
-      <th>Date</th>
-      <% @analytes.each do |analyte| %>
-        <th rowspan='2'><%= analyte.name %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render :partial => 'sample', :collection => @samples %>
-  </tbody>
-</table>
-
+<%= form_for(:run, :url => runs_path, :html => {:multipart => true}) do |f| %>
+  <%= render "shared/error_messages", :target => @run %>
+  <p>
+  <%= f.label :comment, "Comment" %>
+  <%= f.text_area :comment %>
+  </p>
+  <p>
+    <%= f.label :sample_date, "Sample Date (for incubations, this is the day the bag is collected)" %>
+    <%= f.date_select :sample_date,  {:include_blank => true} %>
+  </p>
+  <p>
+    <%= f.label :start_date, "Start Date (for incubations only, this is the date the sample is buried )" %>
+    <%= f.date_select :start_date,  {:include_blank => true} %>
+  </p>
+  <p>
+  <%= f.label :initial_sample_date, "Initial Sample Date (for incubations only, this is the date the sample is removed from the field (the initial sample)' )" %>
+  <%= f.date_select :initial_sample_date,  {:include_blank => true} %>
+  </p>
+  <p>
+    <%= f.label :run_date, "Run Date" %>
+    <%= f.date_select :run_date,  {:include_blank => true} %>
+  </p>
+  <p>
+    <%= f.label :sample_type_id, "Sample Type" %>
+    <%= f.select :sample_type_id, options_for_select(SampleType.sample_type_options) %>
+  </p>
+  <%= submit_tag "Upload", :disable_with => "Uploading..."  %>
+<% end %>

@@ -17,6 +17,10 @@
     <%= f.date_select :start_date %>
   </p>
   <p>
+  <%= f.label :initial_sample_date, "Initial Sample Date (for incubations only, this is the date the sample is removed from the field (the initial sample)' )" %>
+    <%= f.date_select :initial_sample_date %>
+  </p>
+  <p>
     <%= f.label :run_date, "Run Date" %>
     <%= f.date_select :run_date %>
   </p>
