@@ -3,6 +3,8 @@
 
 <h1>qc</h1><span id='spinner' style="display:none"><img src='/images/spinner.gif'/></span>
 
+<%= link_to 'back', runs_url %>
+
 <p>
   Run Date: <%= @run.run_date %>
 </p>
@@ -13,7 +15,7 @@
   Sample Type: <%= @run.sample_type_name %>
 </p>
 
-<table>
+<table class='table'>
   <thead>
     <tr>
       <th>Plot</th>
@@ -27,4 +29,3 @@
     <%= render :partial => 'sample', :collection => @samples %>
   </tbody>
 </table>
-
