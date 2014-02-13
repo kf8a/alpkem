@@ -66,6 +66,20 @@ describe Parsers::GLBRCCNPlantParser do
         assert_includes @parser.measurements.collect {|x| x.amount}, 0.8120
       end
     end
+
+    describe 'a poplar line' do
+      before do
+        @parser.process_line('20101221,51,1012G08R4POPNXM.TRB,2.753,GLBRC10P06E3,Unknown,,,,0.4198,46.9426')
+      end
+
+      it 'has the right date' do
+        @parser.sample.sample_date.should == Date.civil(2010,12,21)
+      end
+
+      it 'has the right plot' do
+        @parser.sample.plot.name.should == 'G8R4POPNXM.TR'
+      end
+    end
   end
 end
 
