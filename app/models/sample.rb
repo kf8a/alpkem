@@ -7,11 +7,11 @@ class Sample < ActiveRecord::Base
   has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
   has_many :runs, :through => :measurements, :order => 'run_date'
   has_many :analytes, :through => :measurements
-  
+
   validates_presence_of :plot
-  
+
   scope :approved, where(:approved => true)
-  
+
   def Sample.samples_to_csv(samples)
     CSV.generate do |csv|
       csv << csv_titles
