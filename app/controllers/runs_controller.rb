@@ -30,7 +30,7 @@ class RunsController < ApplicationController
   # GET /runs/new.xml
   def new
     @run = Run.new
-    @run.sample_date  = session[:sample_date]
+    @run.sample_date  = Date.today #session[:sample_date]
     @run.run_date     = session[:run_date]
     respond_with @run
   end
