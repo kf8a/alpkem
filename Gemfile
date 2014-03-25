@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.16'
+gem 'rails', '3.2.17'
 
 # Bundle authentication
 gem 'devise'
@@ -46,7 +46,6 @@ group :test do
   gem 'capybara'
   gem "database_cleaner"
   gem "cucumber-rails", :require => false
-  gem 'single_test'
   gem 'spork'
   # gem 'launchy'
 end
