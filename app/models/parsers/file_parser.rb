@@ -29,7 +29,7 @@ class Parsers::FileParser
         when 22; Parsers::ResourceGradientParser
         when 23; Parsers::GLBRCSwitchgrassCNParser
         when 24; Parsers::GenericParser   #T0 glbrc mineralization
-        when 25; Parsers::CNGenericParser  #Annual Root CN
+        when 25; Parsers::CNGLBRCGenericParser  #Annual Root CN
         else false
         end
 

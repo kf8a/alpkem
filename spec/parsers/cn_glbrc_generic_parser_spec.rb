@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Parsers::CNGenericParser do
+describe Parsers::CNGLBRCGenericParser do
 
   before do
     @parser = Parsers::FileParser.for(25,Date.today)
