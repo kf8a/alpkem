@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Parsers::CNGenericParser do
 
   before do
-    FactoryGirl.create(:plot, name: 'G01R4-ZEAMX')
     @parser = Parsers::FileParser.for(25,Date.today)
   end
   describe 'a line of data' do
@@ -16,7 +15,7 @@ describe Parsers::CNGenericParser do
     end
 
     it "should have the right plot" do
-      expect(@parser.sample.plot.name).to eq('G01R4-ZEAMX')
+      expect(@parser.sample.plot.name).to eq('G1R4-ZEAMX')
     end
     it 'has the right date' do
       expect(@parser.sample.sample_date).to eq(Date.new(2013,9,16))
@@ -37,7 +36,7 @@ describe Parsers::CNGenericParser do
     end
 
     it "should have the right plot" do
-      expect(@parser.sample.plot.name).to eq('G01R4-ZEAMX')
+      expect(@parser.sample.plot.name).to eq('G1R4-ZEAMX')
     end
     it 'has the right date' do
       expect(@parser.sample.sample_date).to eq(Date.new(2013,9,16))
