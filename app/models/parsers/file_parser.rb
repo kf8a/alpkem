@@ -18,7 +18,7 @@ class Parsers::FileParser
         # when 11; Parsers::LysimeterNH4Parser
         when 12; Parsers::GLBRCCNPlantParser
         when 13; Parsers::LeileiSampleParser
-        when 14; Parsers::LTERCNPlantParser
+        when 14; Parsers::LterCnPlantParser
         when 15; Parsers::LterCnDeepParser
         when 16; Parsers::StandardParser
         when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
