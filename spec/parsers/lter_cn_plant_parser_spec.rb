@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Parsers::LTERCNPlantParser do
+describe Parsers::LterCnPlantParser do
 
   describe 'excel csv format' do
     before do
@@ -8,14 +8,14 @@ describe Parsers::LTERCNPlantParser do
     end
     describe 'a line of data' do
       before do
-        @parser.process_line('20070626,11,0706T01R2TRIGRA,2.816,9856,Unknown,,,,1.5809,40.7759')
+        @parser.process_line('20070626,11,0706T01R2-TRIGRA,2.816,9856,Unknown,,,,1.5809,40.7759')
       end
 
       it "has the right date" do
-        @parser.sample.sample_date.should == Date.new(2007,06,26)
+        expect(@parser.sample.sample_date).to eq(Date.new(2007,06,26))
       end
       it "has the right plot" do
-        @parser.sample.plot.name.should =='T1R2TRIGR' 
+        expect(@parser.sample.plot.name).to eq('T1R2TRIGR')
       end
       it "has the right measurement" do
         assert_includes @parser.sample.measurements.collect {|x| x.amount}, 1.5809
@@ -25,14 +25,14 @@ describe Parsers::LTERCNPlantParser do
 
     describe 'another line of data' do
       before do
-        @parser.process_line('20070625,28,0706TSFR1TRIGRB,2.639,9872,Unknown,,,,1.4945,41.8258')
+        @parser.process_line('20070625,28,0706TSFR1-TRIGRB,2.639,9872,Unknown,,,,1.4945,41.8258')
       end
 
       it "has the right date" do
-        @parser.sample.sample_date.should == Date.civil(2007,06,25)
+        expect(@parser.sample.sample_date).to eq(Date.civil(2007,06,25))
       end
       it "has the right plot" do
-        @parser.sample.plot.name.should == 'TSFR1TRIGR'
+        expect(@parser.sample.plot.name).to eq('TSFR1TRIGR')
       end
       it "has the right measurement" do
         assert_includes @parser.sample.measurements.collect {|x| x.amount}, 1.4945
@@ -42,13 +42,13 @@ describe Parsers::LTERCNPlantParser do
 
     describe 'a species with fractions' do
       before do 
-        @parser.process_line('20030107,15,0301T05R2POPEUR.TRNC,4.958,6868,Unk,,,,0.4622,51.5293')
+        @parser.process_line('20030107,15,0301T05R2-POPEUR.TRNC,4.958,6868,Unk,,,,0.4622,51.5293')
       end
       it 'has the right date' do
-        @parser.sample.sample_date.should == Date.civil(2003,01,07)
+        expect(@parser.sample.sample_date).to eq(Date.civil(2003,01,07))
       end
       it 'has the right plot' do
-        @parser.sample.plot.name.should == 'T5R2POPEUR.TRN'
+        expect(@parser.sample.plot.name).to eq('T5R2POPEUR.TRN')
       end
       it 'has the right measurements' do
         assert_includes @parser.sample.measurements.collect {|x| x.amount}, 0.4622
