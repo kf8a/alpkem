@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '3.2.19'
 
 # Bundle authentication
 gem 'devise'
@@ -28,7 +28,6 @@ gem 'therubyracer'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development do
-  gem "nifty-generators"
   gem 'rails-erd'
 end
 
