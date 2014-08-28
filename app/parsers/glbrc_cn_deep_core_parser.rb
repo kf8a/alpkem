@@ -1,5 +1,5 @@
 #For parsing GLBRC deep core Carbon and Nitrogen samples.
-class Parsers::GLBRCCNDeepCoreParser < Parsers::CNSampleParser
+class GLBRCCNDeepCoreParser < CNSampleParser
 
  # CN_PLANT_SAMPLE           = '(\d{1,2}\/\d{1,2}\/\d\d\d\d),\d+,"?(G\d\dR\dm?\w+)[abc]"?,\d+\.\d+,"?\w+"?,"?\w+"?,,,,(\d+\.\d+),(\d+\.\d+)'
   CN_DEEP_CORE_SAMPLE        = '(\d+),\d+,(\d+)?(G..R\dS\d)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'

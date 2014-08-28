@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::GLBRCCNPlantParser do
+describe GLBRCCNPlantParser do
 
   describe 'an excel file with improper string escaping' do
     before do
-      @parser = Parsers::FileParser.for(12,Date.today)
+      @parser = FileParser.for(12,Date.today)
     end
     describe 'a line of data' do
       before do

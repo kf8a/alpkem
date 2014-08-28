@@ -1,5 +1,5 @@
 #For parsing Lysimeter samples
-class Parsers::LysimeterParser < Parsers::FileParser
+class LysimeterParser < FileParser
 
   def parse_data(data)
     line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'LysimeterLineParser'

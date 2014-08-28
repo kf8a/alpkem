@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::GenericParser do
+describe GenericParser do
 
   before do
     FactoryGirl.create(:plot, name: 'G1R1-10')
-    @parser = Parsers::FileParser.for(20,Date.today)
+    @parser = FileParser.for(20,Date.today)
   end
   describe 'a line of data' do
     before do

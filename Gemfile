@@ -7,7 +7,7 @@ gem 'devise'
 gem 'devise-encryptable'
 
 # Bundle the extra gems:
-gem 'will_paginate', :require => 'will_paginate'
+#gem 'will_paginate', :require => 'will_paginate'
 gem 'nokogiri'
 gem 'rack-offline'
 gem 'chronic'   #parsing dates
@@ -33,8 +33,6 @@ end
 
 group :development, :test do
   gem 'sqlite3-ruby' #, :require => 'sqlite3'  
-  gem 'single_test'
-  gem 'rspec'
   gem 'rspec-rails'
   gem "metric_fu" #use with 'rake metrics:all'
 end
@@ -42,10 +40,10 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
-  gem 'capybara'
+  #gem 'capybara'
   gem "database_cleaner"
   gem "cucumber-rails", :require => false
-  gem 'spork'
+  #gem 'spork'
   # gem 'launchy'
 end
 

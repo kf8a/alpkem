@@ -1,5 +1,5 @@
 #For parsing generic Carbon and Nitrogen samples.
-class Parsers::CNSampleParser < Parsers::FileParser
+class CNSampleParser < FileParser
 
   CN_SAMPLE           = ',\d*,(\d\d\/\d\d\/\d\d\d\d)?,"\d*(.{1,11})[ABC]?","?\w*"?,".*",\d*\.\d*,.*,"?\w*"?,(\d*\.\d*),(\d*\.\d*)'
 

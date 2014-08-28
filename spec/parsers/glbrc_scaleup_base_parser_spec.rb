@@ -1,14 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::GLBRCScaleupBaseParser do
+describe GLBRCScaleupBaseParser do
   describe 'a line of data' do
     before do 
-      @parser = Parsers::FileParser.for(17, Date.today)
+      @parser = FileParser.for(17, Date.today)
       @parser.process_line('10:49	109	M01S02025A	   18143.576171875	       0.199468508		   27428.517578125	       0.304367423	')
     end
 
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'M01S02025'
+      expect(@parser.sample.plot.name).to eql('M01S02025')
     end
 
     it "should have the right measurement" do

@@ -64,7 +64,7 @@ class Run < ActiveRecord::Base
   end
 
   def parser
-    @parser ||= Parsers::FileParser.for(sample_type_id, sample_date)
+    @parser ||= FileParser.for(sample_type_id, sample_date)
   end
 
   def load_errors

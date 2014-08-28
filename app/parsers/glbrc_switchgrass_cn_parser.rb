@@ -1,4 +1,4 @@
-class Parsers::GLBRCSwitchgrassCNParser < Parsers::CNSampleParser
+class GLBRCSwitchgrassCNParser < CNSampleParser
 
   SWITCHGRASS = '(\d+),\d+,(SWF\d+H\d+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 

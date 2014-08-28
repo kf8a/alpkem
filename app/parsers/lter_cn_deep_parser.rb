@@ -1,4 +1,4 @@
-class Parsers::LterCnDeepParser < Parsers::CNSampleParser
+class LterCnDeepParser < CNSampleParser
 
   REGEX = '(\d+),\d+,(T..(?:nt)?R\dS\dC\d[SMD])[ABC],.+,(\d+\.\d+),(\d+\.\d+)'
 

@@ -1,5 +1,5 @@
 #For parsing Deep Core samples from GLBRC.
-class Parsers::GLBRCDeepParser < Parsers::FileParser
+class GLBRCDeepParser < FileParser
 
   GLBRC_DEEP_CORE = '\t\d{3}\t(G\d+R\dS\d\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 

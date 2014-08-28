@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::GLBRCCNDeepCoreParser do
+describe GLBRCCNDeepCoreParser do
 
   before do
-    @parser = Parsers::FileParser.for(26,Date.today)
+    @parser = FileParser.for(26,Date.today)
   end
 
   describe 'a line of data' do

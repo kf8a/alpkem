@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::LterCnPlantParser do
+describe LterCnPlantParser do
 
   describe 'excel csv format' do
     before do
-       @parser = Parsers::FileParser.for(14,Date.today)
+       @parser = FileParser.for(14,Date.today)
     end
     describe 'a line of data' do
       before do

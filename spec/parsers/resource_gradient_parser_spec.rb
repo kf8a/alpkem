@@ -1,11 +1,9 @@
-# require File.dirname(__FILE__) + '/../../app/parsers/resource_gradient_parser.rb'
-# require File.dirname(__FILE__) + '/../../lib/parser_matcher.rb'
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::ResourceGradientParser do
+describe ResourceGradientParser do
   before do
     FactoryGirl.create(:plot, name: 'F403')
-    @parser = Parsers::FileParser.for(22,Date.today)
+    @parser = FileParser.for(22,Date.today)
   end
   describe 'processing a line of data' do
     before do

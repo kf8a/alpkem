@@ -1,4 +1,4 @@
-class Parsers::GLBRCScaleupBaseParser < Parsers::FileParser
+class GLBRCScaleupBaseParser < FileParser
 
   STANDARD_SAMPLE     = '([M|L]0\dS\d{5})[abc|ABC]\s+-?\d+\.\d+\s+(-?\d+\.\d+)\s+-?\d+\.\d+\s+(-?\d+\.\d+)'
 

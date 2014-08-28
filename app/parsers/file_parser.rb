@@ -1,36 +1,36 @@
 #Helper class to parse files for Run data
-class Parsers::FileParser
+class FileParser
   attr_accessor :load_errors, :plot_errors, :measurements, :plot, :sample, :sample_type_id, :sample_date
 
   # These subclasses are really line parsers.
   def self.for(sample_type_id,date)
     klass = case sample_type_id
-        when 1; Parsers::LysimeterParser
-        when 2; Parsers::LterSoilParser
-        when 3; Parsers::StandardParser
-        when 4; Parsers::GLBRCDeepParser
-        when 5; Parsers::StandardParser
-        when 6; Parsers::CNSampleParser
-        when 7; Parsers::CNDeepParser
-        when 8; Parsers::StandardParser # glbrc inorganic N 0-25
-        when 9; Parsers::CNGLBRCParser
-        # when 10; Parsers::LysimeterNO3Parser
-        # when 11; Parsers::LysimeterNH4Parser
-        when 12; Parsers::GLBRCCNPlantParser
-        when 13; Parsers::LeileiSampleParser
-        when 14; Parsers::LterCnPlantParser
-        when 15; Parsers::LterCnDeepParser
-        when 16; Parsers::LterSoilParser
-        when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
-        # when 18; Parsers::SWFParser
-        when 19; Parsers::GenericParser   #T28 glbrc mineralization data
-        when 20; Parsers::GenericParser   #glbrc soil data
-        when 21; Parsers::GenericParser   #glbrc scaleup soil N
-        when 22; Parsers::ResourceGradientParser
-        when 23; Parsers::GLBRCSwitchgrassCNParser
-        when 24; Parsers::GenericParser   #T0 glbrc mineralization
-        when 25; Parsers::CNGLBRCGenericParser  #Annual Root CN
-        when 26; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cors
+        when 1; LysimeterParser
+        when 2; LterSoilParser
+        when 3; StandardParser
+        when 4; GLBRCDeepParser
+        when 5; StandardParser
+        when 6; CNSampleParser
+        when 7; CNDeepParser
+        when 8; StandardParser # glbrc inorganic N 0-25
+        when 9; CNGLBRCParser
+        # when 10; LysimeterNO3Parser
+        # when 11; LysimeterNH4Parser
+        when 12; GLBRCCNPlantParser
+        when 13; LeileiSampleParser
+        when 14; LterCnPlantParser
+        when 15; LterCnDeepParser
+        when 16; LterSoilParser
+        when 17; GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
+        # when 18; SWFParser
+        when 19; GenericParser   #T28 glbrc mineralization data
+        when 20; GenericParser   #glbrc soil data
+        when 21; GenericParser   #glbrc scaleup soil N
+        when 22; ResourceGradientParser
+        when 23; GLBRCSwitchgrassCNParser
+        when 24; GenericParser   #T0 glbrc mineralization
+        when 25; CNGLBRCGenericParser  #Annual Root CN
+        when 26; GLBRCCNDeepCoreParser  #GLBRC Deep cors
         else false
         end
 

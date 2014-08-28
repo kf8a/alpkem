@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parsers::CNGLBRCGenericParser do
+describe CNGLBRCGenericParser do
 
   before do
-    @parser = Parsers::FileParser.for(25,Date.today)
+    @parser = FileParser.for(25,Date.today)
   end
   describe 'a line of data' do
     before do

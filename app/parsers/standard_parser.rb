@@ -1,5 +1,5 @@
 #Standard parser to convert files to measurements.
-class Parsers::StandardParser < Parsers::FileParser
+class StandardParser < FileParser
 
   def parse_data(data)
     line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'StandardLineParser'

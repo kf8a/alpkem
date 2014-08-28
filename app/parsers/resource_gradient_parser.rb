@@ -1,4 +1,4 @@
-class Parsers::ResourceGradientParser < Parsers::FileParser
+class ResourceGradientParser < FileParser
   GENERIC_SAMPLE     = '(\d{3})\s+(F\d)\s+\d+\s+(-*\d+\.\d+)\s+\d+\s*-*\d+\s*(-*\d+\.\d+)'
 
   def parse_data(data)

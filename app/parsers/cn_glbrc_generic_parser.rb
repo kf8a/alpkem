@@ -1,4 +1,4 @@
-class Parsers::CNGLBRCGenericParser < Parsers::CNSampleParser
+class CNGLBRCGenericParser < CNSampleParser
   CN_DEEP_CORE = '(\d+),\d+,"?\d*(.*)[ABC|abc]"?,.+,(\d+\.\d+),(\d+\.\d+)'
 
   def process_line(line)

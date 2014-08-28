@@ -1,5 +1,5 @@
 #Generic parser to convert files to measurements.
-class Parsers::LterSoilParser < Parsers::FileParser
+class LterSoilParser < FileParser
 
   def parse_data(data)
     line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'GenericLineParser'
