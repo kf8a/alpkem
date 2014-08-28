@@ -12,10 +12,10 @@ describe GLBRCCNPlantParser do
       end
 
       it "should have the right date" do
-        @parser.sample.sample_date.should == Date.civil(2008,10,10) 
+        expect(@parser.sample.sample_date).to eql(Date.civil(2008,10,10))
       end
       it "should have the right plot" do
-        @parser.sample.plot.name.should == 'G1R2ZEAGR'
+        expect(@parser.sample.plot.name).to eql('G1R2ZEAGR')
       end
       it "should have the right measurement" do
         assert_includes @parser.measurements.collect {|x| x.amount}, 40.6730
@@ -29,7 +29,7 @@ describe GLBRCCNPlantParser do
       end
 
       it 'should not find a sample' do
-        @parser.sample.should be_nil
+        expect(@parser.sample).to be_nil
       end
     end
 
@@ -39,10 +39,10 @@ describe GLBRCCNPlantParser do
       end
 
       it "should have the right date" do
-        @parser.sample.sample_date.should == Date.civil(2008,10,10) 
+        expect(@parser.sample.sample_date).to eql(Date.civil(2008,10,10))
       end
       it "should have the right plot" do
-         @parser.sample.plot.name.should == 'G2R2ZEAST'
+         expect(@parser.sample.plot.name).to eql('G2R2ZEAST')
       end
       it "should have the right measurement" do
         assert_includes @parser.measurements.collect {|x| x.amount}, 43.4679
@@ -56,10 +56,10 @@ describe GLBRCCNPlantParser do
       end
 
       it 'has the right date' do
-        @parser.sample.sample_date.should == Date.civil(2008,10,10)
+        expect(@parser.sample.sample_date).to eql(Date.civil(2008,10,10))
       end
       it "should have the right plot" do
-         @parser.sample.plot.name.should == 'G2R2ZEAMX.GR'
+         expect(@parser.sample.plot.name).to eql('G2R2ZEAMX.GR')
       end
       it "should have the right measurement" do
         assert_includes @parser.measurements.collect {|x| x.amount}, 43.4679
@@ -73,11 +73,11 @@ describe GLBRCCNPlantParser do
       end
 
       it 'has the right date' do
-        @parser.sample.sample_date.should == Date.civil(2010,12,21)
+        expect(@parser.sample.sample_date).to eql(Date.civil(2010,12,21))
       end
 
       it 'has the right plot' do
-        @parser.sample.plot.name.should == 'G8R4POPNXM.TR'
+        expect(@parser.sample.plot.name).to eql('G8R4POPNXM.TR')
       end
     end
   end

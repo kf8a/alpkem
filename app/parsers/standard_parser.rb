@@ -12,7 +12,6 @@ class StandardParser < FileParser
 
   def process_line(line, line_parser)
     first, second, nh4_amount, no3_amount = line_parser.parse(line)
- 
     unless first.blank? || second.blank?
       plot_name = get_plot_name(first, second)
       unless plot.try(:name) == plot_name

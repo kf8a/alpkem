@@ -12,7 +12,7 @@ describe GenericParser do
     end
 
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'G1R1-10'
+      expect(@parser.sample.plot.name).to eql('G1R1-10')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.068
@@ -26,7 +26,7 @@ describe GenericParser do
     end
 
     it "should have no plot" do
-      @parser.sample.should == nil
+      expect(@parser.sample).to be_nil
     end
   end
 

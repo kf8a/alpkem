@@ -27,7 +27,7 @@ describe CNGLBRCParser do
     end
 
     it 'should have no plot' do
-      @parser.plot.should be_nil
+      expect(@parser.plot).to be_nil
     end
   end
 

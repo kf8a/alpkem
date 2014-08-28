@@ -21,10 +21,10 @@ describe RunsController do
 
   describe "POST :create with invalid sample type" do
     before(:each) do
-      file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
+      # file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
       post :create, :run => {:sample_date => Date.today,
           :sample_type_id => 1},
-          :data => {:file => fixture_file_upload(file_name)}
+          :data => {:file => fixture_file_upload('/new_format_soil_samples_090415.TXT')}
     end
 
     it { should render_template "new" }
@@ -40,8 +40,7 @@ describe RunsController do
 
   describe "POST :create with blank file" do
     before(:each) do
-      file_name = Rails.root.join('test', 'data', 'blank.txt')
-      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+      post :create, :run => @attr, :data => {:file => fixture_file_upload('/blank.txt')}
     end
 
     it { should render_template "new" }
@@ -110,7 +109,7 @@ describe RunsController do
   describe "should create run" do
     before(:each) do
       file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
-      post :create, :run => @attr, :data => {:file => fixture_file_upload(file_name)}
+      post :create, :run => @attr, :data => {:file => fixture_file_upload('/new_format_soil_samples_090415.TXT')}
     end
 
     it { should redirect_to run_path(assigns(:run)) }
@@ -129,10 +128,10 @@ describe RunsController do
 
   describe 'POST merge a split run' do
     before do
-      file1_name = Rails.root.join('test','data', '03262012.TXT')
-      file2_name = Rails.root.join('test','data', '3262012B.TXT')
-      file1 = fixture_file_upload(file1_name, 'text/plain')
-      @file2 = fixture_file_upload(file2_name, 'text/plain')
+      # file1_name = Rails.root.join('test','data', '03262012.TXT')
+      # file2_name = Rails.root.join('test','data', '3262012B.TXT')
+      file1 = fixture_file_upload('/03262012.TXT', 'text/plain')
+      @file2 = fixture_file_upload('/3262012B.TXT', 'text/plain')
 
       post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
         :data => {:file => file1}
@@ -142,7 +141,7 @@ describe RunsController do
     end
 
     it 'uploads the right number of measurements' do
-      @sample.measurements.count.should == 6
+      expect(@sample.measurements.count).to eql(6)
     end
 
 
@@ -150,7 +149,7 @@ describe RunsController do
       post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
         :data => {:file => @file2}
 
-      @sample.measurements.count.should == 9
+      expect(@sample.measurements.count).to eql(9)
     end
   end
 

@@ -6,7 +6,7 @@ class FileParser
   def self.for(sample_type_id,date)
     klass = case sample_type_id
         when 1; LysimeterParser
-        when 2; LterSoilParser
+        when 2; StandardParser #LterSoilParser
         when 3; StandardParser
         when 4; GLBRCDeepParser
         when 5; StandardParser
@@ -20,7 +20,7 @@ class FileParser
         when 13; LeileiSampleParser
         when 14; LterCnPlantParser
         when 15; LterCnDeepParser
-        when 16; LterSoilParser
+        when 16; StandardParser  #LterSoilParser
         when 17; GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
         # when 18; SWFParser
         when 19; GenericParser   #T28 glbrc mineralization data

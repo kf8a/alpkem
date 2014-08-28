@@ -7,8 +7,12 @@ describe StandardParser do
       @parser.process_line('10:38	101	2-1a	     6282	   0.048					    74108	   0.714				', StandardLineParser)
     end
 
+    it 'parses' do
+      expect(@parser.sample).to_not be_nil
+    end
+
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'T2R1'
+      expect(@parser.sample.plot.name).to eql('T2R1')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.048
@@ -23,7 +27,7 @@ describe StandardParser do
     end
 
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'T2R1'
+      expect(@parser.sample.plot.name).to eql('T2R1')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.048
@@ -38,7 +42,7 @@ describe StandardParser do
     end
 
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'G2R1'
+      expect(@parser.sample.plot.name).to eql('G2R1')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.048
@@ -53,7 +57,7 @@ describe StandardParser do
     end
 
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'L03S9'
+      expect(@parser.sample.plot.name).to eql('L03S9')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.112928890 
@@ -69,7 +73,7 @@ describe StandardParser do
     end
 
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'G3R1'
+      expect(@parser.sample.plot.name).to eql('G3R1')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 11.523
@@ -85,7 +89,7 @@ describe StandardParser do
     end
 
     it "should return no sample" do
-      @parser.sample.should be_nil
+      expect(@parser.sample).to be_nil
     end
   end
 

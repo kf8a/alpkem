@@ -11,7 +11,7 @@ describe ResourceGradientParser do
     end
 
     it 'has the right plot' do
-      @parser.sample.plot.name.should == 'F403'
+      expect(@parser.sample.plot.name).to eql('F403')
     end
 
     it 'has the right measurements' do
@@ -26,7 +26,7 @@ describe ResourceGradientParser do
     end
 
     it 'has no plot' do
-      @parser.sample.should be_nil
+      expect(@parser.sample).to be_nil
     end
   end
 end

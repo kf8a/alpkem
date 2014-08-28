@@ -7,7 +7,7 @@ describe Run do
   end
 
   def set_good_data
-    file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
+    file_name = Rails.root.join('spec', 'fixtures', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
       return StringIO.new(f.read)
     end
@@ -26,16 +26,16 @@ describe Run do
 
   it "should validate sample_type_id" do
     run = Run.find(@standard_run.id)
-    run.should be_valid
+    assert run.valid?
     run.sample_type_id = nil
-    run.should_not be_valid
+    assert !run.valid?
   end
 
-  it "should validate measurements" do 
+  it "validates measurements" do 
     run = Run.find(@standard_run.id)
-    run.should be_valid
+    assert run.valid?
     run.measurements = []
-    run.should_not be_valid
+    assert !run.valid?
   end
 
   it "runs should include runs but not cn runs and vice versa" do
@@ -103,7 +103,7 @@ describe Run do
 
   it "requires non empty data to save" do
     r = Run.new(@attr)
-    file_name = Rails.root.join('test', 'data', 'blank.txt')
+    file_name = Rails.root.join('spec', 'fixtures', 'blank.txt')
     File.open(file_name, 'r') do |f|
       empty_data = StringIO.new(f.read)
       r.load_file(empty_data)
@@ -179,7 +179,7 @@ describe Run do
   end
 
   it 'loads single element files' do
-    file_name = Rails.root.join 'test', 'data', '3262012B.TXT'
+    file_name = Rails.root.join 'spec', 'fixtures', '3262012B.TXT'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 2))
@@ -190,7 +190,7 @@ describe Run do
   end
 
   it "loads glbrc_resin_strips files" do
-    file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
+    file_name = Rails.root.join('spec', 'fixtures', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r = Run.new(@attr.merge(:sample_type_id => 5))

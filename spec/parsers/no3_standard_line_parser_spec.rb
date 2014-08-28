@@ -3,9 +3,9 @@ require File.dirname(__FILE__) + '/../../app/models/parsers/no3_standard_line_pa
 describe NO3StandardLineParser do
   it 'parses an NO3 only line' do
     first, second, nh4, no3 = NO3StandardLineParser.parse('09:54	106	4-4c	     9541	   0.104				')
-    first.should    == '4'
-    second.should   == '4'
-    no3.should      == '0.104'
-    nh4.should be_nil
+    expect(first).to eql('4')
+    expect(second).to eql('4')
+    expect(no3).to eql('0.104')
+    expect(nh4).to be_nil
   end
 end

@@ -8,10 +8,10 @@ describe GLBRCSwitchgrassCNParser do
       @parser.process_line '20120706,42,SWF1108H2C,3.829,GLBRC12P14D6,Unknown,,,,1.1235,44.4332'
     end
     it 'has the right date' do
-      @parser.sample_date.should == Date.new(2012,7,6)
+      expect(@parser.sample_date).to eql(Date.new(2012,7,6))
     end
     it "should have the right plot" do
-      @parser.sample.plot.name.should == 'SWF1108H2'
+      expect(@parser.sample.plot.name).to eql('SWF1108H2')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 1.1235
