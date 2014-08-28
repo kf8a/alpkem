@@ -40,7 +40,7 @@ studies.each do |study|
   study.treatments.each do |treatment|
     replicates = Replicate.find_all_by_study_id(study)
     replicates.each do |replicate|
-      p = Plot.where(:name => "#{treatment.name}#{replicate.name}", :study_id => study,).first_or_create({:name => "#{treatment.name}#{replicate.name}", :study => study,:treatment => treatment, :replicate => replicate})
+      Plot.where(:name => "#{treatment.name}#{replicate.name}", :study_id => study,).first_or_create({:name => "#{treatment.name}#{replicate.name}", :study => study,:treatment => treatment, :replicate => replicate})
     end
   end
 end
@@ -50,7 +50,7 @@ m_study.treatments.each do |treatment|
   replicates = Replicate.find_all_by_study_id(m_study.id)
   replicates.each do |replicate|
     1.upto(5) do |f|
-      p = Plot.where(:name => "#{treatment.name}#{replicate.name}F#{f}", :study_id => m_study).first_or_create(:name => "#{treatment.name}#{replicate.name}F#{f}", :study => m_study, :treatment => treatment, :replicate => replicate)
+      Plot.where(:name => "#{treatment.name}#{replicate.name}F#{f}", :study_id => m_study).first_or_create(:name => "#{treatment.name}#{replicate.name}F#{f}", :study => m_study, :treatment => treatment, :replicate => replicate)
     end
   end
 end
