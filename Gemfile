@@ -17,6 +17,8 @@ gem 'jquery-rails'
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"
 
+gem 'dotenv-rails', :groups => [:development, :test]
+gem 'carrierwave'
 
 # Deploy with Capistrano
 gem 'capistrano', '2.15.5'

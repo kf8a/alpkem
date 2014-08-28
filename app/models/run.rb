@@ -4,6 +4,7 @@ class Run < ActiveRecord::Base
   has_many :samples,  through: :measurements, uniq: true, dependent: :destroy
   has_many :analytes, through: :measurements, uniq: true, order: 'name'
   has_many :measurements, dependent: :destroy
+  has_many :data_sources
 
   validates :sample_type_id, presence: true
   validates :measurements,   presence: true

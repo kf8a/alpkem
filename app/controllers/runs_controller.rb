@@ -54,6 +54,9 @@ class RunsController < ApplicationController
     session[:run_date] = @run.run_date
 
     file = (!params[:data].blank? && params[:data][:file])
+    data = DataSource.new
+    data.data = file
+    @run.data_sources << data
     @run.load_file(file)
 
     if @run.save
