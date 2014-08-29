@@ -13,6 +13,7 @@ gem 'rack-offline'
 gem 'chronic'   #parsing dates
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 #Gets rid of annoying UTF-8 string error in rack
 gem "escape_utils"

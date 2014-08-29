@@ -4,7 +4,6 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery_ujs 
-//= require jquery-ui-1.8.23.custom.min.js
+//= require jquery-ui/effect.all
 //= require_tree .
 //
