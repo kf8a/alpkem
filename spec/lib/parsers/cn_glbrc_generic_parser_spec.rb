@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Parsers::CNGLBRCGenericParser do
 
   before do
-    @parser = Parsers::FileParser.for(25,Date.today)
+    @parser = Parsers::Parser.for(25,Date.today)
   end
   describe 'a line of data' do
     before do

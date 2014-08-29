@@ -3,7 +3,7 @@ module Parsers
   class StandardParser < FileParser
 
     def parse_data(data)
-      line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'StandardLineParser'
+      line_parser_name = "Parsers::" + FileFormatSelector.new.get_line_parser_prefix(data) + 'StandardLineParser'
 
       data.each { | line | process_line(line, line_parser_name.constantize) }
       if self.measurements.blank?
