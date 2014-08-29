@@ -19,7 +19,7 @@ describe Run do
       :sample_date    => Date.today.to_s
     }
 
-    @standard_run = Run.new(@attr)
+    @standard_run = FactoryGirl.build(:run, @attr)
     @standard_run.measurements = [FactoryGirl.create(:measurement)]
     assert @standard_run.save
   end
@@ -83,7 +83,7 @@ describe Run do
     changing_sample.save
     static_run = FactoryGirl.create(:run)
     static_sample = FactoryGirl.create(:sample)
-    FactoryGirl.create(:measurement, :sample => static_sample, :run => static_run)
+    FactoryGirl.create(:measurement, sample: static_sample, run: static_run)
     changing_run.reload
     static_run.reload
     assert changing_run.updated?
@@ -91,18 +91,18 @@ describe Run do
   end
 
   it "saves with good data" do
-    r = Run.new(@attr)
+    r = FactoryGirl.build(:run, @attr)
     r.load_file(good_data)
     assert r.save
   end
 
   it "requires loaded data to save" do
-    r = Run.new(@attr)
+    r = FactoryGirl.build(:run, @attr.merge(measurements: []))
     assert !r.save, "It should not save without data loaded."
   end
 
   it "requires non empty data to save" do
-    r = Run.new(@attr)
+    r = FactoryGirl.build(:run,@attr)
     file_name = Rails.root.join('spec', 'fixtures', 'blank.txt')
     File.open(file_name, 'r') do |f|
       empty_data = StringIO.new(f.read)
@@ -113,13 +113,13 @@ describe Run do
   end
 
   it "requires a date to save" do
-    r = Run.new(@attr.merge(:sample_date => nil))
+    r = FactoryGirl.build(:run, @attr.merge(sample_date: nil))
     r.load_file(good_data)
     assert !r.save
   end
 
   it "properly loads the data" do
-    r = Run.new(@attr)
+    r = FactoryGirl.build(:run, @attr)
     r.load_file(good_data)
     r.save
 
@@ -158,7 +158,7 @@ describe Run do
     #    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
     #    File.open(file_name,'r') do |f|
     #      s = StringIO.new(f.read)
-    #      r = Run.new(@attr)
+    #      r = FactoryGirl.build(:run, @attr)
     #      r.load(s)
     #      assert r.save
     #      assert r.samples.size > 1
@@ -171,7 +171,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'GLBRC_deep_core_1106R4R5.TXT')
     File.open(file_name,'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 4))
+      r = FactoryGirl.build(:run,@attr.merge(:sample_type_id => 4))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
@@ -182,7 +182,7 @@ describe Run do
     file_name = Rails.root.join 'spec', 'fixtures', '3262012B.TXT'
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 2))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 2))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
@@ -193,7 +193,7 @@ describe Run do
     file_name = Rails.root.join('spec', 'fixtures', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 5))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 5))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1 #We'll have better tests in the parser
@@ -204,7 +204,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'DC01CFR1.csv')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 6))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 6))
       r.load_file(s)
       assert_equal r.plot_errors, ""
       assert r.save
@@ -216,7 +216,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'GLBRC_cn.csv')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 9))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 9))
       r.load_file(s)
       assert_equal r.plot_errors, ""
       assert r.save
@@ -228,7 +228,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'glbrc_soil_sample_new_format.txt')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 8))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 8))
       assert r.load_file(s)
       assert r.save
       assert r.samples.size > 1
@@ -239,7 +239,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', '100419L.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 8))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 8))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
@@ -250,7 +250,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 1))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert_equal "", r.plot_errors
       assert r.save
@@ -263,7 +263,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', '090615QL.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 1))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
@@ -279,7 +279,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', '090701QL.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 1))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
@@ -291,7 +291,7 @@ describe Run do
     file_name = Rails.root.join('test', 'data', 'Lysimeter_single_format.TXT')
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
-      r = Run.new(@attr.merge(:sample_type_id => 1))
+      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
       r.load_file(s)
       assert r.save
       assert r.samples.size > 1
