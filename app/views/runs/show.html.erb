@@ -10,6 +10,9 @@
 <p>
   Number of Samples: <%= @run.samples.size %>
 </p>
+<p>
+Files: <%= @run.data_sources.collect {|x| x.data}.join(',') %>
+</p>
 <%= link_to 'back', @back %> 
 <%= link_to "qc", qc_run_path(@run) %> 
 <%= link_to "edit", edit_run_path(@run) %> 

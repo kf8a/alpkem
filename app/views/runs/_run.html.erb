@@ -10,4 +10,5 @@
 <td><%= link_to "edit", edit_run_path(run) %>
 <td><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
 <td><%= run.comment %></td>
+<td><%= run.data_sources.collect {|x| File.basename(x.data.to_s)}.join(',') %></td>
 </tr>

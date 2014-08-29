@@ -25,7 +25,9 @@
   </li>
 <% end %>
 
+<div class="content">
 <%= yield  %>
+</div>
 
 <%= debug(params) if Rails.env.development? %>
 

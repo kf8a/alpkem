@@ -53,11 +53,11 @@ class RunsController < ApplicationController
     session[:sample_date] = @run.sample_date
     session[:run_date] = @run.run_date
 
-    file = (!params[:data].blank? && params[:data][:file])
-    data = DataSource.new
-    data.data = file
-    @run.data_sources << data
-    @run.load_file(file)
+    data_source = DataSource.new
+    data_source.data = params[:data][:file]
+    @run.data_sources << data_source
+    data_source.save
+    @run.load_file(params[:data][:file])
 
     if @run.save
       flash[:notice] = 'Run was successfully uploaded.'
