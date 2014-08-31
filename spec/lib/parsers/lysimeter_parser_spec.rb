@@ -24,14 +24,14 @@ describe Parsers::LysimeterParser do
     end
 
     it 'should have the right nh4 amounts' do
-      nh4 = Analyte.find_by_name("NH4")
+      nh4 = Analyte.find_by(name: "NH4")
       sample = @samples[0]
       sample.measurements.where(:analyte_id => nh4.id).include?(0.046)
       sample.measurements.where(:analyte_id => nh4.id).include?(0.055)
     end
 
     it 'should have the right no3 amounts' do
-      no3 = Analyte.find_by_name("NO3")
+      no3 = Analyte.find_by(name: "NO3")
       sample = @samples[0]
       sample.measurements.where(:analyte_id => no3.id).include?(-0.030)
       sample.measurements.where(:analyte_id => no3.id).include?(-0.031)

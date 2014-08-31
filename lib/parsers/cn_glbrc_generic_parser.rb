@@ -12,7 +12,7 @@ module Parsers
           @plot_name, @modifier = ParserMatcher.parse('(.*\d)(.*)', @plot_name)
           @plot_name = @plot_name + '-' + @modifier
         end
-        Plot.find_or_create_by_name(:name=>@plot_name, :study_id => 8)
+        Plot.find_or_create_by(name: @plot_name, study_id: 8)
       end
       process_data #if cn_plot_name_ok?
     end

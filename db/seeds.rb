@@ -1,44 +1,44 @@
-m_study = Study.find_or_create_by_name(:name => 'Main Site', :prefix => 'T')
+m_study = Study.find_or_create_by(:name => 'Main Site', :prefix => 'T')
 
 1.upto(8) do |i|
-  m_study.treatments.find_or_create_by_name("T#{i}")
+  m_study.treatments.find_or_create_by(name: "T#{i}")
 end
-m_study.treatments.find_or_create_by_name('TDF')
-m_study.treatments.find_or_create_by_name('TSF')
-m_study.treatments.find_or_create_by_name('TCF')
-m_study.treatments.find_or_create_by_name('T21')
+m_study.treatments.find_or_create_by(name:'TDF')
+m_study.treatments.find_or_create_by(name:'TSF')
+m_study.treatments.find_or_create_by(name:'TCF')
+m_study.treatments.find_or_create_by(name:'T21')
 
 1.upto(6) do |i|
-  m_study.replicates.find_or_create_by_name("R#{i}")
+  m_study.replicates.find_or_create_by(name: "R#{i}")
 end
 
 
-g_study = Study.find_or_create_by_name({:name => 'glbrc', :prefix => 'G'})
+g_study = Study.find_or_create_by({:name => 'glbrc', :prefix => 'G'})
 
 1.upto(10) do |i|
-  g_study.treatments.find_or_create_by_name("G#{i}")
+  g_study.treatments.find_or_create_by(name:"G#{i}")
 end
 
 1.upto(5) do |i|
-  g_study.replicates.find_or_create_by_name("R#{i}")
+  g_study.replicates.find_or_create_by(name: "R#{i}")
 end
 
 
-l_study = Study.find_or_create_by_name(:name => 'Lux Arbor', :prefix => 'L')
+l_study = Study.find_or_create_by(:name => 'Lux Arbor', :prefix => 'L')
  
 1.upto(3) do |i|
-  l_study.treatments.find_or_create_by_name("L0#{i}")
+  l_study.treatments.find_or_create_by(name: "L0#{i}")
 end
  
 1.upto(10) do |i|
-  l_study.replicates.find_or_create_by_name("S#{i}")
+  l_study.replicates.find_or_create_by(name: "S#{i}")
 end
  
 
 studies = Study.all
 studies.each do |study|
   study.treatments.each do |treatment|
-    replicates = Replicate.find_all_by_study_id(study)
+    replicates = Replicate.where(study_id: study.id)
     replicates.each do |replicate|
       Plot.where(:name => "#{treatment.name}#{replicate.name}", :study_id => study,).first_or_create({:name => "#{treatment.name}#{replicate.name}", :study => study,:treatment => treatment, :replicate => replicate})
     end
@@ -47,7 +47,7 @@ end
 
 m_study.reload
 m_study.treatments.each do |treatment|
-  replicates = Replicate.find_all_by_study_id(m_study.id)
+  replicates = Replicate.where(study_id: m_study.id)
   replicates.each do |replicate|
     1.upto(5) do |f|
       Plot.where(:name => "#{treatment.name}#{replicate.name}F#{f}", :study_id => m_study).first_or_create(:name => "#{treatment.name}#{replicate.name}F#{f}", :study => m_study, :treatment => treatment, :replicate => replicate)
@@ -57,7 +57,7 @@ end
 
 g_study.reload
 g_study.treatments.each do |treatment|
-  replicates = Replicate.find_all_by_study_id(g_study.id)
+  replicates = Replicate.where(study_id: g_study.id)
   replicates.each do |replicate|
     1.upto(3) do |station|
       [10,25].each do |depth|
@@ -68,12 +68,12 @@ g_study.treatments.each do |treatment|
   end
 end
 
-Analyte.find_or_create_by_name({:name => 'NO3', :unit => 'ppm'})
-Analyte.find_or_create_by_name({:name => 'NH4', :unit => 'ppm'})
-Analyte.find_or_create_by_name({:name => 'N',   :unit => 'ppm'})
-Analyte.find_or_create_by_name({:name => 'C',   :unit => 'ppm'})
+Analyte.find_or_create_by({:name => 'NO3', :unit => 'ppm'})
+Analyte.find_or_create_by({:name => 'NH4', :unit => 'ppm'})
+Analyte.find_or_create_by({:name => 'N',   :unit => 'ppm'})
+Analyte.find_or_create_by({:name => 'C',   :unit => 'ppm'})
 
-cn_deep_study = Study.find_or_create_by_name(:name => 'CN Deep Core', :prefix => 'D')
+cn_deep_study = Study.find_or_create_by(:name => 'CN Deep Core', :prefix => 'D')
 
 ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |plot|
   1.upto(5) do |replicate|
@@ -85,7 +85,7 @@ cn_deep_study = Study.find_or_create_by_name(:name => 'CN Deep Core', :prefix =>
   end
 end
 
-cn_soil_study = Study.find_or_create_by_name(:name => 'CN Soil Sample', :prefix => 'C')
+cn_soil_study = Study.find_or_create_by(:name => 'CN Soil Sample', :prefix => 'C')
 
 1.upto(5) do |station|
   ['SUR', 'MID', 'DEE'].each do |depth|
@@ -94,7 +94,7 @@ cn_soil_study = Study.find_or_create_by_name(:name => 'CN Soil Sample', :prefix 
   end
 end
 
-cn_glbrc_study = Study.find_or_create_by_name(:name => 'CN GLBRC', :prefix => 'L')
+cn_glbrc_study = Study.find_or_create_by(:name => 'CN GLBRC', :prefix => 'L')
 
 ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'].each do |station|
   ['010', '025','050','100'].each do |depth|
@@ -105,14 +105,14 @@ cn_glbrc_study = Study.find_or_create_by_name(:name => 'CN GLBRC', :prefix => 'L
   end
 end
 
-SampleType.find_or_create_by_name('Lysimeter')
-SampleType.find_or_create_by_name("Soil Sample")
-SampleType.find_or_create_by_name("GLBRC Soil Sample")
-SampleType.find_or_create_by_name("GLBRC Deep Core Nitrogen")
-SampleType.find_or_create_by_name("GLBRC Resin Strips")
-SampleType.find_or_create_by_name("CN Soil Sample")
-SampleType.find_or_create_by_name("CN Deep Core")
-SampleType.find_or_create_by_name("GLBRC Soil Sample (New)")
-SampleType.find_or_create_by_name("GLBRC CN")
-SampleType.find_or_create_by_name("Lysimeter NO3")
-SampleType.find_or_create_by_name("Lysimeter NH4")
+SampleType.find_or_create_by(name: 'Lysimeter')
+SampleType.find_or_create_by(name: "Soil Sample")
+SampleType.find_or_create_by(name: "GLBRC Soil Sample")
+SampleType.find_or_create_by(name: "GLBRC Deep Core Nitrogen")
+SampleType.find_or_create_by(name: "GLBRC Resin Strips")
+SampleType.find_or_create_by(name: "CN Soil Sample")
+SampleType.find_or_create_by(name: "CN Deep Core")
+SampleType.find_or_create_by(name: "GLBRC Soil Sample (New)")
+SampleType.find_or_create_by(name: "GLBRC CN")
+SampleType.find_or_create_by(name: "Lysimeter NO3")
+SampleType.find_or_create_by(name: "Lysimeter NH4")

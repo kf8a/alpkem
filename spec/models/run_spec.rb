@@ -124,16 +124,16 @@ describe Run do
     r.save
 
     assert r.samples.size > 1
-    plot = Plot.find_by_treatment_and_replicate('T7', 'R1')
-    sample = Sample.find_by_plot_id_and_sample_date(plot, Date.today)
+    plot = Plot.find_by(treatment: 'T7', replicate: 'R1')
+    sample = Sample.find_by(plot_id: plot, sample_date: Date.today)
     assert sample.valid?
-    no3 = Analyte.find_by_name('NO3')
-    nh4 = Analyte.find_by_name('NH4')
+    no3 = Analyte.find_by(name: 'NO3')
+    nh4 = Analyte.find_by(name: 'NH4')
     assert_not_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
     assert_not_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
 
-    plot = Plot.find_by_treatment_and_replicate('T7','R2')
-    sample = Sample.find_by_plot_id_and_sample_date(plot.id, Date.today.to_s)
+    plot = Plot.find_by(treatment: 'T7',replicate: 'R2')
+    sample = Sample.find_by(plot_id: plot.id, sample_date: Date.today.to_s)
     assert_not_nil sample
     assert sample.valid?
     assert_not_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}

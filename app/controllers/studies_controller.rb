@@ -14,7 +14,7 @@ class StudiesController < ApplicationController
   end
 
   def create
-    @study = Study.find_or_create_by_name(:name => params[:study_name], :prefix => params[:prefix])
+    @study = Study.find_or_create_by(:name => params[:study_name], :prefix => params[:prefix])
 
     number_of_treatments = params[:number_of_treatments].to_i
     number_of_replicates = params[:number_of_replicates].to_i
@@ -32,7 +32,7 @@ class StudiesController < ApplicationController
   end
 
   def update
-    if Replicate.find_by_study_id(@study)
+    if Replicate.find_by(study_id: @study.id)
       number_of_treatments = params[:number_of_treatments].to_i
       number_of_replicates = params[:number_of_replicates].to_i
       @study.update_plots(number_of_treatments, number_of_replicates)

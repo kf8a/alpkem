@@ -22,13 +22,13 @@ class Study < ActiveRecord::Base
 
   def create_treatments(amount)
     1.upto(amount) do |number|
-      self.treatments.find_or_create_by_name("#{self.prefix}#{number}")
+      self.treatments.find_or_create_by(name: "#{self.prefix}#{number}")
     end
   end
 
   def create_replicates(amount, prefix)
     1.upto(amount) do |number|
-      self.replicates.find_or_create_by_name("#{prefix}#{number}")
+      self.replicates.find_or_create_by(name: "#{prefix}#{number}")
     end
   end
 

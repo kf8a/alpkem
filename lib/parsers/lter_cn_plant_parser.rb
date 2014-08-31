@@ -16,7 +16,7 @@ module Parsers
         @plot_name = @plot_name.gsub(/0(\d)/,'\1')
         @plot_name = @plot_name + species
 
-        Plot.find_or_create_by_name(name: @plot_name, study_id: 1)
+        Plot.find_or_create_by(name: @plot_name, study_id: 1)
 
         process_data
       end
