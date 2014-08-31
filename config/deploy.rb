@@ -47,6 +47,7 @@ namespace :deploy do
  # after :deploy, :link_paperclip_storage, 
   after 'deploy:finalize_update', :link_production_db
   after 'deploy:finalize_update', :link_local_env
+  after 'deploy:finalize_update', :link_upload_dir
 end
 
 # seed database
@@ -66,3 +67,7 @@ task :link_local_env do
   run "ln -nfs #{deploy_to}/shared/config/local_env.yml #{release_path}/config/local_env.yml"
 end
 
+desc 'link upload directory'
+task :link_upload_dir do
+  run "ln -nfs #{deploy_to}/shared/upload#{release_path}/public/"
+end
