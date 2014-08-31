@@ -69,11 +69,12 @@ describe Sample do
   describe "analytes method" do
     describe "for an NO3/NH4 type sample" do
       before(:each) do
+        run = FactoryGirl.create(:run)
         @sample = FactoryGirl.create(:sample)
         @no3 = find_or_factory(:analyte, :name => "NO3")
         @nh4 = find_or_factory(:analyte, :name => "NH4")
-        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @no3)
-        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @nh4)
+        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @no3, run: run)
+        FactoryGirl.create(:measurement, :sample => @sample, :analyte => @nh4, run: run)
       end
 
       it "should include NO3" do

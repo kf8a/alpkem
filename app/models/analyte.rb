@@ -3,4 +3,5 @@
 class Analyte < ActiveRecord::Base
   has_many :measurements
   has_many :cn_measurements
+  has_many :runs, through: :measurements
 end

@@ -19,3 +19,4 @@ def secure_token
 end
 
 Alpkem::Application.config.secret_token = secure_token
+Alpkem::Application.config.secret_key_base = secure_token

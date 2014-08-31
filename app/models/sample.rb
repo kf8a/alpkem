@@ -4,7 +4,7 @@ require 'statistics'
 class Sample < ActiveRecord::Base
   belongs_to :plot
 
-  has_many :measurements, -> {includes(:run).order('runs.run_date, measurements.id') }
+  has_many :measurements #, -> {include(:runs, :measurements).order('runs.run_date, measurements.id') }
   has_many :runs, -> {order('run_date')}, through: :measurements
   has_many :analytes, :through => :measurements
 
