@@ -4,13 +4,13 @@ require 'statistics'
 class Sample < ActiveRecord::Base
   belongs_to :plot
 
-  has_many :measurements, :include => :run, :order => 'runs.run_date, measurements.id'
-  has_many :runs, :through => :measurements, :order => 'run_date'
+  has_many :measurements, -> {includes(:run).order('runs.run_date, measurements.id') }
+  has_many :runs, -> {order('run_date')}, through: :measurements
   has_many :analytes, :through => :measurements
 
   validates_presence_of :plot
 
-  scope :approved, where(:approved => true)
+  scope :approved, ->  {where(:approved => true)}
 
   def Sample.samples_to_csv(samples)
     CSV.generate do |csv|
@@ -31,12 +31,12 @@ class Sample < ActiveRecord::Base
  
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
-    measurements.average(:amount, :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
+    measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).average(:amount)
   end
   
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
-    variance = measurements.calculate(:variance, :amount,  :conditions => [%q{analyte_id = ? and deleted = 'f'}, analyte.id])
+    variance = measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).calculate(:variance, :amount)
     variance/average
   end
 
