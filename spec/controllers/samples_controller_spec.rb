@@ -8,7 +8,7 @@ describe SamplesController do
   it "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:samples)
+    expect(assigns(:samples)).to_not be_nil
   end
 end
 

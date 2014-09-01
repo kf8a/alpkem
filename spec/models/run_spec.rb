@@ -129,15 +129,15 @@ describe Run do
     assert sample.valid?
     no3 = Analyte.find_by(name: 'NO3')
     nh4 = Analyte.find_by(name: 'NH4')
-    assert_not_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
-    assert_not_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
+    expect(sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}).to_not be_nil
+    expect(sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}).to_not be_nil
 
     plot = Plot.find_by(name: 'T7R2')
     sample = Sample.find_by(plot_id: plot.id, sample_date: Date.today.to_s)
-    assert_not_nil sample
+    expect(sample).to_not be_nil
     assert sample.valid?
-    assert_not_nil sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}
-    assert_not_nil sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}
+    expect(sample.measurements.index {|m| m.amount == 0.070 && m.analyte == no3}).to_not be_nil
+    expect(sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}).to_not be_nil
 
     run = Run.find(r.id)
     measurements = run.measurements.where(:analyte_id => no3.id)
@@ -145,7 +145,7 @@ describe Run do
     measurements = run.measurements.where(:analyte_id => nh4.id)
     assert !measurements.where(:amount => 0.036).blank?
 
-    assert_not_nil run.samples.index {|s| s.plot.treatment.name == "T6"}
+    expect(run.samples.index {|s| s.plot.treatment.name == "T6"}).to_not be_nil
 
     assert_equal 330, run.measurements.size
   end

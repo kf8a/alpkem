@@ -65,8 +65,6 @@ group :test do
   #gem 'capybara'
   gem "database_cleaner"
   gem "cucumber-rails", :require => false
-  #gem 'spork'
-  # gem 'launchy'
 end
 
 
