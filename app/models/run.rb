@@ -16,12 +16,12 @@ class Run < ActiveRecord::Base
   end
 
   def self.runs
-    all_runs = Run.order('sample_date')
+    all_runs = Run.order('sample_date').to_a
     all_runs.keep_if {|run| !run.cn_run?}
   end
 
   def self.cn_runs
-    all_runs = Run.order('run_date')
+    all_runs = Run.order('run_date').to_a
     all_runs.keep_if {|run| run.cn_run?}
   end
 

@@ -24,7 +24,7 @@ class Sample < ActiveRecord::Base
   end
   
   def previous_measurements
-    right_samples = Sample.approved.where(:plot_id => self.plot.id)
+    right_samples = Sample.approved.where(:plot_id => self.plot.id).to_a
     right_samples.keep_if {|sample| sample.sample_date}
     right_samples.collect {|sample| sample.measurements.where(:deleted => false)}.flatten
   end
