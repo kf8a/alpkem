@@ -48,16 +48,18 @@ class RunsController < ApplicationController
   # POST /runs
   # POST /runs.xml
   def create
-    @run = Run.new(params[:run])
+    @run = Run.new(run_params)
 
     session[:sample_date] = @run.sample_date
     session[:run_date] = @run.run_date
 
-    data_source = DataSource.new
-    data_source.data = params[:data][:file]
-    @run.data_sources << data_source
-    data_source.save
-    @run.load_file(params[:data][:file])
+    if params[:data]
+      data_source = DataSource.new
+      data_source.data = params[:data][:file]
+      @run.data_sources << data_source
+      data_source.save
+      @run.load_file(params[:data][:file])
+    end
 
     if @run.save
       flash[:notice] = 'Run was successfully uploaded.'
@@ -73,7 +75,7 @@ class RunsController < ApplicationController
   # PUT /runs/1
   # PUT /runs/1.xml
   def update
-    if @run.update_attributes(params[:run])
+    if @run.update_attributes(run_params)
       flash[:notice] = 'Run was successfully updated.'
     end
     respond_with @run
@@ -107,6 +109,10 @@ class RunsController < ApplicationController
 
   def get_run
     @run = Run.find(params[:id])
+  end
+
+  def run_params
+    params.require(:run).permit(:sample_date, :start_date, :initial_sample_date, :sample_type_id, :comment)
   end
 
 end

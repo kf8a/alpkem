@@ -121,18 +121,18 @@ describe Run do
   it "properly loads the data" do
     r = FactoryGirl.build(:run, @attr)
     r.load_file(good_data)
-    r.save
+    assert r.save
 
     assert r.samples.size > 1
-    plot = Plot.find_by(treatment: 'T7', replicate: 'R1')
-    sample = Sample.find_by(plot_id: plot, sample_date: Date.today)
+    plot = Plot.find_by(name: 'T7R1')
+    sample = Sample.find_by(plot_id: plot.id, sample_date: Date.today)
     assert sample.valid?
     no3 = Analyte.find_by(name: 'NO3')
     nh4 = Analyte.find_by(name: 'NH4')
     assert_not_nil sample.measurements.index {|m| m.amount == 0.047 && m.analyte == no3}
     assert_not_nil sample.measurements.index {|m| m.amount == 0.379 && m.analyte == nh4}
 
-    plot = Plot.find_by(treatment: 'T7',replicate: 'R2')
+    plot = Plot.find_by(name: 'T7R2')
     sample = Sample.find_by(plot_id: plot.id, sample_date: Date.today.to_s)
     assert_not_nil sample
     assert sample.valid?

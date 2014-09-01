@@ -100,7 +100,7 @@ describe RunsController do
     end
 
     it "should destroy the run" do
-      assert_nil Run.find_by_id(@run.id)
+      assert_raises ActiveRecord::RecordNotFound,  Run.find(@run.id)
     end
 
     it { should redirect_to runs_path }
@@ -128,8 +128,6 @@ describe RunsController do
 
   describe 'POST merge a split run' do
     before do
-      # file1_name = Rails.root.join('test','data', '03262012.TXT')
-      # file2_name = Rails.root.join('test','data', '3262012B.TXT')
       file1 = fixture_file_upload('/03262012.TXT', 'text/plain')
       @file2 = fixture_file_upload('/3262012B.TXT', 'text/plain')
 
@@ -137,7 +135,6 @@ describe RunsController do
         :data => {:file => file1}
       run = assigns(:run)
       @sample = run.samples[35]
-
     end
 
     it 'uploads the right number of measurements' do
