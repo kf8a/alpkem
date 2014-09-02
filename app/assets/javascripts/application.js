@@ -5,5 +5,6 @@
 //
 //= require jquery
 //= require jquery-ui/effect.all
+//= require jquery_ujs
 //= require_tree .
 //
