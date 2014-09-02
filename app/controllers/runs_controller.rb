@@ -52,6 +52,7 @@ class RunsController < ApplicationController
 
     session[:sample_date] = @run.sample_date
     session[:run_date] = @run.run_date
+    session[:sample_type_id] = @run.sample_type_id
 
     if params[:data]
       data_source = DataSource.new
