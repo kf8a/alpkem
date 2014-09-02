@@ -180,7 +180,6 @@ GEM
     pg (0.17.1)
     polyglot (0.3.5)
     rack (1.5.2)
-    rack-offline (0.6.4)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.5)
@@ -325,7 +324,6 @@ DEPENDENCIES
   metric_fu
   nokogiri
   pg
-  rack-offline
   rails (= 4.1.5)
   rails-erd
   rspec-rails
