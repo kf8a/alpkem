@@ -32,6 +32,7 @@ class RunsController < ApplicationController
     @run = Run.new
     @run.sample_date  = Date.today #session[:sample_date]
     @run.run_date     = session[:run_date]
+    @run.sample_type_id = session[:sample_type_id]
     respond_with @run
   end
 
