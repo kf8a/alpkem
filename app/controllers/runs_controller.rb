@@ -112,7 +112,7 @@ class RunsController < ApplicationController
   end
 
   def run_params
-    params.require(:run).permit(:sample_date, :start_date, :initial_sample_date, :sample_type_id, :comment)
+    params.require(:run).permit(:run_date, :sample_date, :start_date, :initial_sample_date, :sample_type_id, :comment)
   end
 
 end
