@@ -1,6 +1,6 @@
 module Parsers
   class CNGLBRCGenericParser < CNSampleParser
-    CN_DEEP_CORE = '(\d+),\d+,"?\d*(.*)[ABC|abc]"?,.+,(\d+\.\d+),(\d+\.\d+)'
+    CN_DEEP_CORE = '(\d+),\d+,"?\d*(.*)[abc]"?,.+,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
       raw_date, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(CN_DEEP_CORE, line)
