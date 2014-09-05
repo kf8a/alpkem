@@ -75,4 +75,11 @@ class Run < ActiveRecord::Base
   def plot_errors
     parser.plot_errors
   end
+
+  def update_sample_types
+   samples.each do |sample|
+     sample.sample_type_id = sample_type_id
+     sample.save
+   end
+  end
 end

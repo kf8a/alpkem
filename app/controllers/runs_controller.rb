@@ -77,9 +77,9 @@ class RunsController < ApplicationController
   # PUT /runs/1
   # PUT /runs/1.xml
   def update
-    if @run.update_attributes(run_params)
-      flash[:notice] = 'Run was successfully updated.'
-    end
+    # if @run.update_attributes(run_params) &&  @run.update_sample_types
+    #   flash[:notice] = 'Run was successfully updated.'
+    # end
     respond_with @run
   end
 
