@@ -16,7 +16,7 @@ module Parsers
 
         self.sample_date = Chronic.parse(date).to_date
         #try to find plot
-        self.plot = Plot.find_by_name(plot)
+        self.plot = Plot.find_by(name: plot)
         #create it if you can't find it
         self.plot = Plot.create(:name => plot) if self.plot.blank?
 

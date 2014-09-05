@@ -9,10 +9,10 @@ module Parsers
       self.plot_errors = ""
       self.load_errors = ""
       self.measurements = []
-      @no3_analyte = Analyte.find_by_name('NO3')
-      @nh4_analyte = Analyte.find_by_name('NH4')
-      @nitrogen_analyte = Analyte.find_by_name('N')
-      @carbon_analyte = Analyte.find_by_name('C')
+      @no3_analyte = Analyte.find_by(name: 'NO3')
+      @nh4_analyte = Analyte.find_by(name: 'NH4')
+      @nitrogen_analyte = Analyte.find_by(name: 'N')
+      @carbon_analyte = Analyte.find_by(name: 'C')
     end
 
     # subclasses need to implement this
@@ -46,7 +46,7 @@ module Parsers
     end
 
     def find_plot(plot_to_find)
-      self.plot = Plot.find_by_name(plot_to_find)
+      self.plot = Plot.find_by(name: plot_to_find)
       self.plot_errors += "There is no plot named #{plot_to_find}" unless plot.present?
     end
 
