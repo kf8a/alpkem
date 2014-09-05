@@ -56,7 +56,7 @@ module Parsers
     end
 
     def find_sample
-      self.sample = self.plot.samples.find_by_sample_date_and_sample_type_id(self.sample_date, self.sample_type_id)
+      self.sample = self.plot.samples.find_by(sample_date: self.sample_date, sample_type_id: self.sample_type_id)
     end
 
     def create_sample
