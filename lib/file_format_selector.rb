@@ -7,15 +7,15 @@ class FileFormatSelector
     if old_format?(lines)
       'Old'
     else
-
+      name = "Parsers::"
       header = analysis_header_line(lines)
       case header
       when /NH4.+NO3/ then 
-        ''
+        name + ''
       when /NH4/ then
-        'NH4'
+        name + 'NH4'
       when /NO3/ then 
-        'NO3'
+        name + 'NO3'
       else
         raise 'Unkown file type'
       end

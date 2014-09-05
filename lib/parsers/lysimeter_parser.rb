@@ -3,7 +3,7 @@ module Parsers
   class LysimeterParser < FileParser
 
     def parse_data(data)
-      line_parser_name = "Parsers::" + FileFormatSelector.new.get_line_parser_prefix(data) + 'LysimeterLineParser'
+      line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'LysimeterLineParser'
 
       data.each { | line | process_line(line, line_parser_name.constantize) }
       if self.measurements.blank?
