@@ -47,6 +47,26 @@ describe Parsers::CNGLBRCGenericParser do
     end
   end
 
+  describe 'a line of old root data' do
+    before do
+      @parser.process_line('20091020,13,L2S05-GLYMXc,2.933,GLBRCBNPP5B1,Unknown,,,,0.6513,41.4597')
+    end
+    it 'creates a sample' do
+      expect(@parser.sample).to_not be_nil
+    end
+
+    it "should have the right plot" do
+      expect(@parser.sample.plot.name).to eq('L2S5-GLYMX')
+    end
+    it 'has the right date' do
+      expect(@parser.sample.sample_date).to eq(Date.new(2009,10,20))
+    end
+    it "should have the right measurement" do
+      assert_includes @parser.measurements.collect {|x| x.amount}, 0.6513
+      assert_includes @parser.measurements.collect {|x| x.amount}, 41.4597
+    end
+  end
+
   describe 'a line of non data' do
     before do
       @parser.process_line('20140331,4,Standard2,0.532,GLBRC13BNPPP01A4Std2,Standard,2,,,7.4609,64.878')
