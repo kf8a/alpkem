@@ -5,7 +5,7 @@ class FileFormatSelector
     data.rewind
 
     if old_format?(lines)
-      'Old'
+      'Parsers::Old'
     else
       name = "Parsers::"
       header = analysis_header_line(lines)
