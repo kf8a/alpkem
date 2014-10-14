@@ -13,6 +13,7 @@ module Parsers
 
     def process_line(line, line_parser)
       first, second, third, raw_date, nh4_amount, no3_amount = line_parser.parse(line)
+      self.sample_date = raw_date
       unless first.blank? || second.blank? || third.blank?
         locate_plot(first, second, third)
 
