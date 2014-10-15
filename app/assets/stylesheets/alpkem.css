@@ -4,12 +4,18 @@ td {
   width: 9em;
 }
 
+
 .even {
 	background-color: #f7ffe9;
 }
 
 .even td td {
   border-style: none;
+}
+
+.completed_false {
+  background-color: red;
+  border-bottom-style: solid;
 }
 
 tr:hover {

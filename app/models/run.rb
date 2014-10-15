@@ -49,6 +49,10 @@ class Run < ActiveRecord::Base
     samples.index {|sample| sample.updated?}
   end
 
+  def complete?
+    approved_samples == samples.size
+  end
+
   def sample_date_range
     dates = samples.collect {|x| x.sample_date }
     if dates.min == dates.max
