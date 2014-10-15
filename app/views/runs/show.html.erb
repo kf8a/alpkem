@@ -11,7 +11,10 @@
   Number of Samples: <%= @run.samples.size %>
 </p>
 <p>
-Files: <%= @run.data_sources.collect {|x| x.data}.join(',') %>
+Files: 
+<% @run.data_sources.each do |file| %>
+  <%= link_to file.data.url, file.data.url %>
+<% end %>
 </p>
 <%= link_to 'back', @back %> 
 <%= link_to "qc", qc_run_path(@run) %> 

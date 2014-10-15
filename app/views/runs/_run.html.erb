@@ -1,5 +1,5 @@
 <tr class="updated_<%=run.updated?%> <%=cycle('even','odd')%>">
-  <td><%=run.id %></td>
+  <td><%=link_to run.id, run_path(run) %></td>
 <td><%= run.run_date %></td>
 <td><%= run.sample_date %></td>
 <td><%= run.sample_date_range %></td>
