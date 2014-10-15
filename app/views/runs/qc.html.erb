@@ -1,9 +1,9 @@
-<!--Load the AJAX API-->
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-
+<div class='container'>
 <h1>qc</h1><span id='spinner' style="display:none"><img src='/images/spinner.gif'/></span>
 
+<p>
 <%= link_to 'back', runs_url %>
+</p>
 
 <p>
   Run Date: <%= @run.run_date %>
@@ -14,7 +14,12 @@
 <p>
   Sample Type: <%= @run.sample_type_name %>
 </p>
-
+<p>
+Files: 
+<% @run.data_sources.each do |file| %>
+  <%= link_to file.data.url, file.data.url %>
+<% end %>
+</p>
 <table class='table'>
   <thead>
     <tr>
@@ -29,3 +34,4 @@
     <%= render :partial => 'sample', :collection => @samples %>
   </tbody>
 </table>
+</div>
