@@ -56,6 +56,7 @@ module Parsers
               when 24; Parsers::GenericParser   #T0 glbrc mineralization
               when 25; Parsers::CNGLBRCGenericParser  #Annual Root CN
               when 26; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cors
+              when 27; Parsers::LterCnPlantParser   #Post frost
               else false
               end
 
