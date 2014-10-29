@@ -1,10 +1,14 @@
+require 'csv'
+
 class FileFormatSelector
 
   def get_line_parser_prefix(data)
     lines = data.readlines
     data.rewind
 
-    if old_format?(lines)
+    if lachat_format?(lines)
+      "Parsers::Lachat"
+    elsif old_format?(lines)
       'Parsers::Old'
     else
       name = "Parsers::"
@@ -31,6 +35,11 @@ class FileFormatSelector
       i = i + 1
     end
     lines[i + 2]
+  end
+
+  def lachat_format?(lines)
+    first_line = CSV.parse(lines[0]).first
+    first_line.first == "Sample ID"
   end
 
   def old_format?(lines)
