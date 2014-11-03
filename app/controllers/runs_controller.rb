@@ -7,7 +7,7 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.xml
   def index
-    @runs = Run.runs
+    @runs = Run.order('id desc')
     respond_with @runs
   end
 
