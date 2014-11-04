@@ -7,7 +7,7 @@ class RunsController < ApplicationController
   # GET /runs
   # GET /runs.xml
   def index
-    @runs = Run.run
+    @runs = Run.runs
     respond_with @runs
   end
 

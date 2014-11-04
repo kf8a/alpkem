@@ -16,7 +16,7 @@ class Run < ActiveRecord::Base
   end
 
   def self.runs
-    all_runs = Run.order('d desc').to_a
+    all_runs = Run.order('id desc').to_a
     all_runs.keep_if {|run| !run.cn_run?}
   end
 
