@@ -50,7 +50,7 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  config.logger = RemoteSyslogLogger.new('logs2.papertrailapp.com', 34385)
+  config.logger = Logger::Syslog.new("alpkem", Syslog::LOG_LOCAL5)
   config.log_level = :warn 
 
 
