@@ -50,7 +50,7 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  syslog_looger = Logger::Syslog.new("alpkem", Syslog::LOG_LOCAL0)
+  syslog_logger = Logger::Syslog.new("alpkem", Syslog::LOG_LOCAL0)
   config.logger = ActiveSupport::TaggedLogging.new(syslog_logger)
   config.log_level = :info
 
