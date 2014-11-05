@@ -50,8 +50,9 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  config.logger = Logger::Syslog.new("alpkem", Syslog::LOG_LOCAL5)
-  config.log_level = :warn 
+  syslog_looger = Logger::Syslog.new("alpkem", Syslog::LOG_LOCAL0)
+  config.logger = ActiveSupport::TaggedLogging.new(syslog_logger)
+  config.log_level = :info
 
 
   # Use a different cache store in production.
