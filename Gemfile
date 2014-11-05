@@ -26,6 +26,9 @@ gem 'capistrano', '2.15.5'
 gem 'therubyracer'
 #gem 'libv8'
 
+# use syslog
+gem "syslog-logger"
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
