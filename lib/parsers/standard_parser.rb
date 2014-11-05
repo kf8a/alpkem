@@ -12,7 +12,10 @@ module Parsers
     end
 
     def process_line(line, line_parser)
-      first, second, nh4_amount, no3_amount = line_parser.parse(line)
+      first, second, nh4_amount, no3_amount, raw_sample_date = line_parser.parse(line)
+      if raw_sample_date
+        self.sample_date = raw_sample_date
+      end
       unless first.blank? || second.blank?
         plot_name = get_plot_name(first, second)
         unless plot.try(:name) == plot_name
