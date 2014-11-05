@@ -49,10 +49,7 @@ Rails.application.configure do
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  syslog_logger = Logger::Syslog.new("alpkem", Syslog::LOG_LOCAL0)
-  config.logger = ActiveSupport::TaggedLogging.new(syslog_logger)
-  config.log_level = :info
+  config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new("alpkem"))
 
 
   # Use a different cache store in production.
