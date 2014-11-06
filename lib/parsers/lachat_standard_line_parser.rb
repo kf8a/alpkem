@@ -12,6 +12,7 @@ module Parsers
       return nil if data[0] =~ /blank/i
 
       result = /(\d{8})T(.+)R(\d)/.match(data.first)
+      raise "unparsable name #{data.first}" unless result
       raw_date = result[1]
       first = result[2]
       second = result[3]

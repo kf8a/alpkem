@@ -55,4 +55,11 @@ describe Parsers::LachatStandardLineParser do
     end
 
   end
+
+  describe 'a wrong line' do
+
+    it 'raises an error' do
+      expect{Parsers::LachatStandardLineParser.parse("something,Unknown,1,1,167,1,1,,,,10/29/2014,1:43:19 PM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.00509,,mg/L,0.32,0.0317,Conc = 0.656 * Area - 0.205,48.5,36,0.00509,0.00509,0.00509,2,Nitrate-Nitrite,0.00707,,mg N/L,0.0839,0.0058,Conc = 0.464 * Area - 0.0319,47.5,35,0.00707,0.00707,0.00707")}.to raise_error(RuntimeError)
+    end
+  end
 end
