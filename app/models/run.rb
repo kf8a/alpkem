@@ -63,9 +63,11 @@ class Run < ActiveRecord::Base
   end
 
   def load_file(file)
-    parser.parse_file(file)
-    self.measurements = parser.measurements
-    self.load_errors.blank?
+    ActiveRecord::Base.transaction do
+      parser.parse_file(file)
+      self.measurements = parser.measurements
+      self.load_errors.blank?
+    end
   end
 
   def parser
