@@ -7,7 +7,7 @@ module Parsers
       data = CSV.parse_line(line)
 
       return  nil unless data[1] == "Unknown"
-      return nil if data[0] =~ /1\s.M\s+KCL/i
+      return nil if data[0] =~ /1\s*M\s+KCL/i
       return nil if data[0] =~ /H2O/i
       return nil if data[0] =~ /blank/i
 
