@@ -1,9 +1,9 @@
 #Main model in this app. Runs represent a set of measurements taken at one time.
 class Run < ActiveRecord::Base
   belongs_to :sample_type
-  has_many :samples, -> {uniq},  through: :measurements, dependent: :destroy
-  has_many :analytes, -> {uniq.order('name')}, through: :measurements
   has_many :measurements, dependent: :delete_all
+  has_many :samples, -> {uniq},  through: :measurements #, dependent: :destroy
+  has_many :analytes, -> {uniq.order('name')}, through: :measurements
   has_many :data_sources
 
   validates :sample_type_id, presence: true
