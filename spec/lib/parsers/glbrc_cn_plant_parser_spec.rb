@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Parsers::GLBRCCNPlantParser do
 
-  describe 'an excel file with improper string escaping' do
     before do
       @parser = Parsers::Parser.for(12,Date.today)
     end
@@ -20,6 +19,23 @@ describe Parsers::GLBRCCNPlantParser do
       it "should have the right measurement" do
         assert_includes @parser.measurements.collect {|x| x.amount}, 40.6730
         assert_includes @parser.measurements.collect {|x| x.amount}, 1.9310
+      end
+    end
+
+    describe 'a line of data with dashes' do
+      before do
+        @parser.process_line('20130923,40,G02R1-ZEAMX.STA,2.302,GLBRC13P02D4,Unknown,,,,0.7331,43.8663')
+      end
+
+      it "should have the right date" do
+        expect(@parser.sample.sample_date).to eql(Date.civil(2013,9,23))
+      end
+      it "should have the right plot" do
+        expect(@parser.sample.plot.name).to eql('G2R1-ZEAMX.ST')
+      end
+      it "should have the right measurement" do
+        assert_includes @parser.measurements.collect {|x| x.amount}, 43.8663
+        assert_includes @parser.measurements.collect {|x| x.amount}, 0.7331
       end
     end
 
@@ -80,6 +96,5 @@ describe Parsers::GLBRCCNPlantParser do
         expect(@parser.sample.plot.name).to eql('G8R4POPNXM.TR')
       end
     end
-  end
 end
 

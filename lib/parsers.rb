@@ -41,7 +41,7 @@ module Parsers
               when 9; Parsers::CNGLBRCParser
                 # when 10; Parsers::LysimeterNO3Parser
                 # when 11; Parsers::LysimeterNH4Parser
-              when 12; Parsers::GLBRCCNPlantParser
+              when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants
               when 13; Parsers::LeileiSampleParser
               when 14; Parsers::LterCnPlantParser
               when 15; Parsers::LterCnDeepParser
