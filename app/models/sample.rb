@@ -12,6 +12,19 @@ class Sample < ActiveRecord::Base
 
   scope :approved, ->  {where(:approved => true)}
 
+  include Workflow
+
+  workflow do
+    state :new do
+      event :approved, transitions_to: :approved
+    end
+    state :approved do
+      event :released, transitions_to: :released
+    end
+    state :released do
+      event :retract, transitions_to: :approved
+  end
+
   def Sample.samples_to_csv(samples)
     CSV.generate do |csv|
       csv << csv_titles

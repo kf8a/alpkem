@@ -11,6 +11,8 @@ gem 'devise-encryptable'
 gem 'nokogiri'
 gem 'chronic'   #parsing dates
 
+gem 'workflow'
+
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
