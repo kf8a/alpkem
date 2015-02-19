@@ -23,7 +23,7 @@ class Sample < ActiveRecord::Base
       event :reject, transitions_to: :rejected
     end
     state :rejected do
-      event :revert, transitions_to: :approved
+      event :reject, transitions_to: :approved
     end
   end
 
@@ -54,6 +54,14 @@ class Sample < ActiveRecord::Base
     raise ArgumentError unless analyte.class == Analyte
     variance = measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).calculate(:variance, :amount)
     variance/average
+  end
+
+  def toggle_approval
+    if self.approved?
+      self.revert!
+    else
+      self.approve!
+    end
   end
 
   def unapprove

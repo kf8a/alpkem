@@ -107,7 +107,7 @@ describe RunsController do
   end
 
   describe "should create run" do
-    before(:each) do
+    before do
       file_name = Rails.root.join('test', 'data', 'new_format_soil_samples_090415.TXT')
       post :create, :run => @attr, :data => {:file => fixture_file_upload('/new_format_soil_samples_090415.TXT')}
     end
@@ -120,10 +120,10 @@ describe RunsController do
     FactoryGirl.create(:measurement, :sample_id => sample.id, :run_id => @run.id)
     xhr :get, :approve, :id => sample, :sample_class => "Sample", :run_id => @run.id
     sample.reload
-    assert sample.approved
+    assert sample.approved?
     xhr :get, :approve, :id => sample, :sample_class => "Sample", :run_id => @run.id
     sample.reload
-    assert ! sample.approved
+    assert sample.new?
   end
 
   describe 'POST merge a split run' do
