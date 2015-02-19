@@ -1,12 +1,13 @@
 #Pages for showing/manipulating samples.
 class SamplesController < ApplicationController
-  
-  require 'csv' or require 'fastercsv'
+
+  before_filter :authenticate_user! unless Rails.env == 'test'
+  require 'csv'
 
   # GET /samples
   # GET /samples.xml
   def index
-    @samples = Sample.approved
+    @samples = Sample.approved.order('sample_date desc').joins(:plot).order('plots.name').joins(measurements: :analyte).limit(500)
     respond_to do |format|
       format.html
       format.csv do
@@ -25,4 +26,9 @@ class SamplesController < ApplicationController
     end
   end
 
+  def reject
+  end
+
+  def approve
+  end
 end

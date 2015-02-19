@@ -13,7 +13,12 @@ Alpkem::Application.routes.draw do
     end
   end
 
-  resources :samples
+  resources :samples do
+    member do
+      post 'approve'
+      post 'reject'
+    end
+  end
   resources :studies
 
   root :to => 'runs#index'

@@ -7,6 +7,7 @@ class Sample < ActiveRecord::Base
   has_many :measurements #, -> {include(:runs, :measurements).order('runs.run_date, measurements.id') }
   has_many :runs, -> {order('run_date')}, through: :measurements
   has_many :analytes, :through => :measurements
+  belongs_to :sample_type
 
   validates_presence_of :plot
 
@@ -38,18 +39,18 @@ class Sample < ActiveRecord::Base
   def plot_name
     self.plot.try(:name)
   end
-  
+
   def previous_measurements
     right_samples = Sample.approved.where(:plot_id => self.plot.id).to_a
     right_samples.keep_if {|sample| sample.sample_date}
     right_samples.collect {|sample| sample.measurements.where(:deleted => false)}.flatten
   end
- 
+
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
     measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).average(:amount)
   end
-  
+
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
     variance = measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).calculate(:variance, :amount)
