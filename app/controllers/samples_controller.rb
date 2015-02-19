@@ -7,7 +7,7 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.xml
   def index
-    @samples = Sample.approved.order('sample_date desc').joins(:plot).order('plots.name').joins(measurements: :analyte).limit(500)
+    @samples = Sample.approved.order('sample_date desc').joins(:plot).order('plots.name').joins(measurements: :analyte).page(params[:page]).per(100)
     respond_to do |format|
       format.html
       format.csv do
