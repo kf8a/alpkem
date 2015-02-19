@@ -74,7 +74,7 @@ describe StudiesController do
       end
 
       it "should set the flash" do
-        should set_the_flash.to("There are no replicates to update.")
+        should set_flash.to("There are no replicates to update.")
       end
     end
 
@@ -90,7 +90,7 @@ describe StudiesController do
       end
 
       it "should not set the flash" do
-        should_not set_the_flash
+        should_not set_flash
       end
 
       it "should create additional replicates, treatments, and plots as requested" do
