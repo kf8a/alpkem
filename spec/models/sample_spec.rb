@@ -124,4 +124,22 @@ describe Sample do
       assert_equal @sample.average(@nh4), 4
     end
   end
+
+  describe 'workflow states' do
+    let(:sample) {FactoryGirl.create :sample}
+    it 'starts out as new' do
+      expect(sample.new?).to be_truthy
+    end
+    it 'transitions to released when released' do
+      sample.release!
+      expect(sample.released?).to be_truthy
+    end
+    it 'transitions from released to accepted' do
+      sample.release!
+      expect(sample.released?).to be_truthy
+      sample.retract!
+      expect(sample.approved?).to be_truthy
+    end
+  end
+
 end

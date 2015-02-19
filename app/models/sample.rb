@@ -16,14 +16,17 @@ class Sample < ActiveRecord::Base
 
   workflow do
     state :new do
-      event :approved, transitions_to: :approved
+      event :release, transitions_to: :released
     end
     state :approved do
-      event :released, transitions_to: :released
+      event :revert,  transitions_to: :new
+      event :release, transitions_to: :released
     end
     state :released do
       event :retract, transitions_to: :approved
+    end
   end
+
 
   def Sample.samples_to_csv(samples)
     CSV.generate do |csv|
