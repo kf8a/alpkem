@@ -21,3 +21,4 @@ webrat.log
 public/assets/*
 .secret
 public/uploads/*
+.env
