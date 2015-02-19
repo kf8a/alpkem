@@ -43,7 +43,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
+#gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -54,9 +54,8 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3-ruby' #, :require => 'sqlite3'  
   gem 'rspec-rails'
-  gem "metric_fu" #use with 'rake metrics:all'
+  # gem "metric_fu" #use with 'rake metrics:all'
 end
 
 group :test do
@@ -67,8 +66,8 @@ group :test do
   gem "cucumber-rails", :require => false
 end
 
+gem 'pg'
 
 group :production do
-  gem 'pg'
   gem 'unicorn'
 end
