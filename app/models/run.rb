@@ -11,7 +11,7 @@ class Run < ActiveRecord::Base
 
   def approved_samples
     samples.collect do |sample|
-      sample if sample.approved
+      sample if sample.approved?
     end.compact.size
   end
 

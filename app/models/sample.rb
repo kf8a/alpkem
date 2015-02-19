@@ -10,7 +10,7 @@ class Sample < ActiveRecord::Base
 
   validates_presence_of :plot
 
-  scope :approved, ->  {where(:approved => true)}
+  scope :approved, ->  {where(workflow_state: 'approved')}
 
   include Workflow
 
@@ -65,8 +65,13 @@ class Sample < ActiveRecord::Base
   end
 
   def unapprove
-    self.approved = false
-    self.save
+    if self.rejected?
+      self.revert!
+      self.revert!
+    end
+    if self.approved?
+      self.revert!
+    end
   end
 
   def updated?

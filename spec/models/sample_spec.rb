@@ -30,19 +30,19 @@ describe Sample do
         @prev_sample = FactoryGirl.create(:sample,
             :sample_date => 1.year.ago.to_date,
             :plot => @sample.plot,
-            :approved => true)
+            :workflow_state => 'approved')
         @prev_approved1 = FactoryGirl.create(:measurement, :sample => @prev_sample)
         @prev_approved2 = FactoryGirl.create(:measurement, :sample => @prev_sample)
         @unapproved_sample = FactoryGirl.create(:sample,
              :sample_date => 1.year.ago.to_date,
              :plot => @sample.plot,
-             :approved => false)
+             :workflow_state => 'new')
         @prev_unapproved = FactoryGirl.create(:measurement, :sample => @unapproved_sample)
         new_plot = FactoryGirl.create(:plot)
         @wrong_plot_sample = FactoryGirl.create(:sample,
              :sample_date => 1.year.ago.to_date,
              :plot => new_plot,
-             :approved => true)
+             :workflow_state => 'approved')
         @prev_wrong_plot = FactoryGirl.create(:measurement, :sample => @wrong_plot_sample)
         @prev_deleted = FactoryGirl.create(:measurement, :sample => @prev_sample, :deleted => true)
       end
