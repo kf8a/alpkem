@@ -130,15 +130,15 @@ describe Sample do
     it 'starts out as new' do
       expect(sample.new?).to be_truthy
     end
-    it 'transitions to released when released' do
-      sample.release!
-      expect(sample.released?).to be_truthy
-    end
-    it 'transitions from released to accepted' do
-      sample.release!
-      expect(sample.released?).to be_truthy
-      sample.retract!
+    it 'transitions to approved when approved' do
+      sample.approve!
       expect(sample.approved?).to be_truthy
+    end
+    it 'transitions from approved to rejected' do
+      sample.approve!
+      expect(sample.approved?).to be_truthy
+      sample.reject!
+      expect(sample.rejected?).to be_truthy
     end
   end
 

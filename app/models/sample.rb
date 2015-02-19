@@ -16,14 +16,14 @@ class Sample < ActiveRecord::Base
 
   workflow do
     state :new do
-      event :release, transitions_to: :released
+      event :approve, transitions_to: :approved
     end
     state :approved do
       event :revert,  transitions_to: :new
-      event :release, transitions_to: :released
+      event :reject, transitions_to: :rejected
     end
-    state :released do
-      event :retract, transitions_to: :approved
+    state :rejected do
+      event :revert, transitions_to: :approved
     end
   end
 
