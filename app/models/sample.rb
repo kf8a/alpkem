@@ -12,7 +12,6 @@ class Sample < ActiveRecord::Base
   validates_presence_of :plot
 
   scope :approved, ->  {where(workflow_state: 'approved')}
-  scope :approved_or_rejected, -> {where('workflow_state = ? or workflow_state = ?', 'approved', 'rejected')}
 
   include Workflow
 
@@ -27,6 +26,15 @@ class Sample < ActiveRecord::Base
     state :rejected do
       event :approve, transitions_to: :approved
     end
+  end
+
+  def Sample.approved_or_rejected
+    where('workflow_state = ? or workflow_state = ?', 
+          'approved', 'rejected')
+    .order('sample_date desc')
+    .joins(:plot)
+    .order('plots.name')
+    .joins(measurements: :analyte)
   end
 
 

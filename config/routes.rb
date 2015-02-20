@@ -14,6 +14,9 @@ Alpkem::Application.routes.draw do
   end
 
   resources :samples do
+    collection do
+      get 'search'
+    end
     member do
       post 'approve'
       post 'reject'

@@ -7,7 +7,7 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.xml
   def index
-    @samples = Sample.approved_or_rejected.order('sample_date desc').joins(:plot).order('plots.name').joins(measurements: :analyte).page(params[:page]).per(100)
+    @samples = Sample.approved_or_rejected.page(params[:page]).per(100)
     respond_to do |format|
       format.html
       format.csv do
@@ -24,6 +24,11 @@ class SamplesController < ApplicationController
         end
       end
     end
+  end
+
+  def search
+    @samples = Sample.approved_or_rejected.where('plots.name like ?',params[:q]+"%").page(params[:page]).per(500)
+    render :index
   end
 
   def reject

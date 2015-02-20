@@ -25,5 +25,10 @@ describe SamplesController do
     @sample.reload
     expect(@sample).to be_approved
   end
+
+  it 'searches' do
+    get :search, q: 'test'
+    assert_response :success
+  end
 end
 

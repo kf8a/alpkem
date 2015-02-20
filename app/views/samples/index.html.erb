@@ -1,32 +1,41 @@
 <%= paginate @samples%>
 
+<%= form_tag("/samples/search", method: "get", html: {class: "form"}) do %>
+    <%= text_field_tag(:q, "", {placeholder: "Search for Plots", class: "form-control"}) %>
+    <%= submit_tag("Search", {class: "btn btn-primary", data: { disable_with: "Please wait..." } }) %>
+<% end %>
+
 <table class='table table-striped table-hover'>
   <tr>
     <th>Date</th>
     <th>Experiment</th>
     <th>Sample Type</th>
     <th>Plot</th>
+    <th>Compound</th>
+    <th>Conc.</th>
+    <th>Compound</th>
+    <th>Conc.</th>
   </tr>
-<% @samples.each do |sample| %>
-  <tr>
-    <td><%= sample.sample_date %></td>
-    <td><%= sample.plot.study.try(:name) %></td>
-    <td><%= sample.sample_type.try(:name)%></td>
-    <td><%= sample.plot_name %></td>
-    <% sample.analytes.all.uniq.sort.each do |analyte| %>
-      <td><%= analyte.name %>: </td>
-      <td><%= number_with_precision(sample.average(analyte), precision: 3) %></td>
-    <% end %>
-    <td>
-      <% if sample.approved? %>
-        <%= button_to "Reject", {class: 'btn btn default', action: 'reject', id: sample.id }, {:remote => true} %>
+  <% @samples.each do |sample| %>
+    <tr>
+      <td><%= sample.sample_date %></td>
+      <td><%= sample.plot.study.try(:name) %></td>
+      <td><%= sample.sample_type.try(:name)%></td>
+      <td><%= sample.plot_name %></td>
+      <% sample.analytes.all.uniq.sort.each do |analyte| %>
+        <td><%= analyte.name %>: </td>
+        <td><%= number_with_precision(sample.average(analyte), precision: 3) %></td>
       <% end %>
-      <% if sample.rejected? %>
-        <%= button_to "Approve", {action: 'approve', id: sample.id}, {:remote => true} %>
+      <td>
+        <% if sample.approved? %>
+          <%= button_to "Reject", {class: 'btn btn default', action: 'reject', id: sample.id }, {:remote => true} %>
         <% end %>
-    </td>
+        <% if sample.rejected? %>
+          <%= button_to "Approve", {action: 'approve', id: sample.id}, {:remote => true} %>
+        <% end %>
+      </td>
     </tr>
-<% end %>
+  <% end %>
 </table>
 
 <%= paginate @samples%>
