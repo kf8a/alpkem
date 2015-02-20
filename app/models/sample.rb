@@ -34,7 +34,6 @@ class Sample < ActiveRecord::Base
     .order('sample_date desc')
     .joins(:plot)
     .order('plots.name')
-    .joins(measurements: :analyte)
   end
 
 
