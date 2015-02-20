@@ -128,17 +128,23 @@ describe Sample do
   describe 'workflow states' do
     let(:sample) {FactoryGirl.create :sample}
     it 'starts out as new' do
-      expect(sample.new?).to be_truthy
+      expect(sample).to be_new
     end
     it 'transitions to approved when approved' do
       sample.approve!
-      expect(sample.approved?).to be_truthy
+      expect(sample).to be_approved
     end
     it 'transitions from approved to rejected' do
       sample.approve!
-      expect(sample.approved?).to be_truthy
+      expect(sample).to be_approved
       sample.reject!
-      expect(sample.rejected?).to be_truthy
+      expect(sample).to be_rejected
+    end
+    it 'transitions from rejected to approved' do
+      sample.approve!
+      sample.reject!
+      sample.approve!
+      expect(sample).to be_approved
     end
   end
 

@@ -7,7 +7,7 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.xml
   def index
-    @samples = Sample.approved.order('sample_date desc').joins(:plot).order('plots.name').joins(measurements: :analyte).page(params[:page]).per(100)
+    @samples = Sample.with_approved_state.order('sample_date desc').joins(:plot).order('plots.name').joins(measurements: :analyte).page(params[:page]).per(100)
     respond_to do |format|
       format.html
       format.csv do
@@ -27,8 +27,15 @@ class SamplesController < ApplicationController
   end
 
   def reject
+    sample = Sample.find(params[:id])  
+    sample.reject!
+    render nothing: true
   end
 
   def approve
+    sample = Sample.find(params[:id])  
+    sample.approve!
+    render nothing: true
   end
+
 end

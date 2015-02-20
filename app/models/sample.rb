@@ -24,7 +24,7 @@ class Sample < ActiveRecord::Base
       event :reject, transitions_to: :rejected
     end
     state :rejected do
-      event :reject, transitions_to: :approved
+      event :approve, transitions_to: :approved
     end
   end
 
