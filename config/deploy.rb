@@ -48,6 +48,7 @@ namespace :deploy do
   after 'deploy:finalize_update', :link_production_db
   after 'deploy:finalize_update', :link_local_env
   after 'deploy:finalize_update', :link_upload_dir
+  after 'deploy:finalize_update', :link_environment
 end
 
 # seed database
@@ -69,5 +70,10 @@ end
 
 desc 'link upload directory'
 task :link_upload_dir do
-  run "ln -nfs #{deploy_to}/shared/upload#{release_path}/public/"
+  run "ln -nfs #{deploy_to}/shared/uploads #{release_path}/public/"
+end
+
+desc 'link upload env'
+task :link_environment do
+  run "ln -nfs #{deploy_to}/shared/env #{release_path}/.env"
 end
