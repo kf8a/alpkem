@@ -11,6 +11,10 @@ describe SamplesController do
     expect(assigns(:samples)).to_not be_nil
   end
 
+  it 'toggles measurements' do
+    pending 
+  end
+
   it 'allows rejections' do
     @sample.approve!
     xhr :post, :reject, :id => @sample
