@@ -4,6 +4,8 @@ class SamplesController < ApplicationController
   before_filter :authenticate_user! unless Rails.env == 'test'
   require 'csv'
 
+  respond_to :html, :json, :csv
+
   # GET /samples
   # GET /samples.xml
   def index
@@ -32,15 +34,21 @@ class SamplesController < ApplicationController
   end
 
   def reject
-    sample = Sample.find(params[:id])  
-    sample.reject!
-    render nothing: true
+    @sample = Sample.find(params[:id])
+    @dom_id = "sample-" + @sample.id.to_s
+    @sample.reject!
+    respond_to do |format|
+      format.js
+    end
   end
 
   def approve
-    sample = Sample.find(params[:id])  
-    sample.approve!
-    render nothing: true
+    @sample = Sample.find(params[:id])  
+    @dom_id = "sample-" + @sample.id.to_s
+    @sample.approve!
+    respond_to do |format|
+      format.js
+    end
   end
 
 end

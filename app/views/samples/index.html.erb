@@ -17,24 +17,7 @@
     <th>Conc.</th>
   </tr>
   <% @samples.each do |sample| %>
-    <tr>
-      <td><%= sample.sample_date %></td>
-      <td><%= sample.plot.study.try(:name) %></td>
-      <td><%= sample.sample_type.try(:name)%></td>
-      <td><%= sample.plot_name %></td>
-      <% sample.analytes.all.uniq.sort.each do |analyte| %>
-        <td><%= analyte.name %>: </td>
-        <td><%= number_with_precision(sample.average(analyte), precision: 3) %></td>
-      <% end %>
-      <td>
-        <% if sample.approved? %>
-          <%= button_to "Reject", {class: 'btn btn default', action: 'reject', id: sample.id }, {:remote => true} %>
-        <% end %>
-        <% if sample.rejected? %>
-          <%= button_to "Approve", {action: 'approve', id: sample.id}, {:remote => true} %>
-        <% end %>
-      </td>
-    </tr>
+    <%= render partial: sample, locals: {sample: sample}%>
   <% end %>
 </table>
 
