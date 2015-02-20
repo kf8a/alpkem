@@ -12,6 +12,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :plot
 
   scope :approved, ->  {where(workflow_state: 'approved')}
+  scope :approved_or_rejected, -> {where('workflow_state = ? or workflow_state = ?', 'approved', 'rejected')}
 
   include Workflow
 
