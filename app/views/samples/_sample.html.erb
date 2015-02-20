@@ -6,13 +6,8 @@
   <% sample.analytes.all.uniq.sort.each do |analyte| %>
     <td><%= analyte.name %>: </td>
     <td><%= number_with_precision(sample.average(analyte), precision: 3) %></td>
+    <td>
+        <%= button_to "Toggle", {class: 'btn btn default', action: 'toggle', id: sample.id, analyte: analyte.name }, {:remote => true} %>
+    </td>
   <% end %>
-  <td>
-    <% if sample.approved? %>
-      <%= button_to "Reject", {class: 'btn btn default', action: 'reject', id: sample.id }, {:remote => true} %>
-    <% end %>
-    <% if sample.rejected? %>
-      <%= button_to "Approve", {action: 'approve', id: sample.id}, {:remote => true} %>
-    <% end %>
-  </td>
 </tr>

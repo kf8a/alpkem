@@ -20,6 +20,7 @@ Alpkem::Application.routes.draw do
     member do
       post 'approve'
       post 'reject'
+      post 'toggle'
     end
   end
   resources :studies

@@ -36,7 +36,6 @@ class Sample < ActiveRecord::Base
     .order('plots.name')
   end
 
-
   def Sample.samples_to_csv(samples)
     CSV.generate do |csv|
       csv << csv_titles
@@ -56,12 +55,12 @@ class Sample < ActiveRecord::Base
 
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
-    measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).average(:amount)
+    measurements.where(%q{analyte_id = ? and deleted = 'f' and rejected = 'f'}, analyte.id).average(:amount)
   end
 
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
-    variance = measurements.where(%q{analyte_id = ? and deleted = 'f'}, analyte.id).calculate(:variance, :amount)
+    variance = measurements.where(%q{analyte_id = ? and deleted = 'f' and rejected = 'f'}, analyte.id).calculate(:variance, :amount)
     variance/average
   end
 
