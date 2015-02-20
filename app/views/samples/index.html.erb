@@ -1,7 +1,7 @@
 <%= paginate @samples%>
 
 <%= form_tag("/samples/search", method: "get", html: {class: "form"}) do %>
-    <%= text_field_tag(:q, "", {placeholder: "Search for Plots", class: "form-control"}) %>
+    <%= text_field_tag(:q, @q , {placeholder: "Search for Plots", class: "form-control"}) %>
     <%= submit_tag("Search", {class: "btn btn-primary", data: { disable_with: "Please wait..." } }) %>
 <% end %>
 
