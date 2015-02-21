@@ -50,6 +50,7 @@ class SamplesController < ApplicationController
   def reject
     @sample = Sample.find(params[:id])
     @dom_id = "sample-" + @sample.id.to_s
+    @sample.reject!
     respond_to do |format|
       format.js
     end
