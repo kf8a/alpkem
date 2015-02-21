@@ -18,8 +18,6 @@ Alpkem::Application.routes.draw do
       get 'search'
     end
     member do
-      post 'approve'
-      post 'reject'
       post 'toggle'
     end
   end

@@ -47,23 +47,4 @@ class SamplesController < ApplicationController
     end
   end
 
-  def reject
-    @sample = Sample.find(params[:id])
-    @dom_id = "sample-" + @sample.id.to_s
-    @sample.reject!
-    respond_to do |format|
-      format.js
-    end
-  end
-
-  def approve
-    @sample = Sample.find(params[:id])
-    analyte = Analyte.where(name: params[:analyte])
-    @dom_id = "sample-" + @sample.id.to_s
-    @sample.approve!
-    respond_to do |format|
-      format.js
-    end
-  end
-
 end

@@ -15,21 +15,6 @@ describe SamplesController do
     pending 
   end
 
-  it 'allows rejections' do
-    @sample.approve!
-    xhr :post, :reject, :id => @sample
-    @sample.reload
-    expect(@sample).to be_rejected
-  end
-
-  it 'allows approval' do
-    @sample.approve!
-    @sample.reject!
-    xhr :get, :approve, :id => @sample
-    @sample.reload
-    expect(@sample).to be_approved
-  end
-
   it 'searches' do
     get :search, q: 'test'
     assert_response :success
