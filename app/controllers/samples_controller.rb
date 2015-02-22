@@ -30,7 +30,7 @@ class SamplesController < ApplicationController
 
   def search
     @q = params[:q]
-    @samples = Sample.approved_or_rejected.where('plots.name like ?',@q+"%").page(params[:page]).per(500)
+    @samples = Sample.approved_or_rejected.where('plots.name similar to ?',@q).page(params[:page]).per(500)
     render :index
   end
 
