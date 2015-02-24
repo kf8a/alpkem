@@ -69,7 +69,8 @@ describe Sample do
   describe "analytes method" do
     describe "for an NO3/NH4 type sample" do
       before(:each) do
-        run = FactoryGirl.create(:run)
+        run = FactoryGirl.build(:run_with_measurements)
+        run.save
         @sample = FactoryGirl.create(:sample)
         @no3 = find_or_factory(:analyte, :name => "NO3")
         @nh4 = find_or_factory(:analyte, :name => "NH4")

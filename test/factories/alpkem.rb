@@ -23,21 +23,39 @@ FactoryGirl.define do
     association :plot
   end
   factory :measurement do
-    association     :sample
-    association     :analyte
+    sample
+    analyte
     amount          0.5
   end
   factory :run do
     sample_type_id    1
-    measurements      [FactoryGirl.create(:measurement)]
+    factory :run_with_measurements do
+      transient do
+        measurements_count 5
+      end
+
+      after(:build) do |run, evaluator|
+       run.measurements = create_list(:measurement, evaluator.measurements_count, run: run)
+      end
+    end
+    # measurements      [FactoryGirl.create(:measurement)]
   end
   factory :cnm, :class => :measurement do
-    association   :sample
-    association   :analyte, :name => "N"
+    sample
+    analyte name: "N"
     amount        0.5
   end
   factory :cn_run, :class => :run do
     sample_type_id    6
-    measurements   [FactoryGirl.create(:cnm)]
+    # measurements   [FactoryGirl.create(:cnm)]
+    factory :cn_run_with_measurements do
+      transient do
+        measurements_count 5
+      end
+
+      after(:build) do |cn_run, evaluator|
+        cn_run.measurements = create_list(:measurement, evaluator.measurements_count, run: cn_run)
+      end
+    end
   end
 end

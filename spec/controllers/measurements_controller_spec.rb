@@ -7,7 +7,8 @@ describe MeasurementsController do
   end
 
   it "should destroy and undestroy measurement" do
-    @run = FactoryGirl.create(:run)
+    @run = FactoryGirl.build(:run_with_measurements)
+    @run.save
     @measurement = FactoryGirl.create(:measurement, :run_id => @run.id)
     xhr :delete, :destroy, :id => @measurement, :sample_class => "Sample", :run_id => @run.id
     @measurement.reload

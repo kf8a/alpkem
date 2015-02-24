@@ -39,8 +39,10 @@ describe Run do
   end
 
   it "runs should include runs but not cn runs and vice versa" do
-    run = FactoryGirl.create(:run, :sample_date => Date.today)
-    cn_run = FactoryGirl.create(:cn_run)
+    run = FactoryGirl.build(:run_with_measurements, :sample_date => Date.today)
+    run.save
+    cn_run = FactoryGirl.create(:cn_run_with_measurements)
+    cn_run.save
     assert !Run.runs.include?(cn_run)
     assert Run.runs.include?(run)
 
@@ -49,13 +51,15 @@ describe Run do
   end
 
   it "should give sample_type_name for a run" do
-    run = FactoryGirl.create(:run, :sample_type_id => 4)
+    run = FactoryGirl.build(:run_with_measurements, :sample_type_id => 4)
+    run.save
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
   end
 
   it "should identify what is and is not a cn_run" do
     run = Run.find(@standard_run.id)
-    cn_run = FactoryGirl.create(:cn_run)
+    cn_run = FactoryGirl.build(:cn_run_with_measurements)
+    cn_run.save
     assert !run.cn_run?
     assert cn_run.cn_run?
   end
@@ -64,7 +68,8 @@ describe Run do
     run = Run.find(@standard_run.id)
     sample = FactoryGirl.create(:sample)
     FactoryGirl.create(:measurement, :run => run, :sample => sample)
-    other_run = FactoryGirl.create(:run)
+    other_run = FactoryGirl.build(:run_with_measurements)
+    other_run.save
     other_sample = FactoryGirl.create(:sample)
     FactoryGirl.create(:measurement, :run => other_run, :sample => other_sample)
     run.reload
@@ -76,12 +81,13 @@ describe Run do
   end
 
   it "should know if it has been updated" do
-    changing_run = FactoryGirl.create(:run)
+    changing_run = FactoryGirl.build(:run_with_measurements)
+    changing_run.save
     changing_sample = FactoryGirl.create(:sample)
     FactoryGirl.create(:measurement, :sample => changing_sample, :run => changing_run)
     changing_sample.sample_date = Date.yesterday #a change
     changing_sample.save
-    static_run = FactoryGirl.create(:run)
+    static_run = FactoryGirl.build(:run_with_measurements)
     static_sample = FactoryGirl.create(:sample)
     FactoryGirl.create(:measurement, sample: static_sample, run: static_run)
     changing_run.reload

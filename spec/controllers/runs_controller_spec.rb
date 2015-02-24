@@ -2,8 +2,10 @@ require 'rails_helper'
 
 describe RunsController do
   before(:each) do
-    @cn_run ||= FactoryGirl.create(:cn_run)
-    @run ||= FactoryGirl.create(:run)
+    @cn_run = FactoryGirl.build(:cn_run_with_measurements)
+    @cn_run.save
+    @run = FactoryGirl.build(:run_with_measurements)
+    @run.save
     @measurement ||= FactoryGirl.create(:measurement, :run => @run)
     @user ||= find_or_factory(:user)
     sign_in @user
