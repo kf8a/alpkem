@@ -88,6 +88,7 @@ describe Run do
     changing_sample.sample_date = Date.yesterday #a change
     changing_sample.save
     static_run = FactoryGirl.build(:run_with_measurements)
+    static_run.save
     static_sample = FactoryGirl.create(:sample)
     FactoryGirl.create(:measurement, sample: static_sample, run: static_run)
     changing_run.reload
