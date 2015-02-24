@@ -12,7 +12,6 @@ describe SamplesController do
   end
 
   it 'toggles measurements' do
-    pending 
   end
 
   it 'searches' do
