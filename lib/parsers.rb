@@ -43,7 +43,7 @@ module Parsers
                 # when 11; Parsers::LysimeterNH4Parser
               when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants
               when 13; Parsers::LeileiSampleParser
-              when 14; Parsers::LterCnPlantParser
+              when 14; Parsers::LterCnPlantParser #LTER CN PLants
               when 15; Parsers::LterCnDeepParser
               when 16; Parsers::StandardParser  #LterSoilParser
               when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
@@ -57,6 +57,7 @@ module Parsers
               when 25; Parsers::CNGLBRCGenericParser  #Annual Root CN
               when 26; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cors
               when 27; Parsers::LterCnPlantParser   #Post frost
+              when 28; Parsers::LterCnPlantParser
               else false
               end
 
