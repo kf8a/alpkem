@@ -3,7 +3,7 @@ module Parsers
   class LterCnPlantParser < CNSampleParser
 
     #  CN_PLANT_SAMPLE           = '(\d{1,2}\/\d{1,2}\/\d\d\d\d),\d+,"?(T\d\dR\d\w+)[abc]"?,\d+\.\d+,"?\w+"?,"?\w+"?,,,,(\d+\.\d+),(\d+\.\d+)'
-    CN_PLANT_SAMPLE           = '(\d+),\d+,(\d+)?(T..R\d)-(.+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+    CN_PLANT_SAMPLE           = '(\d+),\d+,(\d+)?(T..R\d(?:N.)?)-(.+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
       date, x, @plot_name, species, @percent_n, @percent_c = ParserMatcher.parse(CN_PLANT_SAMPLE, line)
@@ -14,7 +14,7 @@ module Parsers
         @sample_date = Date.new(year, month, day)
 
         @plot_name = @plot_name.gsub(/0(\d)/,'\1')
-        @plot_name = @plot_name + species
+        @plot_name = @plot_name + '-' + species
 
         Plot.find_or_create_by(name: @plot_name, study_id: 1)
 
