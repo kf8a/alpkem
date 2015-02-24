@@ -55,7 +55,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'sqlite3-ruby'
+  gem 'sqlite3'
   gem 'rspec-rails'
   # gem "metric_fu" #use with 'rake metrics:all'
 end
