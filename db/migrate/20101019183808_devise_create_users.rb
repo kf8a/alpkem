@@ -1,11 +1,10 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def self.up
-    drop_table :open_id_authentication_associations
-    drop_table :open_id_authentication_nonces
-    drop_table :users
     create_table(:users) do |t|
-      t.openid_authenticatable
-      t.rememberable      
+      t.string :email,              :null => false, :default => ""
+      t.string :encrypted_password, :null => false, :default => ""
+
+      t.datetime :remember_created_at
 
       t.timestamps
     end
