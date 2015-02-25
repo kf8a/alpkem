@@ -264,6 +264,7 @@ describe Run do
     assert r.save
     #TODO add CF and DF plots to the test database
     assert r.samples.size > 1 # there are 93 samples but we don't have DF and CF in the test database
+    r.destroy
   end
 
   it "loads another lysimeter file" do
@@ -278,8 +279,9 @@ describe Run do
     #These details can be dealt with in the parser tests
     #      assert_equal 32, r.samples.size
     assert_equal 6, r.samples[0].measurements.size
-    assert_equal  0.055, r.samples[0].measurements[0].amount
+    assert_equal 0.055, r.samples[0].measurements[0].amount
     assert_equal 2.115, r.samples[0].measurements[1].amount
+    r.destroy
   end
 
   it "loads lysimeter files with negative peaks" do
