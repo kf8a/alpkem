@@ -52,14 +52,12 @@ describe Run do
 
   it "should give sample_type_name for a run" do
     run = FactoryGirl.build(:run_with_measurements, :sample_type_id => 4)
-    run.save
     assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
   end
 
   it "should identify what is and is not a cn_run" do
     run = Run.find(@standard_run.id)
     cn_run = FactoryGirl.build(:cn_run_with_measurements)
-    cn_run.save
     assert !run.cn_run?
     assert cn_run.cn_run?
   end
@@ -117,12 +115,14 @@ describe Run do
     end
     assert !r.save
     assert_equal r.load_errors, "Data file is empty."
+    r.destroy
   end
 
   it "requires a date to save" do
     r = FactoryGirl.build(:run, @attr.merge(sample_date: nil))
     r.load_file(good_data)
     assert !r.save
+    r.destroy
   end
 
   it "properly loads the data" do
@@ -155,6 +155,7 @@ describe Run do
     expect(run.samples.index {|s| s.plot.treatment.name == "T6"}).to_not be_nil
 
     assert_equal 330, run.measurements.size
+    r.destroy
   end
 
   # TODO these next 2 test fail because I am now using the new format for sample type 2 rather than the old format
@@ -183,6 +184,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   it 'loads single element files' do
@@ -194,6 +196,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   it "loads glbrc_resin_strips files" do
@@ -205,6 +208,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1 #We'll have better tests in the parser
+    r.destroy
   end
 
   it "loads cn files" do
@@ -217,6 +221,7 @@ describe Run do
     assert_equal r.plot_errors, ""
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   it "loads glbrc_cn_deep_core new format files" do
@@ -229,6 +234,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   it "loads new glbrc soil sample files" do
@@ -240,6 +246,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   it "loads more glbrc soil sample files" do
@@ -251,6 +258,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   it "loads lysimeter files" do
@@ -279,7 +287,7 @@ describe Run do
     #These details can be dealt with in the parser tests
     #      assert_equal 32, r.samples.size
     assert_equal 6, r.samples[0].measurements.size
-    assert_equal 0.055, r.samples[0].measurements[0].amount
+    assert_equal 0.049, r.samples[0].measurements[0].amount
     assert_equal 2.115, r.samples[0].measurements[1].amount
     r.destroy
   end
@@ -294,6 +302,7 @@ describe Run do
     assert r.save
     assert r.samples.size > 1
     assert_equal 6, r.samples[0].measurements.size
+    r.destroy
   end
 
   it "loads lysimeter files with a single sample" do
@@ -305,6 +314,7 @@ describe Run do
     end
     assert r.save
     assert r.samples.size > 1
+    r.destroy
   end
 
   describe 'deleting' do
