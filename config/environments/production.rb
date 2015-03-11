@@ -49,7 +49,7 @@ Rails.application.configure do
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
-  config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new("alpkem"))
+  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new("alpkem"))
   # syslog_logger = Logger::Syslog.new("alpkem")
   # config.logger = ActiveSupport::TaggedLogging.new(syslog_logger)
 
