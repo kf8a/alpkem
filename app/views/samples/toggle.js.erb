@@ -1,0 +1,1 @@
+jQuery('#<%= @dom_id %>').replaceWith("<%= escape_javascript(render :partial => 'sample', :locals => {:sample => @sample})%>").effect('highlight')
