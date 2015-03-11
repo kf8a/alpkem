@@ -287,7 +287,7 @@ describe Run do
     #These details can be dealt with in the parser tests
     #      assert_equal 32, r.samples.size
     assert_equal 6, r.samples[0].measurements.size
-    assert_equal 0.049, r.samples[0].measurements[0].amount
+    assert_equal 0.055, r.samples[0].measurements[0].amount
     assert_equal 2.115, r.samples[0].measurements[1].amount
     r.destroy
   end
