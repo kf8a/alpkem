@@ -58,6 +58,7 @@ module Parsers
               when 26; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cors
               when 27; Parsers::LterCnPlantParser   #Post frost
               when 28; Parsers::LterCnPlantParser
+              when 29; Parsers::GLBRCCNPlantParser #GLBRC Plants post harvest
               else false
               end
 
