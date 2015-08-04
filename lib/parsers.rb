@@ -36,7 +36,7 @@ module Parsers
               when 4; Parsers::GLBRCDeepParser
               when 5; Parsers::StandardParser
               when 6; Parsers::CNSampleParser
-              when 7; Parsers::CNDeepParser
+              when 7; Parsers::CNDeepParser # lter deep core
               when 8; Parsers::StandardParser # glbrc inorganic N 0-25
               when 9; Parsers::CNGLBRCParser
                 # when 10; Parsers::LysimeterNO3Parser
@@ -44,7 +44,7 @@ module Parsers
               when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants
               when 13; Parsers::LeileiSampleParser
               when 14; Parsers::LterCnPlantParser #LTER CN PLants
-              when 15; Parsers::LterCnDeepParser
+              when 15; Parsers::LterCnDeepParser #LTER CN Deep 
               when 16; Parsers::StandardParser  #LterSoilParser
               when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples
                 # when 18; Parsers::SWFParser
