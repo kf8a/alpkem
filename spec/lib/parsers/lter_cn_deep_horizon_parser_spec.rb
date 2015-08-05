@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Parsers::LterCnDeepParser do
+describe Parsers::LterCnDeepHorizonParser do
 
   describe 'lter deep core data' do
     before do

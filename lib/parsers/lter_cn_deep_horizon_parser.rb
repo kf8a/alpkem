@@ -1,5 +1,5 @@
 module Parsers
-  class LterCnDeepParser < CNSampleParser
+  class LterCnDeepHorizonParser < CNSampleParser
 
     REGEX = '(\d+),\d+,(T..(?:nt)?R\dS\dC\d[SMD])[ABC],.+,(\d+\.\d+),(\d+\.\d+)'
 
