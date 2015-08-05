@@ -6,9 +6,11 @@ module Parsers
 
     def process_line(line)
       raw_date, @plot_name, depth, @percent_n, @percent_c = ParserMatcher.parse(CN_DEEP_CORE_SAMPLE, line)
-      @sample_date = Date.parse(raw_date)
-      @plot_name = @plot_name + "-" + depth
-      process_data if cn_plot_name_ok?
+      if raw_date
+        @sample_date = Date.parse(raw_date)
+        @plot_name = @plot_name + "-" + depth
+        process_data if cn_plot_name_ok?
+      end
     end
   end
 end
