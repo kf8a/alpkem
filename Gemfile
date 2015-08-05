@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.3'
 
 # Bundle authentication
 gem 'devise'
@@ -50,12 +50,10 @@ gem 'jbuilder', '~> 2.0'
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
-group :development do
-  gem 'spring'
-end
-
 group :development, :test do
-  gem 'sqlite3'
+  gem "byebug"
+  gem "spring"
+  gem "web-console", '~> 2.0'
   gem 'rspec-rails'
   # gem "metric_fu" #use with 'rake metrics:all'
 end
