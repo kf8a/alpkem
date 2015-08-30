@@ -26,6 +26,7 @@ require "parsers/resource_gradient_parser.rb"
 require "parsers/standard_line_parser.rb"
 require "parsers/standard_parser.rb"
 require "parsers/cn_deep_parser.rb"
+# require "parsers/cimmyt_parser.rb"
 
 module Parsers
   class Parser
@@ -61,6 +62,7 @@ module Parsers
               when 28; Parsers::LterCnPlantParser
               when 29; Parsers::GLBRCCNPlantParser #GLBRC Plants post harvest
               when 30; Parsers::LterCnDeepParser #LTER CN Deep (new format)
+              # when 31: Parsers::CIMMYParser #lachat CIMMYT samples
               else false
               end
 
