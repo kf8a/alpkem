@@ -16,15 +16,6 @@ ActiveRecord::Schema.define(version: 20150220213420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "analyses", force: :cascade do |t|
-    t.integer  "measurement_id"
-    t.integer  "sample_id"
-    t.integer  "analyte_id"
-    t.string   "workflow_state"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "analytes", force: :cascade do |t|
     t.string "name", limit: 255
     t.string "unit", limit: 255
@@ -54,9 +45,9 @@ ActiveRecord::Schema.define(version: 20150220213420) do
 
   create_table "data_sources", force: :cascade do |t|
     t.integer  "run_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "data",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "data"
   end
 
   create_table "measurements", force: :cascade do |t|
@@ -120,10 +111,10 @@ ActiveRecord::Schema.define(version: 20150220213420) do
     t.integer  "plot_id"
     t.integer  "sample_type_id"
     t.date     "sample_date"
-    t.boolean  "old_approved",               default: false
+    t.boolean  "approved",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "workflow_state", limit: 255
+    t.string   "workflow_state"
   end
 
   add_index "samples", ["plot_id"], name: "index_samples_on_plot_id", using: :btree
