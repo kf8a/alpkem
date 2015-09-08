@@ -62,4 +62,16 @@ describe Parsers::LachatStandardLineParser do
       expect{Parsers::LachatStandardLineParser.parse("something,Unknown,1,1,167,1,1,,,,10/29/2014,1:43:19 PM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.00509,,mg/L,0.32,0.0317,Conc = 0.656 * Area - 0.205,48.5,36,0.00509,0.00509,0.00509,2,Nitrate-Nitrite,0.00707,,mg N/L,0.0839,0.0058,Conc = 0.464 * Area - 0.0319,47.5,35,0.00707,0.00707,0.00707")}.to raise_error(RuntimeError)
     end
   end
+
+  describe 'a glbrc line' do
+    before do
+      @first, @second, @nh4, @no3, @date = Parsers::LachatStandardLineParser.parse('20130604G10R2-25-c,Unknown,1,1,3,1,1,,,,10/29/2014,11:45:13 AM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.164,,mg/L,0.563,0.0534,Conc = 0.656 * Area - 0.205,48.5,36,0.164,0.164,0.164,2,Nitrate-Nitrite,0.0969,,mg N/L,0.277,0.0219,Conc = 0.464 * Area - 0.0319,47.5,34,0.0969,0.0969,0.0969')
+    end
+    it 'has the right treatment' do
+      expect(@first).to  eq('10')
+    end
+    it 'hast the right replicate' do
+      expect(@second).to eq('2')
+    end
+  end
 end
