@@ -1,4 +1,5 @@
 #For parsing CN Deep Core files into Carbon/Nitrogen measurements.
+# DEPRECATED
 module Parsers
   class CNDeepParser < CNSampleParser
 

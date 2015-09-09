@@ -46,7 +46,7 @@ module Parsers
               when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants
               when 13; Parsers::LeileiSampleParser
               when 14; Parsers::LterCnPlantParser #LTER CN PLants
-              when 15; Parsers::LterCnDeepHorizonParser #LTER CN Deep  deprecated
+                # when 15; Parsers::LterCnDeepHorizonParser #LTER CN Deep  deprecated
               when 16; Parsers::StandardParser  #LterSoilParser
                 # when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples deprecated
                 # when 18; Parsers::SWFParser

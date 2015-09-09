@@ -1,3 +1,4 @@
+#DEPRECATED 2015-9-9
 module Parsers
   class LterCnDeepHorizonParser < CNSampleParser
 
