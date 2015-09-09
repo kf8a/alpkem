@@ -3,6 +3,7 @@ def top_depth(bottom)
   when 10 then 0
   when 25 then 10
   when 50 then 25
+  when 100 then 50
   when 122 then 50
   end
 end
@@ -28,6 +29,22 @@ def seed
             p Plot.where(name: plot, study_id: 1).first_or_create(name: plot, study_id: 1, bottom_depth: depth, top_depth: top_depth(depth))
           end
         end
+      end
+    end
+  end
+  1.upto(3) do |rep|
+    1.upto(10) do |stn|
+      [10,25,50,100].each do |depth|
+        plot = "L#{rep}R1S#{stn}C1-#{depth}"
+        p Plot.where(name: plot, study_id: 11).first_or_create(name: plot, study_id: 11, bottom_depth: depth, top_depth: top_depth(depth))
+      end
+    end
+  end
+  1.upto(4) do |rep|
+    1.upto(10) do |stn|
+      [10,25,50,100].each do |depth|
+        plot = "M#{rep}R1S#{stn}C1-#{depth}"
+        p Plot.where(name: plot, study_id: 11).first_or_create(name: plot, study_id: 11, bottom_depth: depth, top_depth: top_depth(depth))
       end
     end
   end
