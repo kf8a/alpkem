@@ -38,17 +38,17 @@ module Parsers
               when 4; Parsers::GLBRCDeepParser
               when 5; Parsers::StandardParser
               when 6; Parsers::CNSampleParser
-                # when 7; Parsers::CNDeepParser  # deprecated old deepcore parser
-                # when 8; Parsers::StandardParser # glbrc inorganic N 0-25 deprecated
+              when 7; Parsers::CNDeepParser  # deprecated old deepcore parser
+              when 8; Parsers::StandardParser # glbrc inorganic N 0-25 deprecated
               when 9; Parsers::CNGLBRCParser
-                # when 10; Parsers::LysimeterNO3Parser
-                # when 11; Parsers::LysimeterNH4Parser
+              when 10; Parsers::LysimeterNO3Parser
+              when 11; Parsers::LysimeterNH4Parser
               when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants
               when 13; Parsers::LeileiSampleParser
               when 14; Parsers::LterCnPlantParser #LTER CN PLants
-                # when 15; Parsers::LterCnDeepHorizonParser #LTER CN Deep  deprecated
+              when 15; Parsers::LterCnDeepHorizonParser #LTER CN Deep  deprecated
               when 16; Parsers::StandardParser  #LterSoilParser
-                # when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples deprecated
+              when 17; Parsers::GLBRCScaleupBaseParser #Baseline 2009 scaleup samples deprecated
                 # when 18; Parsers::SWFParser
               when 19; Parsers::GenericParser   #T28 glbrc mineralization data
               when 20; Parsers::GenericParser   #glbrc soil data
