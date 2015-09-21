@@ -1,4 +1,5 @@
 <tr id="sample-<%=sample.id%>">
+  <td><%= sample.run.id %></td>
   <td><%= sample.sample_date %></td>
   <td><%= sample.plot.study.try(:name) %></td>
   <td><%= sample.sample_type.try(:name)%></td>
