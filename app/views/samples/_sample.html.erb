@@ -1,5 +1,5 @@
 <tr id="sample-<%=sample.id%>">
-  <td><%= link_to sample.measurements.first.run.id, qc_run_path(sample.measurements.first.run.id) %></td>
+  <td><%= sample_measurements.collect {|x| link_to x.try(:run).try(:id), qc_run_path x.try(:run).try(:id)}.join %></td>
   <td><%= sample.sample_date %></td>
   <td><%= sample.plot.study.try(:name) %></td>
   <td><%= sample.sample_type.try(:name)%></td>
