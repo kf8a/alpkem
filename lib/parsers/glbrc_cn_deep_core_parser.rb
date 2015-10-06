@@ -3,11 +3,13 @@ module Parsers
   class GLBRCCNDeepCoreParser < CNSampleParser
 
     # CN_PLANT_SAMPLE           = '(\d{1,2}\/\d{1,2}\/\d\d\d\d),\d+,"?(G\d\dR\dm?\w+)[abc]"?,\d+\.\d+,"?\w+"?,"?\w+"?,,,,(\d+\.\d+),(\d+\.\d+)'
-    CN_DEEP_CORE_SAMPLE        = '(\d+),\d+,(\d+)?([G|M|L]..R\dS\d)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+    CN_DEEP_CORE_SAMPLE        = '(\d+),\d+,(\d+)?([G|M|L]..R\dS\d+C?\d?)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
       date, dup_date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_DEEP_CORE_SAMPLE, line)
+      p line
       return unless date
+      p line
       year  = date[0..3].to_i
       month = date[4..5].to_i
       day   = date[6..7].to_i
