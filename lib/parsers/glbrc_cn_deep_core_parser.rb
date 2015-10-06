@@ -7,9 +7,7 @@ module Parsers
 
     def process_line(line)
       date, dup_date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_DEEP_CORE_SAMPLE, line)
-      p line
       return unless date
-      p line
       year  = date[0..3].to_i
       month = date[4..5].to_i
       day   = date[6..7].to_i
