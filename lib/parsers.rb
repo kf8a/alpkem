@@ -43,7 +43,7 @@ module Parsers
               when 9; Parsers::CNGLBRCParser
               when 10; Parsers::LysimeterNO3Parser
               when 11; Parsers::LysimeterNH4Parser
-              when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants
+              when 12; Parsers::GLBRCCNPlantParser #GLBRC Plants (ANPP)
               when 13; Parsers::LeileiSampleParser
               when 14; Parsers::LterCnPlantParser #LTER CN PLants
               when 15; Parsers::LterCnDeepHorizonParser #LTER CN Deep  deprecated
@@ -58,7 +58,7 @@ module Parsers
               when 24; Parsers::GenericParser   #T0 glbrc mineralization
               when 25; Parsers::CNGLBRCGenericParser  #Annual Root CN
               when 26; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cors
-              when 27; Parsers::LterCnPlantParser   #Post frost
+              when 27; Parsers::LterCnPlantParser   #LTER Post frost
               when 28; Parsers::LterCnPlantParser
               when 29; Parsers::GLBRCCNPlantParser #GLBRC Plants post harvest
               when 30; Parsers::LterCnDeepParser #LTER CN Deep (new format)
