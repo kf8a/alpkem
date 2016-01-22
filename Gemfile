@@ -63,7 +63,7 @@ group :test do
   gem 'factory_girl_rails'
   #gem 'capybara'
   gem "database_cleaner"
-  gem "cucumber-rails", :require => false
+  # gem "cucumber-rails", :require => false
   gem "sqlite3"
 end
 

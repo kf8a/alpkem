@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-describe Run do
+describe Run, type: :model do
+  it {should have_many :measurements}
 
   def good_data
     @good_data ||= set_good_data

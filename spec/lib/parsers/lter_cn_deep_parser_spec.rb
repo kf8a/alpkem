@@ -6,7 +6,7 @@ describe Parsers::LterCnDeepParser do
   end
   describe 'lter deep core data' do
     before do
-      FactoryGirl.create :plot, name: "T04R5S4C2-50"
+      find_or_factory :plot, name: "T04R5S4C2-50"
       @parser.process_line("20130904,10,T04R5S4C2-50-C,17.247,LTERDC2013P02A10,Unknown,,,,0.0159,0.1342")
     end
 
@@ -26,7 +26,7 @@ describe Parsers::LterCnDeepParser do
 
   describe 'a T8nt plot' do
     before do
-      FactoryGirl.create :plot, :name => "T08ntR5S4C2-10"
+      find_or_factory :plot, name: "T08ntR5S4C2-10"
       @parser.process_line("20130904,10,T08ntR5S4C2-10-C,17.247,LTERDC2013P02A10,Unknown,,,,0.0159,0.1342")
     end
 
@@ -37,7 +37,7 @@ describe Parsers::LterCnDeepParser do
 
   describe 'a forest plot' do
     before do
-      FactoryGirl.create :plot, :name=>'TSFR1S5C2-122'
+      find_or_factory :plot, name: 'TSFR1S5C2-122'
       @parser.process_line("20130904,10,TSFR1S5C2-122-C,17.247,LTERDC2013P02A10,Unknown,,,,0.0159,0.1342")
     end
 

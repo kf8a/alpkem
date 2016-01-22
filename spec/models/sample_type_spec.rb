@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SampleType do
+describe SampleType, type: :model  do
   it {should have_many :samples}
   it {should have_many :runs}
 

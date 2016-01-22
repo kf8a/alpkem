@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Parsers::GenericParser do
 
   before do
-    FactoryGirl.create(:plot, name: 'G1R1-10')
+    find_or_factory :plot, name: 'G1R1-10'
     @parser = Parsers::Parser.for(20,Date.today)
   end
   describe 'a line of data' do

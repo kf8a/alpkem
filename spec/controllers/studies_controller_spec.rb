@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StudiesController do
+describe StudiesController, type: :controller do
   before(:each) do
     @user = FactoryGirl.create :user
     sign_in @user
@@ -31,7 +31,7 @@ describe StudiesController do
 
   describe "POST :create_plots" do
     before(:each) do
-      @study = FactoryGirl.create(:study, :name => "teststudy")
+      @study = find_or_factory :study, name: "teststudy"
       post :create, :study_name => @study.name
     end
 
@@ -42,7 +42,7 @@ describe StudiesController do
 
   describe "GET :show" do
     before(:each) do
-      @study = FactoryGirl.create(:study, :name => "teststudy")
+      @study = find_or_factory :study, name: "teststudy"
       get :show, :id => @study.id
     end
 
@@ -53,7 +53,7 @@ describe StudiesController do
 
   describe "GET :edit" do
     before(:each) do
-      @study = FactoryGirl.create(:study, :name => "teststudy")
+      @study = find_or_factory :study, name: "teststudy"
       get :edit, :id => @study.id
     end
 
@@ -65,7 +65,7 @@ describe StudiesController do
   describe "PUT :update_plots" do
     describe "with a study with no current replicates" do
       before(:each) do
-        @study = FactoryGirl.create(:study, :name => "teststudy")
+        @study = find_or_factory :study, name: "teststudy"
         put :update, :id => @study.id
       end
 
@@ -80,7 +80,7 @@ describe StudiesController do
 
     describe "with a study with replicates already" do
       before(:each) do
-        @study = FactoryGirl.create(:study, :name => "teststudy")
+        @study = find_or_factory :study, name: "teststudy"
         @study.create_plots(2, 2, "te")
         put :update, :id => @study.id, :number_of_replicates => 3, :number_of_treatments => 3
       end

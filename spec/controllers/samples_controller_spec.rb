@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SamplesController do
+describe SamplesController, type: :controller do
   before do
     @sample = FactoryGirl.create :sample
   end

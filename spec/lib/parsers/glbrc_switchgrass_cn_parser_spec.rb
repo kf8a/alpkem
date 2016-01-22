@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Parsers::GLBRCSwitchgrassCNParser do
   describe 'a line of data' do
     before do
-      FactoryGirl.create(:plot, name: 'SWF1108H2')
+      find_or_factory :plot, name: 'SWF1108H2'
       @parser = Parsers::Parser.for(23,Date.today)
       @parser.process_line '20120706,42,SWF1108H2C,3.829,GLBRC12P14D6,Unknown,,,,1.1235,44.4332'
     end

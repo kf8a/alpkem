@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe MeasurementsController do
+describe MeasurementsController, type: :controller  do
   before(:each) do
     @user = FactoryGirl.create(:user)
     sign_in @user

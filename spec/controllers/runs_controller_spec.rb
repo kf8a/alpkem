@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe RunsController do
+describe RunsController, type: :controller do
   before(:each) do
     @cn_run = FactoryGirl.build(:cn_run_with_measurements)
     @cn_run.save

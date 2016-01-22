@@ -8,8 +8,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    add_index :users, :identity_url, :unique => true
   end
 
   def self.down

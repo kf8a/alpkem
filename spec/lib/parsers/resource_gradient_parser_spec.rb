@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Parsers::ResourceGradientParser do
   before do
-    FactoryGirl.create(:plot, name: 'F403')
+    find_or_factory :plot, name: 'F403'
     @parser = Parsers::Parser.for(22,Date.today)
   end
   describe 'processing a line of data' do
