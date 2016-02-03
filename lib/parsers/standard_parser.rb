@@ -27,9 +27,11 @@ module Parsers
 
     def get_plot_name(first, second)
       if [2,16].include?(@sample_type_id)
-        "#{first}R#{second}"
+        "T#{first}R#{second}"
       elsif first.start_with?("L0") || first.start_with?("M0")
         "#{first}S#{second}"
+      else
+        "G#{first}R#{second}"
       end
     end
 
