@@ -77,7 +77,7 @@ describe Parsers::LachatStandardLineParser do
 
   describe 'a swithcgrass line' do
     before do
-      @first, @second, @nh4, @no3, @date, @site = Parsers::LachatStandardLineParser.parse('ARL-20150729-SWF1H1R5C-15,Unknown,1,1,15,1,1,,,,1/27/2016,10:13:34 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,0.376,,mg/L,0.841,0.0791,Conc = 0.729 * Area - 0.237,47.0,33.0,0.376,0.376,0.376,2,Nitrate-Nitrite,0.0836,,mg N/L,0.277,0.0202,Conc = 0.443 * Area - 0.0391,46.5,33.5,0.0836,0.0836,0.0836')
+      @first, @second, @nh4, @no3, @date, @modifier, @site = Parsers::LachatStandardLineParser.parse('ARL-20150729-SWF1H1R5C-15,Unknown,1,1,15,1,1,,,,1/27/2016,10:13:34 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,0.376,,mg/L,0.841,0.0791,Conc = 0.729 * Area - 0.237,47.0,33.0,0.376,0.376,0.376,2,Nitrate-Nitrite,0.0836,,mg N/L,0.277,0.0202,Conc = 0.443 * Area - 0.0391,46.5,33.5,0.0836,0.0836,0.0836')
     end
 
     it "has the right site" do
@@ -94,7 +94,7 @@ describe Parsers::LachatStandardLineParser do
 
   describe 'a blank switchgrass line' do
     before do
-      @first, @second, @nh4, @no3, @date, @site = Parsers::LachatStandardLineParser.parse('ARL-20150827-BLKA-15,Unknown,1,1,133,1,1,,,,1/27/2016,11:40:54 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,-0.0019,,mg/L,0.322,0.0317,Conc = 0.729 * Area - 0.237,49.5,34.0,-0.0019,-0.0019,-0.0019,2,Nitrate-Nitrite,-0.0112,,mg N/L,0.063,0.00402,Conc = 0.443 * Area - 0.0391,49.5,37.5,-0.0112,-0.0112,-0.0112')
+      @first, @second, @nh4, @no3, @date, @modifier, @site = Parsers::LachatStandardLineParser.parse('ARL-20150827-BLKA-15,Unknown,1,1,133,1,1,,,,1/27/2016,11:40:54 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,-0.0019,,mg/L,0.322,0.0317,Conc = 0.729 * Area - 0.237,49.5,34.0,-0.0019,-0.0019,-0.0019,2,Nitrate-Nitrite,-0.0112,,mg N/L,0.063,0.00402,Conc = 0.443 * Area - 0.0391,49.5,37.5,-0.0112,-0.0112,-0.0112')
     end
 
     it "returns nil " do
