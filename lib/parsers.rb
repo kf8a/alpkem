@@ -62,8 +62,9 @@ module Parsers
               when 28; Parsers::LterCnPlantParser
               when 29; Parsers::GLBRCCNPlantParser #GLBRC Plants post harvest
               when 30; Parsers::LterCnDeepParser #LTER CN Deep (new format)
-              when 32; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cores Marginal Land site
               # when 31: Parsers::CIMMYParser #lachat CIMMYT samples
+              when 32; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cores Marginal Land site
+              when 33; Parsers::GenericParser #Lachat switchgrass (mineralization? samples)
               else false
               end
 
