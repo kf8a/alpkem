@@ -75,25 +75,25 @@ class Run < ActiveRecord::Base
   end
 
   def load_errors
-    errors = parser.load_errors
-    if errors.length > 1024
-      errors = errors[0..1024] + "..."
-    end
-    errors
+    short_errors(parser.load_errors)
   end
 
   def plot_errors
-    errors = parser.plot_errors
+    short_errors(parser.plot_errors)
+  end
+
+  def update_sample_types
+    samples.each do |sample|
+      sample.sample_type_id = sample_type_id
+      sample.save
+    end
+  end
+
+  def short_errors(errors)
     if errors.length > 1024
       errors = errors[0..1024] + "..."
     end
     errors
   end
 
-  def update_sample_types
-   samples.each do |sample|
-     sample.sample_type_id = sample_type_id
-     sample.save
-   end
-  end
 end
