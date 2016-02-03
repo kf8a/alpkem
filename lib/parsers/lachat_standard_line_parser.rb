@@ -18,13 +18,14 @@ module Parsers
       raw_date = result[2]
       first = result[3]
       second = result[4]
+      modifier = result[5]
       site = result[1]
 
       nh4 = data[17].to_f
       no3 = data[30].to_f
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
 
-      [first, second, nh4, no3, sample_date, site]
+      [first, second, nh4, no3, sample_date, modifier, site]
     end
   end
 end
