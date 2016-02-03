@@ -99,6 +99,7 @@ describe Parsers::StandardParser do
 
   describe 'a line of lachat data' do
     before do
+      FactoryGirl.create :plot, {name: "T1R2-25"}
       @parser = Parsers::Parser.for(2,Date.today)
       @parser.process_line("20130604T1R2-25-c,Unknown,1,1,6,1,1,,,,10/29/2014,11:51:46 AM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.147,,mg/L,0.537,0.0523,Conc = 0.656 * Area - 0.205,49,35,0.147,0.147,0.147,2,Nitrate-Nitrite,0.0716,,mg N/L,0.223,0.0177,Conc = 0.464 * Area - 0.0319,46.5,34,0.0716,0.0716,0.0716", Parsers::LachatStandardLineParser)
     end
@@ -112,7 +113,7 @@ describe Parsers::StandardParser do
     end
 
     it "should have the right plot" do
-      expect(@parser.sample.plot.name).to eql('T1R2')
+      expect(@parser.sample.plot.name).to eql('T1R2-25')
     end
     it "should have the right measurement" do
       assert_includes @parser.measurements.collect {|x| x.amount}, 0.147
@@ -120,5 +121,15 @@ describe Parsers::StandardParser do
     end
   end
 
+  describe 'another line of lachat data' do
+    before do
+      FactoryGirl.create :plot, {name: "ARL-SWF8H1R2-15"}
+      @parser = Parsers::Parser.for(8,Date.today)
+      @parser.process_line("ARL-20150827-SWF8H1R2A-15,Unknown,1,1,6,1,1,,,,10/29/2014,11:51:46 AM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.147,,mg/L,0.537,0.0523,Conc = 0.656 * Area - 0.205,49,35,0.147,0.147,0.147,2,Nitrate-Nitrite,0.0716,,mg N/L,0.223,0.0177,Conc = 0.464 * Area - 0.0319,46.5,34,0.0716,0.0716,0.0716", Parsers::LachatStandardLineParser)
+    end
 
+    it "should have the right plot" do
+      expect(@parser.sample.plot.name).to eql("ARL-SWF8H1R2-15")
+    end
+  end
 end

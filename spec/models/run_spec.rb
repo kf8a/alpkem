@@ -155,7 +155,7 @@ describe Run, type: :model do
 
     expect(run.samples.index {|s| s.plot.treatment.name == "T6"}).to_not be_nil
 
-    assert_equal 330, run.measurements.size
+    assert_equal 276, run.measurements.size
     r.destroy
   end
 
