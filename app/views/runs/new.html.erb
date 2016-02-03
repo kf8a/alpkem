@@ -1,7 +1,5 @@
 <h1>New Run</h1>
 
-<%= flash[:notice] %>
-
 <%= form_for(:run, :url => runs_path, :html => {role: "form", class: "form", multipart: true}) do |f| %>
   <%= render "shared/error_messages", :target => @run %>
   <div class="form-group">
