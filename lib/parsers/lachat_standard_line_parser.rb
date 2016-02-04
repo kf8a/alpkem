@@ -20,8 +20,11 @@ module Parsers
       modifier = result[5]
       site = result[1]
 
-      nh4 = data[17].to_f
-      no3 = data[30].to_f
+      manual_dilution_factor = data[5].to_f
+      auto_dilution_factor = data[6].to_f
+      dilution_factor = manual_dilution_factor * auto_dilution_factor
+      nh4 = data[17].to_f * dilution_factor
+      no3 = data[30].to_f * dilution_factor
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
 
       [first, second, nh4, no3, sample_date, modifier, site]

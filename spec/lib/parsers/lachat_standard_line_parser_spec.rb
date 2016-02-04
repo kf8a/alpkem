@@ -90,6 +90,12 @@ describe Parsers::LachatStandardLineParser do
     it 'hast the right replicate' do
       expect(@second).to eq('5')
     end
+    it 'has the right nitrate' do
+      expect(@no3).to eq 0.0836
+    end
+    it 'has the right ammonium' do
+      expect(@nh4).to eq 0.376
+    end
   end
 
   describe 'a blank switchgrass line' do
@@ -101,5 +107,42 @@ describe Parsers::LachatStandardLineParser do
       expect(@site).to be_nil
     end
 
+  end
+
+  describe 'an auto diluted line' do
+    before do
+      @first, @second, @nh4, @no3, @date, @modifier, @site = Parsers::LachatStandardLineParser.parse('ARL-20150729-SWF1H1R5C-15,Unknown,1,1,15,1,10,,,,1/27/2016,10:13:34 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,0.376,,mg/L,0.841,0.0791,Conc = 0.729 * Area - 0.237,47.0,33.0,0.376,0.376,0.376,2,Nitrate-Nitrite,0.0836,,mg N/L,0.277,0.0202,Conc = 0.443 * Area - 0.0391,46.5,33.5,0.0836,0.0836,0.0836')
+    end
+
+    it 'has the right nitrate' do
+      expect(@no3).to eq 0.836
+    end
+    it 'has the right ammonium' do
+      expect(@nh4).to eq 3.76
+    end
+  end
+  describe 'a manually diluted line' do
+    before do
+      @first, @second, @nh4, @no3, @date, @modifier, @site = Parsers::LachatStandardLineParser.parse('ARL-20150729-SWF1H1R5C-15,Unknown,1,1,15,10,1,,,,1/27/2016,10:13:34 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,0.376,,mg/L,0.841,0.0791,Conc = 0.729 * Area - 0.237,47.0,33.0,0.376,0.376,0.376,2,Nitrate-Nitrite,0.0836,,mg N/L,0.277,0.0202,Conc = 0.443 * Area - 0.0391,46.5,33.5,0.0836,0.0836,0.0836')
+    end
+
+    it 'has the right nitrate' do
+      expect(@no3).to eq 0.836
+    end
+    it 'has the right ammonium' do
+      expect(@nh4).to eq 3.76
+    end
+  end
+  describe 'a line with both manual and auto dilution' do
+    before do
+      @first, @second, @nh4, @no3, @date, @modifier, @site = Parsers::LachatStandardLineParser.parse('ARL-20150729-SWF1H1R5C-15,Unknown,1,1,15,10,10,,,,1/27/2016,10:13:34 AM,mcca,OM_1-27-2016_09-43-06AM.OMN,,1,Ammonia,0.376,,mg/L,0.841,0.0791,Conc = 0.729 * Area - 0.237,47.0,33.0,0.376,0.376,0.376,2,Nitrate-Nitrite,0.0836,,mg N/L,0.277,0.0202,Conc = 0.443 * Area - 0.0391,46.5,33.5,0.0836,0.0836,0.0836')
+    end
+
+    it 'has the right nitrate' do
+      expect(@no3).to eq 8.36
+    end
+    it 'has the right ammonium' do
+      expect(@nh4).to eq 37.6
+    end
   end
 end
