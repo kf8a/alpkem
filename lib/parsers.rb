@@ -66,6 +66,7 @@ module Parsers
               when 32; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cores Marginal Land site
               when 33; Parsers::StandardParser #Lachat switchgrass (mineralization? samples T0)
               when 34; Parsers::StandardParser #Lachat switchgrass (mineralization? samples T28)
+              when 35; Parsers::GLBRCCNSoilParser # GLBRC soil samples new format
               else false
               end
 
