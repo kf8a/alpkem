@@ -26,6 +26,7 @@ require "parsers/resource_gradient_parser.rb"
 require "parsers/standard_line_parser.rb"
 require "parsers/standard_parser.rb"
 require "parsers/cn_deep_parser.rb"
+require "parsers/glbrc_cn_soil_parser.rb"
 # require "parsers/cimmyt_parser.rb"
 
 module Parsers
