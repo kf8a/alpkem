@@ -47,13 +47,14 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 #gem 'sdoc', '~> 0.4.0',          group: :doc
 
+gem 'web-console', group: :development
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
   gem "byebug"
   gem "spring"
-  gem "web-console", '~> 2.0'
   gem 'rspec-rails'
   # gem "metric_fu" #use with 'rake metrics:all'
 end
