@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~>4.2.5'
-gem 'rake', '< 11.0'
+gem 'rails', '~>4.2.6'
 
 # Bundle authentication
 gem 'devise'
