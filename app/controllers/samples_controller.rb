@@ -1,7 +1,7 @@
 #Pages for showing/manipulating samples.
 class SamplesController < ApplicationController
 
-  before_filter :authenticate_user! unless Rails.env == 'test'
+  # before_filter :authenticate_user! unless Rails.env == 'test'
   require 'csv'
 
   respond_to :html, :json, :csv
