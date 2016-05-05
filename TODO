@@ -1,4 +1,9 @@
+
 Create a preview from the uploaded file and ask the user to fill in the
 plot and replicate info if we don't have have it. Don't allow it to be approved 
 until the info is there.
 TODO the qc link on the page after the upload is complete does not go to qc page
+
+FEATURE REQUEST: Cathy i think is looking to see if the samples are complete and asked to sort the samples by sample type 
+and then date. I am thinking that it might be better to have a separate view for the completeness checks.
+
