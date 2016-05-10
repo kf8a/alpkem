@@ -13,12 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150220213420) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "analytes", force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "unit", limit: 255
+    t.string "name"
+    t.string "unit"
   end
 
   create_table "cn_measurements", force: :cascade do |t|
@@ -31,14 +28,14 @@ ActiveRecord::Schema.define(version: 20150220213420) do
     t.datetime "updated_at"
   end
 
-  add_index "cn_measurements", ["analyte_id"], name: "index_cn_measurements_on_analyte_id", using: :btree
-  add_index "cn_measurements", ["cn_sample_id"], name: "index_cn_measurements_on_cn_sample_id", using: :btree
-  add_index "cn_measurements", ["run_id"], name: "index_cn_measurements_on_run_id", using: :btree
+  add_index "cn_measurements", ["analyte_id"], name: "index_cn_measurements_on_analyte_id"
+  add_index "cn_measurements", ["cn_sample_id"], name: "index_cn_measurements_on_cn_sample_id"
+  add_index "cn_measurements", ["run_id"], name: "index_cn_measurements_on_run_id"
 
   create_table "cn_samples", force: :cascade do |t|
-    t.string   "cn_plot",     limit: 255
+    t.string   "cn_plot"
     t.date     "sample_date"
-    t.boolean  "approved",                default: false
+    t.boolean  "approved",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,29 +58,38 @@ ActiveRecord::Schema.define(version: 20150220213420) do
     t.boolean  "rejected",   default: false
   end
 
-  add_index "measurements", ["analyte_id"], name: "index_measurements_on_analyte_id", using: :btree
-  add_index "measurements", ["run_id"], name: "index_measurements_on_run_id", using: :btree
-  add_index "measurements", ["sample_id"], name: "index_measurements_on_sample_id", using: :btree
+  add_index "measurements", ["analyte_id"], name: "index_measurements_on_analyte_id"
+  add_index "measurements", ["run_id"], name: "index_measurements_on_run_id"
+  add_index "measurements", ["sample_id"], name: "index_measurements_on_sample_id"
+
+  create_table "open_id_authentication_associations", force: :cascade do |t|
+    t.integer "issued"
+    t.integer "lifetime"
+    t.string  "handle"
+    t.string  "assoc_type"
+    t.binary  "server_url"
+    t.binary  "secret"
+  end
+
+  create_table "open_id_authentication_nonces", force: :cascade do |t|
+    t.integer "timestamp",  null: false
+    t.string  "server_url"
+    t.string  "salt",       null: false
+  end
 
   create_table "plots", force: :cascade do |t|
-    t.string  "name",         limit: 255
+    t.string  "name"
     t.integer "study_id"
     t.integer "treatment_id"
     t.integer "replicate_id"
-    t.text    "species_code"
-    t.text    "fraction"
-    t.float   "top_depth"
-    t.float   "bottom_depth"
-    t.integer "station_id"
+    t.string  "species_code"
     t.text    "sub_plot"
     t.text    "treatment"
     t.text    "replicate"
   end
 
-  add_index "plots", ["name"], name: "plots_name_key", unique: true, using: :btree
-
   create_table "replicates", force: :cascade do |t|
-    t.string  "name",     limit: 255
+    t.string  "name"
     t.integer "study_id"
   end
 
@@ -94,15 +100,14 @@ ActiveRecord::Schema.define(version: 20150220213420) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "start_date"
-    t.text     "comment"
     t.date     "initial_sample_date"
   end
 
-  add_index "runs", ["sample_type_id"], name: "index_runs_on_sample_type_id", using: :btree
+  add_index "runs", ["sample_type_id"], name: "index_runs_on_sample_type_id"
 
   create_table "sample_types", force: :cascade do |t|
-    t.string  "name",     limit: 255
-    t.boolean "active",               default: true
+    t.string  "name"
+    t.boolean "active",   default: true
     t.text    "parser"
     t.integer "study_id"
   end
@@ -117,55 +122,43 @@ ActiveRecord::Schema.define(version: 20150220213420) do
     t.string   "workflow_state"
   end
 
-  add_index "samples", ["plot_id"], name: "index_samples_on_plot_id", using: :btree
-  add_index "samples", ["sample_date"], name: "index_samples_on_sample_date", using: :btree
-  add_index "samples", ["sample_type_id"], name: "index_samples_on_sample_type_id", using: :btree
+  add_index "samples", ["plot_id"], name: "index_samples_on_plot_id"
+  add_index "samples", ["sample_date"], name: "index_samples_on_sample_date"
+  add_index "samples", ["sample_type_id"], name: "index_samples_on_sample_type_id"
 
   create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", limit: 255, null: false
+    t.string   "session_id", null: false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-
-  create_table "stations", force: :cascade do |t|
-    t.text "name"
-  end
-
-  add_index "stations", ["name"], name: "stations_name_key", unique: true, using: :btree
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
 
   create_table "studies", force: :cascade do |t|
-    t.string "name",   limit: 255
-    t.string "prefix", limit: 255
+    t.string "name"
+    t.string "prefix"
   end
 
   create_table "treatments", force: :cascade do |t|
-    t.string  "name",     limit: 255
+    t.string  "name"
     t.integer "study_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "identity_url",           limit: 255
-    t.string   "remember_token",         limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.datetime "remember_created_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
-  add_index "users", ["identity_url"], name: "index_users_on_identity_url", unique: true, using: :btree
-
-  add_foreign_key "measurements", "samples", name: "measurements_sample_id_fkey"
-  add_foreign_key "samples", "plots", name: "samples_plot_id_fkey"
 end
