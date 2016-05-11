@@ -17,7 +17,7 @@ class Run < ActiveRecord::Base
 
   def self.runs
     all_runs = Run.order('id desc').to_a
-    all_runs.drop_if(&:cn_run?)
+    all_runs.reject(&:cn_run?)
   end
 
   def self.cn_runs
