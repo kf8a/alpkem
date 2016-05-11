@@ -8,7 +8,6 @@ gem 'devise-encryptable'
 
 # Bundle the extra gems:
 #gem 'will_paginate', :require => 'will_paginate'
-gem 'nokogiri'
 gem 'chronic'   #parsing dates
 
 gem 'workflow'

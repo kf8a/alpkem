@@ -236,7 +236,6 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   kaminari
-  nokogiri
   pg
   rails (~> 4.2.6)
   rspec-rails
@@ -253,4 +252,4 @@ DEPENDENCIES
   workflow
 
 BUNDLED WITH
-   1.11.2
+   1.12.2
