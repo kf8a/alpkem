@@ -6,10 +6,10 @@ FactoryGirl.define do
     "plot#{n}#{rand(n).to_i}#{rand(4)}#{Time.now}"
   end
   factory :analyte do
-    name                 { FactoryGirl.generate :analyte_name }
+    name { FactoryGirl.generate :analyte_name }
   end
   factory :plot do
-    name                 { FactoryGirl.generate :plot_name }
+    name { FactoryGirl.generate :plot_name }
   end
   factory :replicate do
   end
@@ -25,10 +25,10 @@ FactoryGirl.define do
   factory :measurement do
     sample
     analyte
-    amount          0.5
+    amount 0.5
   end
   factory :run do
-    sample_type_id    1
+    sample_type_id 1
     factory :run_with_measurements do
       transient do
         measurements_count 5
@@ -42,10 +42,10 @@ FactoryGirl.define do
   end
   factory :cnm, :class => :measurement do
     sample
-    analyte name: "N"
-    amount        0.5
+    analyte name: 'N'
+    amount 0.5
   end
-  factory :cn_run, :class => :run do
+  factory :cn_run, class: :run do
     sample_type_id    6
     # measurements   [FactoryGirl.create(:cnm)]
     factory :cn_run_with_measurements do
