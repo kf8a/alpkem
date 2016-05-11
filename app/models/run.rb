@@ -1,9 +1,9 @@
-#Main model in this app. Runs represent a set of measurements taken at one time.
+# Main model in this app. Runs represent a set of measurements
 class Run < ActiveRecord::Base
   belongs_to :sample_type
   has_many :measurements, dependent: :delete_all
-  has_many :samples, -> {uniq},  through: :measurements #, dependent: :destroy
-  has_many :analytes, -> {uniq.order('name')}, through: :measurements
+  has_many :samples, -> { uniq }, through: :measurements
+  has_many :analytes, -> { uniq.order('name') }, through: :measurements
   has_many :data_sources
 
   validates :sample_type_id, presence: true
@@ -17,16 +17,16 @@ class Run < ActiveRecord::Base
 
   def self.runs
     all_runs = Run.order('id desc').to_a
-    all_runs.keep_if {|run| !run.cn_run?}
+    all_runs.drop_if(&:cn_run?)
   end
 
   def self.cn_runs
     all_runs = Run.order('id desc').to_a
-    all_runs.keep_if {|run| run.cn_run?}
+    all_runs.keep_if(&:cn_run?)
   end
 
   def all_measurements
-    self.measurements.includes(:sample).includes(:analyte)
+    measurements.includes(:sample).includes(:analyte)
   end
 
   # def analytes
@@ -34,19 +34,19 @@ class Run < ActiveRecord::Base
   # end
 
   def similar_runs
-    Run.where(:sample_date => sample_date, :sample_type_id => sample_type_id)
+    Run.where(sample_date: sample_date, sample_type_id: sample_type_id)
   end
 
   def sample_type_name
-    self.sample_type.name
+    sample_type.name
   end
 
   def cn_run?
-    self.sample_type_name.include?("CN")
+    sample_type_name.include?('CN')
   end
 
   def updated?
-    samples.index {|sample| sample.updated?}
+    samples.index(&:updated?)
   end
 
   def complete?
@@ -54,9 +54,9 @@ class Run < ActiveRecord::Base
   end
 
   def sample_date_range
-    dates = samples.collect {|x| x.sample_date }
+    dates = samples.collect(&:sample_date)
     if dates.min == dates.max
-      "#{dates.min}"
+      dates.min.to_s
     else
       "#{dates.min} - #{dates.max}"
     end
@@ -66,7 +66,7 @@ class Run < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       parser.parse_file(file)
       self.measurements = parser.measurements
-      self.load_errors.blank?
+      load_errors.blank?
     end
   end
 
@@ -90,10 +90,7 @@ class Run < ActiveRecord::Base
   end
 
   def short_errors(errors)
-    if errors.length > 1024
-      errors = errors[0..1024] + "..."
-    end
+    errors = errors[0..1024] + '...' if errors.length > 1024
     errors
   end
-
 end
