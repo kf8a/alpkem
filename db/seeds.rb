@@ -52,7 +52,7 @@ m_study.treatments.each do |treatment|
   replicates.each do |replicate|
     Plot.where(name: "#{treatment.name}#{replicate.name}-25", study_id: m_study)
         .first_or_create(name: "#{treatment.name}#{replicate.name}-25",
-                         study: study,
+                         study: m_study,
                          treatment: treatment,
                          replicate: replicate,
                          top_depth: 0,
