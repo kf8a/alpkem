@@ -18,6 +18,6 @@ class Measurement < ActiveRecord::Base
   # in which case we need to investigate.
   def change_negative_to_zero
     return unless amount < 0 && amount > -0.01
-    amount = 0
+    self.amount = 0
   end
 end
