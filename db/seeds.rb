@@ -54,9 +54,9 @@ m_study.treatments.each do |treatment|
         .first_or_create(name: "#{treatment.name}#{replicate.name}-25",
                          study: m_study,
                          treatment: treatment,
-                         replicate: replicate,
-                         top_depth: 0,
-                         bottom_depth: 25)
+                         replicate: replicate)
+                         # top_depth: 0,
+                         # bottom_depth: 25)
   end
 end
 
