@@ -148,7 +148,7 @@ describe RunsController, type: :controller do
       post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
         :data => {:file => @file2}
 
-      expect(@sample.measurements.count).to eql(9)
+      expect(@sample.measurements.count).to eql(6)
     end
   end
 
