@@ -50,7 +50,7 @@ m_study.reload
 m_study.treatments.each do |treatment|
   replicates = Replicate.where(study_id: m_study.id)
   replicates.each do |replicate|
-    Plot.where(name: "#{treatment.name}#{replicate.name}-25", study_id: study)
+    Plot.where(name: "#{treatment.name}#{replicate.name}-25", study_id: m_study)
         .first_or_create(name: "#{treatment.name}#{replicate.name}-25",
                          study: study,
                          treatment: treatment,
