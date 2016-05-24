@@ -1,6 +1,6 @@
 # This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
-  before_ation :get_run, only: [:qc, :edit, :update, :destroy]
+  before_action :get_run, only: [:qc, :edit, :update, :destroy]
   respond_to :html, :csv
 
   # GET /runs
