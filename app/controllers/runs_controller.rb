@@ -1,25 +1,21 @@
-#This is the main controller for the app. Pages to show/manipulate runs.
+# This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
-
-  before_filter :get_run, :only => [:qc, :edit, :update, :destroy]
-  respond_to :html, :xml, :csv
+  before_ation :get_run, only: [:qc, :edit, :update, :destroy]
+  respond_to :html, :csv
 
   # GET /runs
-  # GET /runs.xml
   def index
     @runs = Run.runs
     respond_with @runs
   end
 
   # GET /runs/cn
-  # GET /runs/cn.xml
   def cn
     @runs = Run.cn_runs
     respond_with @runs
   end
 
   # GET /runs/1
-  # GET /runs/1.xml
   def show
     @run = Run.includes(:measurements).find(params[:id])
     @back = @run.cn_run? ? cn_runs_path : runs_path
@@ -27,10 +23,9 @@ class RunsController < ApplicationController
   end
 
   # GET /runs/new
-  # GET /runs/new.xml
   def new
     @run = Run.new
-    @run.sample_date  = Date.today #session[:sample_date]
+    @run.sample_date  = Date.today # session[:sample_date]
     @run.run_date     = session[:run_date]
     @run.sample_type_id = session[:sample_type_id]
     respond_with @run
@@ -47,7 +42,6 @@ class RunsController < ApplicationController
   end
 
   # POST /runs
-  # POST /runs.xml
   def create
     @run = Run.new(run_params)
 
@@ -75,7 +69,6 @@ class RunsController < ApplicationController
   end
 
   # PUT /runs/1
-  # PUT /runs/1.xml
   def update
     # if @run.update_attributes(run_params) &&  @run.update_sample_types
     #   flash[:notice] = 'Run was successfully updated.'
@@ -106,14 +99,16 @@ class RunsController < ApplicationController
     end
   end
 
-  private  ###############################
+  private
 
   def get_run
     @run = Run.find(params[:id])
   end
 
   def run_params
-    params.require(:run).permit(:run_date, :sample_date, :start_date, :initial_sample_date, :sample_type_id, :comment)
+    params.require(:run).permit(:run_date, :sample_date, :start_date,
+                                :initial_sample_date, :sample_type_id,
+                                :comment)
   end
 
 end
