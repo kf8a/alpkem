@@ -1,7 +1,6 @@
-# encoding: utf-8
-
+# Keep the uploaded data files around so that we can
+# track provinance
 class DataUploader < CarrierWave::Uploader::Base
-
   # Choose what kind of storage to use for this uploader:
   storage :file
 
@@ -16,5 +15,4 @@ class DataUploader < CarrierWave::Uploader::Base
   def extension_white_list
     %w(csv txt)
   end
-
 end

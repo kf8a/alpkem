@@ -1,6 +1,6 @@
 # This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
-  before_action :get_run, only: [:qc, :edit, :update, :destroy]
+  before_action :run, only: [:qc, :edit, :update, :destroy]
   respond_to :html, :csv
 
   # GET /runs
@@ -38,7 +38,8 @@ class RunsController < ApplicationController
   def qc
     @samples    = @run.samples.order('id')
     @analytes   = @run.analytes
-    # @measurements = @run.all_measurements + @run.similar_runs.collect{|run| run.all_measurements}
+    # @measurements = @run.all_measurements +
+    # @run.similar_runs.collect{|run| run.all_measurements}
   end
 
   # POST /runs
@@ -94,14 +95,14 @@ class RunsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.html { render :nothing => true }
+      format.html { render nothing: true }
       format.xml { head :ok }
     end
   end
 
   private
 
-  def get_run
+  def run
     @run = Run.find(params[:id])
   end
 
@@ -110,5 +111,4 @@ class RunsController < ApplicationController
                                 :initial_sample_date, :sample_type_id,
                                 :comment)
   end
-
 end

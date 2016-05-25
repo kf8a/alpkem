@@ -1,6 +1,5 @@
-#Methods to manipulate pages related to the Measurements model
+# Methods to manipulate pages related to the Measurements model
 class MeasurementsController < ApplicationController
-
   def destroy
     @run = Run.find(params[:run_id])
     @measurement = Measurement.find(params[:id])

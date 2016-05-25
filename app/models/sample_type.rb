@@ -1,4 +1,5 @@
-# Samples and runs each belong to a sample type, which determines parsing behavior.
+# Samples and runs each belong to a sample type,
+# which determines parsing behavior.
 class SampleType < ActiveRecord::Base
   has_many :samples
   has_many :runs

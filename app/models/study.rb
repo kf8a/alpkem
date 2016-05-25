@@ -12,12 +12,11 @@ class Study < ActiveRecord::Base
 
     treatments_and_replicates = treatments.product(replicates)
     treatments_and_replicates.each do |treatment, replicate|
-      Plot.where(name: "#{treatment.name}#{replicate.name}",
-                 study_id: self).first_or_create(
-                   name: "#{treatment.name}#{replicate.name}",
-                   study: self,
-                   treatment: treatment,
-                   replicate: replicate)
+      Plot.where(name: "#{treatment.name}#{replicate.name}", study_id: self)
+          .first_or_create(name: "#{treatment.name}#{replicate.name}",
+                           study: self,
+                           treatment: treatment,
+                           replicate: replicate)
     end
   end
 
