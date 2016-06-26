@@ -1,7 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -11,11 +11,11 @@ require 'rspec/rails'
 # run twice. It is recommended that you do not name files matching this glob to
 # end with _spec.rb. You can configure this pattern with the --pattern
 # option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 require "#{Rails.root}/db/seeds.rb"
 
-def find_or_factory(model, attributes = Hash.new)
+def find_or_factory(model, attributes = {})
   model_as_constant = model.to_s.titleize.gsub(' ', '').constantize
   object = model_as_constant.where(attributes).first
   object ||= FactoryGirl.create(model.to_sym, attributes)
@@ -31,25 +31,23 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-      
+
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
-#ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
+# ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
-#   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-   config.before(:suite) do
-     DatabaseCleaner.strategy = :transaction
-     # DatabaseCleaner.clean_with(:truncation)
-   end
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    # DatabaseCleaner.clean_with(:truncation)
+  end
 
-   config.around(:each) do |example|
-     DatabaseCleaner.cleaning do
-       example.run
-     end
-   end
- end
-
-
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+end

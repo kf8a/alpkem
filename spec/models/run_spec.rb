@@ -79,11 +79,11 @@ describe Run, type: :model do
     assert !other_run.samples.include?(sample)
   end
 
-  it "should know if it has been updated" do
+  it 'should know if it has been updated' do
     changing_run = FactoryGirl.build(:run_with_measurements)
     changing_run.save
     changing_sample = FactoryGirl.create(:sample)
-    FactoryGirl.create(:measurement, :sample => changing_sample, :run => changing_run)
+    FactoryGirl.create(:measurement, sample: changing_sample, run: changing_run)
     changing_sample.sample_date = Date.yesterday #a change
     changing_sample.save
     static_run = FactoryGirl.build(:run_with_measurements)
@@ -96,18 +96,18 @@ describe Run, type: :model do
     assert !static_run.updated?
   end
 
-  it "saves with good data" do
+  it 'saves with good data' do
     r = FactoryGirl.build(:run, @attr)
     r.load_file(good_data)
     assert r.save
   end
 
-  it "requires loaded data to save" do
+  it 'requires loaded data to save' do
     r = FactoryGirl.build(:run, @attr.merge(measurements: []))
-    assert !r.save, "It should not save without data loaded."
+    assert !r.save, 'It should not save without data loaded.'
   end
 
-  it "requires non empty data to save" do
+  it 'requires non empty data to save' do
     r = FactoryGirl.build(:run,@attr)
     file_name = Rails.root.join('spec', 'fixtures', 'blank.txt')
     File.open(file_name, 'r') do |f|
@@ -115,18 +115,18 @@ describe Run, type: :model do
       r.load_file(empty_data)
     end
     assert !r.save
-    assert_equal r.load_errors, "Data file is empty."
+    assert_equal r.load_errors, 'Data file is empty.'
     r.destroy
   end
 
-  it "requires a date to save" do
+  it 'requires a date to save' do
     r = FactoryGirl.build(:run, @attr.merge(sample_date: nil))
     r.load_file(good_data)
     assert !r.save
     r.destroy
   end
 
-  it "properly loads the data" do
+  it 'properly loads the data' do
     r = FactoryGirl.build(:run, @attr)
     r.load_file(good_data)
     assert r.save
@@ -148,10 +148,10 @@ describe Run, type: :model do
     expect(sample.measurements.index {|m| m.amount == 0.266 && m.analyte == nh4}).to_not be_nil
 
     run = Run.find(r.id)
-    measurements = run.measurements.where(:analyte_id => no3.id)
-    assert !measurements.where(:amount => 0.098).blank?
+    measurements = run.measurements.where(analyte_id: no3.id)
+    assert !measurements.where(amount: 0.098).blank?
     measurements = run.measurements.where(:analyte_id => nh4.id)
-    assert !measurements.where(:amount => 0.036).blank?
+    assert !measurements.where(amount: 0.036).blank?
 
     expect(run.samples.index {|s| s.plot.treatment.name == "T6"}).to_not be_nil
 
@@ -159,9 +159,9 @@ describe Run, type: :model do
     r.destroy
   end
 
-  # TODO these next 2 test fail because I am now using the new format for sample type 2 rather than the old format
+  # TODO: these next 2 test fail because I am now using the new format for sample type 2 rather than the old format
   # I will need to get some new files with negatives and reruns for these test
-  # TODO separate out the sample type from the sample format.
+  # TODO: separate out the sample type from the sample format.
   it "loads files with negatives" do
     # assert_difference "Run.count" do
     #    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
@@ -176,10 +176,10 @@ describe Run, type: :model do
     #  end
   end
 
-  it "loads glbrc files" do
+  it 'loads glbrc files' do
     file_name = Rails.root.join('test', 'data', 'GLBRC_deep_core_1106R4R5.TXT')
-    r = FactoryGirl.build(:run,@attr.merge(:sample_type_id => 4))
-    File.open(file_name,'r') do |f|
+    r = FactoryGirl.build(:run,@attr.merge(sample_type_id: 4))
+    File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
     end
@@ -190,7 +190,7 @@ describe Run, type: :model do
 
   it 'loads single element files' do
     file_name = Rails.root.join 'spec', 'fixtures', '3262012B.TXT'
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 2))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 2))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -200,9 +200,9 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads glbrc_resin_strips files" do
+  it 'loads glbrc_resin_strips files' do
     file_name = Rails.root.join('spec', 'fixtures', 'new_format_soil_samples_090415.TXT')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 5))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 5))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -214,12 +214,12 @@ describe Run, type: :model do
 
   it "loads cn files" do
     file_name = Rails.root.join('test', 'data', 'DC01CFR1.csv')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 6))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 6))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
     end
-    assert_equal r.plot_errors, ""
+    assert_equal r.plot_errors, ''
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -227,11 +227,11 @@ describe Run, type: :model do
 
   it "loads glbrc_cn_deep_core new format files" do
     file_name = Rails.root.join('test', 'data', 'GLBRC_cn.csv')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 9))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 9))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
-      assert_equal r.plot_errors, ""
+      assert_equal r.plot_errors, ''
     end
     assert r.save
     assert r.samples.size > 1
@@ -240,7 +240,7 @@ describe Run, type: :model do
 
   it "loads new glbrc soil sample files" do
     file_name = Rails.root.join('test', 'data', 'glbrc_soil_sample_new_format.txt')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 8))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 8))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       assert r.load_file(s)
@@ -252,7 +252,7 @@ describe Run, type: :model do
 
   it "loads more glbrc soil sample files" do
     file_name = Rails.root.join('test', 'data', '100419L.TXT')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 8))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 8))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -264,21 +264,21 @@ describe Run, type: :model do
 
   it "loads lysimeter files" do
     file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
     end
     assert_equal "", r.plot_errors
     assert r.save
-    #TODO add CF and DF plots to the test database
+    # TODO: add CF and DF plots to the test database
     assert r.samples.size > 1 # there are 93 samples but we don't have DF and CF in the test database
     r.destroy
   end
 
   it "loads another lysimeter file" do
     file_name = Rails.root.join('test', 'data', '090615QL.TXT')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -290,7 +290,7 @@ describe Run, type: :model do
 
   it "loads lysimeter files with negative peaks" do
     file_name = Rails.root.join('test', 'data', '090701QL.TXT')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -303,7 +303,7 @@ describe Run, type: :model do
 
   it "loads lysimeter files with a single sample" do
     file_name = Rails.root.join('test', 'data', 'Lysimeter_single_format.TXT')
-    r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
+    r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -316,11 +316,11 @@ describe Run, type: :model do
   describe 'deleting' do
     it 'deletes measurements' do
       file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
-      r = FactoryGirl.build(:run, @attr.merge(:sample_type_id => 1))
+      r = FactoryGirl.build(:run, @attr.merge(sample_type_id: 1))
       File.open(file_name, 'r') do |f|
         s = StringIO.new(f.read)
         r.load_file(s)
-        #TODO add CF and DF plots to the test database
+        # TODO: add CF and DF plots to the test database
       end
       assert_equal "", r.plot_errors
       assert r.save
