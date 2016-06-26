@@ -11,5 +11,4 @@ class MeasurementsController < ApplicationController
       format.js
     end
   end
-
 end

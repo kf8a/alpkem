@@ -62,7 +62,8 @@ class Sample < ActiveRecord::Base
 
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
-    variance = measurements.where("analyte_id = ? and deleted = 'f' and rejected = 'f'",
+    variance = measurements.where("analyte_id = ? and deleted = 'f'"\
+                                  " and rejected = 'f'",
                                   analyte.id).calculate(:variance, :amount)
     variance / average
   end

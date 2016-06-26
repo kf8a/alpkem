@@ -14,9 +14,11 @@ module RunsHelper
     mdate = measurement_date(m)
     if mdate && m.amount
       if m.analyte == analyte1
-        "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}), #{m.amount}, undefined],"
+        "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}),"\
+        " #{m.amount}, undefined],"
       else
-        "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}), undefined, #{m.amount}],"
+        "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}),"\
+        " undefined, #{m.amount}],"
       end
     end
   end
