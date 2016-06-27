@@ -68,7 +68,7 @@ module Parsers
               when 33; Parsers::StandardParser #Lachat switchgrass (mineralization? samples T0)
               when 34; Parsers::StandardParser #Lachat switchgrass (mineralization? samples T28)
               when 35; Parsers::GLBRCCNSoilParser # GLBRC soil samples new format
-              when 36: Parsers::GLBRCCNPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
+              when 36; Parsers::GLBRCCNPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
               else false
               end
 
