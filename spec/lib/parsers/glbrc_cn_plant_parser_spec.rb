@@ -96,5 +96,20 @@ describe Parsers::GLBRCCNPlantParser do
         expect(@parser.sample.plot.name).to eql('G8R4POPNXM.TR')
       end
     end
+
+    describe 'a scaleup field line' do
+      before do
+        @parser.process_line('20151109,15,L01S3-UNSRTB,2.833,GLBRCSU15P1B3,Unknown,,,,0.4232,43.1423')
+      end
+
+      it 'has the right date' do
+        expect(@parser.sample.sample_date).to eql(Date.civil(2015,11,9))
+      end
+
+      it 'has the right plot' do
+        expect(@parser.sample.plot.name).to eql('L1S3-UNSRT')
+      end
+
+    end
 end
 
