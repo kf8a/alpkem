@@ -61,13 +61,14 @@ module Parsers
               when 26; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cors
               when 27; Parsers::LterCnPlantParser   #LTER Post frost
               when 28; Parsers::LterCnPlantParser
-              when 29; Parsers::GLBRCCNPlantParser #GLBRC Plants post harvest
+              when 29; Parsers::GLBRCCNPlantParser # GLBRC Harvest CN (grab sample)
               when 30; Parsers::LterCnDeepParser #LTER CN Deep (new format)
               # when 31: Parsers::CIMMYParser #lachat CIMMYT samples
               when 32; Parsers::GLBRCCNDeepCoreParser  #GLBRC Deep cores Marginal Land site
               when 33; Parsers::StandardParser #Lachat switchgrass (mineralization? samples T0)
               when 34; Parsers::StandardParser #Lachat switchgrass (mineralization? samples T28)
               when 35; Parsers::GLBRCCNSoilParser # GLBRC soil samples new format
+              when 36: Parsers::GLBRCCNPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
               else false
               end
 
