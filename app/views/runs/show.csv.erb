@@ -1,2 +1,2 @@
-#Plot, Date, <%= @run.analytes.collect {|a| a.name}.join(', ') %>
+#Date, Plot, <%= @run.analytes.collect {|a| a.name}.join(', ') %>
 <%= render :partial => 'sample', :collection => @run.samples %>
