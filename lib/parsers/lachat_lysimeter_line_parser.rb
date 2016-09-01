@@ -12,9 +12,10 @@ module Parsers
       first, second, third = plot[0..-2].split(/-/)
       dilution = data[6].to_f
       nh4 = data[25].to_f # * dilution
-      no3 = data[38].to_f $* dilution
+      no3 = data[38].to_f #* dilution
+      no = data[51].to_f
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
-      [first, second, third, sample_date, nh4, no3]
+      [first, second, third, sample_date, nh4, no3, no]
     end
   end
 end
