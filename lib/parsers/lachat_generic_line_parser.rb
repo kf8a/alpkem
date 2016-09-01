@@ -22,10 +22,9 @@ module Parsers
 
       nh4 = data[25].to_f
       no3 = data[38].to_f
-      no = data[51].to_f
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
 
-      [sample_date, plot, depth, nh4, no3, no]
+      [sample_date, plot, depth, nh4, no3]
     end
   end
 end
