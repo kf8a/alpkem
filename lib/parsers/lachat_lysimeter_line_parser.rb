@@ -10,9 +10,12 @@ module Parsers
       return nil if data[0] =~ /H2O/i
       plot, raw_date = data[0].split(/\s+/)
       first, second, third = plot[0..-2].split(/-/)
-      dilution = data[6].to_f
-      nh4 = data[17].to_f * dilution
-      no3 = data[30].to_f * dilution
+
+      manual_dilution_factor = data[5].to_f
+      auto_dilution_factor = data[6].to_f
+      dilution_factor = manual_dilution_factor * auto_dilution_factor
+      nh4 = data[17].to_f * dilution_factor
+      no3 = data[30].to_f * dilution_factor
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
       [first, second, third, sample_date, nh4, no3]
     end
