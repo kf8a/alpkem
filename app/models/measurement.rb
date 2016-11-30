@@ -10,9 +10,7 @@ class Measurement < ActiveRecord::Base
   validates_presence_of :analyte
   validates_presence_of :sample
 
-  def sample_date
-    sample.sample_date
-  end
+  delegate :sample_date, to: :sample
 
   # change number to zero unless they are more that 0.01 negative
   # in which case we need to investigate.
