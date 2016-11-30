@@ -37,7 +37,9 @@ class Run < ActiveRecord::Base
     Run.where(sample_date: sample_date, sample_type_id: sample_type_id)
   end
 
-  delegate :sample_type_name, to: :sample_type
+  def sample_type_name
+    sample_type.name
+  end
 
   def cn_run?
     sample_type_name.include?('CN')
