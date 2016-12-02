@@ -30,7 +30,7 @@ module Parsers
       if [2,16].include?(@sample_type_id)
         # make_lter_plot(first, second, modifier, site)
         make_plot_with_prefix('T',first, second, modifier, site)
-      elsif first.start_with?("L0") || first.start_with?("M0")
+      elsif first.start_with?('L0', 'M0')
         make_scaleup_plot(first, second, modifier, site)
       else
         make_plot_with_prefix('G',first, second, modifier, site)
