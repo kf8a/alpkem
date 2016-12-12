@@ -1,12 +1,12 @@
 td {
-	text-align:right;
-	border-color: green;
+  text-align:right;
+  border-color: green;
   width: 9em;
 }
 
 
 .even {
-	background-color: #f7ffe9;
+  background-color: #f7ffe9;
 }
 
 .even td td {
@@ -36,33 +36,33 @@ tr:hover {
 }
 
 .cv-high-true {
-	background-color: red;
+  background-color: red;
 }
 
 a:visited {
-	color: blue;
+  color: blue;
 }
 
 a.deleted-true:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 .deleted-true  {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 #spinner {
-	position: fixed;
-	top: 20px;
-	right: 20px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
 }
 
 ul {
-	list-style-type: none;
+  list-style-type: none;
 }
 
 .updated-true {
-	color: silver;
+  color: silver;
 }
 .run_errors {
   color: red;
