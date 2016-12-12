@@ -8,7 +8,7 @@ def top_depth(bottom)
   end
 end
 def seed
-  [1,2,3,4,5,6,7,8,"8nt"].each do |trt|
+  [1, 2, 3, 4, 5, 6, 7, 8, '8nt'].each do |trt|
     1.upto(6) do |rep|
       1.upto(5) do |stn|
         1.upto(2) do |core|
@@ -20,7 +20,7 @@ def seed
       end
     end
   end
-  ["SF","CF","DF"].each do |trt|
+  ['SF', 'CF', 'DF'].each do |trt|
     1.upto(3) do |rep|
       1.upto(5) do |stn|
         1.upto(2) do |core|
