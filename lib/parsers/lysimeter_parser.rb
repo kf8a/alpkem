@@ -1,13 +1,12 @@
 module Parsers
-  #For parsing Lysimeter samples
+  # For parsing Lysimeter samples
   class LysimeterParser < FileParser
-
     def parse_data(data)
       line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'LysimeterLineParser'
 
-      data.each { | line | process_line(line, line_parser_name.constantize) }
-      if self.measurements.blank?
-        self.load_errors += "No data was able to be loaded from this file."
+      data.each { |line| process_line(line, line_parser_name.constantize) }
+      if measurements.blank?
+        self.load_errors += 'No data was able to be loaded from this file.'
       end
     end
 
@@ -23,12 +22,11 @@ module Parsers
 
     def locate_plot(first, second, third)
       plot_name = "T#{first}R#{second}F#{third}"
-      find_plot(plot_name) unless self.plot.try(:name) == plot_name
+      find_plot(plot_name) unless plot.try(:name) == plot_name
     end
 
     def process_data(nh4_amount, no3_amount)
       process_nhno_sample(nh4_amount, no3_amount) if plot.present?
     end
-
   end
 end

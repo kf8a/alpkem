@@ -5,10 +5,13 @@ module Parsers
 
     def self.parse(line)
       data = CSV.parse(line)[0]
-      return  nil unless data[1] == "Unknown"
+      p data
+      return nil unless data[1] == 'Unknown'
       return nil if data[0] =~ /1\s.M\s+KCL/i
       return nil if data[0] =~ /H2O/i
+      p data
       plot, raw_date = data[0].split(/\s+/)
+      p [ plot, raw_date]
       first, second, third = plot[0..-2].split(/-/)
 
       manual_dilution_factor = data[5].to_f
