@@ -42,9 +42,9 @@ module Parsers
 
     def self.no3_id(data)
       if data[16] == 'Nitrate-Nitrite'
-        30
-      elsif data[29] == 'Nitrate-Nitrite'
         17
+      elsif data[29] == 'Nitrate-Nitrite'
+        30
       else
         200
       end
