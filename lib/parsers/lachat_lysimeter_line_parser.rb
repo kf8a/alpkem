@@ -2,7 +2,6 @@ require 'csv'
 
 module Parsers
   class LachatLysimeterLineParser
-
     def self.parse(line)
       data = CSV.parse(line)[0]
       p data
@@ -11,7 +10,7 @@ module Parsers
       return nil if data[0] =~ /H2O/i
       p data
       plot, raw_date = data[0].split(/\s+/)
-      p [ plot, raw_date]
+      p [plot, raw_date]
       first, second, third = plot[0..-2].split(/-/)
 
       manual_dilution_factor = data[5].to_f
