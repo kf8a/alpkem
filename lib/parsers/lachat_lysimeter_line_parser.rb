@@ -17,8 +17,14 @@ module Parsers
       auto_dilution_factor = data[6].to_f
       dilution_factor = manual_dilution_factor * auto_dilution_factor
 
-      nh4 = data[nh4_id(data)].to_f * dilution_factor
-      no3 = data[no3_id(data)].to_f * dilution_factor
+      nh4_id = nh4_id(data)
+      nh4 = if nh4_id
+              data[nh4_id].to_f * dilution_factor
+            end
+      no3_id = no3_id(data)
+      no3 = if no3_id
+              data[no3_id].to_f * dilution_factor
+            end
       sample_date = parse_date(raw_date)
       [first, second, third, sample_date, nh4, no3]
     end
@@ -35,8 +41,6 @@ module Parsers
         17
       elsif data[29] == 'Ammonia'
         30
-      else
-        200
       end
     end
 
@@ -45,8 +49,6 @@ module Parsers
         17
       elsif data[29] == 'Nitrate-Nitrite'
         30
-      else
-        200
       end
     end
   end
