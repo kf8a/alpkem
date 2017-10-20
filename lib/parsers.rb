@@ -70,6 +70,7 @@ module Parsers
               when 35 then Parsers::GLBRCCNSoilParser # GLBRC soil samples new format
               when 36 then Parsers::GLBRCCNPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
               when 37 then Parsers::GLBRCSwitchgrassCNParser # GLBRC Switchgrass Soil
+              when 38 then Parsers::LysimeterParser # Rainout shelters
               else false
               end
 
