@@ -33,10 +33,6 @@ class Run < ActiveRecord::Base
   #   measurements.joins(:analyte).uniq.order(:name)
   # end
 
-  def similar_runs
-    Run.where(sample_date: sample_date, sample_type_id: sample_type_id)
-  end
-
   def sample_type_name
     sample_type.name
   end
@@ -80,13 +76,6 @@ class Run < ActiveRecord::Base
 
   def plot_errors
     short_errors(parser.plot_errors)
-  end
-
-  def update_sample_types
-    samples.each do |sample|
-      sample.sample_type_id = sample_type_id
-      sample.save
-    end
   end
 
   def short_errors(errors)
