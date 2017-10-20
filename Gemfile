@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~>4.2.7'
+gem 'rails', '~>4.2'
 
 # Bundle authentication
 gem 'devise'
@@ -8,7 +8,7 @@ gem 'devise-encryptable'
 
 # Bundle the extra gems:
 #gem 'will_paginate', :require => 'will_paginate'
-gem 'chronic'   #parsing dates
+gem 'chronic' # parsing dates
 
 gem 'workflow'
 
@@ -16,28 +16,27 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 #Gets rid of annoying UTF-8 string error in rack
-gem "escape_utils"
+gem 'escape_utils'
 
-gem 'dotenv-rails'
 gem 'carrierwave'
+gem 'dotenv-rails'
 
 # Deploy with Capistrano
 gem 'capistrano', '2.15.5'
 
 gem 'therubyracer'
-#gem 'libv8'
 
 # use syslog
-gem "syslog-logger"
+gem 'syslog-logger'
 
 gem 'prometheus-client', '~> 0.6.0'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 
 gem 'kaminari'
 
@@ -45,8 +44,6 @@ gem 'kaminari'
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-#gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'web-console', group: :development
 
