@@ -104,8 +104,8 @@ class Sample < ActiveRecord::Base
   def to_array
     sample_array = [id,
                     sample_date.to_s,
-                    plot.treatment.name,
-                    plot.replicate.name]
+                    plot.treatment_name,
+                    plot.replicate_name]
 
     Sample.all_analytes.each { |analyte| sample_array << average(analyte) }
 

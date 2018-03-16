@@ -21,9 +21,5 @@ describe Plot do
       @replicate = find_or_factory(:replicate, :name => "Replicate")
       @plot = find_or_factory(:plot, :treatment_id => @treatment.id, :replicate_id => @replicate.id)
     end
-
-    it "should be found by Plot.find_by_treatment_and_replicate" do
-      assert_equal @plot, Plot.find_by_treatment_and_replicate("Treatment", "Replicate")
-    end
   end
 end

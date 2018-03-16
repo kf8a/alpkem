@@ -8,9 +8,11 @@ class Plot < ActiveRecord::Base
 
   validates :name, uniqueness: { scope: :study_id }
 
-  def self.find_by_treatment_and_replicate(treatment_string, replicate_string)
-    trt = Treatment.find_by(name: treatment_string)
-    rep = Replicate.find_by(name: replicate_string)
-    Plot.find_by(treatment_id: trt.id, replicate_id: rep.id)
+  def treatment_name
+    treatment.name
+  end
+
+  def replicate_name
+    replicate.name
   end
 end
