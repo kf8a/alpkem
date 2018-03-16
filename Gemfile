@@ -7,7 +7,7 @@ gem 'devise'
 gem 'devise-encryptable'
 
 # Bundle the extra gems:
-#gem 'will_paginate', :require => 'will_paginate'
+# gem 'will_paginate', :require => 'will_paginate'
 gem 'chronic' # parsing dates
 
 gem 'workflow'
@@ -15,7 +15,7 @@ gem 'workflow'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-#Gets rid of annoying UTF-8 string error in rack
+# Gets rid of annoying UTF-8 string error in rack
 gem 'escape_utils'
 
 gem 'carrierwave'
@@ -51,10 +51,16 @@ gem 'web-console', group: :development
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem "byebug"
-  gem "spring"
+  gem 'byebug'
   gem 'rspec-rails'
+  gem 'spring'
   # gem "metric_fu" #use with 'rake metrics:all'
+end
+
+group :development do
+  gem 'bcrypt_pbkdf'
+  gem 'rbnacl', '< 5.0'
+  gem 'rbnacl-libsodium'
 end
 
 group :test do
