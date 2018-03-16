@@ -14,12 +14,11 @@ module Parsers
     def process_line(line, line_parser)
       date, plot_name, modifier, nh4_amount, no3_amount = line_parser.parse(line)
 
-      if plot_name && modifier
-        plot_name = plot_name + '-' + modifier
-        find_plot(plot_name)
-        process_nhno_sample(nh4_amount, no3_amount) if plot.present?
-      end
-    end
+      return unless plot_name && modifier
 
+      plot_name = plot_name + '-' + modifier
+      find_plot(plot_name)
+      process_nhno_sample(nh4_amount, no3_amount) if plot.present?
+    end
   end
 end

@@ -6,7 +6,7 @@ module Parsers
     CN_DEEP_CORE_SAMPLE        = '(\d+),\d+,(\d+)?(\w+..R\dS\d+C?\d?)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
-      date, dup_date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_DEEP_CORE_SAMPLE, line)
+      date, _dup_date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_DEEP_CORE_SAMPLE, line)
       return unless date
       year  = date[0..3].to_i
       month = date[4..5].to_i
