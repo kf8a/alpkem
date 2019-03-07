@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'statistics'
+require 'workflow'
+require 'workflow_activerecord'
 
 # This repesents one field sample such as a soil core or a water sample
 class Sample < ActiveRecord::Base
@@ -15,7 +17,7 @@ class Sample < ActiveRecord::Base
 
   scope :approved, -> { where(workflow_state: 'approved') }
 
-  include Workflow
+  include WorkflowActiverecord
 
   workflow do
     state :new do

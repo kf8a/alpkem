@@ -12,7 +12,7 @@ gem 'pg'
 # gem 'will_paginate', :require => 'will_paginate'
 gem 'chronic' # parsing dates
 
-gem 'workflow'
+gem 'workflow-activerecord', '>= 4.1', '< 6.0'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
