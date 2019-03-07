@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~>4.1'
+gem 'rails', '~>5.0'
 
 # Bundle authentication
 gem 'devise'
 gem 'devise-encryptable'
+
+gem 'pg'
 
 # Bundle the extra gems:
 # gem 'will_paginate', :require => 'will_paginate'
@@ -52,9 +54,10 @@ gem 'web-console', group: :development
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'byebug'
+  gem 'ruby-graphviz'
   gem 'rspec-rails'
   gem 'spring'
-  # gem "metric_fu" #use with 'rake metrics:all'
+  gem 'sqlite3', '~> 1.3', '< 1.4'
 end
 
 group :development do
@@ -64,15 +67,11 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
-  #gem 'capybara'
-  gem "database_cleaner"
-  # gem "cucumber-rails", :require => false
-  gem "sqlite3"
 end
-
-gem 'pg'
 
 group :production do
   gem 'unicorn'

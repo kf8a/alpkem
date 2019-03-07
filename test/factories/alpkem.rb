@@ -40,22 +40,22 @@ FactoryBot.define do
     end
     # measurements      [FactoryBot.create(:measurement)]
   end
-  # factory :cnm, class: :measurement do
-  #   sample
-  #   analyte name: 'N'
-  #   amount { 0.5 }
-  # end
-  # factory :cn_run, class: :run do
-  #   sample_type_id { 6 }
-  #   # measurements   [FactoryBot.create(:cnm)]
-  #   factory :cn_run_with_measurements do
-  #     transient do
-  #       measurements_count 5
-  #     end
-  #
-  #     after(:build) do |cn_run, evaluator|
-  #       cn_run.measurements = create_list(:measurement, evaluator.measurements_count, run: cn_run)
-  #     end
-  #   end
-  # end
+  factory :cnm, class: :measurement do
+    sample
+    analyte
+    amount { 0.5 }
+  end
+  factory :cn_run, class: :run do
+    sample_type_id { 6 }
+    # measurements   [FactoryBot.create(:cnm)]
+    factory :cn_run_with_measurements do
+      transient do
+        measurements_count { 5 }
+      end
+
+      after(:build) do |cn_run, evaluator|
+        cn_run.measurements = create_list(:measurement, evaluator.measurements_count, run: cn_run)
+      end
+    end
+  end
 end

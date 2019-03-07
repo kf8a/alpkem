@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Run, type: :model do
-  it {should have_many :measurements}
+  it { should have_many :measurements }
 
   def good_data
     @good_data ||= set_good_data
@@ -15,32 +17,30 @@ describe Run, type: :model do
   end
 
   before do
-    @attr ||= {
-      :sample_type_id => 2,
-      :sample_date    => Date.today.to_s
-    }
+    @attr ||= { sample_type_id: 2,
+                sample_date: Date.today.to_s }
 
     @standard_run = FactoryBot.build(:run, @attr)
     @standard_run.measurements = [FactoryBot.create(:measurement)]
     assert @standard_run.save
   end
 
-  it "should validate sample_type_id" do
+  it 'should validate sample_type_id' do
     run = Run.find(@standard_run.id)
     assert run.valid?
     run.sample_type_id = nil
     assert !run.valid?
   end
 
-  it "validates measurements" do
+  it 'validates measurements' do
     run = Run.find(@standard_run.id)
     assert run.valid?
     run.measurements = []
     assert !run.valid?
   end
 
-  it "runs should include runs but not cn runs and vice versa" do
-    run = FactoryBot.build(:run_with_measurements, :sample_date => Date.today)
+  it 'runs should include runs but not cn runs and vice versa' do
+    run = FactoryBot.build(:run_with_measurements, sample_date: Date.today)
     run.save
     cn_run = FactoryBot.create(:cn_run_with_measurements)
     cn_run.save
@@ -51,26 +51,26 @@ describe Run, type: :model do
     assert Run.cn_runs.include?(cn_run)
   end
 
-  it "should give sample_type_name for a run" do
-    run = FactoryBot.build(:run_with_measurements, :sample_type_id => 4)
-    assert_equal "GLBRC Deep Core Nitrogen", run.sample_type_name
+  it 'should give sample_type_name for a run' do
+    run = FactoryBot.build(:run_with_measurements, sample_type_id: 4)
+    assert_equal 'GLBRC Deep Core Nitrogen', run.sample_type_name
   end
 
-  it "should identify what is and is not a cn_run" do
+  it 'should identify what is and is not a cn_run' do
     run = Run.find(@standard_run.id)
     cn_run = FactoryBot.build(:cn_run_with_measurements)
     assert !run.cn_run?
     assert cn_run.cn_run?
   end
 
-  it "should find the associated samples" do
+  it 'should find the associated samples' do
     run = Run.find(@standard_run.id)
     sample = FactoryBot.create(:sample)
-    FactoryBot.create(:measurement, :run => run, :sample => sample)
+    FactoryBot.create(:measurement, run: run, sample: sample)
     other_run = FactoryBot.build(:run_with_measurements)
     other_run.save
     other_sample = FactoryBot.create(:sample)
-    FactoryBot.create(:measurement, :run => other_run, :sample => other_sample)
+    FactoryBot.create(:measurement, run: other_run, sample: other_sample)
     run.reload
     other_run.reload
     assert run.samples.include?(sample)
@@ -84,7 +84,7 @@ describe Run, type: :model do
     changing_run.save
     changing_sample = FactoryBot.create(:sample)
     FactoryBot.create(:measurement, sample: changing_sample, run: changing_run)
-    changing_sample.sample_date = Date.yesterday #a change
+    changing_sample.sample_date = Date.yesterday # a change
     changing_sample.save
     static_run = FactoryBot.build(:run_with_measurements)
     static_run.save
@@ -108,7 +108,7 @@ describe Run, type: :model do
   end
 
   it 'requires non empty data to save' do
-    r = FactoryBot.build(:run,@attr)
+    r = FactoryBot.build(:run, @attr)
     file_name = Rails.root.join('spec', 'fixtures', 'blank.txt')
     File.open(file_name, 'r') do |f|
       empty_data = StringIO.new(f.read)
@@ -150,10 +150,10 @@ describe Run, type: :model do
     run = Run.find(r.id)
     measurements = run.measurements.where(analyte_id: no3.id)
     assert !measurements.where(amount: 0.098).blank?
-    measurements = run.measurements.where(:analyte_id => nh4.id)
+    measurements = run.measurements.where(analyte_id: nh4.id)
     assert !measurements.where(amount: 0.036).blank?
 
-    expect(run.samples.index {|s| s.plot.treatment.name == "T6"}).to_not be_nil
+    expect(run.samples.index {|s| s.plot.treatment.name == 'T6'}).to_not be_nil
 
     assert_equal 276, run.measurements.size
     r.destroy
@@ -162,8 +162,8 @@ describe Run, type: :model do
   # TODO: these next 2 test fail because I am now using the new format for sample type 2 rather than the old format
   # I will need to get some new files with negatives and reruns for these test
   # TODO: separate out the sample type from the sample format.
-  it "loads files with negatives" do
-    # assert_difference "Run.count" do
+  it 'loads files with negatives' do
+    # assert_difference 'Run.count' do
     #    file_name = File.dirname(__FILE__) + '/../data/LTER_soil_20040511.TXT'
     #    File.open(file_name,'r') do |f|
     #      s = StringIO.new(f.read)
@@ -178,7 +178,7 @@ describe Run, type: :model do
 
   it 'loads glbrc files' do
     file_name = Rails.root.join('test', 'data', 'GLBRC_deep_core_1106R4R5.TXT')
-    r = FactoryBot.build(:run,@attr.merge(sample_type_id: 4))
+    r = FactoryBot.build(:run, @attr.merge(sample_type_id: 4))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
@@ -208,11 +208,11 @@ describe Run, type: :model do
       r.load_file(s)
     end
     assert r.save
-    assert r.samples.size > 1 #We'll have better tests in the parser
+    assert r.samples.size > 1 # We'll have better tests in the parser
     r.destroy
   end
 
-  it "loads cn files" do
+  it 'loads cn files' do
     file_name = Rails.root.join('test', 'data', 'DC01CFR1.csv')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 6))
     File.open(file_name, 'r') do |f|
@@ -225,7 +225,7 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads glbrc_cn_deep_core new format files" do
+  it 'loads glbrc_cn_deep_core new format files' do
     file_name = Rails.root.join('test', 'data', 'GLBRC_cn.csv')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 9))
     File.open(file_name, 'r') do |f|
@@ -238,7 +238,7 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads new glbrc soil sample files" do
+  it 'loads new glbrc soil sample files' do
     file_name = Rails.root.join('test', 'data', 'glbrc_soil_sample_new_format.txt')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 8))
     File.open(file_name, 'r') do |f|
@@ -250,7 +250,7 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads more glbrc soil sample files" do
+  it 'loads more glbrc soil sample files' do
     file_name = Rails.root.join('test', 'data', '100419L.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 8))
     File.open(file_name, 'r') do |f|
@@ -262,21 +262,21 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads lysimeter files" do
+  it 'loads lysimeter files' do
     file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
       r.load_file(s)
     end
-    assert_equal "", r.plot_errors
+    assert_equal '', r.plot_errors
     assert r.save
     # TODO: add CF and DF plots to the test database
     assert r.samples.size > 1 # there are 93 samples but we don't have DF and CF in the test database
     r.destroy
   end
 
-  it "loads another lysimeter file" do
+  it 'loads another lysimeter file' do
     file_name = Rails.root.join('test', 'data', '090615QL.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
@@ -288,7 +288,7 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads lysimeter files with negative peaks" do
+  it 'loads lysimeter files with negative peaks' do
     file_name = Rails.root.join('test', 'data', '090701QL.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
@@ -301,7 +301,7 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it "loads lysimeter files with a single sample" do
+  it 'loads lysimeter files with a single sample' do
     file_name = Rails.root.join('test', 'data', 'Lysimeter_single_format.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
     File.open(file_name, 'r') do |f|
@@ -328,7 +328,7 @@ describe Run, type: :model do
       measurements = r.measurements
       assert measurements.size > 1
       r.destroy
-      assert measurements.size == 0
+      assert measurements.empty?
     end
   end
 end

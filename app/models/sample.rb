@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'statistics'
 
 # This repesents one field sample such as a soil core or a water sample
@@ -56,12 +58,14 @@ class Sample < ActiveRecord::Base
 
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
+
     measurements.where("analyte_id = ? and deleted = 'f' and rejected = 'f'",
                        analyte.id).average(:amount)
   end
 
   def cv(analyte)
     raise ArgumentError unless analyte.class == Analyte
+
     variance = measurements.where("analyte_id = ? and deleted = 'f'"\
                                   " and rejected = 'f'",
                                   analyte.id).calculate(:variance, :amount)
@@ -78,9 +82,11 @@ class Sample < ActiveRecord::Base
 
   def unapprove
     return unless rejected?
+
     revert!
     revert!
     return unless approved?
+
     revert!
   end
 
@@ -95,7 +101,7 @@ class Sample < ActiveRecord::Base
   end
 
   def self.csv_titles
-    titles = %w(sample_id sample_date treatment replicate)
+    titles = %w[sample_id sample_date treatment replicate]
     all_analytes.each { |analyte| titles << "#{analyte.name}_#{analyte.unit}" }
 
     titles

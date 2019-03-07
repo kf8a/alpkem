@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'parsers/file_parser.rb'
 require 'parsers/cn_sample_parser.rb'
 require 'parsers/nh4_lysimeter_line_parser.rb'
@@ -40,7 +42,7 @@ module Parsers
               when 4 then Parsers::GLBRCDeepParser
               when 5 then Parsers::StandardParser
               when 6 then Parsers::CNSampleParser
-              when 7 then Parsers::CNDeepParser  # deprecated old deepcore parser
+              when 7 then Parsers::CNDeepParser # deprecated old deepcore parser
               when 8 then Parsers::StandardParser # glbrc inorganic N 0-25 deprecated
               when 9 then Parsers::CNGLBRCParser
               when 10 then Parsers::LysimeterNO3Parser
@@ -65,14 +67,14 @@ module Parsers
               when 29 then Parsers::GLBRCCNPlantParser # GLBRC Harvest CN (grab sample)
               when 30 then Parsers::LterCnDeepParser # LTER CN Deep (new format)
               # when 31: Parsers::CIMMYParser #lachat CIMMYT samples
-              when 32 then Parsers::GLBRCCNDeepCoreParser #GLBRC Deep cores Marginal Land site
+              when 32 then Parsers::GLBRCCNDeepCoreParser # GLBRC Deep cores Marginal Land site
               when 33 then Parsers::StandardParser # Lachat switchgrass (mineralization? samples T0)
               when 34 then Parsers::StandardParser # Lachat switchgrass (mineralization? samples T28)
               when 35 then Parsers::GLBRCCNSoilParser # GLBRC soil samples new format
               when 36 then Parsers::GLBRCCNPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
               when 37 then Parsers::GLBRCSwitchgrassCNParser # GLBRC Switchgrass Soil
               when 38 then Parsers::LysimeterParser # Rainout shelters
-              when 39 then Parsers::GLBRCCNPitParser #MLE pit samples
+              when 39 then Parsers::GLBRCCNPitParser # MLE pit samples
               else false
               end
 

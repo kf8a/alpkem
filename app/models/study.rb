@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A study is a collection of plots which go together for analysis.
 class Study < ActiveRecord::Base
   has_many :treatments
@@ -10,7 +12,7 @@ class Study < ActiveRecord::Base
     create_treatments(number_of_treatments)
     create_replicates(number_of_replicates, replicate_prefix)
 
-    treatments_and_replicates = treatments.product(replicates)
+    treatments_and_replicates = treatments.to_a.product(replicates.to_a)
     treatments_and_replicates.each do |treatment, replicate|
       Plot.where(name: "#{treatment.name}#{replicate.name}", study_id: self)
           .first_or_create(name: "#{treatment.name}#{replicate.name}",

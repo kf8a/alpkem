@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe SamplesController, type: :controller do
@@ -5,7 +7,7 @@ describe SamplesController, type: :controller do
     @sample = FactoryBot.create :sample
   end
 
-  it "should get index" do
+  it 'should get index' do
     get :index
     assert_response :success
     expect(assigns(:samples)).to_not be_nil
@@ -15,8 +17,7 @@ describe SamplesController, type: :controller do
   end
 
   it 'searches' do
-    get :search, q: 'test'
+    get :search, params: { q: 'test' }
     assert_response :success
   end
 end
-

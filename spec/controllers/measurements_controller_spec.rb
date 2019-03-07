@@ -12,10 +12,10 @@ describe MeasurementsController, type: :controller do
     @run = FactoryBot.build(:run_with_measurements)
     @run.save
     @measurement = FactoryBot.create(:measurement, run_id: @run.id)
-    xhr :delete, :destroy, id: @measurement, sample_class: 'Sample', run_id: @run.id
+    post :destroy, xhr: true, params: { id: @measurement, sample_class: 'Sample', run_id: @run.id }
     @measurement.reload
     assert @measurement.deleted
-    xhr :delete, :destroy, id: @measurement, sample_class: 'Sample', run_id: @run.id
+    post :destroy, xhr: true, params: { id: @measurement, sample_class: 'Sample', run_id: @run.id }
     @measurement.reload
     assert !@measurement.deleted
   end

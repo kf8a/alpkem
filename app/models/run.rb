@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # Main model in this app. Runs represent a set of measurements
 class Run < ActiveRecord::Base
   belongs_to :sample_type
   has_many :measurements, dependent: :delete_all
-  has_many :samples, -> { uniq }, through: :measurements
-  has_many :analytes, -> { uniq.order('name') }, through: :measurements
+  has_many :samples, -> { distinct }, through: :measurements
+  has_many :analytes, -> { distinct.order('name') }, through: :measurements
   has_many :data_sources
 
   validates :sample_type_id, presence: true

@@ -8,6 +8,7 @@ module Parsers
       return nil unless data[1] == 'Unknown'
       return nil if data[0] =~ /1\s.M\s+KCL/i
       return nil if data[0] =~ /H2O/i
+
       plot, raw_date = data[0].split(/\s+/)
       first, second, third = plot[0..-2].split(/-/)
 
@@ -29,6 +30,7 @@ module Parsers
 
     def self.parse_date(raw_date)
       return unless raw_date
+
       Date.new(raw_date[0..3].to_i,
                raw_date[4..5].to_i,
                raw_date[6..7].to_i)
