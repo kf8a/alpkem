@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Sample do
   describe 'validates presence of plot' do
     before(:each) do
-      @sample = FactoryGirl.create(:sample)
+      @sample = FactoryBot.create(:sample)
     end
 
     it 'should require plot to be valid' do
@@ -14,7 +14,7 @@ describe Sample do
 
   describe 'plot_name method' do
     before(:each) do
-      @sample = FactoryGirl.create(:sample)
+      @sample = FactoryBot.create(:sample)
     end
 
     it 'should return the name of the plot' do
@@ -25,27 +25,27 @@ describe Sample do
   describe 'previous_measurements method' do
     describe 'with some previous approved measurements for the same plot' do
       before(:each) do
-        @sample = FactoryGirl.create(:sample, sample_date: Date.today)
-        @prev_sample = FactoryGirl.create(:sample,
+        @sample = FactoryBot.create(:sample, sample_date: Date.today)
+        @prev_sample = FactoryBot.create(:sample,
                                           sample_date: 1.year.ago.to_date,
                                           plot: @sample.plot,
                                           workflow_state: 'approved')
-        @prev_approved1 = FactoryGirl.create(:measurement, sample: @prev_sample)
-        @prev_approved2 = FactoryGirl.create(:measurement, sample: @prev_sample)
-        @unapproved_sample = FactoryGirl.create(:sample,
+        @prev_approved1 = FactoryBot.create(:measurement, sample: @prev_sample)
+        @prev_approved2 = FactoryBot.create(:measurement, sample: @prev_sample)
+        @unapproved_sample = FactoryBot.create(:sample,
                                                 sample_date: 1.year.ago.to_date,
                                                 plot: @sample.plot,
                                                 workflow_state: 'new')
-        @prev_unapproved = FactoryGirl.create(:measurement,
+        @prev_unapproved = FactoryBot.create(:measurement,
                                               sample: @unapproved_sample)
-        new_plot = FactoryGirl.create(:plot)
-        @wrong_plot_sample = FactoryGirl.create(:sample,
+        new_plot = FactoryBot.create(:plot)
+        @wrong_plot_sample = FactoryBot.create(:sample,
                                                 sample_date: 1.year.ago.to_date,
                                                 plot: new_plot,
                                                 workflow_state: 'approved')
-        @prev_wrong_plot = FactoryGirl.create(:measurement,
+        @prev_wrong_plot = FactoryBot.create(:measurement,
                                               sample: @wrong_plot_sample)
-        @prev_deleted = FactoryGirl.create(:measurement,
+        @prev_deleted = FactoryBot.create(:measurement,
                                            sample: @prev_sample,
                                            deleted: true)
       end
@@ -72,16 +72,16 @@ describe Sample do
   describe 'analytes method' do
     describe 'for an NO3/NH4 type sample' do
       before(:each) do
-        run = FactoryGirl.build(:run_with_measurements)
+        run = FactoryBot.build(:run_with_measurements)
         run.save
-        @sample = FactoryGirl.create(:sample)
+        @sample = FactoryBot.create(:sample)
         @no3 = find_or_factory(:analyte, name: 'NO3')
         @nh4 = find_or_factory(:analyte, name: 'NH4')
-        FactoryGirl.create(:measurement,
+        FactoryBot.create(:measurement,
                            sample: @sample,
                            analyte: @no3,
                            run: run)
-        FactoryGirl.create(:measurement,
+        FactoryBot.create(:measurement,
                            sample: @sample,
                            analyte: @nh4,
                            run: run)
@@ -98,11 +98,11 @@ describe Sample do
 
     describe 'for an N/C type sample' do
       before(:each) do
-        @sample = FactoryGirl.create(:sample)
+        @sample = FactoryBot.create(:sample)
         @nitrogen = find_or_factory(:analyte, name: 'N')
         @carbon = find_or_factory(:analyte, name: 'C')
-        FactoryGirl.create(:measurement, sample: @sample, analyte: @nitrogen)
-        FactoryGirl.create(:measurement, sample: @sample, analyte: @carbon)
+        FactoryBot.create(:measurement, sample: @sample, analyte: @nitrogen)
+        FactoryBot.create(:measurement, sample: @sample, analyte: @carbon)
       end
 
       it 'should include Nitrogen' do
@@ -117,27 +117,27 @@ describe Sample do
 
   describe 'average method' do
     before(:each) do
-      @sample = FactoryGirl.create(:sample)
+      @sample = FactoryBot.create(:sample)
       @no3 = find_or_factory(:analyte, name: 'NO3')
       @nh4 = find_or_factory(:analyte, name: 'NH4')
-      @measurement1 = FactoryGirl.create(:measurement,
+      @measurement1 = FactoryBot.create(:measurement,
                                          sample: @sample,
                                          amount: 1,
                                          analyte: @no3)
-      @measurement2 = FactoryGirl.create(:measurement,
+      @measurement2 = FactoryBot.create(:measurement,
                                          sample: @sample,
                                          amount: 2,
                                          analyte: @no3)
-      @measurement3 = FactoryGirl.create(:measurement,
+      @measurement3 = FactoryBot.create(:measurement,
                                          sample: @sample,
                                          amount: 3,
                                          analyte: @no3)
       @correct_average = (1 + 2 + 3) / 3
-      @other_analyte_measurement = FactoryGirl.create(:measurement,
+      @other_analyte_measurement = FactoryBot.create(:measurement,
                                                       sample: @sample,
                                                       amount: 4,
                                                       analyte: @nh4)
-      @deleted_measurement = FactoryGirl.create(:measurement,
+      @deleted_measurement = FactoryBot.create(:measurement,
                                                 sample: @sample,
                                                 amount: 5,
                                                 analyte: @no3,
@@ -152,7 +152,7 @@ describe Sample do
   end
 
   describe 'workflow states' do
-    let(:sample) { FactoryGirl.create :sample }
+    let(:sample) { FactoryBot.create :sample }
     it 'starts out as new' do
       expect(sample).to be_new
     end

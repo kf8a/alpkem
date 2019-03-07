@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe RunsController, type: :controller do
   before(:each) do
-    @cn_run = FactoryGirl.build(:cn_run_with_measurements)
+    @cn_run = FactoryBot.build(:cn_run_with_measurements)
     @cn_run.save
-    @run = FactoryGirl.build(:run_with_measurements)
+    @run = FactoryBot.build(:run_with_measurements)
     @run.save
-    @measurement ||= FactoryGirl.create(:measurement, :run => @run)
+    @measurement ||= FactoryBot.create(:measurement, :run => @run)
     @user ||= find_or_factory(:user)
     sign_in @user
 
@@ -118,8 +118,8 @@ describe RunsController, type: :controller do
   end
 
   it "should approve and disapprove sample" do
-    sample = FactoryGirl.create(:sample)
-    FactoryGirl.create(:measurement, :sample_id => sample.id, :run_id => @run.id)
+    sample = FactoryBot.create(:sample)
+    FactoryBot.create(:measurement, :sample_id => sample.id, :run_id => @run.id)
     xhr :get, :approve, :id => sample, :sample_class => "Sample", :run_id => @run.id
     sample.reload
     assert sample.approved?
@@ -133,7 +133,7 @@ describe RunsController, type: :controller do
       file1 = fixture_file_upload('/03262012.TXT', 'text/plain')
       @file2 = fixture_file_upload('/3262012B.TXT', 'text/plain')
 
-      post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
+      post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'},
         :data => {:file => file1}
       run = assigns(:run)
       @sample = run.samples[35]
@@ -145,7 +145,7 @@ describe RunsController, type: :controller do
 
 
     it 'should group the samples together' do
-      post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'}, 
+      post :create, :run => {:sample_date => Date.today, :sample_type_id => '2'},
         :data => {:file => @file2}
 
       expect(@sample.measurements.count).to eql(9)

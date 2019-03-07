@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe SamplesController, type: :controller do
   before do
-    @sample = FactoryGirl.create :sample
+    @sample = FactoryBot.create :sample
   end
 
   it "should get index" do

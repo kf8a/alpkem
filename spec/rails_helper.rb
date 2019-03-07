@@ -18,7 +18,7 @@ require "#{Rails.root}/db/seeds.rb"
 def find_or_factory(model, attributes = {})
   model_as_constant = model.to_s.titleize.gsub(' ', '').constantize
   object = model_as_constant.where(attributes).first
-  object ||= FactoryGirl.create(model.to_sym, attributes)
+  object ||= FactoryBot.create(model.to_sym, attributes)
 
   object
 end
