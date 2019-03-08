@@ -50,7 +50,7 @@ class RunsController < ApplicationController
     session[:run_date] = @run.run_date
     session[:sample_type_id] = @run.sample_type_id
 
-    if params[:data]
+    if params[:data] && params[:data].present?
       data_source = DataSource.new
       data_source.data = params[:data][:file]
       @run.data_sources << data_source
