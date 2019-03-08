@@ -1,1 +1,0 @@
-AUTOFEATURE=true bundle exec autotest --fast-start --no-full-after-failed

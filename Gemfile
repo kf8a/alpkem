@@ -62,6 +62,7 @@ end
 
 group :development do
   gem 'bcrypt_pbkdf'
+  gem 'ed25519'
   gem 'rbnacl', '< 5.0'
   gem 'rbnacl-libsodium'
 end
