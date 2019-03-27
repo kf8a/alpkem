@@ -33,8 +33,6 @@ gem 'syslog-logger'
 
 gem 'prometheus-client', '~> 0.6.0'
 
-# Use SCSS for stylesheets
-gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
@@ -54,8 +52,8 @@ gem 'web-console', group: :development
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'byebug'
-  gem 'ruby-graphviz'
   gem 'rspec-rails'
+  gem 'ruby-graphviz'
   gem 'spring'
   gem 'sqlite3', '~> 1.3', '< 1.4'
 end
