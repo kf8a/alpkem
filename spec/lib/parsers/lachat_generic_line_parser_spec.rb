@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-#TODO the generic parser should be merged into the standard line parser
-#this is the same as the StandardLineParser
+# TODO the generic parser should be merged into the standard line parser
+# this is the same as the StandardLineParser
 describe Parsers::LachatGenericLineParser do
   describe 'parses a glbrc soil sample lines' do
     before do
@@ -38,7 +38,9 @@ describe Parsers::LachatGenericLineParser do
     it 'has the right depth' do
       expect(@depth).to eq('25')
     end
-
   end
 
+  describe 'a microplot data line' do
+    it 'is pending'
+  end
 end

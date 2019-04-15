@@ -22,6 +22,3 @@ describe Parsers::GLBRCCNSoilParser do
     end
   end
 end
-
-
-
