@@ -16,7 +16,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 require "#{Rails.root}/db/seeds.rb"
 
 def find_or_factory(model, attributes = {})
-  model_as_constant = model.to_s.titleize.gsub(' ', '').constantize
+  model_as_constant = model.to_s.titleize.delete(' ').constantize
   object = model_as_constant.where(attributes).first
   object ||= FactoryBot.create(model.to_sym, attributes)
 
