@@ -30,6 +30,7 @@ require 'parsers/standard_parser.rb'
 require 'parsers/cn_deep_parser.rb'
 require 'parsers/glbrc_cn_soil_parser.rb'
 require 'parsers/glbrc_cn_pit_parser.rb'
+require 'parsers/glbrc_cn_root_soil_parser.rb'
 # require 'parsers/cimmyt_parser.rb'
 
 module Parsers
@@ -75,6 +76,7 @@ module Parsers
               when 37 then Parsers::GLBRCSwitchgrassCNParser # GLBRC Switchgrass Soil
               when 38 then Parsers::LysimeterParser # Rainout shelters
               when 39 then Parsers::GLBRCCNPitParser # MLE pit samples
+              when 40 then Parsers::GLBRCCNRootSoilParser # GLBRC Root Soil samples
               else false
               end
 

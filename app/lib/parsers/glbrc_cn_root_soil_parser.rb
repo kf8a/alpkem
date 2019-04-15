@@ -2,14 +2,14 @@
 
 module Parsers
   # For parsing GLBRC surface soil Carbon and Nitrogen samples.
-  class GLBRCCNSoilParser < CNSampleParser
+  class GLBRCCNRootSoilParser < CNSampleParser
 
-    CN_SOIL_SAMPLE =
-      '(\d+),\d+,(\d+)?(\w+..R\dS\d+C?\d?)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+    CN_ROOT_SOIL_SAMPLE =
+      '(\d+),\d+,(G.?.R\dC[C|I])-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
-      date, _dup_date, @plot_name, @depth, @percent_n, @percent_c =
-        ParserMatcher.parse(CN_SOIL_SAMPLE, line)
+      date, @plot_name, @depth, @percent_n, @percent_c =
+        ParserMatcher.parse(CN_ROOT_SOIL_SAMPLE, line)
       return unless date
 
       @sample_date = parse_date(date)
