@@ -1,15 +1,23 @@
 <h1>CN Runs</h1>
 <%= link_to "new", new_run_path %>
 <%= link_to "Other runs", runs_path %>
-<table>
+<table class='table'>
   <tr>
+    <th>id</th>
     <th>Run Date</th>
     <th>Sample Date</th>
     <th>Sample Date Range</th>
     <th>Name</th>
     <th>Approved/Size</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th>Comment</th>
+    <th>Files</th>
   </tr>
-<%= render :partial => 'run', :collection => @runs %>
+
+  <%= render @runs %>
 </table>
 <%= link_to "new", new_run_path %>
 <%= link_to "Other runs", runs_path %>
