@@ -33,6 +33,7 @@ require 'parsers/glbrc_cn_pit_parser.rb'
 require 'parsers/glbrc_cn_root_soil_parser.rb'
 require 'parsers/glbrc_cn_pit_root_parser.rb'
 require 'parsers/glbrc_cn_root_excavation_soil_parser.rb'
+require 'parsers/glbrc_cn_root_excavation_plant_parser.rb'
 # require 'parsers/cimmyt_parser.rb'
 
 module Parsers
@@ -81,6 +82,7 @@ module Parsers
               when 40 then Parsers::GLBRCCNRootSoilParser # GLBRC Root Soil samples
               when 42 then Parsers::GLBRCCNPitRootParser# GLBRC Root pit samples
               when 43 then Parsers::GLBRCCNRootExcavationSoilParser # GLBRC root excavation soil pit samples
+              when 44 then Parsers::GLBRCCNRootExcavationPlantParser # GLBRC root excavation soil pit samples
               else false
               end
 
