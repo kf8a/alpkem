@@ -1,8 +1,10 @@
-#For parsing MLE pit Carbon and Nitrogen samples.
+# frozen_string_literal: true
+
 module Parsers
-  class GLBRCCNPitParser< CNSampleParser
+  # For parsing GKBRC pit Carbon and Nitrogen samples.
+  class GLBRCCNRootExcavationSoilParser < CNSampleParser
     CN_PIT_SAMPLE =
-      '(\d+),\d+,(\w\w)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'.freeze
+      '(\d+),\d+,(\w\w)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
       date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_PIT_SAMPLE, line)
@@ -16,7 +18,7 @@ module Parsers
       @plot_name = @plot_name.gsub(/0(\d)/, '\1')
       @plot_name = @plot_name + '-' + @depth
 
-      Plot.find_or_create_by(name: @plot_name, study_id: 13)
+      Plot.find_or_create_by(name: @plot_name, study_id: 14)
 
       process_data
     end

@@ -16,7 +16,8 @@ module Parsers
       @plot_name = @plot_name.gsub(/0(\d)/, '\1')
       @plot_name = @plot_name + '-' + @modifier
 
-      Plot.find_or_create_by(name: @plot_name, study_id: 11)
+      # TODO: create study id for pit samples.
+      Plot.find_or_create_by(name: @plot_name, study_id: 14)
 
       process_data
     end
