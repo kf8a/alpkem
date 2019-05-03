@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # This is the main controller for the app. Pages to show/manipulate runs.
 class RunsController < ApplicationController
-  before_action :run, only: [:qc, :edit, :update, :destroy]
+  before_action :run, only: %i[qc edit update destroy]
   respond_to :html, :csv
 
   # GET /runs
@@ -31,8 +33,7 @@ class RunsController < ApplicationController
     respond_with @run
   end
 
-  def edit
-  end
+  def edit; end
 
   # GET /runs/1/qc
   def qc
