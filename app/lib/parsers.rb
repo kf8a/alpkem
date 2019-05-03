@@ -82,7 +82,7 @@ module Parsers
               when 40 then Parsers::GLBRCCNRootSoilParser # GLBRC Root Soil samples
               when 42 then Parsers::GLBRCCNPitRootParser # GLBRC Root pit samples
               when 43 then Parsers::GLBRCCNRootExcavationSoilParser # GLBRC root excavation soil pit samples
-              when 44 then Parsers::GLBRCCNRootExcavationPlantParser # GLBRC root excavation soil pit samples
+              when 44 then Parsers::GLBRCCNRootExcavationPlantParser # GLBRC plant root excavation soil pit samples
               else false
               end
 

@@ -12,14 +12,14 @@ module RunsHelper
 
   def self.add_measurement(m, analyte1)
     mdate = measurement_date(m)
-    if mdate && m.amount
-      if m.analyte == analyte1
-        "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}),"\
+    return unless mdate && m.amount
+
+    if m.analyte == analyte1
+      "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}),"\
         " #{m.amount}, undefined],"
-      else
-        "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}),"\
+    else
+      "[new Date(#{mdate.year}, #{mdate.month}, #{mdate.day}),"\
         " undefined, #{m.amount}],"
-      end
     end
   end
 
