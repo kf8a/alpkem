@@ -1,13 +1,14 @@
 #Helper class to parse files for Run data
 module Parsers
   class FileParser
-    attr_accessor :load_errors, :plot_errors, :measurements, :plot, :sample, :sample_type_id, :sample_date
+    attr_accessor :load_errors, :plot_errors, :measurements, :plot,
+                  :sample, :sample_type_id, :sample_date
 
     def initialize(date, id)
       self.sample_date = date
       self.sample_type_id = id
-      self.plot_errors = ""
-      self.load_errors = ""
+      self.plot_errors = ''
+      self.load_errors = ''
       self.measurements = []
       @no3_analyte = Analyte.find_by(name: 'NO3')
       @nh4_analyte = Analyte.find_by(name: 'NH4')
@@ -16,7 +17,7 @@ module Parsers
     end
 
     # subclasses need to implement this
-    def process_line(line)
+    def process_line(_line)
       raise NotImplementedError
     end
 
@@ -33,15 +34,15 @@ module Parsers
       require_data(file_contents)
       require_sample_type_id
       require_sample_date
-      self.parse_data(file_contents) if self.load_errors.blank?
+      parse_data(file_contents) if load_errors.blank?
     end
 
     # subclasses should override this if they need to specifiy
     # different line parsers for the sample type
     def parse_data(data)
-      data.each { | line | process_line(line) }
-      if self.measurements.blank?
-        self.load_errors += "No data was able to be loaded from this file."
+      data.each { |line| process_line(line) }
+      if measurements.blank?
+        self.load_errors += 'No data was able to be loaded from this file.'
       end
     end
 
@@ -52,64 +53,64 @@ module Parsers
 
     def find_or_create_sample
       find_sample unless sample_already_found?
-      self.sample ? unapprove_sample : create_sample
+      sample ? unapprove_sample : create_sample
     end
 
     def find_sample
-      self.sample = self.plot.samples.find_by(sample_date: self.sample_date, sample_type_id: self.sample_type_id)
+      self.sample = plot.samples.find_by(sample_date: sample_date, sample_type_id: sample_type_id)
     end
 
     def create_sample
-      self.sample = Sample.create(:sample_date => self.sample_date,
-                                  :plot => self.plot,
-                                  :sample_type_id => self.sample_type_id)
+      self.sample = Sample.create(sample_date: sample_date,
+                                  plot: plot,
+                                  sample_type_id: sample_type_id)
     end
 
     private
 
     def require_sample_type_id
-      self.load_errors += "No Sample Type selected." unless self.sample_type_id
+      self.load_errors += 'No Sample Type selected.' unless sample_type_id
     end
 
     def require_sample_date
-      self.load_errors += "No Sample Date selected." unless self.sample_date
+      self.load_errors += 'No Sample Date selected.' unless sample_date
     end
 
     def require_data(data)
-      self.load_errors += "Data file is empty."      if data.size == 0
+      self.load_errors += 'Data file is empty.'      if data.size == 0
     end
 
     def cn_plot_name_ok?
       !@plot_name.blank? &&
-        !@plot_name.include?("Standard") &&
-        !@plot_name.include?("Blindstd")
+        !@plot_name.include?('Standard') &&
+        !@plot_name.include?('Blindstd')
     end
 
     def process_cn_sample
-      format_sample_date if self.sample_date.class == String
+      format_sample_date if sample_date.class == String
       find_or_create_sample
       create_measurement(@percent_n, @nitrogen_analyte) unless @percent_n.blank?
       create_measurement(@percent_c, @carbon_analyte) unless @percent_c.blank?
     end
 
     def format_sample_date
-      self.sample_date = Date.strptime(self.sample_date, "%m/%d/%Y")
+      self.sample_date = Date.strptime(sample_date, '%m/%d/%Y')
     end
 
     def unapprove_sample
-      self.sample.unapprove #New data makes sample unapproved
+      sample.unapprove # New data makes sample unapproved
     end
 
     def sample_already_found?
-      self.sample && right_plot? && right_date?
+      sample && right_plot? && right_date?
     end
 
     def right_plot?
-      self.sample.plot == self.plot
+      sample.plot == plot
     end
 
     def right_date?
-      self.sample.sample_date == self.sample_date
+      sample.sample_date == sample_date
     end
 
     def process_nhno_sample(nh4_amount, no3_amount)
@@ -119,10 +120,9 @@ module Parsers
     end
 
     def create_measurement(amount, analyte)
-      measurement = Measurement.new(:analyte => analyte, :amount => amount)
-      self.sample.measurements  << measurement
-      self.measurements         << measurement
+      measurement = Measurement.new(analyte: analyte, amount: amount)
+      sample.measurements  << measurement
+      measurements         << measurement
     end
-
   end
 end

@@ -6,7 +6,7 @@ module Parsers
     def self.parse(line)
       data = CSV.parse_line(line)
 
-      return  nil unless data[1] == "Unknown"
+      return nil unless data[1] == "Unknown"
       return nil if data[0] =~ /1\s*M\s+KCL/i
       return nil if data[0] =~ /H2O/i
       return nil if data[0] =~ /blank/i
@@ -14,6 +14,7 @@ module Parsers
 
       result = /([A-Z]{3})?-?(\d{8})-?(\w+)R(\d).-?(\d+)?/.match(data.first)
       raise "unparsable name #{data.first}" unless result
+
       raw_date = result[2]
       first = result[3]
       second = result[4]
