@@ -4,10 +4,11 @@ module Parsers
   # For parsing GKBRC pit Carbon and Nitrogen samples.
   class GLBRCCNRootExcavationSoilParser < CNSampleParser
     CN_PIT_SAMPLE =
-      '(\d+),\d+,(\w\w)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+      '(\d+),\d+,(\w+)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
     def process_line(line)
       date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_PIT_SAMPLE, line)
+      p [date, @plot_name, @depth, @percent_n, @percent_c]
       return unless date
 
       year  = date[0..3].to_i
