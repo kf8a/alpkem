@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module Parsers
-  # For parsing GKBRC pit Carbon and Nitrogen samples.
+  # For parsing Root GLBC pit Carbon and Nitrogen samples.
+  # TODO: This is actually root material not soil
   class GLBRCCNRootExcavationSoilParser < CNSampleParser
     CN_PIT_SAMPLE =
       '(\d+),\d+,(\w+)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
