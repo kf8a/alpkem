@@ -82,7 +82,7 @@ class RunsController < ApplicationController
   # DELETE /runs/1.xml
   def destroy
     @run.destroy
-    respond_with @run
+    redirect_to runs_url
   end
 
   def approve
