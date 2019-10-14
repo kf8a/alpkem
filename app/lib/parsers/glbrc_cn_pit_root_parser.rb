@@ -4,7 +4,7 @@ module Parsers
   # For parsing GLBRC surface soil Carbon and Nitrogen samples.
   class GLBRCCNPitRootParser < CNSampleParser
     CN_ROOT_SAMPLE =
-      '(\d+),\d+,(G.?.R\du?h)-(\w+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+      '(\d+),\d+,(G.?.R\du?h)-(\w+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
     def process_line(line)
       date, @plot_name, @modifier, @percent_n, @percent_c =

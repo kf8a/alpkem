@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #For parsing CN Deep Core files into Carbon/Nitrogen measurements.
 # DEPRECATED
 module Parsers
@@ -11,6 +13,5 @@ module Parsers
       @sample_date = Date.parse(raw_date) if raw_date
       process_data if cn_plot_name_ok?
     end
-
   end
 end

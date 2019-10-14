@@ -1,8 +1,10 @@
-#For parsing Deep Core samples from GLBRC.
+# frozen_string_literal: true
+
+# For parsing Deep Core samples from GLBRC.
 module Parsers
   class GLBRCDeepParser < FileParser
-
-    GLBRC_DEEP_CORE = '\t\d{3}\t(G\d+R\dS\d\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
+    GLBRC_DEEP_CORE =
+      '\t\d{3}\t(G\d+R\dS\d\d{2})\w*\t\s+-*\d+\.\d+\s+(-*\d\.\d+)\t.*\t *-*\d+\.\d+\s+(-*\d+\.\d+)\t'
 
     def process_line(line)
       re = Regexp.new(GLBRC_DEEP_CORE)
@@ -12,6 +14,5 @@ module Parsers
         process_nhno_sample(nh4_amount, no3_amount) if plot.present?
       end
     end
-
   end
 end

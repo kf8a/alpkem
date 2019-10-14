@@ -5,7 +5,7 @@ module Parsers
   # TODO: This is actually root material not soil
   class GLBRCCNRootExcavationSoilParser < CNSampleParser
     CN_PIT_SAMPLE =
-      '(\d+),\d+,(\w+)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+      '(\d+),\d+,(\w+)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
     def process_line(line)
       date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_PIT_SAMPLE, line)

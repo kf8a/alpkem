@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Parsers
   # For parsing Lysimeter samples
   class LysimeterParser < FileParser

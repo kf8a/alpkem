@@ -5,7 +5,7 @@ module Parsers
   class GLBRCCNRootSoilParser < CNSampleParser
 
     CN_ROOT_SOIL_SAMPLE =
-      '(\d+),\d+,(G.?.R\dC[C|I])-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+      '(\d+),\d+,(G.?.R\dC[C|I])-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
     def process_line(line)
       date, @plot_name, @depth, @percent_n, @percent_c =

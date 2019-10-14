@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module Parsers
   class GLBRCSwitchgrassCNParser < CNSampleParser
 
-    SWITCHGRASS = '(\d+),\d+,(SWF\d+H\d+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
+    SWITCHGRASS =
+      '(\d+),\d+,(SWF\d+H\d+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
     def process_line(data)
       raw_date, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(SWITCHGRASS, data)
