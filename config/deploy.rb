@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.2"
+lock '~> 3.11.2'
 
 set :application, 'alpkem'
 set :repo_url, 'https://github.com/kf8a/alpkem.git'
@@ -8,7 +8,7 @@ set :repo_url, 'https://github.com/kf8a/alpkem.git'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-# set :deploy_to, "/var/www/my_app_name"
+set :deploy_to, '/var/u/app/alpkem'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
