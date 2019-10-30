@@ -86,7 +86,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.default_options = {from: 'no-reply@sebewa.kbs.msu.edu', :host => 'sebewa.kbs.msu.edu'}
+  config.action_mailer.default_options = { from: 'no-reply@sebewa.kbs.msu.edu',
+                                           host: 'sebewa.kbs.msu.edu' }
 
 end
 Rails.application.routes.default_url_options[:host] = 'sebewa.kbs.msu.edu'

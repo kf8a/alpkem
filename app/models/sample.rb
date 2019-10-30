@@ -2,7 +2,6 @@
 
 require 'statistics'
 require 'workflow'
-require 'workflow_activerecord'
 
 # This repesents one field sample such as a soil core or a water sample
 class Sample < ActiveRecord::Base
