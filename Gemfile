@@ -24,7 +24,7 @@ gem 'carrierwave'
 gem 'dotenv-rails'
 
 # Deploy with Capistrano
-gem 'capistrano', '2.15.5'
+# gem 'capistrano', '2.15.5'
 
 gem 'therubyracer'
 
@@ -60,6 +60,10 @@ end
 
 group :development do
   gem 'bcrypt_pbkdf'
+  gem "capistrano", "~> 3.11", require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano3-unicorn'
   gem 'ed25519'
   gem 'rbnacl', '< 5.0'
   gem 'rbnacl-libsodium'

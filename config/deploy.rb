@@ -1,81 +1,43 @@
-require 'bundler/capistrano'
-load 'deploy/assets'
+# config valid for current version and patch releases of Capistrano
+lock "~> 3.11.2"
 
 set :application, 'alpkem'
-set :repository,  '/Users/bohms/code/alpkem'
-set :scm, :git
+set :repo_url, 'https://github.com/kf8a/alpkem.git'
 
-# If you aren't deploying to /u/apps/#{application} on the target
-# servers (which is the default), you can specify the actual location
-# via the :deploy_to variable:
-# set :deploy_to, "/var/www/#{application}"
-set :deploy_to, "/var/u/apps/#{application}"
+# Default branch is :master
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
-set :user, 'deploy'
-set :use_sudo, false
+# Default deploy_to directory is /var/www/my_app_name
+# set :deploy_to, "/var/www/my_app_name"
 
-set :branch, 'master'
-set :deploy_via, :copy
-set :git_enable_submodules, 1
+# Default value for :format is :airbrussh.
+# set :format, :airbrussh
 
-role :app, 'oshtemo.kbs.msu.edu'
-role :web, 'oshtemo.kbs.msu.edu'
-role :db,  'oshtemo.kbs.msu.edu', primary: true
+# You can configure the Airbrussh format using :format_options.
+# These are the defaults.
+# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
-set :unicorn_binary, 'unicorn'
-set :unicorn_config, "#{current_path}/config/unicorn/production.rb"
-set :unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid"
+# Default value for :pty is false
+# set :pty, true
 
-namespace :deploy do
-  desc 'start unicorn server'
-  task :start, roles: :app, except: { no_release: true } do
-    run "cd #{current_path} && #{try_sudo} bundle exec #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
-  end
-  desc 'stop unicorn server'
-  task :stop, roles: :app, except: { no_release: true } do
-    run "#{try_sudo} kill `cat #{unicorn_pid}`"
-  end
-  task :graceful_stop, roles: :app, except: { no_release: true } do
-    run "#{try_sudo} kill -s QUIT `cat #{unicorn_pid}`"
-  end
-  task :reload, roles: :app, except: { no_release: true } do
-    run "#{try_sudo} kill -s USR2 `cat #{unicorn_pid}`"
-  end
-  task :restart, roles: :app, except: { no_release: true } do
-    stop
-    start
-  end
+# Default value for :linked_files is []
+# append :linked_files, "config/database.yml"
 
-  after :deploy, :link_paperclip_storage
-  after 'deploy:finalize_update', :link_production_db
-  after 'deploy:finalize_update', :link_local_env
-  after 'deploy:finalize_update', :link_upload_dir
-  after 'deploy:finalize_update', :link_environment
-end
+# Default value for linked_dirs is []
+# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
-# seed database
-desc 'seed the database'
-task :seed_database do
-  run "cd #{current_path}; RAILS_ENV=production bundle exec rake db:seed"
-end
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-# database.yml task
-desc 'Link in the production database.yml'
-task :link_production_db do
-  run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-end
-# local env
-desc 'Link in the local_env.yml'
-task :link_local_env do
-  run "ln -nfs #{deploy_to}/shared/config/local_env.yml #{release_path}/config/local_env.yml"
-end
+# Default value for local_user is ENV['USER']
+# set :local_user, -> { `git config user.name`.chomp }
 
-desc 'link upload directory'
-task :link_upload_dir do
-  run "ln -nfs #{deploy_to}/shared/uploads #{release_path}/public/"
-end
+# Default value for keep_releases is 5
+set :keep_releases, 50
 
-desc 'link upload env'
-task :link_environment do
-  run "ln -nfs #{deploy_to}/shared/env #{release_path}/.env"
-end
+# Uncomment the following to require manually verifying the host key before first deploy.
+# set :ssh_options, verify_host_key: :secure
+
+before 'deploy:publishing', 'unicorn:stop'
+after 'deploy:published', 'unicorn:start'
+after 'deploy:restart', 'unicorn:restart'
