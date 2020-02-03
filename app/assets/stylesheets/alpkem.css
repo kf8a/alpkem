@@ -19,7 +19,7 @@ td {
 }
 
 tr:hover {
-  background-color: #FCF;
+  background-color: #fcf;
 }
 
 
@@ -39,15 +39,11 @@ tr:hover {
   background-color: red;
 }
 
-a:visited {
-  color: blue;
-}
-
 a.deleted-true:hover {
   text-decoration: underline;
 }
 
-.deleted-true  {
+.deleted-true {
   text-decoration: line-through;
 }
 
@@ -64,6 +60,7 @@ ul {
 .updated-true {
   color: silver;
 }
+
 .run_errors {
   color: red;
 }
