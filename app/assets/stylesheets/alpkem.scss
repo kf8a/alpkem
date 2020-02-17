@@ -1,3 +1,6 @@
+$warning-color: #ff0000;
+$not-approved-color: #ffff00;
+
 td {
   text-align:right;
   border-color: green;
@@ -14,7 +17,7 @@ td {
 }
 
 .completed_false {
-  background-color: red;
+  background-color: $warning-color;
   border-bottom-style: solid;
 }
 
@@ -32,11 +35,11 @@ tr:hover {
 }
 
 .notapproved {
-  background-color: yellow;
+  background-color: $not-approved-color;
 }
 
 .cv-high-true {
-  background-color: red;
+  background-color: $warning-color;
 }
 
 a.deleted-true:hover {
@@ -49,8 +52,8 @@ a.deleted-true:hover {
 
 #spinner {
   position: fixed;
-  top: 20px;
   right: 20px;
+  top: 20px;
 }
 
 ul {
@@ -62,5 +65,5 @@ ul {
 }
 
 .run_errors {
-  color: red;
+  color: $warning-color;
 }
