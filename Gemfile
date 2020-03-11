@@ -53,7 +53,7 @@ gem 'web-console', group: :development
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
-  gem 'ruby-graphviz'
+  # gem 'ruby-graphviz'
   gem 'spring'
   gem 'sqlite3', '~> 1.3', '< 1.4'
 end
