@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Use SCSS for stylesheets
+gem 'sassc-rails'
+
 gem 'rails', '~>5.0'
 
 # Bundle authentication
@@ -22,9 +25,6 @@ gem 'escape_utils'
 
 gem 'carrierwave'
 gem 'dotenv-rails'
-
-# Deploy with Capistrano
-# gem 'capistrano', '2.15.5'
 
 gem 'therubyracer'
 
@@ -53,14 +53,13 @@ gem 'web-console', group: :development
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
-  # gem 'ruby-graphviz'
   gem 'spring'
   gem 'sqlite3', '~> 1.3', '< 1.4'
 end
 
 group :development do
   gem 'bcrypt_pbkdf'
-  gem "capistrano", "~> 3.11", require: false
+  gem 'capistrano', '~> 3.11', require: false
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
