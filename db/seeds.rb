@@ -97,9 +97,9 @@ g_study.treatments.each do |treatment|
   replicates = Replicate.where(study_id: g_study.id)
   replicates.each do |replicate|
     Plot.where(name: "#{treatment.name}#{replicate.name}micro-25", study_id: g_study)
-        .first_or_create(name: "#{treatment.name}#{replicate.name}micro-25",
+        .first_or_create(name: "#{treatment.name}#{replicate.name}micro-#{depth}",
                          study: g_study,
-                         sub_plot: 'microplot',
+                         subplot: 'microplot',
                          top_depth: 0,
                          bottom_depth: 25,
                          treatment: treatment,
