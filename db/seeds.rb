@@ -100,6 +100,8 @@ g_study.treatments.each do |treatment|
         .first_or_create(name: "#{treatment.name}#{replicate.name}micro-25",
                          study: g_study,
                          sub_plot: 'microplot',
+                         top_depth: 0,
+                         bottom_depth: 25,
                          treatment: treatment,
                          replicate: replicate)
   end
