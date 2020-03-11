@@ -1,4 +1,4 @@
-class CreateCnSamples < ActiveRecord::Migration
+class CreateCnSamples < ActiveRecord::Migration[4.2]
   def self.up
     create_table :cn_samples do |t|
       t.string   "cn_plot"

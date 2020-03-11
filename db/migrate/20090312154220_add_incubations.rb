@@ -1,4 +1,4 @@
-class AddIncubations < ActiveRecord::Migration
+class AddIncubations < ActiveRecord::Migration[4.2]
   def self.up
     add_column :samples, :start_date, :date
   end

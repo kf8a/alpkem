@@ -1,4 +1,4 @@
-class CreateRuns < ActiveRecord::Migration
+class CreateRuns < ActiveRecord::Migration[4.2]
   def self.up
     create_table :runs do |t|
       t.date :run_date

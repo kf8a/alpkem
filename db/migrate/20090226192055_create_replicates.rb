@@ -1,4 +1,4 @@
-class CreateReplicates < ActiveRecord::Migration
+class CreateReplicates < ActiveRecord::Migration[4.2]
   def self.up
     create_table :replicates do |t|
       t.string :name

@@ -1,4 +1,4 @@
-class CreateAnalytes < ActiveRecord::Migration
+class CreateAnalytes < ActiveRecord::Migration[4.2]
   def self.up
     create_table :analytes do |t|
       t.string :name

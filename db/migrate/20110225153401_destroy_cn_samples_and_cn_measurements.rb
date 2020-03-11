@@ -1,7 +1,7 @@
-class DestroyCnSamplesAndCnMeasurements < ActiveRecord::Migration
+class DestroyCnSamplesAndCnMeasurements < ActiveRecord::Migration[4.2]
   def self.up
-    # drop_table :cn_samples
-    # drop_table :cn_measurements
+    drop_table :cn_samples
+    drop_table :cn_measurements
   end
 
   def self.down

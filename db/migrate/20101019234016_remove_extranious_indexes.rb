@@ -1,4 +1,4 @@
-class RemoveExtraniousIndexes < ActiveRecord::Migration
+class RemoveExtraniousIndexes < ActiveRecord::Migration[4.2]
   # these tables are not big enough to benefit from indexing
   def self.up
     remove_index :plots,                   :study_id

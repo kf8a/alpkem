@@ -1,4 +1,4 @@
-class AddLotsOfIndexes < ActiveRecord::Migration
+class AddLotsOfIndexes < ActiveRecord::Migration[4.2]
   def self.up
     add_index :cn_measurements,         :run_id
     add_index :cn_measurements,         :cn_sample_id

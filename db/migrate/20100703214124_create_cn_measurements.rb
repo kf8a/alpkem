@@ -1,4 +1,4 @@
-class CreateCnMeasurements < ActiveRecord::Migration
+class CreateCnMeasurements < ActiveRecord::Migration[4.2]
   def self.up
     create_table :cn_measurements do |t|
       t.integer  "run_id"
