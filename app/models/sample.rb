@@ -60,8 +60,12 @@ class Sample < ActiveRecord::Base
   def average(analyte)
     raise ArgumentError unless analyte.class == Analyte
 
-    measurements.where("analyte_id = ? and deleted = 'f' and rejected = 'f'",
-                       analyte.id).average(:amount)
+    # measurements.where("analyte_id = ? and deleted = 'f' and rejected = 'f'",
+    #                    analyte.id).average(:amount)
+    measurements.where(analyte_id: analyte.id)
+                .where(deleted: false)
+                .where(rejected: false)
+                .average(:amount)
   end
 
   def cv(analyte)
