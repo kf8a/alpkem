@@ -34,7 +34,7 @@ gem 'syslog-logger'
 gem 'prometheus-client', '~> 0.6.0'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
+# gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
 
@@ -43,9 +43,9 @@ gem 'kaminari'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder' #, '~> 2.0'
 
-gem 'web-console', group: :development
+gem "webpacker"
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -72,6 +72,7 @@ group :development do
   gem 'listen'
   gem 'rbnacl', '< 5.0'
   gem 'rbnacl-libsodium'
+  gem 'web-console'
 end
 
 group :test do
