@@ -1,52 +1,115 @@
+GIT
+  remote: https://github.com/rspec/rspec-core
+  revision: 5de10ff73e397384a2bc243efba57900c99a5650
+  specs:
+    rspec-core (3.10.0.pre)
+      rspec-support (= 3.10.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-expectations
+  revision: 3c997d98f49731b2d28d01e070b88aef6bb3c68b
+  specs:
+    rspec-expectations (3.10.0.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.10.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-its
+  revision: 801ce01019182b7501e0957f4f50fbde90686907
+  specs:
+    rspec-its (1.3.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
+
+GIT
+  remote: https://github.com/rspec/rspec-mocks
+  revision: 81c17e89b2722cb225d602e08b600e4a4f6148a4
+  specs:
+    rspec-mocks (3.10.0.pre)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.10.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-rails
+  revision: 9fb6c9c482da29b8803dd6f17b34d37a6367b8f2
+  specs:
+    rspec-rails (4.0.0.pre)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (= 3.10.0.pre)
+      rspec-expectations (= 3.10.0.pre)
+      rspec-mocks (= 3.10.0.pre)
+      rspec-support (= 3.10.0.pre)
+
+GIT
+  remote: https://github.com/rspec/rspec-support
+  revision: 9cec8e858228ee1d1395e4e6186ac39c2a83d705
+  specs:
+    rspec-support (3.10.0.pre)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (5.2.4.1)
-      actionpack (= 5.2.4.1)
+    actioncable (6.0.2.1)
+      actionpack (= 6.0.2.1)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
-    actionmailer (5.2.4.1)
-      actionpack (= 5.2.4.1)
-      actionview (= 5.2.4.1)
-      activejob (= 5.2.4.1)
+    actionmailbox (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      activestorage (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      mail (>= 2.7.1)
+    actionmailer (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      actionview (= 6.0.2.1)
+      activejob (= 6.0.2.1)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 2.0)
-    actionpack (5.2.4.1)
-      actionview (= 5.2.4.1)
-      activesupport (= 5.2.4.1)
+    actionpack (6.0.2.1)
+      actionview (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
       rack (~> 2.0, >= 2.0.8)
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionview (5.2.4.1)
-      activesupport (= 5.2.4.1)
+      rails-html-sanitizer (~> 1.0, >= 1.2.0)
+    actiontext (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      activestorage (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+      nokogiri (>= 1.8.5)
+    actionview (6.0.2.1)
+      activesupport (= 6.0.2.1)
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.0.3)
-    activejob (5.2.4.1)
-      activesupport (= 5.2.4.1)
+      rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    activejob (6.0.2.1)
+      activesupport (= 6.0.2.1)
       globalid (>= 0.3.6)
-    activemodel (5.2.4.1)
-      activesupport (= 5.2.4.1)
-    activerecord (5.2.4.1)
-      activemodel (= 5.2.4.1)
-      activesupport (= 5.2.4.1)
-      arel (>= 9.0)
-    activestorage (5.2.4.1)
-      actionpack (= 5.2.4.1)
-      activerecord (= 5.2.4.1)
+    activemodel (6.0.2.1)
+      activesupport (= 6.0.2.1)
+    activerecord (6.0.2.1)
+      activemodel (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
+    activestorage (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
       marcel (~> 0.3.1)
-    activesupport (5.2.4.1)
+    activesupport (6.0.2.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+      zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    arel (9.0.0)
     bcrypt (3.1.13)
     bcrypt_pbkdf (1.0.1)
     bindex (0.8.1)
@@ -134,6 +197,9 @@ GEM
     kaminari-core (1.2.0)
     kgio (2.11.3)
     libv8 (3.16.14.19)
+    listen (3.2.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.4.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -162,18 +228,20 @@ GEM
     rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rails (5.2.4.1)
-      actioncable (= 5.2.4.1)
-      actionmailer (= 5.2.4.1)
-      actionpack (= 5.2.4.1)
-      actionview (= 5.2.4.1)
-      activejob (= 5.2.4.1)
-      activemodel (= 5.2.4.1)
-      activerecord (= 5.2.4.1)
-      activestorage (= 5.2.4.1)
-      activesupport (= 5.2.4.1)
+    rails (6.0.2.1)
+      actioncable (= 6.0.2.1)
+      actionmailbox (= 6.0.2.1)
+      actionmailer (= 6.0.2.1)
+      actionpack (= 6.0.2.1)
+      actiontext (= 6.0.2.1)
+      actionview (= 6.0.2.1)
+      activejob (= 6.0.2.1)
+      activemodel (= 6.0.2.1)
+      activerecord (= 6.0.2.1)
+      activestorage (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
       bundler (>= 1.3.0)
-      railties (= 5.2.4.1)
+      railties (= 6.0.2.1)
       sprockets-rails (>= 2.0.0)
     rails-controller-testing (1.0.4)
       actionpack (>= 5.0.1.x)
@@ -184,14 +252,17 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
-    railties (5.2.4.1)
-      actionpack (= 5.2.4.1)
-      activesupport (= 5.2.4.1)
+    railties (6.0.2.1)
+      actionpack (= 6.0.2.1)
+      activesupport (= 6.0.2.1)
       method_source
       rake (>= 0.8.7)
-      thor (>= 0.19.0, < 2.0)
+      thor (>= 0.20.3, < 2.0)
     raindrops (0.19.1)
     rake (13.0.1)
+    rb-fsevent (0.10.3)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
     rbnacl (4.0.2)
       ffi
     rbnacl-libsodium (1.0.16)
@@ -200,33 +271,8 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
-    rspec-core (3.9.1)
-      rspec-support (~> 3.9.1)
-    rspec-expectations (3.9.0)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-mocks (3.9.1)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-rails (3.9.1)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
-      rspec-support (~> 3.9.0)
-    rspec-support (3.9.2)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
-    sassc (2.2.1)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     shoulda-matchers (4.3.0)
       activesupport (>= 4.2.0)
     spring (2.1.0)
@@ -237,7 +283,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.13)
+    sqlite3 (1.4.2)
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -247,7 +293,6 @@ GEM
       ref
     thor (1.0.1)
     thread_safe (0.3.6)
-    tilt (2.0.10)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -260,11 +305,11 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.8)
       rack (>= 2.0.6)
-    web-console (3.7.0)
-      actionview (>= 5.0)
-      activemodel (>= 5.0)
+    web-console (4.0.1)
+      actionview (>= 6.0.0)
+      activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
-      railties (>= 5.0)
+      railties (>= 6.0.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -272,6 +317,7 @@ GEM
     workflow-activerecord (4.1.7)
       activerecord (>= 3.0, < 6.1)
       workflow (~> 2.0)
+    zeitwerk (2.3.0)
 
 PLATFORMS
   ruby
@@ -297,17 +343,22 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   kaminari
+  listen
   pg
   prometheus-client (~> 0.6.0)
-  rails (~> 5.0)
+  rails (~> 6.0)
   rails-controller-testing
   rbnacl (< 5.0)
   rbnacl-libsodium
-  rspec-rails
-  sassc-rails
+  rspec-core!
+  rspec-expectations!
+  rspec-its!
+  rspec-mocks!
+  rspec-rails!
+  rspec-support!
   shoulda-matchers
   spring
-  sqlite3 (~> 1.3, < 1.4)
+  sqlite3
   syslog-logger
   therubyracer
   turbolinks

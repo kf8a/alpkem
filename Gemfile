@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 # Use SCSS for stylesheets
-gem 'sassc-rails'
+# gem 'sassc-rails'
 
-gem 'rails', '~>5.0'
+gem 'rails', '~>6.0'
 
 # Bundle authentication
 gem 'devise'
@@ -52,9 +52,14 @@ gem 'web-console', group: :development
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'byebug'
-  gem 'rspec-rails'
+  gem 'rspec-core', git: 'https://github.com/rspec/rspec-core'
+  gem 'rspec-expectations', git: 'https://github.com/rspec/rspec-expectations'
+  gem 'rspec-its', git: 'https://github.com/rspec/rspec-its'
+  gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails'
+  gem 'rspec-support', git: 'https://github.com/rspec/rspec-support'
   gem 'spring'
-  gem 'sqlite3', '~> 1.3', '< 1.4'
+  gem 'sqlite3' #, '~> 1.3', '< 1.4'
 end
 
 group :development do
@@ -64,6 +69,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
   gem 'ed25519'
+  gem 'listen'
   gem 'rbnacl', '< 5.0'
   gem 'rbnacl-libsodium'
 end
