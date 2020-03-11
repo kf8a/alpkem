@@ -92,19 +92,6 @@ g_study.treatments.each do |treatment|
   end
 end
 
-g_study.reload
-g_study.treatments.each do |treatment|
-  replicates = Replicate.where(study_id: g_study.id)
-  replicates.each do |replicate|
-    Plot.where(name: "#{treatment.name}#{replicate.name}micro-25", study_id: g_study)
-        .first_or_create(name: "#{treatment.name}#{replicate.name}micro-25",
-                         study: g_study,
-                         sub_plot: 'microplot',
-                         treatment: treatment,
-                         replicate: replicate)
-  end
-end
-
 Analyte.find_or_create_by(name: 'NO3', unit: 'ppm')
 Analyte.find_or_create_by(name: 'NH4', unit: 'ppm')
 Analyte.find_or_create_by(name: 'N', unit: 'ppm')
@@ -168,4 +155,3 @@ SampleType.find_or_create_by(name: 'GLBRC Soil Sample (New)')
 SampleType.find_or_create_by(name: 'GLBRC CN')
 SampleType.find_or_create_by(name: 'Lysimeter NO3')
 SampleType.find_or_create_by(name: 'Lysimeter NH4')
-
