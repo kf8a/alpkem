@@ -2,10 +2,7 @@
 
 source 'https://rubygems.org'
 
-# Use SCSS for stylesheets
-gem 'sassc-rails'
-
-gem 'rails', '~>5.0'
+gem 'rails', '~>6.0'
 
 # Bundle authentication
 gem 'devise'
@@ -54,7 +51,8 @@ gem 'webpacker'
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'byebug'
-  gem 'rspec-rails'
+  # gem 'rspec-rails'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', tag: 'v4.0.0.beta4'
   gem 'spring'
   gem 'sqlite3'
 end
