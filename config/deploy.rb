@@ -1,5 +1,4 @@
 # config valid for current version and patch releases of Capistrano
-lock '~> 3.11.2'
 
 set :application, 'alpkem'
 set :repo_url, 'https://github.com/kf8a/alpkem.git'
@@ -8,7 +7,7 @@ set :repo_url, 'https://github.com/kf8a/alpkem.git'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/var/u/app/alpkem'
+set :deploy_to, '/var/u/apps/alpkem/'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -21,9 +20,11 @@ set :deploy_to, '/var/u/app/alpkem'
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml"
+append :linked_files, 'config/database.yml', '.env', 'config/devise.rb'
+append :linked_files, 'config/local_env.yml', 'config/secret_token.rb'
 
 # Default value for linked_dirs is []
+set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads]
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 # Default value for default_env is {}

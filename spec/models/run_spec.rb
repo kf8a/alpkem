@@ -21,7 +21,7 @@ describe Run, type: :model do
                 sample_date: Date.today.to_s }
 
     @standard_run = FactoryBot.build(:run, @attr)
-    @standard_run.measurements = [FactoryBot.create(:measurement)]
+    @standard_run.measurements = [FactoryBot.build(:measurement)]
     assert @standard_run.save
   end
 

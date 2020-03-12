@@ -1,9 +1,9 @@
 # Represents the specific location that a set of measurements are taken from.
 class Plot < ActiveRecord::Base
-  belongs_to :study
-  belongs_to :treatment
-  belongs_to :replicate
-  belongs_to :station
+  belongs_to :study, optional: true
+  belongs_to :treatment, optional: true
+  belongs_to :replicate, optional: true
+  belongs_to :station, optional: true
   has_many :samples
 
   validates :name, uniqueness: { scope: :study_id }
