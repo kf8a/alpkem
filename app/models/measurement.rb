@@ -3,10 +3,9 @@
 # Represents a single measurement, e.g. an amount of carbon or nitric acid.
 class Measurement < ActiveRecord::Base
   before_save :change_negative_to_zero
-
   belongs_to :analyte
   belongs_to :sample
-  belongs_to :run
+  belongs_to :run, optional: true
 
   validates_presence_of :amount
   validates_presence_of :analyte

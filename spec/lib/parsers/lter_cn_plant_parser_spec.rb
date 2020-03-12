@@ -11,7 +11,6 @@ describe Parsers::LterCnPlantParser do
       end
 
       it 'has the right date' do
-        p parser
         expect(parser.sample.sample_date).to eq(Date.new(2007, 6, 26))
       end
       it 'has the right plot' do

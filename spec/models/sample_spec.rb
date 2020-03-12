@@ -27,29 +27,30 @@ describe Sample do
   describe 'previous_measurements method' do
     describe 'with some previous approved measurements for the same plot' do
       before(:each) do
+        run = FactoryBot.build(:run)
         @sample = FactoryBot.create(:sample, sample_date: Date.today)
         @prev_sample = FactoryBot.create(:sample,
                                          sample_date: 1.year.ago.to_date,
                                          plot: @sample.plot,
                                          workflow_state: 'approved')
-        @prev_approved1 = FactoryBot.create(:measurement, sample: @prev_sample)
-        @prev_approved2 = FactoryBot.create(:measurement, sample: @prev_sample)
+        @prev_approved1 = FactoryBot.create(:measurement, sample: @prev_sample, run: run)
+        @prev_approved2 = FactoryBot.create(:measurement, sample: @prev_sample, run: run)
         @unapproved_sample = FactoryBot.create(:sample,
                                                sample_date: 1.year.ago.to_date,
                                                plot: @sample.plot,
                                                workflow_state: 'new')
         @prev_unapproved = FactoryBot.create(:measurement,
-                                             sample: @unapproved_sample)
+                                             sample: @unapproved_sample, run: run)
         new_plot = FactoryBot.create(:plot)
         @wrong_plot_sample = FactoryBot.create(:sample,
                                                sample_date: 1.year.ago.to_date,
                                                plot: new_plot,
                                                workflow_state: 'approved')
         @prev_wrong_plot = FactoryBot.create(:measurement,
-                                             sample: @wrong_plot_sample)
+                                             sample: @wrong_plot_sample, run: run)
         @prev_deleted = FactoryBot.create(:measurement,
                                           sample: @prev_sample,
-                                          deleted: true)
+                                          deleted: true, run: run)
       end
 
       it 'should list those previous measurements' do
@@ -100,11 +101,12 @@ describe Sample do
 
     describe 'for an N/C type sample' do
       before(:each) do
+        run = FactoryBot.build(:run)
         @sample = FactoryBot.create(:sample)
         @nitrogen = find_or_factory(:analyte, name: 'N')
         @carbon = find_or_factory(:analyte, name: 'C')
-        FactoryBot.create(:measurement, sample: @sample, analyte: @nitrogen)
-        FactoryBot.create(:measurement, sample: @sample, analyte: @carbon)
+        FactoryBot.create(:measurement, sample: @sample, analyte: @nitrogen, run: run)
+        FactoryBot.create(:measurement, sample: @sample, analyte: @carbon, run: run)
       end
 
       it 'should include Nitrogen' do
@@ -119,20 +121,26 @@ describe Sample do
 
   describe 'average method' do
     before(:each) do
+      run = FactoryBot.build(:run)
       @sample = FactoryBot.create(:sample)
       @no3 = find_or_factory(:analyte, name: 'NO3')
       @nh4 = find_or_factory(:analyte, name: 'NH4')
-      @measurement1 = FactoryBot.create(:measurement, sample: @sample, amount: 1, analyte: @no3)
-      @measurement2 = FactoryBot.create(:measurement, sample: @sample, amount: 2, analyte: @no3)
-      @measurement3 = FactoryBot.create(:measurement, sample: @sample, amount: 3, analyte: @no3)
+      @measurement1 = FactoryBot.create(:measurement, sample: @sample, amount: 1,
+                                                      analyte: @no3, run: run)
+      @measurement2 = FactoryBot.create(:measurement, sample: @sample, amount: 2,
+                                                      analyte: @no3, run: run)
+      @measurement3 = FactoryBot.create(:measurement, sample: @sample, amount: 3,
+                                                      analyte: @no3, run: run)
       @correct_average = (1 + 2 + 3) / 3
       @other_analyte_measurement = FactoryBot.create(:measurement,
                                                      sample: @sample,
                                                      amount: 4,
+                                                     run: run,
                                                      analyte: @nh4)
       @deleted_measurement = FactoryBot.create(:measurement,
                                                sample: @sample,
                                                amount: 5,
+                                               run: run,
                                                analyte: @no3,
                                                deleted: true)
       @sample.reload

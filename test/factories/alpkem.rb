@@ -5,13 +5,9 @@ FactoryBot.define do
   sequence :plot_name do |n|
     "plot#{n}#{rand(n).to_i}#{rand(4)}#{Time.now}"
   end
-  factory :analyte do
-    name { FactoryBot.generate :analyte_name }
-  end
-  factory :plot do
-    name { FactoryBot.generate :plot_name }
-  end
   factory :replicate do
+  end
+  factory :sample_type do
   end
   factory :study do
   end
@@ -19,12 +15,19 @@ FactoryBot.define do
   end
   factory :user do
   end
+  factory :analyte do
+    name { FactoryBot.generate :analyte_name }
+  end
+  factory :plot do
+    name { FactoryBot.generate :plot_name }
+  end
   factory :sample do
     association :plot
+    sample_type { FactoryBot.build :sample_type }
   end
   factory :measurement do
-    sample
-    analyte
+    sample { FactoryBot.build :sample }
+    analyte { FactoryBot.build :analyte }
     amount { 0.5 }
   end
   factory :run do
