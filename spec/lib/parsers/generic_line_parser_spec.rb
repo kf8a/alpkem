@@ -45,11 +45,20 @@ describe Parsers::GenericLineParser do
     expect(no3).to eql('1.325')
   end
 
-  it 'parse a plot without a modifier' do
+  it 'parses a plot without a modifier' do
     date, plot, modifier, nh4, no3 = Parsers::GenericLineParser.parse('	10:44	122	20130708G4R1-a 	    12545	   0.099					   128171	   1.325')
     expect(date).to eql('20130708')
     expect(plot).to eql('G4R1')
     expect(modifier).to be_nil
+    expect(nh4).to eql('0.099')
+    expect(no3).to eql('1.325')
+  end
+
+  it 'parses an mle plot' do
+    date, plot, modifier, nh4, no3 = Parsers::GenericLineParser.parse('	10:44	122	20191030MCG5R1N-25-a	    12545	   0.099					   128171	   1.325')
+    expect(date).to eql('20191030')
+    expect(plot).to eql('MCG5R1N')
+    expect(modifier).to eql('25')
     expect(nh4).to eql('0.099')
     expect(no3).to eql('1.325')
   end
