@@ -2,8 +2,8 @@
 
 source 'https://rubygems.org'
 
+gem 'sassc-rails'
 gem 'rails', '~>6.0'
-gem 'sassc'
 
 # Bundle authentication
 gem 'devise'
