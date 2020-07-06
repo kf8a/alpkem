@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Pages for showing/manipulating samples.
 class SamplesController < ApplicationController
   # before_filter :authenticate_user! unless Rails.env == 'test'

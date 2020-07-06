@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Allows the creation of studes, including plots, replicates, and treatments
 class StudiesController < ApplicationController
-  before_action :study, only: [:edit, :update]
+  before_action :study, only: %i[edit update]
 
   respond_to :html, :xml
 
@@ -30,8 +32,7 @@ class StudiesController < ApplicationController
     @study = Study.where(id: params[:id]).includes(:plots).first
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if Replicate.find_by(study_id: @study.id)

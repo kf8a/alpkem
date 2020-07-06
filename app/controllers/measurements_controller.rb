@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Methods to manipulate pages related to the Measurements model
 class MeasurementsController < ApplicationController
   def destroy
