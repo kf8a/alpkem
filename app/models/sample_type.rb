@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Samples and runs each belong to a sample type,
 # which determines parsing behavior.
 class SampleType < ActiveRecord::Base

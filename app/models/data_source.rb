@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Keeps a record of the original data
 class DataSource < ActiveRecord::Base
   belongs_to :run

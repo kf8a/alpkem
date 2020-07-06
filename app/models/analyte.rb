@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Represents the component that is analyzed in the measurements
 # for example NO3, NH4, C, or N
 class Analyte < ActiveRecord::Base
