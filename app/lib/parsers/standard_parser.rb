@@ -3,14 +3,13 @@
 module Parsers
   # Standard parser to convert files to measurements.
   class StandardParser < FileParser
-
     def parse_data(data)
       line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'StandardLineParser'
 
       data.each { |line| process_line(line, line_parser_name.constantize) }
-      if self.measurements.blank?
-        self.load_errors += 'No data was able to be loaded from this file.'
-      end
+      return unless measurements.blank?
+
+      self.load_errors += 'No data was able to be loaded from this file.'
     end
 
     def process_line(line, line_parser)
@@ -27,7 +26,6 @@ module Parsers
       end
     end
 
-
     def get_plot_name(first, second, modifier, site)
       if [2, 16].include?(@sample_type_id)
         # make_lter_plot(first, second, modifier, site)
@@ -41,7 +39,7 @@ module Parsers
 
     private
 
-    def make_lter_plot(first, second, modifier, site )
+    def make_lter_plot(first, second, _modifier, _site)
       if first =~ /^[A-Za-z]/
         "#{first}R#{second}"
       else
@@ -64,7 +62,7 @@ module Parsers
       result
     end
 
-    def make_scaleup_plot(first, second, modifier, site)
+    def make_scaleup_plot(first, second, _modifier, _site)
       "#{first}S#{second}"
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Represents the specific location that a set of measurements are taken from.
 class Plot < ActiveRecord::Base
   belongs_to :study, optional: true
