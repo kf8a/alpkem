@@ -41,7 +41,7 @@ module Parsers
     def self.for(sample_type_id,date)
       klass = case sample_type_id
               when 1 then Parsers::LysimeterParser
-              when 2 then Parsers::StandardParser # LterSoilParser
+              when 2 then Parsers::GenericParser # LterSoilParser
               when 3 then Parsers::StandardParser
               when 4 then Parsers::GLBRCDeepParser
               when 5 then Parsers::StandardParser

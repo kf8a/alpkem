@@ -5,7 +5,6 @@ require 'csv'
 module Parsers
   # Generic parser for lachat data
   class LachatGenericLineParser
-
     PLOT_PARSER =
       '(?<date>\d{8})(?<plot>(\w\w)?[G|L|M|T]\d+)(?<rep>R\d+)?(?<modifier>\w+)?-(?<depth>\d+)'
 
@@ -24,6 +23,7 @@ module Parsers
 
       raw_date = result[:date]
       my_plot = "#{result[:plot]}#{result[:rep]}#{result[:modifier]}"
+      p "Plot #{my_plot}"
 
       manual_dilution_factor = data[5].to_f
       auto_dilution_factor = data[6].to_f
