@@ -2,8 +2,8 @@
 
 source 'https://rubygems.org'
 
-gem 'sassc-rails'
 gem 'rails', '~>6.0'
+gem 'sassc-rails'
 
 # Bundle authentication
 gem 'devise'
@@ -43,7 +43,7 @@ gem 'kaminari'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder' # , '~> 2.0'
+gem 'jbuilder'
 
 gem 'webpacker'
 
@@ -61,9 +61,9 @@ end
 group :development do
   gem 'bcrypt_pbkdf'
   gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano3-unicorn'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'capistrano3-unicorn'
   gem 'ed25519'
   gem 'rbnacl', '< 5.0'
   gem 'rbnacl-libsodium'
