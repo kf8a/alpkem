@@ -7,7 +7,7 @@ module Parsers
   class LachatGenericLineParser
 
     PLOT_PARSER =
-      '(?<date>\d{8})(?<plot>(\w\w)?[G|L|M]\d+)(?<rep>R\d+)?(?<modifier>\w+)?-(?<depth>\d+)'
+      '(?<date>\d{8})(?<plot>(\w\w)?[G|L|M|T]\d+)(?<rep>R\d+)?(?<modifier>\w+)?-(?<depth>\d+)'
 
     def self.parse(line)
       data = CSV.parse_line(line)
