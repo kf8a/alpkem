@@ -6,7 +6,7 @@ module Parsers
   # Generic parser for lachat data
   class LachatGenericLineParser
     PLOT_PARSER =
-      '(?<date>\d{8})(?<plot>(\w\w)?[G|L|M|T]\d+)(?<rep>R\d+)?(?<modifier>\w+)?-(?<depth>\d+)'
+      '(?<date>\d{8})(?<plot>(\w\w)?[G|L|M|T]\w+)(?<rep>R\d+)?(?<modifier>\w+)?-(?<depth>\d+)'
 
     def self.parse(line)
       data = CSV.parse_line(line)
@@ -15,10 +15,11 @@ module Parsers
 
       return nil if blank?(data)
 
-      # attempt to parse the plot
+      # attempt to parse the plot to prevent odd plots from getting into the db
       # result = /(\d{8})(\w.+)([R|S])(\d+)-(\d+)/.match(data.first)
       regex = Regexp.new(PLOT_PARSER)
       result = data.first.match(regex)
+      p result
       raise "unparsable name #{data.first}" unless result
 
       raw_date = result[:date]
