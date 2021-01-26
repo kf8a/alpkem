@@ -4,7 +4,7 @@ module Parsers
   # Generic parser to convert files to measurements.
   class GenericParser < FileParser
     def parse_data(data)
-      line_parser_name = FileFormatSelector.new.get_line_parser_prefix(data) + 'GenericLineParser'
+      line_parser_name = "#{FileFormatSelector.new.get_line_parser_prefix(data)}GenericLineParser"
 
       data.each { |line| process_line(line, line_parser_name.constantize) }
       if measurements.blank?
@@ -17,7 +17,7 @@ module Parsers
 
       return unless plot_name && modifier
 
-      plot_name = plot_name + '-' + modifier
+      plot_name = "#{plot_name}-#{modifier}"
       find_plot(plot_name)
       process_nhno_sample(nh4_amount, no3_amount) if plot.present?
     end
