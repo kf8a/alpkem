@@ -67,6 +67,7 @@ group :development do
   gem 'ed25519'
   gem 'rbnacl', '< 5.0'
   gem 'rbnacl-libsodium'
+  gem "webrick"
   gem 'web-console'
 end
 
