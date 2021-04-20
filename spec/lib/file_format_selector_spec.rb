@@ -2,7 +2,7 @@ require './app/lib/file_format_selector.rb'
 
 describe FileFormatSelector do
   it 'finds the right file line parser prefix for NO3 alpkem files' do
-    file = File.open('spec/fixtures/3262012B.TXT')
+    file = File.open('spec/fixtures/files/3262012B.TXT')
     expect(FileFormatSelector.new.get_line_parser_prefix(file)).to eql('Parsers::NO3')
   end
   it 'finds the right file line parser prefix for NO3 alpkem files' do

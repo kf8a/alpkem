@@ -47,7 +47,7 @@ module Parsers
               # when 5 then Parsers::StandardParser # deprecated
               when 6 then Parsers::CNSampleParser
               when 7 then Parsers::CNDeepParser # deprecated old deepcore parser
-              # when 8 then Parsers::StandardParser # deprecated glbrc inorganic N 0-25
+              when 8 then Parsers::StandardParser # deprecated glbrc inorganic N 0-25
               when 9 then Parsers::CNGLBRCParser
               when 10 then Parsers::LysimeterNO3Parser
               when 11 then Parsers::LysimeterNH4Parser

@@ -10,7 +10,7 @@ describe Run, type: :model do
   end
 
   def set_good_data
-    file_name = Rails.root.join('spec', 'fixtures', 'new_format_soil_samples_090415.TXT')
+    file_name = Rails.root.join('spec', 'fixtures', 'files', 'new_format_soil_samples_090415.TXT')
     File.open(file_name, 'r') do |f|
       return StringIO.new(f.read)
     end
@@ -109,7 +109,7 @@ describe Run, type: :model do
 
   it 'requires non empty data to save' do
     r = FactoryBot.build(:run, @attr)
-    file_name = Rails.root.join('spec', 'fixtures', 'blank.txt')
+    file_name = Rails.root.join('spec', 'fixtures','files', 'blank.txt')
     File.open(file_name, 'r') do |f|
       empty_data = StringIO.new(f.read)
       r.load_file(empty_data)
@@ -189,7 +189,7 @@ describe Run, type: :model do
   end
 
   it 'loads single element files' do
-    file_name = Rails.root.join 'spec', 'fixtures', '3262012B.TXT'
+    file_name = Rails.root.join 'spec', 'fixtures', 'files', '3262012B.TXT'
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 2))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
@@ -201,7 +201,7 @@ describe Run, type: :model do
   end
 
   it 'loads glbrc_resin_strips files' do
-    file_name = Rails.root.join('spec', 'fixtures', 'new_format_soil_samples_090415.TXT')
+    file_name = Rails.root.join('spec', 'fixtures','files', 'new_format_soil_samples_090415.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 5))
     File.open(file_name, 'r') do |f|
       s = StringIO.new(f.read)
