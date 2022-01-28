@@ -26,7 +26,7 @@ gem 'escape_utils'
 gem 'carrierwave'
 gem 'dotenv-rails'
 
-gem 'therubyracer'
+# gem 'therubyracer'
 
 # use syslog
 gem 'syslog-logger'
@@ -36,7 +36,7 @@ gem 'prometheus-client', '~> 0.6.0'
 # Use Uglifier as compressor for JavaScript assets
 # gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails'
+# gem 'coffee-rails'
 
 gem 'kaminari'
 
