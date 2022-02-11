@@ -7,9 +7,9 @@ module Parsers
       line_parser_name = "#{FileFormatSelector.new.get_line_parser_prefix(data)}GenericLineParser"
 
       data.each { |line| process_line(line, line_parser_name.constantize) }
-      if measurements.blank?
-        self.load_errors += 'No data was able to be loaded from this file.'
-      end
+      return unless measurements.blank?
+
+      self.load_errors += "No data was able to be loaded from this file."
     end
 
     def process_line(line, line_parser)

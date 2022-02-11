@@ -5,7 +5,7 @@ class Run < ActiveRecord::Base
   belongs_to :sample_type
   has_many :measurements, dependent: :delete_all
   has_many :samples, -> { distinct }, through: :measurements
-  has_many :analytes, -> { distinct.order('name') }, through: :measurements
+  has_many :analytes, -> { distinct.order("name") }, through: :measurements
   has_many :data_sources
 
   validates :sample_type_id, presence: true
@@ -18,12 +18,12 @@ class Run < ActiveRecord::Base
   end
 
   def self.runs
-    all_runs = Run.order('id desc').to_a
+    all_runs = Run.order("id desc").to_a
     all_runs.reject(&:cn_run?)
   end
 
   def self.cn_runs
-    all_runs = Run.order('id desc').to_a
+    all_runs = Run.order("id desc").to_a
     all_runs.keep_if(&:cn_run?)
   end
 
@@ -40,7 +40,7 @@ class Run < ActiveRecord::Base
   end
 
   def cn_run?
-    sample_type_name.include?('CN')
+    sample_type_name.include?("CN")
   end
 
   def updated?
@@ -81,7 +81,7 @@ class Run < ActiveRecord::Base
   end
 
   def short_errors(errors)
-    errors = errors[0..1024] + '...' if errors.length > 1024
+    errors = "#{errors[0..1024]}  ..." if errors.length > 1024
     errors
   end
 end

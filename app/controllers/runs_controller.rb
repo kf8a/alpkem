@@ -37,7 +37,7 @@ class RunsController < ApplicationController
 
   # GET /runs/1/qc
   def qc
-    @samples    = @run.samples.order('id')
+    @samples    = @run.samples.order("id")
     @analytes   = @run.analytes
     # @measurements = @run.all_measurements +
     # @run.similar_runs.collect{|run| run.all_measurements}
@@ -60,9 +60,9 @@ class RunsController < ApplicationController
     end
 
     if @run.save
-      flash[:notice] = 'Run was successfully uploaded.'
+      flash[:notice] = "Run was successfully uploaded."
     else
-      flash[:notice] = 'Run was not uploaded.'
+      flash[:notice] = "Run was not uploaded."
       flash[:file_error] = @run.load_errors
     end
     flash[:notice] += @run.plot_errors
@@ -73,7 +73,7 @@ class RunsController < ApplicationController
   # PUT /runs/1
   def update
     # if @run.update_attributes(run_params) &&  @run.update_sample_types
-    #   flash[:notice] = 'Run was successfully updated.'
+    #   flash[:notice] = "Run was successfully updated."
     # end
     respond_with @run
   end

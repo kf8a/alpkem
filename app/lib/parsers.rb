@@ -1,40 +1,40 @@
 # frozen_string_literal: true
 
-require 'parsers/file_parser'
-require 'parsers/cn_sample_parser'
-require 'parsers/nh4_lysimeter_line_parser'
-require 'parsers/no3_lysimeter_line_parser'
-require 'parsers/old_lysimeter_line_parser'
-require 'parsers/lysimeter_line_parser'
-require 'parsers/nh4_standard_line_parser'
-require 'parsers/no3_standard_line_parser'
-require 'parsers/old_standard_line_parser'
-require 'parsers/cn_glbrc_generic_parser'
-require 'parsers/cn_glbrc_parser'
-require 'parsers/generic_line_parser'
-require 'parsers/generic_parser'
-require 'parsers/glbrc_cn_deep_core_parser'
-require 'parsers/glbrc_cn_plant_parser'
-require 'parsers/glbrc_deep_parser'
-require 'parsers/glbrc_scaleup_base_parser'
-require 'parsers/glbrc_switchgrass_cn_parser'
-require 'parsers/leilei_sample_parser'
-require 'parsers/lter_cn_deep_parser'
-require 'parsers/lter_cn_deep_horizon_parser'
-require 'parsers/lter_cn_plant_parser'
-require 'parsers/lter_soil_parser'
-require 'parsers/lysimeter_parser'
-require 'parsers/resource_gradient_parser'
-require 'parsers/standard_line_parser'
-require 'parsers/standard_parser'
-require 'parsers/cn_deep_parser'
-require 'parsers/glbrc_cn_soil_parser'
-require 'parsers/glbrc_cn_pit_parser'
-require 'parsers/glbrc_cn_root_soil_parser'
-require 'parsers/glbrc_cn_pit_root_parser'
-require 'parsers/glbrc_cn_root_excavation_soil_parser'
-require 'parsers/glbrc_cn_root_excavation_plant_parser'
-# require 'parsers/cimmyt_parser'
+require "parsers/file_parser"
+require "parsers/cn_sample_parser"
+require "parsers/nh4_lysimeter_line_parser"
+require "parsers/no3_lysimeter_line_parser"
+require "parsers/old_lysimeter_line_parser"
+require "parsers/lysimeter_line_parser"
+require "parsers/nh4_standard_line_parser"
+require "parsers/no3_standard_line_parser"
+require "parsers/old_standard_line_parser"
+require "parsers/cn_glbrc_generic_parser"
+require "parsers/cn_glbrc_parser"
+require "parsers/generic_line_parser"
+require "parsers/generic_parser"
+require "parsers/glbrc_cn_deep_core_parser"
+require "parsers/glbrc_cn_plant_parser"
+require "parsers/glbrc_deep_parser"
+require "parsers/glbrc_scaleup_base_parser"
+require "parsers/glbrc_switchgrass_cn_parser"
+require "parsers/leilei_sample_parser"
+require "parsers/lter_cn_deep_parser"
+require "parsers/lter_cn_deep_horizon_parser"
+require "parsers/lter_cn_plant_parser"
+require "parsers/lter_soil_parser"
+require "parsers/lysimeter_parser"
+require "parsers/resource_gradient_parser"
+require "parsers/standard_line_parser"
+require "parsers/standard_parser"
+require "parsers/cn_deep_parser"
+require "parsers/glbrc_cn_soil_parser"
+require "parsers/glbrc_cn_pit_parser"
+require "parsers/glbrc_cn_root_soil_parser"
+require "parsers/glbrc_cn_pit_root_parser"
+require "parsers/glbrc_cn_root_excavation_soil_parser"
+require "parsers/glbrc_cn_root_excavation_plant_parser"
+# require "parsers/cimmyt_parser"
 
 module Parsers
   class Parser
@@ -87,7 +87,7 @@ module Parsers
               else false
               end
 
-      klass.new(date, sample_type_id) if klass
+      klass&.new(date, sample_type_id)
     end
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
 module Parsers
   # Generic parser for lachat data
@@ -11,7 +11,7 @@ module Parsers
     def self.parse(line)
       data = CSV.parse_line(line)
 
-      return nil unless data[1] == 'Unknown'
+      return nil unless data[1] == "Unknown"
 
       return nil if blank?(data)
 

@@ -1,5 +1,8 @@
-#Helper class to parse files for Run data
+# frozen_string_literal: true
+
+# Helper class to parse files for Run data
 module Parsers
+  # Parses incoming data files
   class FileParser
     attr_accessor :load_errors, :plot_errors, :measurements, :plot,
                   :sample, :sample_type_id, :sample_date
@@ -7,13 +10,13 @@ module Parsers
     def initialize(date, id)
       self.sample_date = date
       self.sample_type_id = id
-      self.plot_errors = ''
-      self.load_errors = ''
+      self.plot_errors = ""
+      self.load_errors = ""
       self.measurements = []
-      @no3_analyte = Analyte.find_by(name: 'NO3')
-      @nh4_analyte = Analyte.find_by(name: 'NH4')
-      @nitrogen_analyte = Analyte.find_by(name: 'N')
-      @carbon_analyte = Analyte.find_by(name: 'C')
+      @no3_analyte = Analyte.find_by(name: "NO3")
+      @nh4_analyte = Analyte.find_by(name: "NH4")
+      @nitrogen_analyte = Analyte.find_by(name: "N")
+      @carbon_analyte = Analyte.find_by(name: "C")
     end
 
     # subclasses need to implement this
@@ -22,10 +25,10 @@ module Parsers
     end
 
     def parse_file(file)
-      if file && !file.class.eql?(String)
+      if file && !file.instance_of?(String)
         parse_contents(file)
       else
-        self.load_errors = 'No file was selected to upload.'
+        self.load_errors = "No file was selected to upload."
       end
     end
 
@@ -41,9 +44,9 @@ module Parsers
     # different line parsers for the sample type
     def parse_data(data)
       data.each { |line| process_line(line) }
-      if measurements.blank?
-        self.load_errors += 'No data was able to be loaded from this file.'
-      end
+      return unless measurements.blank?
+
+      self.load_errors += "No data was able to be loaded from this file."
     end
 
     def find_plot(plot_to_find)
@@ -52,15 +55,15 @@ module Parsers
     end
 
     def find_or_create_sample
-      find_sample unless sample_already_found?
-      sample ? unapprove_sample : create_sample
+      find_sample(sample_date, sample_type_id) unless sample_already_found?
+      sample ? unapprove_sample : create_sample(sample_date, sample_type_id, plot)
     end
 
-    def find_sample
+    def find_sample(sample_date, sample_type_id)
       self.sample = plot.samples.find_by(sample_date: sample_date, sample_type_id: sample_type_id)
     end
 
-    def create_sample
+    def create_sample(sample_date, sample_type_id, plot)
       self.sample = Sample.create(sample_date: sample_date,
                                   plot: plot,
                                   sample_type_id: sample_type_id)
@@ -69,32 +72,32 @@ module Parsers
     private
 
     def require_sample_type_id
-      self.load_errors += 'No Sample Type selected.' unless sample_type_id
+      self.load_errors += "No Sample Type selected." unless sample_type_id
     end
 
     def require_sample_date
-      self.load_errors += 'No Sample Date selected.' unless sample_date
+      self.load_errors += "No Sample Date selected." unless sample_date
     end
 
     def require_data(data)
-      self.load_errors += 'Data file is empty.'      if data.size == 0
+      self.load_errors += "Data file is empty."      if data.empty?
     end
 
     def cn_plot_name_ok?
       !@plot_name.blank? &&
-        !@plot_name.include?('Standard') &&
-        !@plot_name.include?('Blindstd')
+        !@plot_name.include?("Standard") &&
+        !@plot_name.include?("Blindstd")
     end
 
     def process_cn_sample
-      format_sample_date if sample_date.class == String
+      format_sample_date if sample_date.instance_of?(String)
       find_or_create_sample
       create_measurement(@percent_n, @nitrogen_analyte) unless @percent_n.blank?
       create_measurement(@percent_c, @carbon_analyte) unless @percent_c.blank?
     end
 
     def format_sample_date
-      self.sample_date = Date.strptime(sample_date, '%m/%d/%Y')
+      self.sample_date = Date.strptime(sample_date, "%m/%d/%Y")
     end
 
     def unapprove_sample

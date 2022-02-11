@@ -9,7 +9,7 @@ module Parsers
       data.each { |line| process_line(line, line_parser_name.constantize) }
       return unless measurements.blank?
 
-      self.load_errors += 'No data was able to be loaded from this file.'
+      self.load_errors += "No data was able to be loaded from this file."
     end
 
     def process_line(line, line_parser)
@@ -29,11 +29,11 @@ module Parsers
     def get_plot_name(first, second, modifier, site)
       if [2, 16].include?(@sample_type_id)
         # make_lter_plot(first, second, modifier, site)
-        make_plot_with_prefix('T', first, second, modifier, site)
-      elsif first.start_with?('L0', 'M0')
+        make_plot_with_prefix("T", first, second, modifier, site)
+      elsif first.start_with?("L0", "M0")
         make_scaleup_plot(first, second, modifier, site)
       else
-        make_plot_with_prefix('G', first, second, modifier, site)
+        make_plot_with_prefix("G", first, second, modifier, site)
       end
     end
 
@@ -54,7 +54,7 @@ module Parsers
                  "#{prefix}#{first}R#{second}"
                end
       if modifier
-        result = result + "-#{modifier}"
+        result += "-#{modifier}"
       end
       if site
         result = "#{site}-" + result
