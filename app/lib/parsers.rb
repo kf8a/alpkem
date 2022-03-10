@@ -47,7 +47,7 @@ module Parsers
               # when 5 then Parsers::StandardParser # deprecated
               when 6 then Parsers::CNSampleParser
               when 7 then Parsers::CNDeepParser # deprecated old deepcore parser
-              when 8 then Parsers::StandardParser # deprecated glbrc inorganic N 0-25
+              # when 8 then Parsers::StandardParser # deprecated glbrc inorganic N 0-25
               when 9 then Parsers::CNGLBRCParser
               when 10 then Parsers::LysimeterNO3Parser
               when 11 then Parsers::LysimeterNH4Parser
@@ -55,7 +55,7 @@ module Parsers
               when 13 then Parsers::LeileiSampleParser
               when 14 then Parsers::LterCnPlantParser # LTER CN PLants
               when 15 then Parsers::LterCnDeepHorizonParser # LTER CN Deep  deprecated
-              when 16 then Parsers::StandardParser # LterSoilParser 21 day incubation
+              when 16 then Parsers::GenericParser # LterSoilParser 21 day incubation
               when 17 then Parsers::GLBRCScaleupBaseParser # Baseline 2009 scaleup samples deprecated
                 # when 18 then Parsers::SWFParser
               when 19 then Parsers::GenericParser   # T28 glbrc mineralization data
