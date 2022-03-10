@@ -1,4 +1,6 @@
-# Keep the uploaded data files around so that we can
+# frozen_string_literal: true
+
+# Keep the uplloaded data files around so that we can
 # track provinance
 class DataUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
@@ -13,6 +15,6 @@ class DataUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(csv txt)
+    %w[csv txt]
   end
 end
