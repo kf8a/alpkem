@@ -24,16 +24,21 @@ module Parsers
       raise NotImplementedError
     end
 
+    # this takes a file object not a string
     def parse_file(file)
       if file && !file.instance_of?(String)
         parse_contents(file)
+      elsif file.instance_of?(String)
+        data = File.read(file)
+        parse_contents(data)
       else
         self.load_errors = "No file was selected to upload."
       end
     end
 
     def parse_contents(file)
-      file_contents = StringIO.new(file.read)
+      file_contents = StringIO.new(file)
+
       require_data(file_contents)
       require_sample_type_id
       require_sample_date
@@ -80,7 +85,8 @@ module Parsers
     end
 
     def require_data(data)
-      self.load_errors += "Data file is empty."      if data.empty?
+      # false positive stringio does not have an empty method
+      self.load_errors += "Data file is empty."      if data.length == 0
     end
 
     def cn_plot_name_ok?

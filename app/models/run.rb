@@ -60,9 +60,10 @@ class Run < ActiveRecord::Base
     end
   end
 
-  def load_file(file)
+  def load_file(_file)
+    # at this point I should have a data_source already
     ActiveRecord::Base.transaction do
-      parser.parse_file(file)
+      parser.parse_file(data_sources[0].data.current_path)
       self.measurements = parser.measurements
       load_errors.blank?
     end
