@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require 'statistics'
-require 'workflow'
+require "statistics"
+require "workflow"
 
 # This repesents one field sample such as a soil core or a water sample
 class Sample < ActiveRecord::Base
   belongs_to :plot
 
   has_many :measurements
-  has_many :runs, -> { order('run_date') }, through: :measurements
+  has_many :runs, -> { order("run_date") }, through: :measurements
   has_many :analytes, through: :measurements
   belongs_to :sample_type
 
   validates :plot, presence: true
 
-  scope :approved, -> { where(workflow_state: 'approved') }
+  scope :approved, -> { where(workflow_state: "approved") }
 
   include WorkflowActiverecord
 
@@ -32,11 +32,11 @@ class Sample < ActiveRecord::Base
   end
 
   def self.approved_or_rejected
-    where('workflow_state = ? or workflow_state = ?',
-          'approved', 'rejected')
-      .order('sample_date desc')
+    where("workflow_state = ? or workflow_state = ?",
+          "approved", "rejected")
+      .order("sample_date desc")
       .joins(:plot)
-      .order('plots.name')
+      .order("plots.name")
   end
 
   def self.samples_to_csv(samples)
@@ -58,7 +58,7 @@ class Sample < ActiveRecord::Base
   end
 
   def average(analyte)
-    raise ArgumentError unless analyte.class == Analyte
+    raise ArgumentError unless analyte.instance_of(Analyte)
 
     # measurements.where("analyte_id = ? and deleted = 'f' and rejected = 'f'",
     #                    analyte.id).average(:amount)
@@ -69,7 +69,7 @@ class Sample < ActiveRecord::Base
   end
 
   def cv(analyte)
-    raise ArgumentError unless analyte.class == Analyte
+    raise ArgumentError unless analyte.instance_of(Analyte)
 
     variance = measurements.where("analyte_id = ? and deleted = 'f'"\
                                   " and rejected = 'f'",
