@@ -58,7 +58,7 @@ class Sample < ActiveRecord::Base
   end
 
   def average(analyte)
-    raise ArgumentError unless analyte.instance_of(Analyte)
+    raise ArgumentError unless analyte.instance_of?(Analyte)
 
     # measurements.where("analyte_id = ? and deleted = 'f' and rejected = 'f'",
     #                    analyte.id).average(:amount)
