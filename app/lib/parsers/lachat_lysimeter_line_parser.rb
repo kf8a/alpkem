@@ -1,13 +1,14 @@
-require 'csv'
+require "csv"
 
 module Parsers
 
   class LachatLysimeterLineParser
     def self.parse(line)
       data = CSV.parse(line)[0]
-      return nil unless data[1] == 'Unknown'
+      return nil unless data[1] == "Unknown"
       return nil if data[0] =~ /1\s.M\s+KCL/i
       return nil if data[0] =~ /H2O/i
+      return nil if data[0] =~ /Blank/i
 
       plot, raw_date = data[0].split(/\s+/)
       first, second, third = plot[0..-2].split(/-/)
@@ -37,17 +38,17 @@ module Parsers
     end
 
     def self.nh4_id(data)
-      if data[16] == 'Ammonia'
+      if data[16] == "Ammonia"
         17
-      elsif data[29] == 'Ammonia'
+      elsif data[29] == "Ammonia"
         30
       end
     end
 
     def self.no3_id(data)
-      if data[16] == 'Nitrate-Nitrite'
+      if data[16] == "Nitrate-Nitrite"
         17
-      elsif data[29] == 'Nitrate-Nitrite'
+      elsif data[29] == "Nitrate-Nitrite"
         30
       end
     end
