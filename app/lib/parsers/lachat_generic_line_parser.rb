@@ -16,10 +16,8 @@ module Parsers
       return nil if blank?(data)
 
       # attempt to parse the plot to prevent odd plots from getting into the db
-      # result = /(\d{8})(\w.+)([R|S])(\d+)-(\d+)/.match(data.first)
       regex = Regexp.new(PLOT_PARSER)
       result = data.first.match(regex)
-      p result
       raise "unparsable name #{data.first}" unless result
 
       raw_date = result[:date]
@@ -30,8 +28,20 @@ module Parsers
       auto_dilution_factor = data[6].to_f
       dilution_factor = manual_dilution_factor * auto_dilution_factor
 
-      nh4 = data[17].to_f * dilution_factor
-      no3 = data[30].to_f * dilution_factor
+      nh4 = if data[16] == "Ammonia"
+              data[17].to_f * dilution_factor
+            elsif data[29] == "Ammonia"
+              data[30].to_f * dilution_factor
+            end
+
+      no3 = if data[16] == "Nitrate-Nitrite"
+              data[17].to_f * dilution_factor
+            elsif data[29] == "Nitrate-Nitrite"
+              data[30].to_f * dilution_factor
+            end
+
+      # nh4 = data[17].to_f * dilution_factor
+      # no3 = data[30].to_f * dilution_factor
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
 
       [sample_date, my_plot, result[:depth], nh4, no3]
