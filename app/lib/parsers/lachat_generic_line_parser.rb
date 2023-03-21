@@ -18,11 +18,11 @@ module Parsers
       # attempt to parse the plot to prevent odd plots from getting into the db
       regex = Regexp.new(PLOT_PARSER)
       result = data.first.match(regex)
+
       raise "unparsable name #{data.first}" unless result
 
       raw_date = result[:date]
       my_plot = "#{result[:plot]}#{result[:rep]}#{result[:modifier]}"
-      p "Plot #{my_plot}"
 
       manual_dilution_factor = data[5].to_f
       auto_dilution_factor = data[6].to_f
@@ -40,8 +40,6 @@ module Parsers
               data[30].to_f * dilution_factor
             end
 
-      # nh4 = data[17].to_f * dilution_factor
-      # no3 = data[30].to_f * dilution_factor
       sample_date = Date.new(raw_date[0..3].to_i, raw_date[4..5].to_i, raw_date[6..7].to_i) if raw_date
 
       [sample_date, my_plot, result[:depth], nh4, no3]
