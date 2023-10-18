@@ -19,6 +19,7 @@ gem 'workflow-activerecord', '>= 4.1', '< 6.0'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+# gem 'rails-ujs'
 
 # Gets rid of annoying UTF-8 string error in rack
 gem 'escape_utils'
@@ -31,12 +32,7 @@ gem 'dotenv-rails'
 # use syslog
 gem 'syslog-logger'
 
-gem 'prometheus-client', '~> 0.6.0'
-
-# Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier'
-# Use CoffeeScript for .js.coffee assets and views
-# gem 'coffee-rails'
+#gem 'prometheus-client' #, '~> 0.6.0'
 
 gem 'kaminari'
 
