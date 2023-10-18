@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Parsers::GLBRCSwitchgrassCNParser do
+describe Parsers::GlbrcSwitchgrassCnParser do
   describe 'a line of data' do
     before do
       find_or_factory :plot, name: 'SWF1108H2'

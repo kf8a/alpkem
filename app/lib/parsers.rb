@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require "parsers/file_parser"
-require "parsers/cn_sample_parser"
-require "parsers/nh4_lysimeter_line_parser"
-require "parsers/no3_lysimeter_line_parser"
+require "parsers/c_n_sample_parser"
+require "parsers/n_h4_lysimeter_line_parser"
+require "parsers/n_o3_lysimeter_line_parser"
 require "parsers/old_lysimeter_line_parser"
 require "parsers/lysimeter_line_parser"
-require "parsers/nh4_standard_line_parser"
-require "parsers/no3_standard_line_parser"
+require "parsers/n_h4_standard_line_parser"
+require "parsers/n_o3_standard_line_parser"
 require "parsers/old_standard_line_parser"
-require "parsers/cn_glbrc_generic_parser"
+require "parsers/c_n_g_l_b_r_c_generic_parser"
 require "parsers/cn_glbrc_parser"
 require "parsers/generic_line_parser"
 require "parsers/generic_parser"
@@ -43,46 +43,46 @@ module Parsers
               when 1 then Parsers::LysimeterParser
               when 2 then Parsers::GenericParser # LterSoilParser
               # when 3 then Parsers::StandardParser # deprecated
-              when 4 then Parsers::GLBRCDeepParser
+              when 4 then Parsers::GlbrcDeepParser
               # when 5 then Parsers::StandardParser # deprecated
               when 6 then Parsers::CNSampleParser
-              when 7 then Parsers::CNDeepParser # deprecated old deepcore parser
+              when 7 then Parsers::CnDeepParser # deprecated old deepcore parser
               # when 8 then Parsers::StandardParser # deprecated glbrc inorganic N 0-25
-              when 9 then Parsers::CNGLBRCParser
+              when 9 then Parsers::CNGlbrcParser
               when 10 then Parsers::LysimeterNO3Parser
               when 11 then Parsers::LysimeterNH4Parser
-              when 12 then Parsers::GLBRCCNPlantParser # GLBRC Plants (ANPP)
+              when 12 then Parsers::GlbrcCnPlantParser # GLBRC Plants (ANPP)
               when 13 then Parsers::LeileiSampleParser
               when 14 then Parsers::LterCnPlantParser # LTER CN PLants
               when 15 then Parsers::LterCnDeepHorizonParser # LTER CN Deep  deprecated
               when 16 then Parsers::GenericParser # LterSoilParser 21 day incubation
-              when 17 then Parsers::GLBRCScaleupBaseParser # Baseline 2009 scaleup samples deprecated
+              when 17 then Parsers::GlbrcScaleupBaseParser # Baseline 2009 scaleup samples deprecated
                 # when 18 then Parsers::SWFParser
               when 19 then Parsers::GenericParser   # T28 glbrc mineralization data
               when 20 then Parsers::GenericParser   # glbrc soil data
               when 21 then Parsers::GenericParser   # glbrc scaleup soil N
               when 22 then Parsers::ResourceGradientParser
-              when 23 then Parsers::GLBRCSwitchgrassCNParser
+              when 23 then Parsers::GlbrcSwitchgrassCnParser
               when 24 then Parsers::GenericParser   # T0 glbrc mineralization
               when 25 then Parsers::CNGLBRCGenericParser # Annual Root CN
-              when 26 then Parsers::GLBRCCNDeepCoreParser # GLBRC Deep cors
+              when 26 then Parsers::GlbrcCnDeepCoreParser # GLBRC Deep cors
               when 27 then Parsers::LterCnPlantParser # LTER Post frost
               when 28 then Parsers::LterCnPlantParser
-              when 29 then Parsers::GLBRCCNPlantParser # GLBRC Harvest CN (grab sample)
+              when 29 then Parsers::GlbrcCnPlantParser # GLBRC Harvest CN (grab sample)
               when 30 then Parsers::LterCnDeepParser # LTER CN Deep (new format)
               # when 31: Parsers::CIMMYParser #lachat CIMMYT samples
-              when 32 then Parsers::GLBRCCNDeepCoreParser # GLBRC Deep cores Marginal Land site
+              when 32 then Parsers::GlbrcCnDeepCoreParser # GLBRC Deep cores Marginal Land site
               when 33 then Parsers::StandardParser # Lachat switchgrass (mineralization? samples T0)
               when 34 then Parsers::StandardParser # Lachat switchgrass (mineralization? samples T28)
-              when 35 then Parsers::GLBRCCNSoilParser # GLBRC soil samples new format
-              when 36 then Parsers::GLBRCCNPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
-              when 37 then Parsers::GLBRCSwitchgrassCNParser # GLBRC Switchgrass Soil
+              when 35 then Parsers::GlbrcCnSoilParser # GLBRC soil samples new format
+              when 36 then Parsers::GlbrcCnPlantParser # GLBRC Harvest Plant Residue collection (raked from the ground in frames)
+              when 37 then Parsers::GlbrcSwitchgrassCnParser # GLBRC Switchgrass Soil
               when 38 then Parsers::LysimeterParser # Rainout shelters
-              when 39 then Parsers::GLBRCCNPitParser # MLE pit samples
-              when 40 then Parsers::GLBRCCNRootSoilParser # GLBRC Root Soil samples
-              when 42 then Parsers::GLBRCCNPitRootParser # GLBRC Root pit samples
-              when 43 then Parsers::GLBRCCNRootExcavationSoilParser # GLBRC root excavation soil pit samples
-              when 44 then Parsers::GLBRCCNRootExcavationPlantParser # GLBRC plant root excavation soil pit samples
+              when 39 then Parsers::GlbrcCnPitParser # MLE pit samples
+              when 40 then Parsers::GlbrcCnRootSoilParser # GLBRC Root Soil samples
+              when 42 then Parsers::GlbrcCnPitRootParser # GLBRC Root pit samples
+              when 43 then Parsers::GlbrcCnRootExcavationSoilParser # GLBRC root excavation soil pit samples
+              when 44 then Parsers::GlbrcCnRootExcavationPlantParser # GLBRC plant root excavation soil pit samples
               when 45 then Parsers::GenericParser # lachat samples from the MLE sites.
               else false
               end

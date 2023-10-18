@@ -2,7 +2,7 @@
 
 # For parsing GLBRC deep core Carbon and Nitrogen samples.
 module Parsers
-  class GLBRCCNDeepCoreParser < CNSampleParser
+  class GlbrcCnDeepCoreParser < CNSampleParser
 
     CN_DEEP_CORE_SAMPLE =
       '(\d+),\d+,(\d+)?(\w+..R\dS.+C?\d?)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'

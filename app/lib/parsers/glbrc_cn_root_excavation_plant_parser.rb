@@ -2,7 +2,7 @@
 
 module Parsers
   # For parsing GLBRC Root Excavatrion plant Carbon and Nitrogen samples.
-  class GLBRCCNRootExcavationPlantParser < CNSampleParser
+  class GlbrcCnRootExcavationPlantParser < CNSampleParser
     CN_PLANT_SAMPLE =
       '(\d+),.+,(\d+)?([G|L|M]..R?\d?-?\S+)-[abc|ABC],.+,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 

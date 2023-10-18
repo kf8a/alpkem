@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe Parsers::GLBRCScaleupBaseParser do
+describe Parsers::GlbrcScaleupBaseParser do
   describe 'a line of data' do
-    before do 
+    before do
       @parser = Parsers::Parser.for(17, Date.today)
       @parser.process_line('10:49	109	M01S02025A	   18143.576171875	       0.199468508		   27428.517578125	       0.304367423	')
     end

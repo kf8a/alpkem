@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Parsers
-  class GLBRCScaleupBaseParser < FileParser
+  class GlbrcScaleupBaseParser < FileParser
 
     STANDARD_SAMPLE =
       '([M|L]0\dS\d{5})[abc|ABC]\s+-?\d+\.\d+\s+(-?\d+\.\d+)\s+-?\d+\.\d+\s+(-?\d+\.\d+)'

@@ -2,7 +2,7 @@
 
 # For parsing MLE pit Carbon and Nitrogen samples.
 module Parsers
-  class GLBRCCNPitParser < CNSampleParser
+  class GlbrcCnPitParser < CNSampleParser
     CN_PIT_SAMPLE =
       '(\d+),\d+,(\w\w)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 

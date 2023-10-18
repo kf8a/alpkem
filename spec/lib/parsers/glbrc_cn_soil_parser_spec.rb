@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Parsers::GLBRCCNSoilParser do
+describe Parsers::GlbrcCnSoilParser do
   before do
     @parser = Parsers::Parser.for(35, Date.today)
   end

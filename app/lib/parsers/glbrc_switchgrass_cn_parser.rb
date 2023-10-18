@@ -2,7 +2,7 @@
 
 module Parsers
   # parser for switchgrass soil samples and deep core samples
-  class GLBRCSwitchgrassCNParser < CNSampleParser
+  class GlbrcSwitchgrassCnParser < CNSampleParser
     SWITCHGRASS =
       '(\d+),\d+,\d{2}?((DC)?SWF\d+H\d+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 

@@ -2,7 +2,7 @@
 
 module Parsers
   # For parsing GLBRC plant Carbon and Nitrogen samples.
-  class GLBRCCNPlantParser < CNSampleParser
+  class GlbrcCnPlantParser < CNSampleParser
     CN_PLANT_SAMPLE =
       '(\d+),.+,(\d+)?([G|L|M]..R?\d?-?\S+)[abc|ABC],.+,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 

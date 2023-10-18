@@ -2,7 +2,7 @@
 
 module Parsers
   # For parsing GLBRC surface soil Carbon and Nitrogen samples.
-  class GLBRCCNSoilParser < CNSampleParser
+  class GlbrcCnSoilParser < CNSampleParser
     CN_SOIL_SAMPLE =
       '(\d+),\d+,(\d+)?(\w+..R\dS\d+C?\d?)-(\d+)-[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
