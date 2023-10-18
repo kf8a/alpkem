@@ -4,7 +4,6 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery-ui/effect.all
-//= require jquery_ujs
+//= require rails-ujs
 //= require_tree .
 //

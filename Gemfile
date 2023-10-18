@@ -18,7 +18,7 @@ gem 'chronic' # parsing dates
 gem 'workflow-activerecord', '>= 4.1', '< 6.0'
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# gem 'jquery-ui-rails'
 # gem 'rails-ujs'
 
 # Gets rid of annoying UTF-8 string error in rack
