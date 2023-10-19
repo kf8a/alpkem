@@ -7,14 +7,16 @@ class RunsController < ApplicationController
 
   # GET /runs
   def index
-    @runs = Run.runs
+    @runs = Run.order("id desc").page(params[:page])
     respond_with @runs
   end
 
   # GET /runs/cn
   def cn
-    @runs = Run.cn_runs
+    @runs = Run.order("id desc").page(params[:page])
     respond_with @runs
+    # @runs = Run.cn_runs
+    # respond_with @runs
   end
 
   # GET /runs/1

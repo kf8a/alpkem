@@ -1,6 +1,5 @@
 <h1>Runs</h1>
 <%= link_to "new", new_run_path %>
-<%= link_to "CN runs", cn_runs_path %>
 <%= link_to "Studies and Plots", studies_path %>
 <table class='table'>
   <tr>
@@ -24,6 +23,8 @@
     <% end %>
   <% end %>
 </table>
+<%= paginate @runs %>
+<br/>
+
 <%= link_to "new", new_run_path %>
-<%= link_to "CN runs", cn_runs_path %>
 <%= link_to "Studies and Plots", studies_path %>

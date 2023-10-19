@@ -18,7 +18,7 @@ class Run < ActiveRecord::Base
   end
 
   def self.runs
-    all_runs = Run.order("id desc").to_a
+    all_runs = Run.order("id desc").
     all_runs.reject(&:cn_run?)
   end
 
@@ -39,6 +39,7 @@ class Run < ActiveRecord::Base
     sample_type.name
   end
 
+  # TODO: I need to include the CN designation on the run instead of the sample type
   def cn_run?
     sample_type_name.include?("CN")
   end
