@@ -56,15 +56,16 @@ end
 
 group :development do
   gem 'bcrypt_pbkdf'
-  gem 'capistrano', '~> 3.11', require: false
-  gem 'capistrano3-unicorn'
+  gem 'capistrano' #, '~> 3.11', require: false
+  # gem 'capistrano3-unicorn'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'ed25519'
-  gem 'rbnacl', '< 5.0'
+  gem 'rbnacl' #, '< 5.0'
   gem 'rbnacl-libsodium'
   gem "webrick"
   gem 'web-console'
+  gem 'capistrano3-puma',  github: "seuros/capistrano-puma"
 end
 
 group :test do
@@ -75,5 +76,5 @@ group :test do
 end
 
 group :production do
-  gem 'unicorn'
+  gem 'puma'
 end

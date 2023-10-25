@@ -12,6 +12,15 @@ GIT
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
 
+GIT
+  remote: https://github.com/seuros/capistrano-puma.git
+  revision: 2cc11846540489edda10d83e026c9bea04e6fab1
+  specs:
+    capistrano3-puma (6.0.0.beta.1)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (>= 5.1, < 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -93,8 +102,6 @@ GEM
     capistrano-rails (1.6.3)
       capistrano (~> 3.1)
       capistrano-bundler (>= 1.1, < 3)
-    capistrano3-unicorn (0.2.1)
-      capistrano (~> 3.1, >= 3.1.0)
     carrierwave (3.0.4)
       activemodel (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -160,7 +167,6 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    kgio (2.11.4)
     loofah (2.21.4)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -194,6 +200,8 @@ GEM
     orm_adapter (0.5.0)
     pg (1.5.4)
     public_suffix (5.0.3)
+    puma (6.4.0)
+      nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
     rack-proxy (0.7.7)
@@ -232,9 +240,8 @@ GEM
       method_source
       rake (>= 12.2)
       thor (~> 1.0)
-    raindrops (0.20.1)
     rake (13.0.6)
-    rbnacl (4.0.2)
+    rbnacl (7.1.1)
       ffi
     rbnacl-libsodium (1.0.16)
       rbnacl (>= 3.0.1)
@@ -286,9 +293,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    unicorn (6.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -317,10 +321,10 @@ PLATFORMS
 DEPENDENCIES
   bcrypt_pbkdf
   byebug
-  capistrano (~> 3.11)
+  capistrano
   capistrano-bundler
   capistrano-rails
-  capistrano3-unicorn
+  capistrano3-puma!
   carrierwave
   chronic
   database_cleaner
@@ -334,9 +338,10 @@ DEPENDENCIES
   jquery-rails
   kaminari
   pg
+  puma
   rails (~> 6.0)
   rails-controller-testing
-  rbnacl (< 5.0)
+  rbnacl
   rbnacl-libsodium
   rspec-rails!
   sassc-rails
@@ -345,7 +350,6 @@ DEPENDENCIES
   sqlite3
   syslog-logger
   turbolinks
-  unicorn
   web-console
   webpacker
   webrick

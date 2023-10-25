@@ -32,6 +32,7 @@ set :default_env, {
   'NODE_OPTIONS':'--openssl-legacy-provider'
 }
 
+set :puma_enable_socket_service, true
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
@@ -42,9 +43,9 @@ set :keep_releases, 20
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-before 'deploy:publishing', 'unicorn:stop'
-after 'deploy:published', 'unicorn:start'
-after 'deploy:restart', 'unicorn:restart'
+# before 'deploy:publishing', 'unicorn:stop'
+# after 'deploy:published', 'unicorn:start'
+# after 'deploy:restart', 'unicorn:restart'
 before 'deploy:assets:precompile', 'deploy:yarn_install'
 namespace :deploy do
   desc 'Run rake yarn install'
