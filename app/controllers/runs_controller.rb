@@ -7,16 +7,10 @@ class RunsController < ApplicationController
 
   # GET /runs
   def index
-    @runs = Run.order("id desc").page(params[:page])
+    type_name = params[:type] || "lachat"
+    type = RunType.find_by(name: type_name)
+    @runs = Run.where(run_type: type).order("id desc").page(params[:page])
     respond_with @runs
-  end
-
-  # GET /runs/cn
-  def cn
-    @runs = Run.order("id desc").page(params[:page])
-    respond_with @runs
-    # @runs = Run.cn_runs
-    # respond_with @runs
   end
 
   # GET /runs/1
@@ -52,6 +46,14 @@ class RunsController < ApplicationController
     session[:sample_date] = @run.sample_date
     session[:run_date] = @run.run_date
     session[:sample_type_id] = @run.sample_type_id
+
+    cn_run = if cn_run?(sample_type: @run.sample_type_id) then
+               RunType.find_by(name: 'cn')
+             else
+               RunType.find_by(name: 'lachat')
+             end
+
+    @run.run_type = cn_run
 
     if params[:data] && params[:data].present?
       data_source = DataSource.new
@@ -89,6 +91,7 @@ class RunsController < ApplicationController
 
   def approve
     @run = Run.find(params[:run_id])
+    @run.touch!
     @measurements = @run.all_measurements
     @sample = Sample.find(params[:id])
     @sample.toggle_approval
