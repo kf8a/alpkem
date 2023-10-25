@@ -91,7 +91,7 @@ class RunsController < ApplicationController
 
   def approve
     @run = Run.find(params[:run_id])
-    @run.touch!
+    @run.touch
     @measurements = @run.all_measurements
     @sample = Sample.find(params[:id])
     @sample.toggle_approval
