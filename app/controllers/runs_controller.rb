@@ -47,13 +47,12 @@ class RunsController < ApplicationController
     session[:run_date] = @run.run_date
     session[:sample_type_id] = @run.sample_type_id
 
-    cn_run = if cn_run?(sample_type: @run.sample_type_id) then
-               RunType.find_by(name: 'cn')
-             else
-               RunType.find_by(name: 'lachat')
-             end
+    @run.run_type = if Run.cn_run?(sample_type: @run.sample_type_id) then
+                      RunType.find_by(name: 'cn')
+                    else
+                      RunType.find_by(name: 'lachat')
+                    end
 
-    @run.run_type = cn_run
 
     if params[:data] && params[:data].present?
       data_source = DataSource.new
