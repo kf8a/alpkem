@@ -32,17 +32,13 @@ class Run < ActiveRecord::Base
     measurements.includes(:sample).includes(:analyte)
   end
 
-  # def analytes
-  #   measurements.joins(:analyte).uniq.order(:name)
-  # end
-
-  def sample_type_name
-    sample_type.name
+  # TODO: I need to include the CN designation on the run instead of the sample type
+  def cn_run?(sample_type_name)
+    sample_type_name.include?("CN")
   end
 
-  # TODO: I need to include the CN designation on the run instead of the sample type
   def cn_run?
-    sample_type_name.include?("CN")
+    sample_type.name.include?("CN")
   end
 
   def updated?
