@@ -37,6 +37,10 @@ class Run < ActiveRecord::Base
     sample_type_name.include?("CN")
   end
 
+  def sample_type_name
+    sample_type.name
+  end
+
   def cn_run?
     sample_type.name.include?("CN")
   end
