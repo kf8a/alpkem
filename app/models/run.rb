@@ -33,7 +33,7 @@ class Run < ActiveRecord::Base
   end
 
   # TODO: I need to include the CN designation on the run instead of the sample type
-  def cn_run?(sample_type_name)
+  def is_cn_run?(sample_type_name)
     sample_type_name.include?("CN")
   end
 

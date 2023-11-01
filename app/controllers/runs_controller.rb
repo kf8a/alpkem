@@ -47,7 +47,7 @@ class RunsController < ApplicationController
     session[:run_date] = @run.run_date
     session[:sample_type_id] = @run.sample_type_id
 
-    @run.run_type = if @run.cn_run?(sample_type: @run.sample_type_id) then
+    @run.run_type = if @run.cn_run? then
                       RunType.find_by(name: 'cn')
                     else
                       RunType.find_by(name: 'lachat')
