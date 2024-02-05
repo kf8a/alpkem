@@ -9,6 +9,7 @@ module Parsers
     def process_line(line)
     year, month, day, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(PARSE_REGEX, line)
     return unless year
+
     p [year, month, day, @plot_name, @percent_n, @percent_c]
     @sample_date = Date.new(year.to_i, month.to_i, day.to_i)
 
