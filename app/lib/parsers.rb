@@ -34,6 +34,7 @@ require "parsers/glbrc_cn_root_soil_parser"
 require "parsers/glbrc_cn_pit_root_parser"
 require "parsers/glbrc_cn_root_excavation_soil_parser"
 require "parsers/glbrc_cn_root_excavation_plant_parser"
+require "parsers/m_l_e_soil_parser"
 # require "parsers/cimmyt_parser"
 
 module Parsers
@@ -84,6 +85,7 @@ module Parsers
               when 43 then Parsers::GlbrcCnRootExcavationSoilParser # GLBRC root excavation soil pit samples
               when 44 then Parsers::GlbrcCnRootExcavationPlantParser # GLBRC plant root excavation soil pit samples
               when 45 then Parsers::GenericParser # lachat samples from the MLE sites.
+              when 46 then Parsers::MLESoilParser # MLE CN soil samples
               else false
               end
 
