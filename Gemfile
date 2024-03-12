@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~>6.0'
+gem 'rails', '~>6.1'
 gem 'sassc-rails'
 
 # Bundle authentication
