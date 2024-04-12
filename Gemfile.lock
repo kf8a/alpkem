@@ -180,7 +180,6 @@ GEM
     method_source (1.0.0)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.5)
     minitest (5.22.3)
     mutex_m (0.2.0)
     net-imap (0.4.10)
@@ -198,8 +197,17 @@ GEM
       net-protocol
     net-ssh (7.2.3)
     nio4r (2.7.1)
-    nokogiri (1.16.4)
-      mini_portile2 (~> 2.8.2)
+    nokogiri (1.16.4-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.4-arm-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.4-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.4-x86-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.4-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.5.6)
@@ -282,8 +290,12 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.7.3)
-      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.7.3-aarch64-linux)
+    sqlite3 (1.7.3-arm-linux)
+    sqlite3 (1.7.3-arm64-darwin)
+    sqlite3 (1.7.3-x86-linux)
+    sqlite3 (1.7.3-x86_64-darwin)
+    sqlite3 (1.7.3-x86_64-linux)
     sshkit (1.22.1)
       base64
       mutex_m
@@ -323,7 +335,12 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-  ruby
+  aarch64-linux
+  arm-linux
+  arm64-darwin
+  x86-linux
+  x86_64-darwin
+  x86_64-linux
 
 DEPENDENCIES
   bcrypt_pbkdf
@@ -363,4 +380,4 @@ DEPENDENCIES
   workflow-activerecord (>= 4.1, < 6.0)
 
 BUNDLED WITH
-   2.2.33
+   2.5.7
