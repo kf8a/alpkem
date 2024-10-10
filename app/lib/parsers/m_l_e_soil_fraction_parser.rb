@@ -15,7 +15,8 @@ module Parsers
     @sample_date = Date.new(year.to_i, month.to_i, day.to_i)
 
     @plot_name = "#{site}_#{treatment}#{replicate}#{subplot}_#{top_depth}-#{bottom_depth}_#{fraction}"
-    metadata = {site: site, subplot: subplot, top_depth: top_depth, bottom_depth: bottom_depth, fraction: fraction}
+    metadata = {site: site, subplot: subplot, top_depth: top_depth, treatment: treatment, replicate: replicate,
+                bottom_depth: bottom_depth, fraction: fraction}
     Plot.find_or_create_with_metadata(name: @plot_name, study_id: 13, metadata: metadata)
     process_data
     end
