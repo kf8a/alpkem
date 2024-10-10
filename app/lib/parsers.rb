@@ -86,6 +86,7 @@ module Parsers
               when 44 then Parsers::GlbrcCnRootExcavationPlantParser # GLBRC plant root excavation soil pit samples
               when 45 then Parsers::GenericParser # lachat samples from the MLE sites.
               when 46 then Parsers::MLESoilParser # MLE CN soil samples
+              when 47 then Parsers::MLESoilFractionParser # MLE CN soil fraction samples
               else false
               end
 

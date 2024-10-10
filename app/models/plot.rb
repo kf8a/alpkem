@@ -17,4 +17,17 @@ class Plot < ActiveRecord::Base
   def replicate_name
     replicate.name
   end
+
+  def self.find_or_create_with_metadata(opts)
+    plot = Plot.find_or_create_by(name: opts[:name], study_id: opts[:study_id])
+    metadata = opts[:metadata]
+    plot.treatment_name = metadata[:treatment]
+    plot.replicate_name = metadata[:replicate]
+    plot.site_code = metadata[:site]
+    plot.sub_plot = metadata[:subplot]
+    plot.top_depth = metadata[:top_depth]
+    plot.bottom_depth = metadata[:bottom_depth]
+    plot.save
+    plot
+  end
 end
