@@ -100,6 +100,9 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    capistrano-asdf (1.1.1)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2)
     capistrano-bundler (2.1.1)
       capistrano (~> 3.1)
     capistrano-rails (1.6.3)
@@ -355,6 +358,7 @@ DEPENDENCIES
   bcrypt_pbkdf
   byebug
   capistrano
+  capistrano-asdf
   capistrano-bundler
   capistrano-rails
   capistrano3-puma!

@@ -13,8 +13,6 @@ require 'capistrano/deploy'
 # install_plugin Capistrano::SCM::Svn
 # or
 require 'capistrano/scm/git'
-require 'capistrano/puma'
-
 install_plugin Capistrano::SCM::Git
 
 # Include tasks from other gems included in your Gemfile
@@ -34,8 +32,10 @@ install_plugin Capistrano::SCM::Git
 require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
+require 'capistrano/asdf'
 # require 'capistrano3/unicorn'
 #
+require 'capistrano/puma'
 install_plugin Capistrano::Puma  # Default puma tasks
 install_plugin Capistrano::Puma::Systemd
 

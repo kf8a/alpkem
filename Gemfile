@@ -57,7 +57,9 @@ end
 group :development do
   gem 'bcrypt_pbkdf'
   gem 'capistrano' #, '~> 3.11', require: false
+  gem 'capistrano-asdf'
   # gem 'capistrano3-unicorn'
+  gem 'capistrano3-puma',  github: "seuros/capistrano-puma"
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'ed25519'
@@ -65,7 +67,6 @@ group :development do
   gem 'rbnacl-libsodium'
   gem "webrick"
   gem 'web-console'
-  gem 'capistrano3-puma',  github: "seuros/capistrano-puma"
 end
 
 group :test do
