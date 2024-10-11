@@ -3,7 +3,7 @@
 # (\d\d\d\d)(\d\d)(\d\d)_(\w\w)_(\w+)_(\w+-\w)_(\d+)-(\d+)_[A|B|C]
 
 module Parsers
-  class MLESoilFractionParser < CNSampleParser
+  class MLECNSoilFractionParser < CNSampleParser
     # PARSE_REGEX = '(\d{4})(\d{2})(\d{2})_(\w\w_\w+-n_\d+-\d+)_[A|B|C],\d+.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
     PARSE_REGEX = '(\d{4})(\d{2})(\d{2})_(\w\w)_(\w\d\d?)(R\d)_(\w+-n)_(\d+)-(\d+)_(\w+)_[A|B|C],\d+.\d+,\w+,\w+,,,,(\d+\.\d+),(\d+\.\d+)'
 
