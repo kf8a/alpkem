@@ -35,6 +35,7 @@ require "parsers/glbrc_cn_pit_root_parser"
 require "parsers/glbrc_cn_root_excavation_soil_parser"
 require "parsers/glbrc_cn_root_excavation_plant_parser"
 require "parsers/m_l_e_soil_parser"
+require "parsers/resource_gradient_cn_parser"
 # require "parsers/cimmyt_parser"
 
 module Parsers
@@ -62,7 +63,7 @@ module Parsers
               when 19 then Parsers::GenericParser   # T28 glbrc mineralization data
               when 20 then Parsers::GenericParser   # glbrc soil data
               when 21 then Parsers::GenericParser   # glbrc scaleup soil N
-              when 22 then Parsers::ResourceGradientParser
+              when 22 then Parsers::ResourceGradientParser # Resource Gradient soil N
               when 23 then Parsers::GlbrcSwitchgrassCnParser
               when 24 then Parsers::GenericParser   # T0 glbrc mineralization
               when 25 then Parsers::CNGLBRCGenericParser # Annual Root CN
@@ -87,6 +88,8 @@ module Parsers
               when 45 then Parsers::GenericParser # lachat samples from the MLE sites.
               when 46 then Parsers::MLESoilParser # MLE CN soil samples
               when 47 then Parsers::MLECNSoilFractionParser # MLE CN soil fraction samples
+              when 48 then Parsers::CnGlbrcBarcodeParser # GLBRC barcode parser
+              when 49 then Parsers::ResourceGradientCnParser
               else false
               end
 
