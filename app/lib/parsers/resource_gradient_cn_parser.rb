@@ -8,14 +8,15 @@ module Parsers
 
     def process_line(line)
       month, day, year, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(CN_SOIL_SAMPLE, line)
-      date = Date.new(year, month,day)
-      return unless date
+      return unless month
 
-      @sample_date = date
+      p [month, day, year, @plot_name, @percent_n, @percent_c]
+      @sample_date = Date.new(year.to_i, month.to_i,day.to_i)
 
-      @plot_name = @plot_name + '-' + '0-25'
+      @plot_name = @plot_name + '-' + '025'
+      _, treatment, _depth = @plot_name.split('-')
 
-      Plot.find_or_create_by(name: @plot_name, study_id: 10)
+      Plot.find_or_create_by(name: @plot_name, study_id: 10, top_depth: 0, bottom_depth: 25, treatment_name: treatment )
 
       process_data
     end
