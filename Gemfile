@@ -12,6 +12,11 @@ gem 'devise-encryptable'
 # block upgrade until we move to rails 7
 gem 'concurrent-ruby', '1.3.4'
 
+gem 'ostruct'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'syslog'
+
 gem 'pg'
 
 # Bundle the extra gems:
