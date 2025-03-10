@@ -2,9 +2,7 @@
 .DS_Store
 coverage/*
 log/*.log
-db/*.db
-db/*.sqlite3
-db/test.sqlite3-journal
+db/*
 tmp/**/*
 tmp/*
 doc/api
