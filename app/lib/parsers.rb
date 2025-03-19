@@ -90,6 +90,7 @@ module Parsers
               when 47 then Parsers::MLECNSoilFractionParser # MLE CN soil fraction samples
               when 48 then Parsers::CnGlbrcBarcodeParser # GLBRC barcode parser
               when 49 then Parsers::ResourceGradientCnParser
+              when 50 then Parsers::StandardParser # LTAR soil samples
               else false
               end
 
