@@ -32,7 +32,9 @@ set :default_env, {
   'NODE_OPTIONS':'--openssl-legacy-provider'
 }
 
-set :puma_enable_socket_service, true
+# set :puma_init_active_record, true
+# set :pty, true
+#set :puma_enable_socket_service, true
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
