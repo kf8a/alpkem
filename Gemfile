@@ -19,6 +19,8 @@ gem 'syslog'
 
 gem 'pg'
 
+gem 'csv'
+
 # Bundle the extra gems:
 # gem 'will_paginate', :require => 'will_paginate'
 gem 'chronic' # parsing dates
