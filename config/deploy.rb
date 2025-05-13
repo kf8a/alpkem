@@ -3,7 +3,8 @@
 set :application, 'alpkem'
 set :repo_url, 'https://github.com/kf8a/alpkem.git'
 
-# Default branch is :master
+# Default branch is :main
+set :branch, 'main'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name

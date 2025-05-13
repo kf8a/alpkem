@@ -2,9 +2,9 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
-role :app, %w{deploy@oshtemo.kbs.msu.edu}
-role :web, %w{deploy@oshtemo.kbs.msu.edu}
-role :db,  %w{deploy@oshtemo.kbs.msu.edu}
+role :app, %w{deploy@thetford.kbs.msu.edu}
+role :web, %w{deploy@thetford.kbs.msu.edu}
+role :db,  %w{deploy@thetford.kbs.msu.edu}
 
 
 # role-based syntax
