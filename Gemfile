@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~>6.0'
+gem 'rails', '~>7.0'
 gem 'sassc-rails'
 
 # Bundle authentication
@@ -51,6 +51,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
+gem "sprockets-rails"
 gem 'webpacker'
 
 # Bundle gems for the local environment. Make sure to
@@ -60,7 +61,6 @@ group :development, :test do
   gem 'byebug'
   # gem 'rspec-rails'
   gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails', tag: 'v4.0.0.beta4'
-  gem 'spring'
   gem 'sqlite3'
 end
 
@@ -68,6 +68,7 @@ group :development do
   gem 'bcrypt_pbkdf'
   gem 'capistrano' #, '~> 3.11', require: false
   gem 'capistrano-asdf'
+  gem "tidewave"
   # gem 'capistrano3-unicorn'
   gem 'capistrano3-puma',  github: "seuros/capistrano-puma"
   gem 'capistrano-bundler'
