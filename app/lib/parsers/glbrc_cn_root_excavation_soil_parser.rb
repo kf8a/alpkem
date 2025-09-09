@@ -9,7 +9,7 @@ module Parsers
 
     def process_line(line)
       date, @plot_name, @depth, @percent_n, @percent_c = ParserMatcher.parse(CN_PIT_SAMPLE, line)
-      p [date, @plot_name, @depth, @percent_n, @percent_c]
+      # p [date, @plot_name, @depth, @percent_n, @percent_c]
       return unless date
 
       year  = date[0..3].to_i

@@ -10,7 +10,7 @@ module Parsers
     year, month, day, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(PARSE_REGEX, line)
     return unless year
 
-    p [year, month, day, @plot_name, @percent_n, @percent_c]
+    # p [year, month, day, @plot_name, @percent_n, @percent_c]
     @sample_date = Date.new(year.to_i, month.to_i, day.to_i)
 
     Plot.find_or_create_by(name: @plot_name, study_id: 13)

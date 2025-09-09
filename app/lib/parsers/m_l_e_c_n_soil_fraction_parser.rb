@@ -11,7 +11,7 @@ module Parsers
     year, month, day, site, treatment, replicate, subplot, top_depth, bottom_depth, fraction, @percent_n, @percent_c = ParserMatcher.parse(PARSE_REGEX, line)
     return unless year
 
-    p [year, month, day, treatment, replicate, subplot, top_depth, fraction, @percent_n, @percent_c]
+    # p [year, month, day, treatment, replicate, subplot, top_depth, fraction, @percent_n, @percent_c]
     @sample_date = Date.new(year.to_i, month.to_i, day.to_i)
 
     @plot_name = "#{site}_#{treatment}#{replicate}#{subplot}_#{top_depth}-#{bottom_depth}_#{fraction}"

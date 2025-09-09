@@ -10,7 +10,7 @@ module Parsers
       month, day, year, @plot_name, @percent_n, @percent_c = ParserMatcher.parse(CN_SOIL_SAMPLE, line)
       return unless month
 
-      p [month, day, year, @plot_name, @percent_n, @percent_c]
+      # p [month, day, year, @plot_name, @percent_n, @percent_c]
       @sample_date = Date.new(year.to_i, month.to_i,day.to_i)
 
       @plot_name = @plot_name + '-' + '025'

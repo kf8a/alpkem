@@ -13,7 +13,6 @@ module Parsers
     end
 
     def process_line(line, line_parser)
-      p line
       first, second, third, raw_date, nh4_amount, no3_amount = line_parser.parse(line)
       self.sample_date = raw_date
       return if first.blank? || second.blank? || third.blank?
