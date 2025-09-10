@@ -51,7 +51,7 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
-gem "sprockets-rails"
+# gem "sprockets-rails"
 gem 'webpacker'
 
 # Bundle gems for the local environment. Make sure to
