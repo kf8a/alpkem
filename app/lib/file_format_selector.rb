@@ -46,7 +46,7 @@ class FileFormatSelector
   end
 
   def old_format?(lines)
-    old_format = lines.map { |line| line =~ /^Results:/ }
-    old_format.include?(true)
+    old_format = lines.map { |line| line =~ /Run Results Report/ }
+    old_format.include?(0)
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Parsers::CnDeepParser do
+describe Parsers::CNDeepParser do
   describe 'openoffice csv format' do
     before do
       @parser = Parsers::Parser.for(7, Date.today)

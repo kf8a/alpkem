@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Parsers::CnGlbrcParser do
+describe Parsers::CNGlbrcParser do
 
   describe 'openoffice csv format' do
   before do

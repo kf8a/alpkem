@@ -3,7 +3,7 @@
 #For parsing CN Deep Core files into Carbon/Nitrogen measurements.
 # DEPRECATED
 module Parsers
-  class CnDeepParser < CNSampleParser
+  class CNDeepParser < CNSampleParser
 
     #  CN_DEEP_CORE        = ',\d*,\d*(.{1,11})[abc|ABC]?,(\d*\.\d*),\w*,(\w*),\w*,\w*,\w*,(\d*\.\d*),(\d*\.\d*)'
     CN_DEEP_CORE = '(\d+),\d+,"?\d*DC(.{1,11})[ABC]"?,.+,(\d+\.\d+),(\d+\.\d+)'

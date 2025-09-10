@@ -10,7 +10,7 @@ require "parsers/n_h4_standard_line_parser"
 require "parsers/n_o3_standard_line_parser"
 require "parsers/old_standard_line_parser"
 require "parsers/c_n_g_l_b_r_c_generic_parser"
-require "parsers/cn_glbrc_parser"
+require "parsers/c_n_glbrc_parser"
 require "parsers/generic_line_parser"
 require "parsers/generic_parser"
 require "parsers/glbrc_cn_deep_core_parser"
@@ -27,7 +27,7 @@ require "parsers/lysimeter_parser"
 require "parsers/resource_gradient_parser"
 require "parsers/standard_line_parser"
 require "parsers/standard_parser"
-require "parsers/cn_deep_parser"
+require "parsers/c_n_deep_parser"
 require "parsers/glbrc_cn_soil_parser"
 require "parsers/glbrc_cn_pit_parser"
 require "parsers/glbrc_cn_root_soil_parser"
@@ -48,7 +48,7 @@ module Parsers
               when 4 then Parsers::GlbrcDeepParser
               # when 5 then Parsers::StandardParser # deprecated
               when 6 then Parsers::CNSampleParser
-              when 7 then Parsers::CnDeepParser # deprecated old deepcore parser
+              when 7 then Parsers::CNDeepParser # deprecated old deepcore parser
               # when 8 then Parsers::StandardParser # deprecated glbrc inorganic N 0-25
               when 9 then Parsers::CNGlbrcParser
               when 10 then Parsers::LysimeterNO3Parser

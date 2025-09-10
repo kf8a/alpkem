@@ -2,7 +2,7 @@
 
 module Parsers
   #For parsing soil Carbon/Nitrogen samples from GLBRC.
-  class CnGlbrcBarcodeParser < CNSampleParser
+  class CNGlbrcBarcodeParser < CNSampleParser
 
     BARCODE= '(FS\d+),.+,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
