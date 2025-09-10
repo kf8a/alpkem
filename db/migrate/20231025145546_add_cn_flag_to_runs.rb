@@ -6,7 +6,7 @@ class AddCnFlagToRuns < ActiveRecord::Migration[6.1]
     end
 
     add_column :runs, :run_type_id, :int
-    add_foreign_key :runs, :run_types, column: :run_type, primary_key: :id
+    add_foreign_key :runs, :run_types, column: :run_type_id, primary_key: :id
 
   end
 end
