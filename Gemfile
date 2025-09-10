@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~>7.0'
+gem 'rails', '~>8.0'
 gem 'sassc-rails'
 
 # Bundle authentication
@@ -10,7 +10,7 @@ gem 'devise'
 gem 'devise-encryptable'
 
 # block upgrade until we move to rails 7
-gem 'concurrent-ruby', '1.3.4'
+gem 'concurrent-ruby'
 
 gem 'ostruct'
 gem 'bigdecimal'
@@ -25,7 +25,7 @@ gem 'csv'
 # gem 'will_paginate', :require => 'will_paginate'
 gem 'chronic' # parsing dates
 
-gem 'workflow-activerecord', '>= 4.1', '< 6.0'
+gem 'workflow-activerecord',  '~> 6.0'
 
 gem 'jquery-rails'
 # gem 'jquery-ui-rails'
@@ -37,12 +37,8 @@ gem 'escape_utils'
 gem 'carrierwave'
 gem 'dotenv-rails'
 
-# gem 'therubyracer'
-
 # use syslog
 gem 'syslog-logger'
-
-#gem 'prometheus-client' #, '~> 0.6.0'
 
 gem 'kaminari'
 
@@ -59,13 +55,13 @@ gem 'jsbundling-rails'
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'byebug'
-  gem 'rspec-rails', '~> 6.1'
+  gem 'rspec-rails'
   gem 'sqlite3'
 end
 
 group :development do
   gem 'bcrypt_pbkdf'
-  gem 'capistrano' #, '~> 3.11', require: false
+  gem 'capistrano'
   gem 'capistrano-asdf'
   gem "tidewave"
   # gem 'capistrano3-unicorn'
@@ -73,7 +69,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'ed25519'
-  gem 'rbnacl' #, '< 5.0'
+  gem 'rbnacl'
   gem 'rbnacl-libsodium'
   gem "webrick"
   gem 'web-console'
