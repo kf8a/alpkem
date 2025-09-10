@@ -35,7 +35,7 @@ FactoryBot.define do
   end
   factory :run do
     sample_type_id { 1 }
-    run_type_id { FactoryBot.build :run_type }
+    run_type { FactoryBot.build :run_type }
     factory :run_with_measurements do
       transient do
         measurements_count { 5 }

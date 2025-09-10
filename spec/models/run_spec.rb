@@ -5,15 +5,24 @@ require 'rails_helper'
 describe Run, type: :model do
   it { should have_many :measurements }
 
+  def setup_data_source_for_run(run, file_path)
+    data_source = DataSource.new
+    data_source.data = File.open(file_path)
+    run.data_sources << data_source
+    data_source.save!
+    data_source
+  end
+
   def good_data
     @good_data ||= set_good_data
   end
 
   def set_good_data
     file_name = Rails.root.join('spec', 'fixtures', 'files', 'new_format_soil_samples_090415.TXT')
-    File.open(file_name, 'r') do |f|
-      return StringIO.new(f.read)
-    end
+    r = FactoryBot.build(:run, @attr)
+    setup_data_source_for_run(r, file_name)
+    r.load_file(file_name)
+    return r
   end
 
   before do
@@ -42,9 +51,11 @@ describe Run, type: :model do
   end
 
   it 'runs should include runs but not cn runs and vice versa' do
-    run = FactoryBot.build(:run_with_measurements, sample_date: Date.today)
+    run_type = FactoryBot.create(:run_type, name: 'lachat')
+    cn_run_type = FactoryBot.create(:run_type, name: 'cn')
+    run = FactoryBot.build(:run_with_measurements, sample_date: Date.today, run_type_id: run_type.id)
     run.save
-    cn_run = FactoryBot.create(:cn_run_with_measurements)
+    cn_run = FactoryBot.create(:cn_run_with_measurements, run_type_id: cn_run_type.id)
     cn_run.save
     assert !Run.runs.include?(cn_run)
     assert Run.runs.include?(run)
@@ -98,12 +109,6 @@ describe Run, type: :model do
     assert !static_run.updated?
   end
 
-  it 'saves with good data' do
-    r = FactoryBot.build(:run, @attr)
-    r.load_file(good_data)
-    assert r.save
-  end
-
   it 'requires loaded data to save' do
     r = FactoryBot.build(:run, @attr.merge(measurements: []))
     assert !r.save, 'It should not save without data loaded.'
@@ -112,10 +117,8 @@ describe Run, type: :model do
   it 'requires non empty data to save' do
     r = FactoryBot.build(:run, @attr)
     file_name = Rails.root.join('spec', 'fixtures','files', 'blank.txt')
-    File.open(file_name, 'r') do |f|
-      empty_data = StringIO.new(f.read)
-      r.load_file(empty_data)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert !r.save
     assert_equal r.load_errors, 'Data file is empty.'
     r.destroy
@@ -123,9 +126,10 @@ describe Run, type: :model do
 
   it 'requires a date to save' do
     r = FactoryBot.build(:run, @attr.merge(sample_date: nil))
-    r.load_file(good_data)
+    setup_data_source_for_run(r, good_data)
+    assert r.load_file(good_data)
     assert !r.save
-    r.destroy
+    assert r.destroy
   end
 
   it 'properly loads the data' do
@@ -181,10 +185,8 @@ describe Run, type: :model do
   it 'loads glbrc files' do
     file_name = Rails.root.join('test', 'data', 'GLBRC_deep_core_1106R4R5.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 4))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -193,10 +195,8 @@ describe Run, type: :model do
   it 'loads single element files' do
     file_name = Rails.root.join 'spec', 'fixtures', 'files', '3262012B.TXT'
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 2))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -205,10 +205,8 @@ describe Run, type: :model do
   it 'loads glbrc_resin_strips files' do
     file_name = Rails.root.join('spec', 'fixtures','files', 'new_format_soil_samples_090415.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 5))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1 # We'll have better tests in the parser
     r.destroy
@@ -217,10 +215,8 @@ describe Run, type: :model do
   it 'loads cn files' do
     file_name = Rails.root.join('test', 'data', 'DC01CFR1.csv')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 6))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert_equal r.plot_errors, ''
     assert r.save
     assert r.samples.size > 1
@@ -230,11 +226,9 @@ describe Run, type: :model do
   it 'loads glbrc_cn_deep_core new format files' do
     file_name = Rails.root.join('test', 'data', 'GLBRC_cn.csv')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 9))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-      assert_equal r.plot_errors, ''
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
+    assert_equal r.plot_errors, ''
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -243,10 +237,8 @@ describe Run, type: :model do
   it 'loads new glbrc soil sample files' do
     file_name = Rails.root.join('test', 'data', 'glbrc_soil_sample_new_format.txt')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 8))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      assert r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(s)
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -255,10 +247,8 @@ describe Run, type: :model do
   it 'loads more glbrc soil sample files' do
     file_name = Rails.root.join('test', 'data', '100419L.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 8))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -267,10 +257,8 @@ describe Run, type: :model do
   it 'loads lysimeter files' do
     file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert_equal '', r.plot_errors
     assert r.save
     # TODO: add CF and DF plots to the test database
@@ -281,10 +269,8 @@ describe Run, type: :model do
   it 'loads another lysimeter file' do
     file_name = Rails.root.join('test', 'data', '090615QL.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -293,10 +279,8 @@ describe Run, type: :model do
   it 'loads lysimeter files with negative peaks' do
     file_name = Rails.root.join('test', 'data', '090701QL.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     assert_equal 6, r.samples[0].measurements.size
@@ -306,10 +290,8 @@ describe Run, type: :model do
   it 'loads lysimeter files with a single sample' do
     file_name = Rails.root.join('test', 'data', 'Lysimeter_single_format.TXT')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
-    File.open(file_name, 'r') do |f|
-      s = StringIO.new(f.read)
-      r.load_file(s)
-    end
+    setup_data_source_for_run(r, file_name)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     r.destroy
@@ -319,11 +301,8 @@ describe Run, type: :model do
     it 'deletes measurements' do
       file_name = Rails.root.join('test', 'data', 'new_lysimeter.TXT')
       r = FactoryBot.build(:run, @attr.merge(sample_type_id: 1))
-      File.open(file_name, 'r') do |f|
-        s = StringIO.new(f.read)
-        r.load_file(s)
-        # TODO: add CF and DF plots to the test database
-      end
+      setup_data_source_for_run(r, file_name)
+      assert r.load_file(file_name)
       assert_equal '', r.plot_errors
       assert r.save
       assert r.samples.size > 1 # there are 93 samples but we don't have DF and CF in the test database
