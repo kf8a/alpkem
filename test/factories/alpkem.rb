@@ -30,8 +30,12 @@ FactoryBot.define do
     analyte { FactoryBot.build :analyte }
     amount { 0.5 }
   end
+  factory :run_type do
+    name { 'CN' }
+  end
   factory :run do
     sample_type_id { 1 }
+    run_type_id { FactoryBot.build :run_type }
     factory :run_with_measurements do
       transient do
         measurements_count { 5 }

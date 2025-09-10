@@ -17,7 +17,9 @@ describe Run, type: :model do
   end
 
   before do
+    run_type = FactoryBot.create(:run_type, name: 'CN')
     @attr ||= { sample_type_id: 2,
+                run_type_id: run_type.id,
                 sample_date: Date.today.to_s }
 
     @standard_run = FactoryBot.build(:run, @attr)
