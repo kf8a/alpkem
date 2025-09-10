@@ -12,6 +12,8 @@ describe RunsController, type: :controller do
     @user ||= find_or_factory(:user)
     sign_in @user
 
+    FactoryBot.create(:run_type, name: 'lachat')
+    FactoryBot.create(:run_type, name: 'cn')
     @attr = {
       sample_type_id: 2,
       sample_date: Date.today.to_s
@@ -111,6 +113,7 @@ describe RunsController, type: :controller do
 
   describe 'should create run' do
     before do
+      p @attr
       post :create,
            params: { run: @attr,
                      data: { file: fixture_file_upload('/new_format_soil_samples_090415.TXT') } }
