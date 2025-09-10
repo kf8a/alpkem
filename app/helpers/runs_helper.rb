@@ -1,4 +1,4 @@
-require 'statistics'
+require "#{Rails.root}/app/lib/statistics"
 
 # Helper to display measurements
 module RunsHelper
