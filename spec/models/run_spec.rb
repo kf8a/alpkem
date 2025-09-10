@@ -18,11 +18,7 @@ describe Run, type: :model do
   end
 
   def set_good_data
-    file_name = Rails.root.join('spec', 'fixtures', 'files', 'new_format_soil_samples_090415.TXT')
-    r = FactoryBot.build(:run, @attr)
-    setup_data_source_for_run(r, file_name)
-    r.load_file(file_name)
-    return r
+    Rails.root.join('spec', 'fixtures', 'files', 'new_format_soil_samples_090415.TXT')
   end
 
   before do
@@ -202,15 +198,16 @@ describe Run, type: :model do
     r.destroy
   end
 
-  it 'loads glbrc_resin_strips files' do
-    file_name = Rails.root.join('spec', 'fixtures','files', 'new_format_soil_samples_090415.TXT')
-    r = FactoryBot.build(:run, @attr.merge(sample_type_id: 5))
-    setup_data_source_for_run(r, file_name)
-    assert r.load_file(file_name)
-    assert r.save
-    assert r.samples.size > 1 # We'll have better tests in the parser
-    r.destroy
-  end
+  # We have not used resin strips in 5 years
+  # it 'loads glbrc_resin_strips files' do
+  #   file_name = Rails.root.join('spec', 'fixtures','files', 'new_format_soil_samples_090415.TXT')
+  #   r = FactoryBot.build(:run, @attr.merge(sample_type_id: 5))
+  #   setup_data_source_for_run(r, file_name)
+  #   assert r.load_file(file_name)
+  #   assert r.save
+  #   assert r.samples.size > 1 # We'll have better tests in the parser
+  #   r.destroy
+  # end
 
   it 'loads cn files' do
     file_name = Rails.root.join('test', 'data', 'DC01CFR1.csv')
@@ -238,7 +235,7 @@ describe Run, type: :model do
     file_name = Rails.root.join('test', 'data', 'glbrc_soil_sample_new_format.txt')
     r = FactoryBot.build(:run, @attr.merge(sample_type_id: 8))
     setup_data_source_for_run(r, file_name)
-    assert r.load_file(s)
+    assert r.load_file(file_name)
     assert r.save
     assert r.samples.size > 1
     r.destroy
