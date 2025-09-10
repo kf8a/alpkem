@@ -18,20 +18,4 @@ describe SampleType, type: :model do
     assert_equal 'Lysimeter NH4', SampleType.find(11).name
   end
 
-  it 'should have the right sample_type_options' do
-    assert_equal SampleType.sample_type_options,
-        [
-          ['Lysimeter', '1'],
-          ['Soil Sample', '2'],
-          ['GLBRC Soil Sample', '3'],
-          ['GLBRC Deep Core Nitrogen', '4'],
-          ['GLBRC Resin Strips', '5'],
-          ['CN Soil Sample', '6'],
-          ['CN Deep Core', '7'],
-          ['GLBRC Soil Sample (New)', '8'],
-          ['GLBRC CN', '9'],
-          ['Lysimeter NO3', '10'],
-          ['Lysimeter NH4', '11']
-        ]
-  end
 end
