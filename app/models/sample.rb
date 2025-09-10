@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "statistics"
+require "#{Rails.root}/app/lib/statistics"
 require "workflow"
 
 # This repesents one field sample such as a soil core or a water sample
