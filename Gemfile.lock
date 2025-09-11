@@ -180,6 +180,7 @@ GEM
       mime-types (~> 3.4)
       rack (~> 3.1)
     ffi (1.17.2-arm64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -250,9 +251,12 @@ GEM
     nio4r (2.7.4)
     nokogiri (1.18.9-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.18.9-x86_64-linux-gnu)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     pg (1.6.2-arm64-darwin)
+    pg (1.6.2-x86_64-linux)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -357,6 +361,7 @@ GEM
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     sqlite3 (2.7.3-arm64-darwin)
+    sqlite3 (2.7.3-x86_64-linux-gnu)
     sshkit (1.24.0)
       base64
       logger
@@ -373,6 +378,7 @@ GEM
       railties (>= 7.0.0)
       tailwindcss-ruby (~> 4.0)
     tailwindcss-ruby (4.1.12-arm64-darwin)
+    tailwindcss-ruby (4.1.12-x86_64-linux-gnu)
     thor (1.4.0)
     tidewave (0.3.0)
       fast-mcp (~> 1.5.0)
@@ -407,6 +413,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  x86_64-linux
 
 DEPENDENCIES
   bcrypt_pbkdf
