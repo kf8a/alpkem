@@ -374,11 +374,6 @@ GEM
     syslog (0.3.0)
       logger
     syslog-logger (1.6.8)
-    tailwindcss-rails (4.3.0)
-      railties (>= 7.0.0)
-      tailwindcss-ruby (~> 4.0)
-    tailwindcss-ruby (4.1.12-arm64-darwin)
-    tailwindcss-ruby (4.1.12-x86_64-linux-gnu)
     thor (1.4.0)
     tidewave (0.3.0)
       fast-mcp (~> 1.5.0)
@@ -453,8 +448,6 @@ DEPENDENCIES
   sqlite3
   syslog
   syslog-logger
-  tailwindcss-rails (~> 4.3)
-  tailwindcss-ruby (~> 4.1)
   tidewave
   turbolinks
   web-console

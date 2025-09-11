@@ -83,7 +83,3 @@ end
 group :production do
   gem 'puma'
 end
-
-gem "tailwindcss-ruby", "~> 4.1"
-
-gem "tailwindcss-rails", "~> 4.3"
