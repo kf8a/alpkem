@@ -28,8 +28,6 @@ gem 'chronic' # parsing dates
 gem 'workflow-activerecord',  '~> 6.0'
 
 gem 'jquery-rails'
-# gem 'jquery-ui-rails'
-# gem 'rails-ujs'
 
 # Gets rid of annoying UTF-8 string error in rack
 gem 'escape_utils'
@@ -65,7 +63,7 @@ group :development do
   gem 'capistrano-asdf'
   gem "tidewave"
   # gem 'capistrano3-unicorn'
-  gem 'capistrano3-puma',  github: "seuros/capistrano-puma"
+  gem 'capistrano3-puma' #,  github: "seuros/capistrano-puma"
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'ed25519'
@@ -85,3 +83,7 @@ end
 group :production do
   gem 'puma'
 end
+
+gem "tailwindcss-ruby", "~> 4.1"
+
+gem "tailwindcss-rails", "~> 4.3"
