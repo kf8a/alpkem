@@ -10,14 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_10_160758) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_10_160758) do
   create_schema "aglog"
   create_schema "alpkem"
   create_schema "ants"
   create_schema "aquatic"
   create_schema "area_description"
   create_schema "bonnie"
+  create_schema "cle"
   create_schema "data"
+  create_schema "deepcore"
+  create_schema "dsfas"
   create_schema "enviro_weather"
   create_schema "gis"
   create_schema "glbrc"
@@ -88,6 +91,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_10_160758) do
   create_schema "ltar"
   create_schema "lter"
   create_schema "lter_roots"
+  create_schema "mdard_climate_resilience"
   create_schema "metadata"
   create_schema "micos_remote"
   create_schema "modeling"
@@ -110,17 +114,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_10_160758) do
   create_schema "weather"
   create_schema "webgas"
   create_schema "yield_monitor"
+  create_schema "zentra"
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "btree_gist"
-  enable_extension "fuzzystrmatch"
-  enable_extension "pgcrypto"
-  enable_extension "plpgsql"
-  enable_extension "postgis"
-  enable_extension "postgis_raster"
-  enable_extension "postgis_topology"
-  enable_extension "postgres_fdw"
-  enable_extension "uuid-ossp"
+  enable_extension "pg_catalog.plpgsql"
+  enable_extension "public.btree_gist"
+  enable_extension "public.citext"
+  enable_extension "public.fuzzystrmatch"
+  enable_extension "public.pgcrypto"
+  enable_extension "public.postgis"
+  enable_extension "public.postgis_raster"
+  enable_extension "public.postgres_fdw"
+  enable_extension "public.uuid-ossp"
+  enable_extension "topology.postgis_topology"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -213,8 +219,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_10_160758) do
     t.integer "replicate_id"
     t.text "species_code"
     t.text "fraction"
-    t.float "top_depth"
-    t.float "bottom_depth"
+    t.float "top_depth", limit: 24
+    t.float "bottom_depth", limit: 24
     t.integer "station_id"
     t.text "sub_plot"
     t.text "treatment_name"
