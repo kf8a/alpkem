@@ -22,6 +22,60 @@ describe Parsers::LachatStandardLineParser do
     end
   end
 
+  describe 'a ltar soil line' do
+    before do
+      @first, @second, @nh4, @no3, @date, @depth = Parsers::LachatStandardLineParser.parse('20240101-ASP1R4-main-25-c,Unknown,1,1,140,1,1,,,,10/29/2014,1:24:37 PM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.324,,mg/L,0.807,0.0758,Conc = 0.656 * Area - 0.205,47.5,35,0.324,0.324,0.324,2,Nitrate-Nitrite,0.0921,,mg N/L,0.267,0.0212,Conc = 0.464 * Area - 0.0319,46,34,0.0921,0.0921,0.0921')
+    end
+
+    it 'has the correct date' do
+      expect(@date).to   eq(Date.new(2024,1,1))
+    end
+    it 'has the correct treatment' do
+      expect(@first).to  eq('ASP1')
+    end
+    it 'has the correct replicate' do
+      expect(@second).to eq('4')
+    end
+
+    it 'has_the_correct_depth' do
+      expect(@depth).to eq('25')
+    end
+
+    it 'has the correct ammonium' do
+      expect(@nh4).to    eq(0.324)
+    end
+    it 'has the correct nitrate' do
+      expect(@no3).to    eq(0.0921)
+    end
+  end
+
+  describe 'an ltar soil line without -main-' do
+    before do
+      @first, @second, @nh4, @no3, @date, @depth = Parsers::LachatStandardLineParser.parse('20240101-ASP1R4-25-c,Unknown,1,1,140,1,1,,,,10/29/2014,1:24:37 PM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.324,,mg/L,0.807,0.0758,Conc = 0.656 * Area - 0.205,47.5,35,0.324,0.324,0.324,2,Nitrate-Nitrite,0.0921,,mg N/L,0.267,0.0212,Conc = 0.464 * Area - 0.0319,46,34,0.0921,0.0921,0.0922')
+    end
+
+    it 'has the correct date' do
+      expect(@date).to   eq(Date.new(2024,1,1))
+    end
+    it 'has the correct treatment' do
+      expect(@first).to  eq('ASP1')
+    end
+    it 'has the correct replicate' do
+      expect(@second).to eq('4')
+    end
+
+    it 'has the correct depth' do
+      expect(@depth).to eq('25')
+    end
+
+    it 'has the correct ammonium' do
+      expect(@nh4).to    eq(0.324)
+    end
+    it 'has the correct nitrate' do
+      expect(@no3).to    eq(0.0921)
+    end
+  end
+
   describe 'a forest line' do
     before do
       @first, @second, @nh4, @no3, @date = Parsers::LachatStandardLineParser.parse( "20130604TCFR1-25-b,Unknown,1,1,140,1,1,,,,10/29/2014,1:24:37 PM,mcca,OM_10-29-2014_11-26-19AM.OMN,,1,Ammonia,0.324,,mg/L,0.807,0.0758,Conc = 0.656 * Area - 0.205,47.5,35,0.324,0.324,0.324,2,Nitrate-Nitrite,0.0921,,mg N/L,0.267,0.0212,Conc = 0.464 * Area - 0.0319,46,34,0.0921,0.0921,0.0921")

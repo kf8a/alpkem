@@ -14,7 +14,8 @@ module Parsers
       return nil if data[0] =~ /blank/i
       return nil if data[0] =~ /BLK/i
 
-      result = /([A-Z]{3})?-?(\d{8})-?(\w+)R(\d).-?(\d+)?/.match(data.first)
+
+      result = /([A-Z]{3})?-?(\d{8})-?(\w+)R(\d)(?:-main|)-?(\d+)?/.match(data.first)
       raise "unparsable name #{data.first}" unless result
 
       raw_date = result[2]
