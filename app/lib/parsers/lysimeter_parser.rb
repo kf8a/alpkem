@@ -23,7 +23,15 @@ module Parsers
     end
 
     def locate_plot(first, second, third)
-      plot_name = "T#{first}R#{second}F#{third}"
+      # If the samples are from the LTAR then do not append T to it
+      # we should also prepend T for LTER samples in the data instead of here
+      plot_name = if first.start_with?("ASP") or first.start_with?("BAU")
+                    "#{first}R#{second}F#{third}"
+                  elsif first.start_with?('T')
+                    "#{first}R#{second}F#{third}"
+                  else
+                    "T#{first}R#{second}F#{third}"
+                  end
       find_plot(plot_name) unless plot.try(:name) == plot_name
     end
 
