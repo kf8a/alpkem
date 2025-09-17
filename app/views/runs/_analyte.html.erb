@@ -9,15 +9,22 @@
       <% number = number_with_precision(measurement.amount,:precision => 4) %>
       <tr>
         <td>
-          <% if sample.approved? %>
-            <span class="deleted-<%=measurement.deleted?%>"><%= number %></span>
+          <% if measurement.deleted? %>
+            <%= link_to "#{number}",
+                 {:controller => 'measurements',
+                  :action => 'destroy',
+                  :id => measurement.id,
+                  :run_id => @run.id},
+                 :class => "line-through hover:cursor-pointer",
+                 :data => {:turbo_method => :delete, :turbo => true},
+                 :format => :turbo_stream %>
           <% else %>
             <%= link_to "#{number}",
                  {:controller => 'measurements',
                   :action => 'destroy',
                   :id => measurement.id,
                   :run_id => @run.id},
-                 :class => "deleted-#{measurement.deleted?}",
+                  class: "hover:cursor-pointer",
                  :data => {:turbo_method => :delete, :turbo => true},
                  :format => :turbo_stream %>
           <% end %>

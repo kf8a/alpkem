@@ -5,12 +5,12 @@
 
   <%= javascript_importmap_tags %>
 
-  <%= stylesheet_link_tag :application %>
+  <%= stylesheet_link_tag :application, :tailwind %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default bg-blue-500 text-white p-4">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
       <span class="sr-only">Toggle navigation</span>
@@ -18,7 +18,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="/">Alpkem</a>
+    <a class="navbar-brand text-xl font-bold" href="/">Alpkem</a>
   </div>
   <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
@@ -34,7 +34,7 @@
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
-<div class="container">
+<div class="container mx-auto px-4 py-8">
   <%= yield %>
 </div>
 

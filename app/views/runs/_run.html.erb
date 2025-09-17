@@ -1,14 +1,18 @@
-<tr class="updated_<%=run.updated?%> <%=cycle('even','odd')%> completed_<%=run.complete?%>">
-  <td><%=link_to run.id, run_path(run) %></td>
-<td><%= run.run_date %></td>
-<td><%= run.sample_date %></td>
-<td><%= run.sample_date_range %></td>
-<td><%= run.sample_type_name %></td>
-<td><%= run.approved_samples %>/<%= run.samples.size %> samples</td>
-<td><%= link_to "qc", qc_run_path(run) %></td>
-<td><%= link_to "download", run_path(run, :format=>:csv) %>
-<td><%= link_to "edit", edit_run_path(run) %>
-<td><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
-<td><%= run.comment %></td>
-<td><%= run.data_sources.collect {|x| File.basename(x.data.to_s)}.join(',') %></td>
+<% if run.complete? %>
+<tr class="even:bg-gray-100 odd:bg-white">
+<% else%>
+<tr class="bg-red-500">
+  <% end %>
+  <td class="text-center p-2"><%=link_to run.id, run_path(run) %></td>
+<td class="text-center p-2"><%= run.run_date %></td>
+<td class="text-center p-2"><%= run.sample_date %></td>
+<td class="text-center p-2"><%= run.sample_date_range %></td>
+<td class="text-center p-2"><%= run.sample_type_name %></td>
+<td class="text-center p-2"><%= run.approved_samples %>/<%= run.samples.size %> samples</td>
+<td class="text-center p-2"><%= link_to "qc", qc_run_path(run) %></td>
+<td class="text-center p-2"><%= link_to "download", run_path(run, :format=>:csv) %>
+<td class="text-center p-2"><%= link_to "edit", edit_run_path(run) %>
+<td class="text-center p-2"><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
+<td class="text-center p-2"><%= run.comment %></td>
+<td class="text-center p-2"><%= run.data_sources.collect {|x| File.basename(x.data.to_s)}.join(',') %></td>
 </tr>
