@@ -1,22 +1,57 @@
-<p>
-	Run Date: <%= @run.run_date %>
-</p>
-<p>
-	Sample Date: <%= @run.sample_date %>
-</p>
-<p>
-	Sample Type: <%= @run.sample_type_name %>
-</p>
-<p>
-  Number of Samples: <%= @run.samples.size %>
-</p>
-<p>
-Files: 
-<% @run.data_sources.each do |file| %>
-  <%= link_to file.data.url, file.data.url %>
-<% end %>
-</p>
-<%= link_to 'back', @back %> 
-<%= link_to "qc", qc_run_path(@run) %> 
-<%= link_to "edit", edit_run_path(@run) %> 
-<%= link_to 'destroy', run_path(@run), :confirm => 'Are you sure?', :method => :delete %>
+<div class="max-w-7xl mx-auto p-6">
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-3xl font-bold text-gray-900">Run Details</h1>
+      <div class="flex items-center space-x-4">
+        <%= link_to '← Back', @back, class: "bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors" %>
+      </div>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Run Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Run Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @run.run_date %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Sample Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @run.sample_date %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Sample Type</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @run.sample_type_name %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Number of Samples</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              <%= @run.samples.size %> samples
+            </span>
+          </dd>
+        </div>
+      </div>
+      
+      <div class="mt-6">
+        <dt class="text-sm font-medium text-gray-500 mb-2">Files</dt>
+        <dd class="text-sm text-gray-900">
+          <div class="space-y-1">
+            <% @run.data_sources.each do |file| %>
+              <%= link_to File.basename(file.data.to_s), file.data.url, class: "text-blue-600 hover:text-blue-800 hover:underline block" %>
+            <% end %>
+          </div>
+        </dd>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-xl font-semibold text-gray-900 mb-4">Actions</h2>
+    <div class="flex flex-wrap gap-4">
+      <%= link_to "Quality Control", qc_run_path(@run), class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors" %>
+      <%= link_to "Edit Run", edit_run_path(@run), class: "bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors" %>
+      <%= link_to "Download CSV", run_path(@run, :format => :csv), class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors" %>
+      <%= link_to "Delete Run", run_path(@run), :confirm => 'Are you sure?', :method => :delete, class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors" %>
+    </div>
+  </div>
+</div>

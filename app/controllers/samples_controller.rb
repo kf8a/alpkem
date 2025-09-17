@@ -36,7 +36,7 @@ class SamplesController < ApplicationController
     end
     @dom_id = 'sample-' + @sample.id.to_s
     respond_to do |format|
-      format.js
+      format.turbo_stream
     end
   end
 

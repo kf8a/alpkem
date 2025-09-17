@@ -1,14 +1,39 @@
-<tr id="sample-<%=sample.id%>">
-  <td><%= raw(sample.measurements.collect {|x| link_to x.run.id, qc_run_path(x.run.id)}.uniq().join(' ')) %></td>
-  <td><%= sample.sample_date %></td>
-  <td><%= sample.plot.study.try(:name) %></td>
-  <td><%= sample.sample_type.try(:name)%></td>
-  <td><%= sample.plot_name %></td>
-  <% sample.analytes.all.uniq.sort.each do |analyte| %>
-    <td><%= analyte.name %>: </td>
-    <td><%= number_with_precision(sample.average(analyte), precision: 3) %></td>
-    <td>
-        <%= button_to "Toggle", {class: 'btn btn default', action: 'toggle', id: sample.id, analyte: analyte.name }, {:remote => true} %>
-    </td>
-  <% end %>
+<tr class="hover:bg-gray-50 transition-colors" id="sample-<%=sample.id%>">
+  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    <%= raw(sample.measurements.collect {|x| link_to x.run.id, qc_run_path(x.run.id), class: "text-blue-600 hover:text-blue-800 hover:underline"}.uniq().join(' ')) %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= sample.sample_date %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= sample.plot.study.try(:name) %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= sample.sample_type.try(:name) %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= sample.plot_name %>
+  </td>
+  <td class="px-6 py-4 text-sm text-gray-900">
+    <div class="space-y-2">
+      <% sample.analytes.all.uniq.sort.each do |analyte| %>
+        <div class="flex items-center justify-between bg-gray-50 rounded-md p-2">
+          <span class="font-medium text-gray-700"><%= analyte.name %>:</span>
+          <span class="text-gray-900 font-mono">
+            <%= number_with_precision(sample.average(analyte), precision: 3) %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-center">
+    <div class="space-y-1">
+      <% sample.analytes.all.uniq.sort.each do |analyte| %>
+        <%= button_to "Toggle", 
+            {action: 'toggle', id: sample.id, analyte: analyte.name}, 
+            {class: 'bg-yellow-600 text-white px-2 py-1 rounded text-xs hover:bg-yellow-700 transition-colors', 
+             :data => {:turbo_method => :post}, :format => :turbo_stream} %>
+      <% end %>
+    </div>
+  </td>
 </tr>

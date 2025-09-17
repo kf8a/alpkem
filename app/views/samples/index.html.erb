@@ -1,26 +1,40 @@
-<%= paginate @samples%>
+<div class="max-w-7xl mx-auto p-6">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Samples</h1>
+    
+    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Search Samples</h2>
+      <%= form_tag("/samples/search", method: "get", class: "flex gap-4") do %>
+        <%= text_field_tag(:q, @q, {placeholder: "Search for Plots", class: "flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"}) %>
+        <%= submit_tag("Search", {class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors", data: { disable_with: "Please wait..." } }) %>
+      <% end %>
+    </div>
+  </div>
 
-<%= form_tag("/samples/search", method: "get", html: {class: "form"}) do %>
-    <%= text_field_tag(:q, @q , {placeholder: "Search for Plots", class: "form-control"}) %>
-    <%= submit_tag("Search", {class: "btn btn-primary", data: { disable_with: "Please wait..." } }) %>
-<% end %>
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Run ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Experiment</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sample Type</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plot</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Analytes & Concentrations</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @samples.each do |sample| %>
+            <%= render partial: sample, locals: {sample: sample}%>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<table class='table table-striped table-hover'>
-  <tr>
-    <th>RunID</th>
-    <th>Date</th>
-    <th>Experiment</th>
-    <th>Sample Type</th>
-    <th>Plot</th>
-    <th>Compound</th>
-    <th>Conc.</th>
-    <th></th>
-    <th>Compound</th>
-    <th>Conc.</th>
-  </tr>
-  <% @samples.each do |sample| %>
-    <%= render partial: sample, locals: {sample: sample}%>
-  <% end %>
-</table>
-
-<%= paginate @samples%>
+  <div class="mt-8 flex justify-center">
+    <%= paginate @samples %>
+  </div>
+</div>
