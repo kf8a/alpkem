@@ -10,7 +10,7 @@ class MeasurementsController < ApplicationController
 
     @measurements = @run.measurements
     respond_to do |format|
-      format.js
+      format.turbo_stream
     end
   end
 end

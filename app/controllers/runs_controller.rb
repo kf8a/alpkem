@@ -99,7 +99,7 @@ class RunsController < ApplicationController
     @analytes   = @run.analytes
 
     respond_to do |format|
-      format.js
+      format.turbo_stream
       format.html { render nothing: true }
       format.xml { head :ok }
     end

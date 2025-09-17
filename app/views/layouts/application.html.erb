@@ -2,15 +2,11 @@
 <html>
 <head>
   <title><%= controller_name.humanize.titleize %>: <%= controller.action_name %></title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
 
-  <%= javascript_include_tag :application %>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  <%= javascript_importmap_tags %>
 
   <%= stylesheet_link_tag :application %>
   <%= csrf_meta_tag %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 <body>
 
@@ -39,7 +35,7 @@
 <p class="alert"><%= alert %></p>
 
 <div class="container">
-<%= yield  %>
+  <%= yield %>
 </div>
 
 <%= debug(params) if Rails.env.development? %>

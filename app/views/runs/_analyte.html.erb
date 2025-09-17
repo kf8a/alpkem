@@ -17,9 +17,9 @@
                   :action => 'destroy',
                   :id => measurement.id,
                   :run_id => @run.id},
-                 :method => 'delete',
                  :class => "deleted-#{measurement.deleted?}",
-                :remote => true %>
+                 :data => {:turbo_method => :delete, :turbo => true},
+                 :format => :turbo_stream %>
           <% end %>
         </td>
       </tr>

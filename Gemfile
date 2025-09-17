@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~>8.0'
-gem 'sassc-rails'
+#gem 'sassc-rails'
 
 # Bundle authentication
 gem 'devise'
@@ -27,7 +27,7 @@ gem 'chronic' # parsing dates
 
 gem 'workflow-activerecord',  '~> 6.0'
 
-gem 'jquery-rails'
+# gem 'jquery-rails'
 
 # Gets rid of annoying UTF-8 string error in rack
 gem 'escape_utils'
@@ -40,12 +40,12 @@ gem 'syslog-logger'
 
 gem 'kaminari'
 
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
-gem 'jsbundling-rails'
+gem 'importmap-rails'
+gem 'cssbundling-rails'
 
 
 # Bundle gems for the local environment. Make sure to
@@ -83,3 +83,7 @@ end
 group :production do
   gem 'puma'
 end
+
+gem "propshaft", "~> 1.2"
+
+# gem "importmap-rails", "~> 2.2"
