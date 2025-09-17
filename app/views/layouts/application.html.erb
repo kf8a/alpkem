@@ -4,8 +4,7 @@
   <title><%= controller_name.humanize.titleize %>: <%= controller.action_name %></title>
 
   <%= javascript_importmap_tags %>
-
-  <%= stylesheet_link_tag :application, :tailwind %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
