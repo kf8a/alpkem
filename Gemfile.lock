@@ -112,8 +112,6 @@ GEM
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
     crass (1.0.6)
-    cssbundling-rails (1.4.3)
-      railties (>= 6.0.0)
     csv (3.3.5)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
@@ -414,7 +412,6 @@ DEPENDENCIES
   carrierwave
   chronic
   concurrent-ruby
-  cssbundling-rails
   csv
   database_cleaner
   devise
