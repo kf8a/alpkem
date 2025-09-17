@@ -45,7 +45,6 @@ gem 'turbo-rails'
 gem 'jbuilder'
 
 gem 'importmap-rails'
-gem 'cssbundling-rails'
 
 
 # Bundle gems for the local environment. Make sure to
