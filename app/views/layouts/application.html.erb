@@ -10,26 +10,16 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-default bg-blue-500 text-white p-4">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand text-xl font-bold" href="/">Alpkem</a>
-  </div>
-  <div class="collapse navbar-collapse">
-    <ul class="nav navbar-nav">
-        <li><%= link_to 'Samples', samples_path %></li>
+  <nav class="bg-blue-500 text-white p-2 flex justify-between items-center">
+    <a class="text-xl font-bold" href="/">Alpkem</a>
+    <ul class="nav navbar-nav flex gap-2">
+        <li class="mr-2"><%= link_to 'Samples', samples_path %></li>
       <% if user_signed_in? %>
         <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
       <% else %>
         <li><%= link_to 'Sign In', new_user_session_path  %></li>
       <% end %>
     </ul>
-  </div>
   </nav>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>

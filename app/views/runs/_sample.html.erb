@@ -1,17 +1,36 @@
-<tr class="p-4 even:bg-gray-100 odd:bg-white" id="sample-<%=sample.id%>">
-  <td class="text-center p-2"><%= sample.id %></td>
-  <td class="text-center p-2"><%= sample.plot_name %></td>
-  <td class="text-center p-2"><%= sample.sample_date %></td>
-  <%= render :partial => 'analyte', :collection => @analytes, :locals => {:sample => sample}%>
-  <% notword = ("" if sample.approved?) || "not" %>
-
-  <% if sample.approved? %>
-  <td class="bg-yellow-300">Sample is <%= notword %> approved!<br />
-  <% else %>
-    <td class="">Sample is <%= notword %> approved!<br />
-  <% end %>
-    <%= button_to "Toggle approval", {:action => 'approve', :id => sample.id, :run_id => @run.id}, {class: "bg-blue-500 text-white p-2 rounded-md hover:cursor-pointer", :data => {:turbo_method => :post}, :format => :turbo_stream} %>
+<% if sample.approved? %>
+<tr class="hover:bg-gray-50 transition-colors" id="sample-<%=sample.id%>">
+<% else %>
+<tr class="bg-red-50 hover:bg-red-100 transition-colors border-l-4 border-red-400" id="sample-<%=sample.id%>">
+<% end %>
+  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    <%= sample.id %>
   </td>
-  <td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= sample.plot_name %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= sample.sample_date %>
+  </td>
+  <%= render :partial => 'analyte', :collection => @analytes, :locals => {:sample => sample}%>
+  
+  <td class="px-6 py-4 whitespace-nowrap text-center">
+    <% notword = ("" if sample.approved?) || "not" %>
+    <% if sample.approved? %>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+        ✓ Approved
+      </span>
+    <% else %>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+        ✗ Not Approved
+      </span>
+    <% end %>
+  </td>
+  
+  <td class="px-6 py-4 whitespace-nowrap text-center">
+    <%= button_to "Toggle Approval", 
+        {:action => 'approve', :id => sample.id, :run_id => @run.id}, 
+        {class: "bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 transition-colors", 
+         :data => {:turbo_method => :post}, :format => :turbo_stream} %>
   </td>
 </tr>

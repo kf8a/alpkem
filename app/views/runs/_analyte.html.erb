@@ -2,20 +2,20 @@
 <% stat_measurements = relevant_measurements.collect {|measurement| measurement if measurement.deleted == false}.compact %>
 <% cv = RunsHelper.cv_help(stat_measurements) %>
 
-<td class="cv-high-<%= cv > 10 || cv < 0 %>"  id="sample-<%= sample.id %>-<%= analyte.id %>">
-  <table>
-
-    <% relevant_measurements.each do |measurement| %>
-      <% number = number_with_precision(measurement.amount,:precision => 4) %>
-      <tr>
-        <td>
+<td class="px-6 py-4 text-center" id="sample-<%= sample.id %>-<%= analyte.id %>">
+  <div class="space-y-2">
+    <!-- Measurements -->
+    <div class="space-y-1">
+      <% relevant_measurements.each do |measurement| %>
+        <% number = number_with_precision(measurement.amount,:precision => 4) %>
+        <div>
           <% if measurement.deleted? %>
             <%= link_to "#{number}",
                  {:controller => 'measurements',
                   :action => 'destroy',
                   :id => measurement.id,
                   :run_id => @run.id},
-                 :class => "line-through hover:cursor-pointer",
+                 :class => "line-through text-gray-400 hover:text-gray-600 hover:cursor-pointer text-sm",
                  :data => {:turbo_method => :delete, :turbo => true},
                  :format => :turbo_stream %>
           <% else %>
@@ -24,20 +24,26 @@
                   :action => 'destroy',
                   :id => measurement.id,
                   :run_id => @run.id},
-                  class: "hover:cursor-pointer",
+                  class: "text-gray-900 hover:text-blue-600 hover:cursor-pointer text-sm font-medium",
                  :data => {:turbo_method => :delete, :turbo => true},
                  :format => :turbo_stream %>
           <% end %>
-        </td>
-      </tr>
-    <% end %>
-    <tr>
-      <td>Mean:</td>
-      <td><%= number_with_precision(RunsHelper.average(stat_measurements), :precision => 4) %></td>
-    </tr>
-    <tr>
-      <td>CV:</td>
-      <td><%= number_with_precision(RunsHelper.cv_help(stat_measurements), :precision=>4) %></td>
-    </tr>
-  </table>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Statistics -->
+    <div class="border-t pt-2 mt-2 space-y-1 text-xs">
+      <div class="flex justify-between">
+        <span class="text-gray-500">Mean:</span>
+        <span class="font-medium"><%= number_with_precision(RunsHelper.average(stat_measurements), :precision => 4) %></span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">CV:</span>
+        <span class="font-medium <%= cv > 10 || cv < 0 ? 'text-red-600 bg-red-100 px-1 rounded' : 'text-gray-900' %>">
+          <%= number_with_precision(RunsHelper.cv_help(stat_measurements), :precision=>4) %>%
+        </span>
+      </div>
+    </div>
+  </div>
 </td>

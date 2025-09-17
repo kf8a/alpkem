@@ -1,18 +1,40 @@
 <% if run.complete? %>
-<tr class="even:bg-gray-100 odd:bg-white">
-<% else%>
-<tr class="bg-red-500">
-  <% end %>
-  <td class="text-center p-2"><%=link_to run.id, run_path(run) %></td>
-<td class="text-center p-2"><%= run.run_date %></td>
-<td class="text-center p-2"><%= run.sample_date %></td>
-<td class="text-center p-2"><%= run.sample_date_range %></td>
-<td class="text-center p-2"><%= run.sample_type_name %></td>
-<td class="text-center p-2"><%= run.approved_samples %>/<%= run.samples.size %> samples</td>
-<td class="text-center p-2"><%= link_to "qc", qc_run_path(run) %></td>
-<td class="text-center p-2"><%= link_to "download", run_path(run, :format=>:csv) %>
-<td class="text-center p-2"><%= link_to "edit", edit_run_path(run) %>
-<td class="text-center p-2"><%= link_to 'destroy', run_path(run), :confirm => 'Are you sure?', :method => :delete %></td>
-<td class="text-center p-2"><%= run.comment %></td>
-<td class="text-center p-2"><%= run.data_sources.collect {|x| File.basename(x.data.to_s)}.join(',') %></td>
+<tr class="hover:bg-gray-50 transition-colors">
+<% else %>
+<tr class="bg-red-100 hover:bg-red-200 transition-colors">
+<% end %>
+  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    <%= link_to run.id, run_path(run), class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= run.run_date %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= run.sample_date %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= run.sample_date_range %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <%= run.sample_type_name %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+      <%= run.approved_samples %>/<%= run.samples.size %> samples
+    </span>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+    <div class="flex space-x-2">
+      <%= link_to "QC", qc_run_path(run), class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+      <%= link_to "Download", run_path(run, :format=>:csv), class: "text-green-600 hover:text-green-800 hover:underline" %>
+      <%= link_to "Edit", edit_run_path(run), class: "text-yellow-600 hover:text-yellow-800 hover:underline" %>
+      <%= link_to "Delete", run_path(run), :confirm => 'Are you sure?', :method => :delete, class: "text-red-600 hover:text-red-800 hover:underline" %>
+    </div>
+  </td>
+  <td class="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
+    <%= run.comment %>
+  </td>
+  <td class="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">
+    <%= run.data_sources.collect {|x| File.basename(x.data.to_s)}.join(', ') %>
+  </td>
 </tr>

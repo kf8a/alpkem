@@ -1,31 +1,41 @@
-<h1>Runs</h1>
-<%= link_to "new", new_run_path %>
-<%= link_to "CN runs", runs_path(:type => 'cn') %>
-<%= link_to "Studies and Plots", studies_path %>
-<table class='table-auto border-collapse border-gray-300 border-spacing-4'>
-  <tr>
-    <th>id</th>
-    <th>Run Date</th>
-    <th>Sample Date</th>
-    <th>Sample Date Range</th>
-    <th>Name</th>
-    <th>Approved/Size</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th>Comment</th>
-    <th>Files</th>
-  </tr>
+<div class="max-w-7xl mx-auto p-6">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Runs</h1>
+    <div class="flex flex-wrap gap-4 mb-6">
+      <%= link_to "New Run", new_run_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors" %>
+      <%= link_to "CN Runs", runs_path(:type => 'cn'), class: "bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors" %>
+      <%= link_to "Studies and Plots", studies_path, class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors" %>
+    </div>
+  </div>
 
-  <% @runs.each do |run| %>
-    <% cache run do %>
-      <%= render run %>
-    <% end %>
-  <% end %>
-</table>
-<%= paginate @runs %>
-<br/>
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Run Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sample Date</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Range</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Approved/Size</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Files</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @runs.each do |run| %>
+            <% cache run do %>
+              <%= render run %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<%= link_to "new", new_run_path %>
-<%= link_to "Studies and Plots", studies_path %>
+  <div class="mt-8 flex justify-center">
+    <%= paginate @runs %>
+  </div>
+</div>

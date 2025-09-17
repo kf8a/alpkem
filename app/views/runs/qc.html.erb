@@ -1,38 +1,61 @@
-<div class='container'>
-<h1>qc</h1><span id='spinner' style="display:none"><img src='/images/spinner.gif'/></span>
+<div class="max-w-7xl mx-auto p-6">
+  <div class="mb-8">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-3xl font-bold text-gray-900">Quality Control</h1>
+      <div class="flex items-center space-x-4">
+        <span id='spinner' class="hidden">
+          <img src='/images/spinner.gif' class="w-6 h-6" alt="Loading..." />
+        </span>
+        <%= link_to '← Back to Runs', runs_url, class: "bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors" %>
+      </div>
+    </div>
 
-<p>
-<%= link_to 'back', runs_url %>
-</p>
+    <div class="bg-white shadow-lg rounded-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Run Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Run Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @run.run_date %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Sample Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @run.sample_date %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Sample Type</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @run.sample_type_name %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Files</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <% @run.data_sources.each do |file| %>
+              <%= link_to File.basename(file.data.to_s), file.data.url, class: "text-blue-600 hover:text-blue-800 hover:underline block" %>
+            <% end %>
+          </dd>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>
-  Run Date: <%= @run.run_date %>
-</p>
-<p>
-  Sample Date: <%= @run.sample_date %>
-</p>
-<p>
-  Sample Type: <%= @run.sample_type_name %>
-</p>
-<p>
-Files: 
-<% @run.data_sources.each do |file| %>
-  <%= link_to file.data.url, file.data.url %>
-<% end %>
-</p>
-<table class='table-fixed'>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Plot</th>
-      <th>Date</th>
-      <% @analytes.each do |analyte| %>
-        <th rowspan='2'><%= analyte.name %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render :partial => 'sample', :collection => @samples %>
-  </tbody>
-</table>
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plot</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+            <% @analytes.each do |analyte| %>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"><%= analyte.name %></th>
+            <% end %>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <%= render :partial => 'sample', :collection => @samples %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
