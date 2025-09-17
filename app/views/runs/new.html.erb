@@ -1,33 +1,85 @@
-<h1>New Run</h1>
+<div class="max-w-4xl mx-auto p-6">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">New Run</h1>
+    <p class="text-gray-600">Create a new data run for analysis</p>
+  </div>
 
-<%= form_for(:run, :url => runs_path, :html => {role: "form", class: "form", multipart: true}) do |f| %>
-  <%= render "shared/error_messages", :target => @run %>
-  <div class="form-group">
-    <%= f.label :comment, "Comment" , class: "control-label"%>
-    <%= f.text_area :comment, class: "form-control" , rows: 3 %>
+  <div class="bg-white shadow-lg rounded-lg p-8">
+    <%= form_for(:run, :url => runs_path, :html => {role: "form", class: "space-y-6", multipart: true}) do |f| %>
+      <%= render "shared/error_messages", :target => @run %>
+      
+      <div class="space-y-4">
+        <div>
+          <%= f.label :comment, "Comment", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= f.text_area :comment, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none", rows: 3, placeholder: "Enter any additional comments about this run..." %>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <%= f.label :sample_date, "Sample Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <p class="text-xs text-gray-500 mb-2">For incubations, this is the day the bag is collected</p>
+            <%= f.date_field :sample_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+          </div>
+
+          <div>
+            <%= f.label :run_date, "Run Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.date_field :run_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+          </div>
+        </div>
+
+        <div class="border-t pt-6">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Incubation Details</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <%= f.label :start_date, "Start Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <p class="text-xs text-gray-500 mb-2">Date the sample is buried or incubation is started</p>
+              <%= f.date_field :start_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+            </div>
+
+            <div>
+              <%= f.label :initial_sample_date, "Initial Sample Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <p class="text-xs text-gray-500 mb-2">Date the sample is removed from the field</p>
+              <%= f.date_field :initial_sample_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <%= f.label :sample_type_id, "Sample Type", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.select :sample_type_id, options_for_select(SampleType.sample_type_options), {}, {class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"} %>
+          </div>
+
+          <div>
+            <%= f.label :data, "Data File", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-gray-400 transition-colors">
+              <div class="space-y-1 text-center">
+                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="flex text-sm text-gray-600">
+                  <%= file_field :data, :file, class: "sr-only", id: "file-upload" %>
+                  <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                    <span>Upload a file</span>
+                  </label>
+                  <p class="pl-1">or drag and drop</p>
+                </div>
+                <p class="text-xs text-gray-500">CSV, Excel, or other data files</p>
+              </div>
+            </div>
+            <% if flash[:file_error] %>
+              <div class="mt-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
+                <%= flash[:file_error] %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4 pt-6 border-t">
+        <%= link_to "Cancel", runs_path, class: "px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+        <%= submit_tag "Upload Run", class: "px-6 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors", disable_with: "Uploading..." %>
+      </div>
+    <% end %>
   </div>
-  <div class="form-group">
-    <%= f.label :sample_date, "Sample Date (for incubations, this is the day the bag is collected)", class: "control-label" %>
-    <%= f.date_select :sample_date,  {:include_blank => true}%>
-  </div>
-  <div class="form-group">
-    <%= f.label :start_date, "Start Date (for incubations only, this is the date the sample is buried or the incubation is started)", class: "control-label" %>
-    <%= f.date_select :start_date,  {:include_blank => true} %>
-    <%= f.label :initial_sample_date, "Initial Sample Date (for incubations only, this is the date the sample is removed from the field (the initial sample)' )", class: "control-label" %>
-    <%= f.date_select :initial_sample_date,  {:include_blank => true}  %>
-  </div>
-  <div class="form-group">
-    <%= f.label :run_date, "Run Date", class: "control-label" %>
-    <%= f.date_select :run_date,  {:include_blank => true} %>
-  </div>
-  <div class="form-group">
-    <%= f.label :sample_type_id, "Sample Type", class: "control-label" %>
-    <%= f.select :sample_type_id, options_for_select(SampleType.sample_type_options), class: "btn form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :data, "File"%>
-    <%= file_field :data, :file%>
-    <div class="run_errors"><%= flash[:file_error] %></div>
-  </div>
-  <%= submit_tag "Upload", class: "btn btn-default", disable_with: "Uploading..."  %>
-<% end %>
+</div>
