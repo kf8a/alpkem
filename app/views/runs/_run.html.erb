@@ -28,7 +28,9 @@
       <%= link_to "QC", qc_run_path(run), class: "text-blue-600 hover:text-blue-800 hover:underline" %>
       <%= link_to "Download", run_path(run, :format=>:csv), class: "text-green-600 hover:text-green-800 hover:underline" %>
       <%= link_to "Edit", edit_run_path(run), class: "text-yellow-600 hover:text-yellow-800 hover:underline" %>
-      <%= link_to "Delete", run_path(run), :confirm => 'Are you sure?', :method => :delete, class: "text-red-600 hover:text-red-800 hover:underline" %>
+      <%= form_with url: run_path(run), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "inline" do |f| %>
+        <%= f.submit "Delete", class: "text-red-600 hover:text-red-800 hover:underline bg-transparent border-none p-0 cursor-pointer" %>
+      <% end %>
     </div>
   </td>
   <td class="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">

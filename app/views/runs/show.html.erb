@@ -51,7 +51,9 @@
       <%= link_to "Quality Control", qc_run_path(@run), class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors" %>
       <%= link_to "Edit Run", edit_run_path(@run), class: "bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors" %>
       <%= link_to "Download CSV", run_path(@run, :format => :csv), class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors" %>
-      <%= link_to "Delete Run", run_path(@run), :confirm => 'Are you sure?', :method => :delete, class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors" %>
+      <%= form_with url: run_path(@run), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "inline" do |f| %>
+        <%= f.submit "Delete Run", class: "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors cursor-pointer" %>
+      <% end %>
     </div>
   </div>
 </div>
