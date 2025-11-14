@@ -36,6 +36,7 @@ require "#{Rails.root}/app/lib/parsers/glbrc_cn_root_excavation_soil_parser"
 require "#{Rails.root}/app/lib/parsers/glbrc_cn_root_excavation_plant_parser"
 require "#{Rails.root}/app/lib/parsers/m_l_e_soil_parser"
 require "#{Rails.root}/app/lib/parsers/resource_gradient_cn_parser"
+require "#{Rails.root}/app/lib/parsers/c_n_unicube_parser"
 # require "parsers/cimmyt_parser"
 
 module Parsers
