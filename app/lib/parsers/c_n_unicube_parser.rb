@@ -7,6 +7,7 @@ module Parsers
       # return unless the method is either plant or soil
       return if method != "Plant"
       return if name == "Name"
+      p [name, method]
 
       date, @plot_name, species = name.split('-')
       return unless @plot_name.start_with?('T')
