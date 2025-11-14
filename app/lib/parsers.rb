@@ -91,6 +91,7 @@ module Parsers
               when 48 then Parsers::CnGlbrcBarcodeParser # GLBRC barcode parser
               when 49 then Parsers::ResourceGradientCnParser
               when 50 then Parsers::StandardParser # LTAR soil samples
+              when 51 then Parsers::CNUnicubeParser # Unicube samples
               else false
               end
 
