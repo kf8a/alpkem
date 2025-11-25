@@ -9,8 +9,14 @@ module Parsers
       return if name == "Name"
       return unless name.include?('-')
 
-      date, @plot_name, species = name.split('-')
-      p [date, @plot_name, species]
+      # sometimes we have 3 parts other times we have 4 parts as in the strip samples
+      result = name.split('-')
+      date, @plot_name, species = if result.length == 3
+          [result[0], result[1], result[2]]
+        elsif result.length == 4
+          [result[0], result[1] + '.' + result[2], result[3]]
+        end
+
       return unless @plot_name.start_with?('T')
 
       year = date[0..3].to_i
@@ -19,10 +25,10 @@ module Parsers
       @sample_date = Date.new(year, month, day)
 
       fraction = nil
+      # drop the last letter of the species usually A, B, C if it is present
+      species = species.slice(0, species.length - 1) if species.end_with?('A', 'B', 'C')
       if species.include?('.')
         species, fraction = species.split('.')
-        # drop the last letter of the fraction usually A, B, C
-        fraction = fraction.gsub(/[A-C]$/, '')
       end
       @plot_name = @plot_name.gsub(/0(\d)/,'\1')
       @plot_name = @plot_name + '-' + species + (fraction ? '.' + fraction : '')
