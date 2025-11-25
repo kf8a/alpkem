@@ -5,7 +5,7 @@ module Parsers
     def process_line(line)
       _weight, name, method, _area_n, _area_c, _factor_n, _factor_c, @percent_n, @percent_c, _rest = CSV.parse_line(line)
       # return unless the method is either plant or soil
-      return if method != "Plant"
+      return unless method.include?("Plant")
       return if name == "Name"
       return unless name.include?('-')
 

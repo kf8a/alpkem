@@ -1,28 +1,64 @@
-<%= form_for(:run, :url => runs_path, html: {multipart: true, class: "form", role: "form"}) do |f| %>
-  <%= render "shared/error_messages", :target => @run %>
-  <div class="form-group">
-  <%= f.label :comment, "Comment" , class: 'control-label'%>
-  <%= f.text_area :comment, class: "form-control" , rows: 3 %>
+<div class="max-w-4xl mx-auto p-6">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Edit Run</h1>
+    <p class="text-gray-600">Update run information</p>
   </div>
-  <div class="form-group">
-    <%= f.label :sample_date, "Sample Date (for incubations, this is the day the bag is collected)", class: "control-label" %>
-    <%= f.date_select :sample_date,  {:include_blank => true}%>
+
+  <div class="bg-white shadow-lg rounded-lg p-8">
+    <%= form_for(@run, :url => run_path(@run), :html => {role: "form", class: "space-y-6", method: :patch}) do |f| %>
+      <%= render "shared/error_messages", :target => @run %>
+      
+      <div class="space-y-4">
+        <div>
+          <%= f.label :comment, "Comment", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= f.text_area :comment, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none", rows: 3, placeholder: "Enter any additional comments about this run..." %>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <%= f.label :sample_date, "Sample Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <p class="text-xs text-gray-500 mb-2">For incubations, this is the day the bag is collected</p>
+            <%= f.date_field :sample_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+          </div>
+
+          <div>
+            <%= f.label :run_date, "Run Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+            <%= f.date_field :run_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+          </div>
+        </div>
+
+        <div class="border-t pt-6">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Incubation Details</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <%= f.label :start_date, "Start Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <p class="text-xs text-gray-500 mb-2">Date the sample is buried or incubation is started</p>
+              <%= f.date_field :start_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+            </div>
+
+            <div>
+              <%= f.label :initial_sample_date, "Initial Sample Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+              <p class="text-xs text-gray-500 mb-2">Date the sample is removed from the field</p>
+              <%= f.date_field :initial_sample_date, class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t pt-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Sample Type</label>
+            <div class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700">
+              <%= @run.sample_type.name %>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Sample type is fixed and cannot be changed after the run is created.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4 pt-6 border-t">
+        <%= link_to "Cancel", run_path(@run), class: "px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+        <%= submit_tag "Update Run", class: "px-6 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors", disable_with: "Updating..." %>
+      </div>
+    <% end %>
   </div>
-  <div class="form-group">
-    <%= f.label :start_date, "Start Date (for incubations only, this is the date the sample is buried )", class: "control-label" %>
-    <%= f.date_select :start_date,  {:include_blank => true} %>
-  </div>
-  <div class="form-group">
-  <%= f.label :initial_sample_date, "Initial Sample Date (for incubations only, this is the date the sample is removed from the field (the initial sample))", class: "control-label" %>
-  <%= f.date_select :initial_sample_date,  {:include_blank => true}  %>
-  </div>
-  <div class="form-group">
-    <%= f.label :run_date, "Run Date", class: "control-label" %>
-    <%= f.date_select :run_date,  {:include_blank => true} %>
-  </div>
-  <div class="form-group">
-    <%= f.label :sample_type_id, "Sample Type", class: "control-label" %>
-    <%= f.collection_select :sample_type_id, SampleType.all, :id, :name, class: "form-control" %>
-  </div>
-  <%= submit_tag "Submit", :disable_with => "Submitting..."  %>
-<% end %>
+</div>

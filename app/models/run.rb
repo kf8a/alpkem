@@ -64,6 +64,10 @@ class Run < ActiveRecord::Base
 
   def load_file(_file)
     # at this point I should have a data_source already
+    Logger.new(STDOUT).info("Loading file: #{data_sources[0].data.current_path}")
+    Logger.new(STDOUT).info("Sample type id: #{sample_type_id}")
+    Logger.new(STDOUT).info("Sample date: #{sample_date}")
+    Logger.new(STDOUT).info("Parser: #{parser}")
     ActiveRecord::Base.transaction do
       parser.parse_file(data_sources[0].data.current_path)
       self.measurements = parser.measurements

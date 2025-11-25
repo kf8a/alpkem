@@ -75,10 +75,13 @@ class RunsController < ApplicationController
 
   # PUT /runs/1
   def update
-    # if @run.update_attributes(run_params) &&  @run.update_sample_types
-    #   flash[:notice] = "Run was successfully updated."
-    # end
-    respond_with @run
+    if @run.update(update_params)
+      flash[:notice] = "Run was successfully updated."
+      respond_with @run
+    else
+      flash[:notice] = "Run was not updated."
+      render :edit
+    end
   end
 
   # DELETE /runs/1
@@ -111,9 +114,19 @@ class RunsController < ApplicationController
     @run = Run.find(params[:id])
   end
 
+  # Parameters allowed when creating a new run
+  # Note: sample_type_id is required on create and tied to the uploaded data file
   def run_params
     params.require(:run).permit(:run_date, :sample_date, :start_date,
                                 :initial_sample_date, :sample_type_id,
                                 :comment)
+  end
+
+  # Parameters allowed when updating an existing run
+  # Note: sample_type_id is intentionally excluded - it cannot be changed after creation
+  # because it's tied to the data file format and parser used
+  def update_params
+    params.require(:run).permit(:run_date, :sample_date, :start_date, :sample_type_id,
+                                :initial_sample_date, :comment)
   end
 end
