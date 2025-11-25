@@ -21,6 +21,8 @@ module Parsers
       fraction = nil
       if species.include?('.')
         species, fraction = species.split('.')
+        # drop the last letter of the fraction usually A, B, C
+        fraction = fraction.gsub(/[A-C]$/, '')
       end
       @plot_name = @plot_name.gsub(/0(\d)/,'\1')
       @plot_name = @plot_name + '-' + species + (fraction ? '.' + fraction : '')
