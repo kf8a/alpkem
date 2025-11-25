@@ -18,7 +18,12 @@ module Parsers
         @plot_name = @plot_name + '-' + species
 
         plot = Plot.find_or_create_by(name: @plot_name, study_id: 1)
+        fraction = nil
+        if species.include?('.')
+          species, fraction = species.split('.')
+        end
         plot.species_code = species
+        plot.fraction = fraction
         plot.save
 
         process_data
