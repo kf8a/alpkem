@@ -61,6 +61,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-asdf'
   gem "tidewave"
+  gem 'rubocop'
   # gem 'capistrano3-unicorn'
   gem 'capistrano3-puma' #,  github: "seuros/capistrano-puma"
   gem 'capistrano-bundler'
