@@ -7,27 +7,27 @@ module Parsers
       '(\d+),\d+,(\d+)?(T..R\d(?:N\d)?)-(.+)[abc|ABC],\d+\.\d+,\w+,\w+,,,,(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)'
 
     def process_line(line)
+      Logger.new(STDOUT).info("Processing line: #{line}")
       date, _x, @plot_name, species, @percent_n, @percent_c = ParserMatcher.parse(CN_PLANT_SAMPLE, line)
-      if date
-        year = date[0..3].to_i
-        month = date[4..5].to_i
-        day = date[6..7].to_i
-        @sample_date = Date.new(year, month, day)
+      return unless date
 
-        @plot_name = @plot_name.gsub(/0(\d)/,'\1')
-        @plot_name = @plot_name + '-' + species
+      year = date[0..3].to_i
+      month = date[4..5].to_i
+      day = date[6..7].to_i
+      @sample_date = Date.new(year, month, day)
 
-        plot = Plot.find_or_create_by(name: @plot_name, study_id: 1)
-        fraction = nil
-        if species.include?('.')
-          species, fraction = species.split('.')
-        end
-        plot.species_code = species
-        plot.fraction = fraction
-        plot.save
+      @plot_name = @plot_name.gsub(/0(\d)/, '\1')
+      @plot_name = "#{@plot_name}-#{species}"
+      Logger.new(STDOUT).info("Plot name: #{@plot_name}")
 
-        process_data
-      end
+      plot = Plot.find_or_create_by(name: @plot_name, study_id: 1)
+      fraction = nil
+      species, fraction = species.split('.') if species.include?('.')
+      plot.species_code = species
+      plot.fraction = fraction
+      plot.save
+
+      process_data
     end
   end
 end

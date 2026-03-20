@@ -6,7 +6,7 @@ class Run < ActiveRecord::Base
   belongs_to :run_type
   has_many :measurements, dependent: :delete_all
   has_many :samples, -> { distinct }, through: :measurements
-  has_many :analytes, -> { distinct.order("name") }, through: :measurements
+  has_many :analytes, -> { distinct.order('name') }, through: :measurements
   has_many :data_sources
 
   validates :sample_type_id, presence: true
@@ -19,12 +19,12 @@ class Run < ActiveRecord::Base
   end
 
   def self.runs
-    all_runs = Run.order("id desc").to_a
+    all_runs = Run.order('id desc').to_a
     all_runs.reject(&:cn_run?)
   end
 
   def self.cn_runs
-    all_runs = Run.order("id desc").to_a
+    all_runs = Run.order('id desc').to_a
     all_runs.keep_if(&:cn_run?)
   end
 
@@ -34,7 +34,7 @@ class Run < ActiveRecord::Base
 
   # TODO: I need to include the CN designation on the run instead of the sample type
   def is_cn_run?(sample_type_name)
-    sample_type_name.include?("CN")
+    sample_type_name.include?('CN')
   end
 
   def sample_type_name
@@ -42,7 +42,7 @@ class Run < ActiveRecord::Base
   end
 
   def cn_run?
-    sample_type.name.include?("CN")
+    sample_type.name.include?('CN')
   end
 
   def updated?
@@ -69,7 +69,11 @@ class Run < ActiveRecord::Base
     Logger.new(STDOUT).info("Sample date: #{sample_date}")
     Logger.new(STDOUT).info("Parser: #{parser}")
     ActiveRecord::Base.transaction do
+      Logger.new(STDOUT).info("Parsing file: #{data_sources[0].data.current_path}")
       parser.parse_file(data_sources[0].data.current_path)
+
+      Logger.new(STDOUT).info("Parser measurements: #{parser.measurements}")
+      Logger.new(STDOUT).info("Parser errors: #{parser.load_errors}")
       self.measurements = parser.measurements
       load_errors.blank?
     end

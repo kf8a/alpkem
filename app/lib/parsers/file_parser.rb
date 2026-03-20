@@ -10,13 +10,13 @@ module Parsers
     def initialize(date, id)
       self.sample_date = date
       self.sample_type_id = id
-      self.plot_errors = ""
-      self.load_errors = ""
+      self.plot_errors = ''
+      self.load_errors = ''
       self.measurements = []
-      @no3_analyte = Analyte.find_by(name: "NO3")
-      @nh4_analyte = Analyte.find_by(name: "NH4")
-      @nitrogen_analyte = Analyte.find_by(name: "N")
-      @carbon_analyte = Analyte.find_by(name: "C")
+      @no3_analyte = Analyte.find_by(name: 'NO3')
+      @nh4_analyte = Analyte.find_by(name: 'NH4')
+      @nitrogen_analyte = Analyte.find_by(name: 'N')
+      @carbon_analyte = Analyte.find_by(name: 'C')
     end
 
     # subclasses need to implement this
@@ -32,7 +32,7 @@ module Parsers
         data = File.read(file)
         parse_contents(data)
       else
-        self.load_errors = "No file was selected to upload."
+        self.load_errors = 'No file was selected to upload.'
       end
     end
 
@@ -51,7 +51,7 @@ module Parsers
       data.each { |line| process_line(line) }
       return unless measurements.blank?
 
-      self.load_errors += "No data was able to be loaded from this file."
+      self.load_errors += 'No data was able to be loaded from this file.'
     end
 
     def find_plot(plot_to_find)
@@ -77,22 +77,22 @@ module Parsers
     private
 
     def require_sample_type_id
-      self.load_errors += "No Sample Type selected." unless sample_type_id
+      self.load_errors += 'No Sample Type selected.' unless sample_type_id
     end
 
     def require_sample_date
-      self.load_errors += "No Sample Date selected." unless sample_date
+      self.load_errors += 'No Sample Date selected.' unless sample_date
     end
 
     def require_data(data)
       # false positive stringio does not have an empty method
-      self.load_errors += "Data file is empty."      if data.length == 0
+      self.load_errors += 'Data file is empty.'      if data.length == 0
     end
 
     def cn_plot_name_ok?
       !@plot_name.blank? &&
-        !@plot_name.include?("Standard") &&
-        !@plot_name.include?("Blindstd")
+        !@plot_name.include?('Standard') &&
+        !@plot_name.include?('Blindstd')
     end
 
     def process_cn_sample
@@ -103,7 +103,7 @@ module Parsers
     end
 
     def format_sample_date
-      self.sample_date = Date.strptime(sample_date, "%m/%d/%Y")
+      self.sample_date = Date.strptime(sample_date, '%m/%d/%Y')
     end
 
     def unapprove_sample
