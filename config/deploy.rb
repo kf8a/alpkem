@@ -35,7 +35,7 @@ set :default_env, {
 
 # set :puma_init_active_record, true
 # set :pty, true
-#set :puma_enable_socket_service, true
+# set :puma_enable_socket_service, true
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
@@ -45,4 +45,3 @@ set :keep_releases, 20
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
-

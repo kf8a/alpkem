@@ -3,7 +3,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~>8.0'
-#gem 'sassc-rails'
 
 # Bundle authentication
 gem 'devise'
@@ -12,9 +11,9 @@ gem 'devise-encryptable'
 # block upgrade until we move to rails 7
 gem 'concurrent-ruby'
 
-gem 'ostruct'
 gem 'bigdecimal'
 gem 'mutex_m'
+gem 'ostruct'
 gem 'syslog'
 
 gem 'pg'
@@ -25,7 +24,7 @@ gem 'csv'
 # gem 'will_paginate', :require => 'will_paginate'
 gem 'chronic' # parsing dates
 
-gem 'workflow-activerecord',  '~> 6.0'
+gem 'workflow-activerecord', '~> 6.0'
 
 # gem 'jquery-rails'
 
@@ -46,7 +45,6 @@ gem 'jbuilder'
 
 gem 'importmap-rails'
 
-
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
@@ -60,17 +58,17 @@ group :development do
   gem 'bcrypt_pbkdf'
   gem 'capistrano'
   gem 'capistrano-asdf'
-  gem "tidewave"
   gem 'rubocop'
-  # gem 'capistrano3-unicorn'
+  gem 'tidewave'
+
   gem 'capistrano3-puma' #,  github: "seuros/capistrano-puma"
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'ed25519'
   gem 'rbnacl'
   gem 'rbnacl-libsodium'
-  gem "webrick"
   gem 'web-console'
+  gem 'webrick'
 end
 
 group :test do
