@@ -36,7 +36,7 @@ module Parsers
                 Study.find_by(name: 'GLBRC')
               elsif @plot_name.start_with?('ASP')
                 Study.find_by(name: 'LTAR')
-              elsif @plot_name.start_with?('BAF')
+              elsif @plot_name.start_with?('BAU')
                 Study.find_by(name: 'LTAR')
               elsif @plot_name.start_with?('L')
                 Study.find_by(name: 'Lux Arbor GLBRC Scaleup')
