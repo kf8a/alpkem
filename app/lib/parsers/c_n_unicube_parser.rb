@@ -38,6 +38,10 @@ module Parsers
                 Study.find_by(name: 'LTAR')
               elsif @plot_name.start_with?('BAF')
                 Study.find_by(name: 'LTAR')
+              elsif @plot_name.start_with?('L')
+                Study.find_by(name: 'Lux Arbor GLBRC Scaleup')
+              elsif @plot_name.start_with?('M')
+                Study.find_by(name: 'Marshall GLBRC Scaleup')
               else
                 raise "Unknown study for plot #{@plot_name}"
               end
