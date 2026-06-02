@@ -105,7 +105,7 @@ GEM
       capistrano (~> 3.7)
       capistrano-bundler
       puma (>= 6.1, < 9.0)
-    carrierwave (3.1.2)
+    carrierwave (3.1.3)
       activemodel (>= 6.0.0)
       activesupport (>= 6.0.0)
       addressable (~> 2.6)
