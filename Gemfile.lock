@@ -289,7 +289,7 @@ GEM
       ffi (~> 1)
     rbnacl-libsodium (1.0.16)
       rbnacl (>= 3.0.1)
-    rbs (4.1.0)
+    rbs (4.1.2)
       logger
       prism (>= 1.6.0)
       tsort
@@ -321,7 +321,7 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.7)
-    rubocop (1.88.2)
+    rubocop (1.89.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -361,7 +361,7 @@ GEM
     tailwindcss-ruby (3.4.19-arm64-darwin)
     tailwindcss-ruby (3.4.19-x86_64-linux)
     thor (1.5.0)
-    tidewave (0.8.0)
+    tidewave (0.8.1)
       rack (>= 2.0)
     timeout (0.6.1)
     tsort (0.2.0)
@@ -390,7 +390,7 @@ GEM
     workflow-activerecord (6.0.1)
       activerecord (>= 6.0)
       workflow (~> 3.0)
-    zeitwerk (2.8.2)
+    zeitwerk (2.8.3)
 
 PLATFORMS
   arm64-darwin-24
